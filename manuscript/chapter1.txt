@@ -85,13 +85,15 @@ Before going any further, think about these specifications and draw up the follo
 
 The high-level architecture for most web applications is a *3-Tier architecture.* Rango will be a variant on this architecture as it interfaces with an external service.
 
-.. _fig-ntier:
+![Overview of the system architecture for Rango. Note the inclusion of an external Search *Application Programming Interface (API).](images/rango-ntier-architecture.png)
+
+<!--- .. _fig-ntier:
 
 .. figure:: ../images/rango-ntier-architecture.svg
 	:scale: 100%
 	:figclass: align-center
 
-	Overview of the system architecture for Rango. Note the inclusion of an external Search *Application Programming Interface (API).*
+	Overview of the system architecture for Rango. Note the inclusion of an external Search *Application Programming Interface (API).* -->
 
 Since we are building a web application with Django, we will use the following technologies for the following tiers.
 
