@@ -158,14 +158,17 @@ It's good practice to note down any working assumptions like this. You never kno
 
 The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``char`` field, ``Int`` denotes an ``integer`` field, ``URL`` denotes a URL field and ``FK`` denotes a Foreign Key.
 
+
 | Category Model          |
 |-------------------------|
+
 
 | Field   | Type          |
 |---------|---------------|
 | `name`  | CharField     | 
 | `views` | IntegerField  |
 | `likes` | IntegerField  |
+
 
 <!--- .. raw:: html
 
