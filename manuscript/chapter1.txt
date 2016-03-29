@@ -160,6 +160,7 @@ The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``ch
 
 | Category Model          |
 |-------------------------|
+
 | Field   | Type          |
 |---------|---------------|
 | `name`  | CharField     | 
