@@ -14,25 +14,16 @@ Once you're familiar with all of these technologies, you're ready to go!
 
 Python
 ------
+Tango with Django requires you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family (e.g. `2.7.11`) or version `3.5` will do. If you're not sure how to install Python and would like some assistance, have a look at **the chapter dealing with installing components**.
 
-For this tutorial, you'll require the following key pieces of software.
+I> ### Not sure how to use Python?
+I>
+I> If you haven't used Python before or you simply wish to brush up on your skills, then we highly recommend that you check out and work through one or more of the following guides:
+I> - [**Learn Python in 10 Minutes**](http://www.korokithakis.net/tutorials/python/) by Stavros;
+I> - [**The Official Python Tutorial**](http://docs.python.org/2/tutorial/);
+I> - [**Think Python: How to Think like a Computer Scientist**](http://www.greenteapress.com/thinkpython/) by Allen B. Downey; or
+I> - [**Learn to Program**](https://www.coursera.org/course/programming1) by Jennifer Campbell and Paul Gries.
 
--   Python version 2.7+ or 3.0
-
-
-If you haven't used Python before or you simply wish to brush
-up on your skills, then we highly recommend that you check out and work
-through one or more of the following guides.
-
--   **A quick tutorial** - Learn Python in 10 Minutes by Stavros,
-    <http://www.korokithakis.net/tutorials/python/>.
--   **The Official Python Tutorial** at
-    <http://docs.python.org/2/tutorial/>.
--   **A brilliant book**: Think Python: How to Think like a Computer
-    Scientist by Allen B. Downey, available online at
-    <http://www.greenteapress.com/thinkpython/>.
--   **An amazing online course**: Learn to Program, by Jennifer Campbell
-    and Paul Gries at <https://www.coursera.org/course/programming1>.
 
 Virtual Environments
 ---------------------
