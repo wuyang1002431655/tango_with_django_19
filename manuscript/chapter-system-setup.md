@@ -1,3 +1,6 @@
+Setting up your System {#chapter-system-setup}
+==============================================
+
 Installing the Software
 -----------------------
 Now that you have a decent understanding of how to interact with the

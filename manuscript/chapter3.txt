@@ -1,5 +1,5 @@
-Django Basics
-=============
+Django Basics {#chapter-django-basics}
+======================================
 
 Let's get started with Django! In this chapter, we'll be giving you an
 overview of the how to get started with Django. You'll be setting up a

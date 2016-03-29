@@ -31,7 +31,7 @@ In this book, we will be taking an exampled-based approach (or inquiry-based lea
 
 At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learned. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations.
 
-X> ##Exercises will be clearly delineated like this!
+X> ### Exercises will be clearly delineated like this!
 X> We expect you to complete exercises as you progress through the book - **they are not optional!** A following chapter will expect you to have completed the preceding chapter's exercises, for example.
 
 Finally, all the code is available from *GitHub* at [https://github.com/leifos/tango_with_django](https://github.com/leifos/tango_with_django).
