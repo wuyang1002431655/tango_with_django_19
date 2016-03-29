@@ -32,9 +32,9 @@ In this book, we will be taking an exampled-based approach (or inquiry-based lea
 At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learned. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations.
 
 X> ### Exercises will be clearly delineated like this!
-X> We expect you to complete exercises as you progress through the book - **they are not optional!** A following chapter will expect you to have completed the preceding chapter's exercises, for example.
-
-Finally, all the code is available from *GitHub* at [https://github.com/leifos/tango_with_django](https://github.com/leifos/tango_with_django).
+X> In each chapter we have added a number of exercises to test your knowledge and skill.
+X> You will need to complete these exercises as the subsequent chapters are dependent on them.
+X> If you get stuck, you can look at our code solution in *GitHUb*  [https://github.com/leifos/tango_with_django_19](https://github.com/leifos/tango_with_django_19).
 
 To see a fully-functional version of the application, you can also visit the [How to Tango with Django website](http://www.tangowithdjango.com/).
 
@@ -78,12 +78,19 @@ At first glance, the specified application to develop seems reasonably straightf
 X> ### Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
+<<<<<<< HEAD:manuscript/chapter1.md
+X> * An N-Tier or System Architecture diagram.
+X> * Wireframes of the Main Page and the Category Page.
+X> * Think about the structure of the URLs and how they will map to the main page and various category pages.
+X> * An Entity-Relationship diagram to describe the data model that we'll be implementing.
+=======
 X> * An **N-Tier or System Architecture** diagram.
 X> * **Wireframes** of the main and category pages.
 X> * A series of **URL mappings** for the application.
 X> * An [***Entity-Relationship (ER)***](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model) diagram to describe the data model that we'll be implementing.
 X>
 X> It's good practice for you to try these exercises out before moving on to examine how we went about creating all of the above.
+>>>>>>> 8519da8ba8d10abed11f0c2d0d738df047f9d671:manuscript/chapter1.md
 
 ###N-Tier Architecture
 
@@ -136,7 +143,8 @@ Note that this specification is rather vague. A single page could in theory exis
 D> ### Take Note!
 D> It's good practice to note down any working assumptions you make, just like the one-to-many relationship assumption we assume above. You never know when they may come back to bite you later on! By noting them down, this means you can communicate it with your development team and make sure that the assumption is sensible and that they are happy to proceed under such an assumption.
 
-With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity. Note that *FK* denotes a *foreign key*. We use Django `ModelField` types to define the type of each field. Note that we ignore *primary keys*; we let the Django ORM define these on our behalf.
+With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity.  We use Django `ModelField` types to define the type of each field (i.e. Integer, Char, URL or ForeignKey). Note that in Django *primary keys* are implicit such that Django adds an `id` to each Model, but we will talk more about that later in the Models and Database chapter.
+
 
 #### Category Model
 
@@ -150,20 +158,14 @@ With this assumption, we then produce a series of tables that describe each enti
 
 | Field      | Type           |
 |------------|----------------|
-| `category` | *FK*           | 
+| `category` | `ForeignKey`   | 
 | `title`    | `CharField`    |
 | `url`      | `URLField`     |
 | `views`    | `IntegerField` |
 
-We will also have a `User` table. We have chosen not to show it here, but shall introduce later in the book. In the following chapters will we see how to instantiate these data models in Django and how to use Django's ORM to connect to the database.
+We will also have model for the `User` so that they can register and login. We have not shown it here, but shall introduce it later in the book when we discuss User Authentication. In the following chapters will we see how to instantiate these models in Django and how to use Django's ORM to connect to the database.
 
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
 
-If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
-
-
-
-
-
-
+If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line and configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
