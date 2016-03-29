@@ -126,23 +126,15 @@ As we progress through the book, we will flesh out how to construct these pages 
 ###Entity-Relationship Diagram
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
 
-{#fig-rango-erd}
+{id="fig-rango-erd"}
 ![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.png)
-
-<!--- .. _fig-rango-erd:
-
-.. figure:: ../images/rango-erd.svg
-	:scale: 100%
-	:figclass: align-center
-
-	The Entity Relationship Diagram of Rango's two main entities. -->
 
 Note that this specification is rather vague. A single page could in theory exist in one or more categories. Working with this assumption, we could model the relationship between categories and pages as a [many-to-many relationship](https://en.wikipedia.org/wiki/Many-to-many_(data_model)). This approach however introduces a number of complexities, so we will make the simplifying assumption that *one category contains many pages, but one page is assigned to one category.* This does not preclude that the same page can be assigned to different categories - but the page would have to be entered twice, which is not ideal.
 
 D> ### Take Note!
 D> It's good practice to note down any working assumptions you make, just like the one-to-many relationship assumption we assume above. You never know when they may come back to bite you later on! By noting them down, this means you can communicate it with your development team and make sure that the assumption is sensible and that they are happy to proceed under such an assumption.
 
-With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity. Note that *FK* denotes a *foreign key*. We use Django `ModelField' types to define the type of each field. Note that we ignore *primary keys*; we let the Django ORM define these on our behalf.
+With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity. Note that *FK* denotes a *foreign key*. We use Django `ModelField` types to define the type of each field. Note that we ignore *primary keys*; we let the Django ORM define these on our behalf.
 
 #### Category Model
 
@@ -166,7 +158,7 @@ We will also have a `User` table. We have chosen not to show it here, but shall 
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
 
-If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter. Otherwise, get started with Chapter :ref:`requirements-label`.
+If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with Chapter :ref:`requirements-label`.
 
 
 
