@@ -1,13 +1,16 @@
 Getting Ready to Tango
 ======================
+Now that you're ready to go, let's get set up so that you can *Tango with Django!* You'll need to ensure that you have everything you need installed on your computer, and that you have a sound understanding of your development environment. 
 
-Let's get set up so that you can tango with Django. You'll need to ensure that you
-have everything you need installed on your computer and that you have a
-sound understanding of your development environment. 
+This chapter outlines the five different components that you need to get setup. These are listed below.
 
-This chapter outlines the different components that you need to get setup.
+* Get your *Python* installation setup and working.
+* Setup your *virtual environment* and get to grips with *pip*.
+* Get *Django* installed and ready to go.
+* Setup an *Integrated Development Environment (IDE)*, if you choose to do so.
+* Understand how to use the *Git* version control system to store your code.
 
-
+Once you're familiar with all of these technologies, you're ready to go!
 
 Python
 ------
@@ -31,6 +34,26 @@ through one or more of the following guides.
 -   **An amazing online course**: Learn to Program, by Jennifer Campbell
     and Paul Gries at <https://www.coursera.org/course/programming1>.
 
+Virtual Environments
+---------------------
+
+We're almost all set to go! However, before we continue, it's worth
+pointing out that while this setup is fine to begin with, there are some
+drawbacks. What if you had another Python application that requires a
+different version to run? Or you wanted to switch to the new version of
+Django, but still wanted to maintain your Django 1.7 project?
+
+The solution to this is to use [virtual
+environments](http://simononsoftware.com/virtualenv-tutorial/). Virtual
+environments allow multiple installations of Python and their relevant
+packages to exist in harmony. This is the generally accepted approach to
+configuring a Python setup nowadays.
+
+Pip
+---
+
+Pip is the python package manager.....
+
 Django
 ------
 
@@ -39,13 +62,6 @@ Django
 As Django is a web application framework written in the Python
 programming language, you will be required to have a working knowledge
 of Python. 
-
-
-Pip
----
-
-Pip is the python package manager.....
-
 
 
 Integrated Development Environment
@@ -65,21 +81,6 @@ you to purchase a licence. Ideally, you'll want to select an IDE that
 supports integration with Django. PyCharm and PyDev both support Django
 integration out of the box - though you will have to point the IDE to
 the version of Python that you are using.
-
-Virtual Environments
----------------------
-
-We're almost all set to go! However, before we continue, it's worth
-pointing out that while this setup is fine to begin with, there are some
-drawbacks. What if you had another Python application that requires a
-different version to run? Or you wanted to switch to the new version of
-Django, but still wanted to maintain your Django 1.7 project?
-
-The solution to this is to use [virtual
-environments](http://simononsoftware.com/virtualenv-tutorial/). Virtual
-environments allow multiple installations of Python and their relevant
-packages to exist in harmony. This is the generally accepted approach to
-configuring a Python setup nowadays.
 
 Git - Code Repository
 ---------------------
