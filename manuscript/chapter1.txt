@@ -19,7 +19,7 @@ In this book, we will be taking an exampled-based approach (or inquiry-based lea
 * **Setup a Django project** and create a basic Django application.
 * **Configure the Django project** to serve static media and other media files.
 * Work with Django's *Model-View-Template* design pattern.
-* **Create database models** and use the object relational mapping functionality provided by Django.
+* **Create database models** and use the [*object relational mapping (ORM)*](https://en.wikipedia.org/wiki/Object-relational_mapping) functionality provided by Django.
 * **Create forms** that can utilise your database models to create dynamically generated webpages.
 * Use the **user authentication** services provided by Django.
 * Incorporate **external services** into your Django application.
@@ -75,7 +75,7 @@ Your client would like you to create a website called *Rango* that lets users br
 
 At first glance, the specified application to develop seems reasonably straightforward. In essence, it is just a list of categories which link to pages, right? However, there are a number of complexities and challenges that need to be addressed. First, let's try and build up a better picture of what needs to be developed by laying down some high-level designs.
 
-X> ##Exercises
+X> ### Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
 X> * An N-Tier or System Architecture diagram.
@@ -142,120 +142,31 @@ Note that this specification is rather vague. A single page could in theory exis
 D> ### Take Note!
 D> It's good practice to note down any working assumptions you make, just like the one-to-many relationship assumption we assume above. You never know when they may come back to bite you later on! By noting them down, this means you can communicate it with your development team and make sure that the assumption is sensible and that they are happy to proceed under such an assumption.
 
-The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``char`` field, ``Int`` denotes an ``integer`` field, ``URL`` denotes a URL field and ``FK`` denotes a Foreign Key.
-
+With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity. Note that *FK* denotes a *foreign key*. We use Django `ModelField' types to define the type of each field. Note that we ignore *primary keys*; we let the Django ORM define these on our behalf.
 
 #### Category Model
 
+| Field   | Type            |
+|---------|-----------------|
+| `name`  | `CharField`     | 
+| `views` | `IntegerField`  |
+| `likes` | `IntegerField`  |
 
-| Field   | Type          |
-|---------|---------------|
-| `name`  | CharField     | 
-| `views` | IntegerField  |
-| `likes` | IntegerField  |
+#### Page Model
 
+| Field      | Type           |
+|------------|----------------|
+| `category` | *FK*           | 
+| `title`    | `CharField`    |
+| `url`      | `URLField`     |
+| `views`    | `IntegerField` |
 
-<!--- .. raw:: html
-
-	<style type="text/css">
-
-		#ch1-tables table {
-			width: 80%;
-			margin: auto;
-			margin:
-		}
-
-		#ch1-tables table tr th {
-			border-bottom: 2px solid black;
-			text-align: center;
-		}
-
-		#ch1-tables table tr.table-header th {
-			border-bottom: none;
-			margin: 10px 0 10px;
-			font-size: 12pt;
-			font-style: italic;
-		}
-
-		#ch1-tables table tr td {
-			text-align: center;
-			border-bottom: 1px solid lightgray;
-		}
-
-		#ch1-tables table th.none, #ch1-tables table td.none {
-			border: none;
-		}
-
-	</style>
-
-	<div id="ch1-tables">
-		<table>
-
-			<tr class="table-header">
-				<th colspan="2">Category Table</th>
-				<th class="none">&nbsp;</th>
-				<th colspan="2">Page Table</th>
-			</tr>
-
-			<tr>
-				<th style="width: 20%;">Field</th>
-				<th style="width: 20%;">Type</th>
-
-				<th class="none"></th>
-
-				<th style="width: 20%;">Field</th>
-				<th style="width: 20%;">Type</th>
-			</tr>
-
-			<tr>
-				<td>name</td>
-				<td>Str</td>
-
-				<td class="none">&nbsp;</td>
-
-				<td>category</td>
-				<td>FK</td>
-			</tr>
-
-			<tr>
-				<td>views</td>
-				<td>Int</td>
-
-				<td class="none">&nbsp;</td>
-
-				<td>title</td>
-				<td>Str</td>
-			</tr>
-
-			<tr>
-				<td>likes</td>
-				<td>Int</td>
-
-				<td class="none">&nbsp;</td>
-
-				<td>url</td>
-				<td>URL</td>
-			</tr>
-
-			<tr>
-				<td class="none">&nbsp;</td>
-				<td class="none">&nbsp;</td>
-
-				<td class="none">&nbsp;</td>
-
-				<td>views</td>
-				<td>Int</td>
-			</tr>
-
-		</table>
-	</div> -->
-
-We will also have a ``User`` table - which we have not shown here, but shall introduce later in the book. In the following chapters will we see how to instantiate these data models in Django and how to use Django's Object Relational Mapping to connect to the database.
+We will also have a `User` table. We have chosen not to show it here, but shall introduce later in the book. In the following chapters will we see how to instantiate these data models in Django and how to use Django's ORM to connect to the database.
 
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
 
-If you already have Python 2.7/3.0 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter. Otherwise, get started with Chapter :ref:`requirements-label`.
+If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter. Otherwise, get started with Chapter :ref:`requirements-label`.
 
 
 
