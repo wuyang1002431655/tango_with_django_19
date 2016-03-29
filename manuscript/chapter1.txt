@@ -87,24 +87,17 @@ X> * An Entity-Relationship diagram to describe the data model that we'll be imp
 
 The high-level architecture for most web applications is a *3-Tier architecture.* Rango will be a variant on this architecture as it interfaces with an external service.
 
-![Overview of the system architecture for Rango. Note the inclusion of an external Search *Application Programming Interface (API).](images/rango-ntier-architecture.png)
-
-<!--- .. _fig-ntier:
-
-.. figure:: ../images/rango-ntier-architecture.svg
-	:scale: 100%
-	:figclass: align-center
-
-	Overview of the system architecture for Rango. Note the inclusion of an external Search *Application Programming Interface (API).* -->
+{id="fig-ntier"}
+![Overview of the 3-tier system architecture for our Rango application.](images/rango-ntier-architecture.png)
 
 Since we are building a web application with Django, we will use the following technologies for the following tiers.
 
-* The *client* will be a web browser (i.e Chrome, Firefox, Safari, etc.) which will render HTML/CSS pages.
-* The *middleware* will be a Django application, and will be dispatched through Django's built-in development web server while we develop.
-* The *database* will be the Python-based *SQLite3* Database engine.
+* The **client** will be a web browser (i.e *Chrome*, *Firefox*, *Safari*, etc.) which will render HTML/CSS pages.
+* The **middleware** will be a *Django* application, and will be dispatched through Django's built-in development web server while we develop.
+* The **database** will be the Python-based *SQLite3* Database engine.
 * The *search API* will be the *Bing Search API.*
 
-For the most part, this book will focus on developing the middleware, though it should be quite evident from Figure :num:`fig-ntier` that we will have to interface with all the other components.
+For the most part, this book will focus on developing the middleware. It should however be quite evident from the [system architecture diagram](#fig-ntier) that we will have to interface with all the other components.
 
 ###Wireframes
 Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time, and can vary from hand drawn sketches to exact mockups depending on the tools that you have available. For Rango, we'd like to make the index page of the site look like the screen shot shown in Figure :num:`fig-index-page`. Our category page is shown in Figure :num:`fig-cat-page`.
