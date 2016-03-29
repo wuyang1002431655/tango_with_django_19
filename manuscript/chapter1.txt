@@ -13,41 +13,46 @@ This book seeks to complement the [official Django Tutorials](https://docs.djang
 **This book is not designed to be read.** Whatever you do, do not read this book! It is a hands-on guide to building web applications in Django. Reading is not doing. To increase the value you gain from this experience, go through and develop the application. When you code up the application, *do not just cut and paste the code.* Type it in, think about what it does, then read the explanations we have provided to describe what is going on. If you still do not understand, then check out the Django documentation, go to [Stack Overflow](http://stackoverflow.com/questions/tagged/django) or other helpful websites and fill in this gap in your knowledge. If you think it is worth mentioning, please get in touch with us so that we can improve the book - we already have a number of contributors and we will happily acknowledge your contribution!
 
 ##What You will Learn
-In this book, we will be taking an exampled-based approach (or inquiry-based learning). The book will show you how to design a web application called *Rango* (see the [Design Brief below](#overview-design-brief-label)). Along the way, we'll show you how to perform the following tasks.
+In this book, we will be taking an exampled-based approach (or inquiry-based learning). The book will show you how to design a web application called *Rango* ([see the Design Brief below](#overview-design-brief-label)). Along the way, we'll show you how to perform the following key tasks.
 
-* Setup a development environment - including how to use the terminal, the Pip installer, how to work with Git, etc.
-* Setup a Django project and create a basic Django application.
-* Configure the Django project to serve static media and other media files.
+* **How to setup your development environment** - including how to use the terminal, your virtual environment, the `pip` installer, how to work with Git, and more.
+* **Setup a Django project** and create a basic Django application.
+* **Configure the Django project** to serve static media and other media files.
 * Work with Django's *Model-View-Template* design pattern.
-* Create database models and use the object relational mapping functionality provided by Django.
-* Create forms that can utilise your database models to create dynamically generated webpages.
-* Use the User Authentication services provided by Django.
-* Incorporate external services into the application.
+* **Create database models** and use the object relational mapping functionality provided by Django.
+* **Create forms** that can utilise your database models to create dynamically generated webpages.
+* Use the **user authentication** services provided by Django.
+* Incorporate **external services** into your Django application.
 * Include *Cascading Styling Sheets (CSS)* and *JavaScript* within a web application.
-* Design and apply CSS to improve the look and feel of the web application.
-* Work with cookies and sessions with Django.
+* **Design and apply CSS** to improve the look and feel of the web application.
+* Work with **cookies and sessions** with Django.
 * Include more advanced functionality like *AJAX* into your application.
-* Deploy your application to a web server using *PythonAnywhere.*
+* **Deploy your application** to a web server using *PythonAnywhere.*
 
-At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learned. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations. Finally, all the code is available from *GitHub* at [https://github.com/leifos/tango_with_django](https://github.com/leifos/tango_with_django).
+At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learned. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations.
 
-To see a fully-functional version of the application, you can also visit the [How to Tango with Django] (http://www.tangowithdjango.com/) website at http://www.tangowithdjango.com/rango/.
+X> As an example, exercises will be clearly delineated.
+X> We expect you to complete exercises as you progress through the book - **they are not optional!** A following chapter will expect you to have completed the preceding chapter's exercises, for example.
+
+Finally, all the code is available from *GitHub* at [https://github.com/leifos/tango_with_django](https://github.com/leifos/tango_with_django).
+
+To see a fully-functional version of the application, you can also visit the [How to Tango with Django website](http://www.tangowithdjango.com/).
 
 ##Technologies and Services
-Through the course of this book, we will used various technologies and external services, including:
+Through the course of this book, we will used various technologies and external services. Click one of the listed technologies or services to learn more about them.
 
-* Python, http://www.python.org
-* Pip, http://www.pip-installer.org
-* Django, https://www.djangoproject.com
-* Git, http://git-scm.com
-* GitHub, https://github.com
-* HTML, http://www.w3.org/html/
-* CSS, http://www.w3.org/Style/CSS/
-* Javascript
-* JQuery, http://jquery.com
-* Twitter Bootstrap, http://getbootstrap.com/
-* Bing Search API via Azure Datamarket, http://datamarket.azure.com
-* PythonAnywhere, https://www.pythonanywhere.com
+* [Python](http://www.python.org)
+* [Pip package manager](http://www.pip-installer.org)
+* [Django](https://www.djangoproject.com)
+* [Git](http://git-scm.com)
+* [GitHub](https://github.com)
+* [HTML](http://www.w3.org/html/)
+* [CSS](http://www.w3.org/Style/CSS/)
+* [Javascript](https://www.javascript.com/)
+* [JQuery](http://jquery.com)
+* [Twitter Bootstrap](http://getbootstrap.com/)
+* [Bing Search API](http://datamarket.azure.com) via Azure Datamarket
+* [PythonAnywhere](https://www.pythonanywhere.com)
 
 We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits (like *Twitter Bootstrap*), external services like (those provided by *Microsoft Azure*) and deploy your application quickly and easily (with PythonAnywhere).
 
