@@ -141,7 +141,8 @@ As we progress through the book, we will flesh out how to construct these pages 
 ###Entity-Relationship Diagram
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
 
-![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.svg)
+.. _fig-rango-erd:
+![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.png)
 
 <!--- .. _fig-rango-erd:
 
@@ -157,7 +158,15 @@ It's good practice to note down any working assumptions like this. You never kno
 
 The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``char`` field, ``Int`` denotes an ``integer`` field, ``URL`` denotes a URL field and ``FK`` denotes a Foreign Key.
 
-.. raw:: html
+| Category Model          |
+|-------------------------|
+| Field   | Type          |
+|---------|---------------|
+| `name`  | CharField     | 
+| `views` | IntegerField  |
+| `likes` | IntegerField  |
+
+<!--- .. raw:: html
 
 	<style type="text/css">
 
@@ -250,7 +259,7 @@ The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``ch
 			</tr>
 
 		</table>
-	</div>
+	</div> -->
 
 We will also have a ``User`` table - which we have not shown here, but shall introduce later in the book. In the following chapters will we see how to instantiate these data models in Django and how to use Django's Object Relational Mapping to connect to the database.
 
