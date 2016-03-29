@@ -1,3 +1,8 @@
 chapter1.txt
 chapter2.txt
 chapter3.txt
+chapter-work-in-progress.md
+chapter-system-setup.md
+chapter-unix.md
+chapter-virtual-env.md
+chapter-git.md
