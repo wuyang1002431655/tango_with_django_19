@@ -158,7 +158,7 @@ We will also have a `User` table. We have chosen not to show it here, but shall 
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
 
-If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with Chapter :ref:`requirements-label`.
+If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
 
 
 
