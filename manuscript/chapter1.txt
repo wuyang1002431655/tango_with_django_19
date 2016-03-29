@@ -73,7 +73,7 @@ Your client would like you to create a website called *Rango* that lets users br
 
 At first glance, the application to develop seems reasonably straightforward. In essence, it is just a list of categories which link to pages, right? However, there are a number of complexities and challenges that need to be addressed. First, let's try and build up a better picture of what needs to be developed by laying down some high-level designs.
 
-X> ###Exercises
+X> ##Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
 X> * An N-Tier or System Architecture diagram.
