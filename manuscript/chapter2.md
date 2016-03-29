@@ -19,6 +19,7 @@ Tango with Django requires you to have installed on your computer a copy of the 
 I> ### Not sure how to use Python?
 I>
 I> If you haven't used Python before or you simply wish to brush up on your skills, then we highly recommend that you check out and work through one or more of the following guides:
+I> 
 I> * [**Learn Python in 10 Minutes**](http://www.korokithakis.net/tutorials/python/) by Stavros;
 I> * [**The Official Python Tutorial**](http://docs.python.org/2/tutorial/);
 I> * [**Think Python: How to Think like a Computer Scientist**](http://www.greenteapress.com/thinkpython/) by Allen B. Downey; or
