@@ -78,19 +78,12 @@ At first glance, the specified application to develop seems reasonably straightf
 X> ### Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
-<<<<<<< HEAD:manuscript/chapter1.md
-X> * An N-Tier or System Architecture diagram.
-X> * Wireframes of the Main Page and the Category Page.
-X> * Think about the structure of the URLs and how they will map to the main page and various category pages.
-X> * An Entity-Relationship diagram to describe the data model that we'll be implementing.
-=======
 X> * An **N-Tier or System Architecture** diagram.
 X> * **Wireframes** of the main and category pages.
 X> * A series of **URL mappings** for the application.
 X> * An [***Entity-Relationship (ER)***](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model) diagram to describe the data model that we'll be implementing.
 X>
 X> It's good practice for you to try these exercises out before moving on to examine how we went about creating all of the above.
->>>>>>> 8519da8ba8d10abed11f0c2d0d738df047f9d671:manuscript/chapter1.md
 
 ###N-Tier Architecture
 
