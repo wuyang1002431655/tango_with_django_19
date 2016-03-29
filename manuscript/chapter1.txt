@@ -95,21 +95,17 @@ Since we are building a web application with Django, we will use the following t
 * The **client** will be a web browser (i.e *Chrome*, *Firefox*, *Safari*, etc.) which will render HTML/CSS pages.
 * The **middleware** will be a *Django* application, and will be dispatched through Django's built-in development web server while we develop.
 * The **database** will be the Python-based *SQLite3* Database engine.
-* The *search API* will be the *Bing Search API.*
+* The **search API** will be the *Bing Search API.*
 
 For the most part, this book will focus on developing the middleware. It should however be quite evident from the [system architecture diagram](#fig-ntier) that we will have to interface with all the other components.
 
 ###Wireframes
-Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time, and can vary from hand drawn sketches to exact mockups depending on the tools that you have available. For Rango, we'd like to make the index page of the site look like the screen shot shown in Figure :num:`fig-index-page`. Our category page is shown in Figure :num:`fig-cat-page`.
+Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time, and can vary from hand drawn sketches to exact mockups depending on the tools that you have at your disposal. For our Rango application, we'd like to make the index page of the site look like the [screenshot below](#fig-index-page). Our category page is also [shown below](#fig-cat-page).
 
-{#fig-index-page}
+{id="fig-index-page"}
 ![The index page with the categories bar on the left, also showing the top five pages and top five categories.](images/ch1-rango-index.png)
 
-[fig-index-page]: images/ch1-rango-index.png "The index page with the categories bar on the left, also showing the top five pages and top five categories."
-A reference to the [fig-index-page](#fig-index-page)
-
-
-{#fig-cat-page}
+{id="fig-cat-page"}
 ![The category page showing the pages in the category (along with the number of views). Below, a search for *Python* has been conducted, with the results shown underneath.](images/ch1-rango-cat-page.png)
 
 ###Pages and URL Mappings
