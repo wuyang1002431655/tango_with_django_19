@@ -141,7 +141,7 @@ As we progress through the book, we will flesh out how to construct these pages 
 ###Entity-Relationship Diagram
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
 
-.. _fig-rango-erd:
+{#fig-rango-erd}
 ![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.png)
 
 <!--- .. _fig-rango-erd:
