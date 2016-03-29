@@ -54,7 +54,7 @@ We've selected these technologies and services as they are either fundamental to
 ##Rango: Initial Design and Specification
 As previously mentioned, the focus of this book will be to develop an application called *Rango*. As we develop this application, it will cover the core components that need to be developed when building any web application.
 
-.. _overview-design-brief-label:
+{#overview-design-brief-label}
 
 ###Design Brief
 Your client would like you to create a website called *Rango* that lets users browse through user-defined categories to access various web pages. In Spanish, the word rango is used to mean *"a league ranked by quality"* or *"a position in a social hierarchy"* (see https://www.vocabulary.com/dictionary/es/rango).
@@ -73,7 +73,7 @@ Your client would like you to create a website called *Rango* that lets users br
 
 At first glance, the application to develop seems reasonably straightforward. In essence, it is just a list of categories which link to pages, right? However, there are a number of complexities and challenges that need to be addressed. First, let's try and build up a better picture of what needs to be developed by laying down some high-level designs.
 
-###Exercises
+X> ###Exercises
 X> Before going any further, think about these specifications and draw up the following design artefacts.
 X>
 X> * An N-Tier or System Architecture diagram.
@@ -107,21 +107,15 @@ For the most part, this book will focus on developing the middleware, though it 
 ###Wireframes
 Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time, and can vary from hand drawn sketches to exact mockups depending on the tools that you have available. For Rango, we'd like to make the index page of the site look like the screen shot shown in Figure :num:`fig-index-page`. Our category page is shown in Figure :num:`fig-cat-page`.
 
-.. _fig-index-page:
+{#fig-index-page}
+![The index page with the categories bar on the left, also showing the top five pages and top five categories.](images/ch1-rango-index.png)
 
-.. figure:: ../images/ch1-rango-index.png
-	:scale: 60%
-	:figclass: align-center
+[fig-index-page]: images/ch1-rango-index.png "The index page with the categories bar on the left, also showing the top five pages and top five categories."
+A reference to the [fig-index-page](#fig-index-page)
 
-	The index page with the categories bar on the left, also showing the top five pages and top five categories.
 
-.. _fig-cat-page:
-
-.. figure:: ../images/ch1-rango-cat-page.png
-	:scale: 60%
-	:figclass: align-center
-
-	The category page showing the pages in the category (along with the number of views). Below, a search for *Python* has been conducted, with the results shown underneath.
+{#fig-cat-page}
+![The category page showing the pages in the category (along with the number of views). Below, a search for *Python* has been conducted, with the results shown underneath.](images/ch1-rango-cat-page.png)
 
 ###Pages and URL Mappings
 From the specification, we have already identified two pages that our application will present to the user at different points in time. To access each of these pages we will need to describe in some fashion the URL mappings. Think of a URL mapping as the text a user will have to enter into a browser's address bar to reach the given page. The basic URL mappings for Rango are shown below.
