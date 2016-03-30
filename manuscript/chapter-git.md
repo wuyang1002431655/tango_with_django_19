@@ -492,5 +492,7 @@ deploying your application. For now though, [check out this
 article](http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)
 to read up on what they are, and how they can benefit you.
 
-D> There's more!
-D> There are many more advanced aspects of Git that we have not covere here, such as branching and merging. There are many fantastic tutorials available online if you are interested in taking you super-awesome version control skills a step further. For more details about such features take a look at this [tutorial on getting started with Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/), the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning about Git Branching](http://pcottle.github.io/learnGitBranching/).
+D> ### There's more!
+D> There are other more advanced features of Git that we have not covered in this chapter. Examples include **branching** and **merging**, which are useful for projects with different release versions, for example. There are many fantastic tutorials available online if you are interested in taking you super-awesome version control skills a step further. For more details about such features take a look at this [tutorial on getting started with Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/), the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning about Git Branching](http://pcottle.github.io/learnGitBranching/).
+D> 
+D> If you're only using this chapter as a simple guide to getting to grips with Git however, everything that we've covered should be enough to get you working efficiently with Git. Good luck!
