@@ -36,15 +36,8 @@ computer. This is considered a huge advantage of Git - you can make
 changes to your local repository when you may not have Internet access,
 and then apply those changes to the remote repository at a later stage.
 
-> **note**
->
-> We keep repeating the word *repository*, but what do we actually mean
-> by that? In the context of version control systems, consider a
-> repository as a form of data structure that contains a set of *commit
-> objects*, and a set of references to commit objects, called *heads*.
-> You can find out more about what these are on [this Git
-> tutorial](http://www.sbf5.com/~cduan/technical/git/git-1.shtml) - and
-> we will be explaining what the terminology for head means later on.
+D> ### What is a *Respository?*
+D> We keep repeating the word *repository*, but what do we actually mean by that? In the context of version control systems, consider a repository as a data structure that contains a set of *commit objects*, and a set of references to commit objects, called *heads*. You can find out more about what these are on [this Git tutorial](http://www.sbf5.com/~cduan/technical/git/git-1.shtml) - and we will be explaining what the terminology for head means later on.
 
 For now though, the following bullet points provide an explanation of
 each part of the Git system.
