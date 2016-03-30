@@ -56,7 +56,7 @@ Cloning your repository is a straightforward process with the `git clone` comman
 
 For GitHub, try the following command, replacing the parts below as appropriate:
 
-{lang="text"}
+{lang="text",linenos=off}
     $ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
 
 where you replace
@@ -69,9 +69,9 @@ where you replace
 
 If all is successful, you'll see some messages that looks like the output shown below.
 
-{lang="text"}
+{lang="text",linenos=off}
     $ git clone https://github.com/leifos/tango_with_django_19
-    Cloning into 'ifind'...
+    Cloning into 'tango_with_django_19'...
     remote: Counting objects: 18964, done.
     remote: Total 18964 (delta 0), reused 0 (delta 0), pack-reused 18964
     Receiving objects: 100% (18964/18964), 99.69 MiB | 3.51 MiB/s, done.
