@@ -1,0 +1,1 @@
+- In the Git chapter, we need to improve the cloning process so that we have a secure way for usernames and passwords to be stored without the need so people don't have to continually reenter them!
