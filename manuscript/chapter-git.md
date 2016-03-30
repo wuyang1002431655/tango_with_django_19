@@ -1,5 +1,4 @@
-A Git Crash Course
-==================
+#A Git Crash Course
 
 We strongly recommend that you spend some time familiarising yourself
 with a version control system. For your benefit, this section provides

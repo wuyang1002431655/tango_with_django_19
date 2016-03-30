@@ -1,5 +1,4 @@
-Getting Ready to Tango
-======================
+#Getting Ready to Tango
 Now that you're ready to go, let's get set up so that you can *Tango with Django!* You'll need to ensure that you have everything you need installed on your computer, and that you have a sound understanding of your development environment. 
 
 This chapter outlines the five different components that you need to get setup. These are listed below.
@@ -12,8 +11,7 @@ This chapter outlines the five different components that you need to get setup. 
 
 Once you're familiar with all of these technologies, you're ready to go!
 
-Python
-------
+## Python
 Tango with Django requires you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family (e.g. `2.7.11`) or version `3.5` will do. If you're not sure how to install Python and would like some assistance, have a look at **the chapter dealing with installing components**.
 
 I> ### Not sure how to use Python?
