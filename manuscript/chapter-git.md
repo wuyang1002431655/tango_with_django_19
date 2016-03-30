@@ -44,49 +44,41 @@ Next, we'll be looking at how to [get your Git workspace set up and ready to go]
 
 ## Setting up Git {#section-git-setup}
 
-Setting up your Git workspace is a straightforward process. Once
-everything is set up, you will begin to make sense of the directory
-structure that Git uses. Assume that you have signed up for a new
-account on [GitHub](https://github.com/) and [created a new repository
-on the service](https://help.github.com/articles/create-a-repo) for your
-project. With your remote repository setup, follow these steps to get
-your local repository and workspace setup on your computer. We'll assume
-you will be working from your `<workspace>` directory.
+Setting up your Git workspace is a straightforward process. Once everything is set up, you will begin to make sense of the directory structure that Git uses. Assume that you have signed up for a new account on [GitHub](https://github.com/) and [created a new repository on the service](https://help.github.com/articles/create-a-repo) for your project. With your remote repository setup, follow these steps to get your local repository and workspace setup on your computer. We'll assume you will be working from your `<workspace>` directory.
 
-1.  Open a terminal and navigate to your home directory (e.g. `cd ~`).
-2.  *Clone* the remote repository - or in other words, make a copy of
-    it. Check out how to do this below.
-3.  Navigate into the newly created directory. That's your workspace in
-    which you can add files to be version controlled!
+1.  Open a terminal and navigate to your home directory (e.g. `$ cd ~`).
+2.  *Clone* the remote repository - or in other words, make a copy of it. Check out how to do this below.
+3.  Navigate into the newly created directory. That's your workspace in which you can add files to be version controlled!
 
 ### How to Clone a Remote Repository
 
-Cloning your repository is a straightforward process with the
-`git clone` command. Supplement this command with the URL of your remote
-repository - and if required, authentication details, too. The URL of
-your repository varies depending on the provider you use. If you are
-unsure of the URL to enter, it may be worth querying it with your search
-engine or asking someone in the know.
+Cloning your repository is a straightforward process with the `git clone` command. Supplement this command with the URL of your remote repository - and if required, authentication details, too. The URL of your repository varies depending on the provider you use. If you are unsure of the URL to enter, it may be worth querying it with your search engine or asking someone in the know.
 
-For GitHub, try the following command, replacing the parts below as
-appropriate:
+For GitHub, try the following command, replacing the parts below as appropriate:
 
-`$ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git <workspace>`
+{lang="text"}
+$ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
 
 where you replace
 
-:   -   `<USERNAME>` with your GitHub username;
-    -   `<PASSWORD>` with your GitHub password;
-    -   `<OWNER>` with the username of the person who owns the
-        repository;
-    -   `<REPO_NAME>` with the name of your project's repository; and
-    -   `<workspace>` with the name for your workspace directory.
-        Although optional, we will specify it here to create the
-        `<workspace>` directory.
+* `<USERNAME>` with your GitHub username;
+* `<PASSWORD>` with your GitHub password;
+* `<OWNER>` with the username of the person who owns the repository;
+* `<REPO_NAME>` with the name of your project's repository; and
+* `<workspace>` with the name for your workspace directory. This is optional; leaving this option out will simply create a directory with the same name as the repository.
 
-If all is successful, you should see some positive messages in your
-terminal or Command Prompt alerting you to the fact that the clone has
-been successful.
+If all is successful, you'll see some messages that looks like the output shown below.
+
+{lang="text"}
+$ git clone https://github.com/leifos/tango_with_django_19
+Cloning into 'ifind'...
+remote: Counting objects: 18964, done.
+remote: Total 18964 (delta 0), reused 0 (delta 0), pack-reused 18964
+Receiving objects: 100% (18964/18964), 99.69 MiB | 3.51 MiB/s, done.
+Resolving deltas: 100% (13400/13400), done.
+Checking connectivity... done.
+
+If the output lines end with `done`, everything should have worked. Check your filesystem to see if the directory has been created.
 
 ### The Directory Structure
 
