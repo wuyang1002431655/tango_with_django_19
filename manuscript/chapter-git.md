@@ -57,12 +57,12 @@ Cloning your repository is a straightforward process with the `git clone` comman
 For GitHub, try the following command, replacing the parts below as appropriate:
 
 {lang="text",linenos=off}
-    $ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
+    $ git clone https://<USER>:<PASS>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
 
 where you replace
 
-* `<USERNAME>` with your GitHub username;
-* `<PASSWORD>` with your GitHub password;
+* `<USER>` with your GitHub username;
+* `<PASS>` with your GitHub password;
 * `<OWNER>` with the username of the person who owns the repository;
 * `<REPO_NAME>` with the name of your project's repository; and
 * `<workspace>` with the name for your workspace directory. This is optional; leaving this option out will simply create a directory with the same name as the repository.
@@ -82,65 +82,37 @@ If the output lines end with `done`, everything should have worked. Check your f
 
 ### The Directory Structure
 
-Once you have cloned your remote repository onto your local computer,
-navigate into the directory with your terminal, Command Prompt or GUI
-file browser. If you have cloned an empty repository the workspace
-directory should appear empty. This directory is therefore your blank
-workspace with which you can begin to add files for your project.
+Once you have cloned your remote repository onto your local computer, navigate into the directory with your terminal, Command Prompt or GUI file browser. If you have cloned an empty repository the workspace directory should appear empty. This directory is therefore your blank workspace with which you can begin to add files for your project.
 
-However, the directory isn't blank at all! On closer inspection, you
-will notice a hidden directory called `.git`. Stored within this
-directory are both the local repository and index. Do not alter the
-contents of the `.git` directory. Doing so could damage your Git setup -
-and break version control functionality. *Your newly-created workspace
-directory therefore contains the workspace, local repository and index.*
+However, the directory isn't blank at all! On closer inspection, you will notice a hidden directory called `.git`. Stored within this directory are both the local repository and local index. **Do not alter the contents of the `.git` directory.** Doing so could damage your Git setup and break version control functionality. *Your newly created workspace therefore actually contains within it the local repository and index.*
 
 ### Final Tweaks
 
-With your workspace setup, now would be a good time to make some final
-tweaks. Here, we discuss two cool features you can try which could make
-your life (and your team members') a little bit easier.
+With your workspace setup, now would be a good time to make some final tweaks. Here, we discuss two cool features you can try which could make your life (and your team members') a little bit easier.
 
-When using your Git repository as part of a team, any changes you make
-will be associated with the username you use to access your remote Git
-repository. However, you can also specify your full name and e-mail
-address to be included with changes that are made by you on the remote
-repository. This is really easy to do. Simply open a Command
-Prompt/terminal and navigate to your workspace. From there, issue two
-commands: one to tell Git your full name, and the other to tell Git your
-e-mail address.
+When using your Git repository as part of a team, any changes you make will be associated with the username you use to access your remote Git repository. However, you can also specify your full name and e-mail address to be included with changes that are made by you on the remote repository. Simply open a Command Prompt or terminal and navigate to your workspace. From there, issue two commands: one to tell Git your full name, and the other to tell Git your e-mail address.
 
-`$ git config user.name "John Doe"`
+{lang="text",linenos=off}
+    $ git config user.name "John Doe"
+    $ git config user.email "johndoe123@me.com"
 
-`$ git config user.email "johndoe123@me.com"`
+Obviously, replace the example name and e-mail address with your own - unless your name actually is John Doe.
 
-Obviously, replace the example name and e-mail address with your own. We
-don't want random commits from some guy called John Doe! How unlucky
-would it be if you were actually called John Doe?
+Git also provides you with the capability to stop - or ignore - particular files from being added to version control. For example, you may not wish a file containing unique keys to access web services from being added to version control. If the file were to be added to the remote repository, anyone could theoretically access the file by cloning the repository. With Git, files can be ignored by including them in the `.gitignore` file, which resides in the root of `<workspace>`. When adding files to version control, Git parses this file. If a file that is being added to version control is listed within `.gitignore`, the file is ignored. Each line of `.gitignore` should be a separate file entry.
 
-Anyway, moving on to the second feature. Git provides you with the
-capability to stop - or ignore - particular files from being added to
-version control. For example, you may not wish a file containing unique
-keys to access web services from being added to version control. If the
-file were to be added to the remote repository, anyone could
-theoretically access the file by cloning the repository.
+Check out the following example of a `.gitignore` file:
 
-With Git, files can be ignored by including them in the `.gitignore`
-file. This file which should reside in the root of your workspace. When
-adding files to version control, Git parses this file. If a file that is
-being added to version control is listed within `.gitignore`, the file
-is ignored. Each line of `.gitignore` should be a separate file entry.
-Check out the following example:
+{lang="text",linenos=on}
+    `config/api_keys.py`
+    `*.pyc`
 
-`config/api_keys.py`
+In this example file, there are two entries - one on each line. The first entry prompts Git to ignore the file `api_keys.py` residing within the `config` directory of your repository. The second entry then prompts Git to ignore *all* instance of files with a `.pyc` extension, or compiled Python files. This is a really nice feature: you can use *wildcards* to make generic entries if you need to!
 
-`*.pyc`
-
-In this example file, there are two entries. The first one prompts git
-to ignore the file `api_keys.py` residing within the `config` directory.
-The second entry prompts Git to ignore *all* instance of files with a
-`.pyc` extension. This is really cool: you can use *wildcards* to make
-generic entries if you need to!
+I> ### `.gitignore` - Anything Else?
+I> There are many kinds of files you could safely ignore from being committed and pushed to your Git repositories.
+I> Examples include temporary files, databases (that can easily be recreated) and operating system-specific files. Operating system-specific files include configurations for the appearance of the directory when viewed in a given file browser. Windows computers create `thumbs.db` files, while OS X creates `.DS_Store` files.
+I>
+I> When you create a new repository on GitHub, the service can offer to create a `.gitignore` file based upon the languages you will use in your project, which can save you some time setting everything up.
 
 ## Basic Commands and Workflow {#section-git-workflow}
 
