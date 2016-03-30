@@ -1,4 +1,4 @@
-#A Git Crash Course
+#A Git Crash Course {#chapter-git}
 
 We strongly recommend that you spend some time familiarising yourself with a [version control](https://en.wikipedia.org/wiki/Version_control) system for your application's codebase. This chapter provides you with a crash course in how to use [Git](http://en.wikipedia.org/wiki/Git_(software)), one of the many version control systems available. Originally developed by [Linus Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds), Git is today [one of the most popular version control systems in use](https://en.wikipedia.org/wiki/Comparison_of_source_code_hosting_facilities#Popularity), and is used by open-source and closed-source projects alike.
 
@@ -533,32 +533,16 @@ your changes and alert your team members. From there, you can start to
 recover from the mistake by putting your head down and getting on with
 your project.
 
-Exercises
----------
-
-If you haven't undertaken what we've been discussing in this chapter
-already, you should go through everything now to ensure your system and
-repository is ready to go.
-
-First, ensure that you have setup your environment correctly. Install
-all of the prerequisites, including Python 2.7.5 and Django 1.7. Django
-should be installed by Pip, the package manager.
-
-Once that is complete, create a new Git repository on Github for your
-project. To try out the commands, you can create a new file `readme.md`
-in the root of your workspace. The file [will be used by
-GitHub](https://help.github.com/articles/github-flavored-markdown) to
-provide information on your project's GitHub homepage.
-
--   Create the file, and write some introductory text to your project.
--   Add the file to the local index upon completion of writing, and
-    commit your changes.
--   Push the new file to the remote repository and observe the changes
-    on the GitHub website.
-
-Once you have completed these basic steps, you can then go back and edit
-the file some more. Add, commit and push - and then try to revert to the
-initial version to see if it all works as expected.
+X> ### Exercises
+X> If you haven't undertaken what we've been discussing in this chapter already, you should go through everything now to ensure your system and repository is ready to go.
+X> First, ensure that you have setup your environment correctly. Install all of the prerequisites, including Python and Django. Django should be installed by Pip, the package manager.
+X> Once that is complete, create a new Git repository on Github for your project. To try out the commands, you can create a new file `readme.md` in the root of your workspace. The file [will be used by GitHub](https://help.github.com/articles/github-flavored-markdown) to provide information on your project's GitHub homepage.
+X>
+X> * Create the file, and write some introductory text to your project.
+X> * Add the file to the local index upon completion of writing, and commit your changes.
+X> * Push the new file to the remote repository and observe the changes on the GitHub website.
+X>
+X> Once you have completed these basic steps, you can then go back and edit the file some more. Add, commit and push - and then try to revert to the initial version to see if it all works as expected.
 
 Upon completion of these exercises, all that is left for us to discuss
 is the environment you just setup. While all may be good just now, what
