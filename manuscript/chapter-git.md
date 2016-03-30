@@ -28,63 +28,22 @@ I> We recommend however that you stick to the command line program. If you switc
 
 ## How Git Works
 
-Essentially, Git comprises of four separate storage locations: your
-*workspace*, the local *index*, the *local repository* and the *remote
-repository*. As the name may suggest, the remote repository is stored on
-some remote server - and is the only part of Git stored outwith your
-computer. This is considered a huge advantage of Git - you can make
-changes to your local repository when you may not have Internet access,
-and then apply those changes to the remote repository at a later stage.
+Essentially, Git comprises of four separate storage locations: your **workspace**, the **local index**, the **local repository** and the **remote repository**. As the name may suggest, the remote repository is stored on some remote server, and is the only location stored on a computer other than your own. This means that there are two copies of the repository - your local copy, and the remote copy. Having two copies is one of the main selling points of Git over other version control systems. You can make changes to your local repository when you may not have Internet access, and then apply any changes to the remote repository at a later stage. Only once changes are made to the remote repository can other contributors see your changes.
 
 D> ### What is a *Respository?*
 D> We keep repeating the word *repository*, but what do we actually mean by that? In the context of version control systems, consider a repository as a data structure that contains a set of *commit objects*, and a set of references to commit objects, called *heads*. You can find out more about what these are on [this Git tutorial](http://www.sbf5.com/~cduan/technical/git/git-1.shtml) - and we will be explaining what the terminology for head means later on.
 
-For now though, the following bullet points provide an explanation of
-each part of the Git system.
+For now though, the following bullet points provide an summary of each part of the Git system.
 
--   As already explained, the *remote repository* is the copy of your
-    project's repository stored on some remote server. This is
-    particularly important for Git projects that have more than one
-    contributor - you require a central place to store all the work that
-    your team members produce. If you're feeling adventurous, you can
-    set up a Git server on a computer with Internet access and a
-    properly configured firewall (check out [this Git server
-    tutorial](http://www.seifeet.com/2012/11/centos-63-configuring-git-server.html),
-    for example), or use one of many services providing free Git
-    repositories. One of the most widely-used services available today
-    is [GitHub](https://github.com/). In fact, this book has a Git
-    [repository](https://github.com/leifos/tango_with_django) on GitHub!
--   The *local repository* is a copy of the remote repository. The key
-    difference however is that the local repository is stored on your
-    own computer. It is to this repository you make all your additions,
-    changes and deletions. When you reach a particular milestone, you
-    can then push all your local changes to the remote repository. From
-    there, you can instruct your team members to retrieve your changes.
-    This concept is known as *pulling* from the remote repository, and
-    we will explain that in a bit more detail later.
--   The *index* is technically part of the local repository. The index
-    stores a list of files that you want to be managed with version
-    control. This is explained in more detail in the commands and
-    workflow section. You can have a look
-    [here](http://stackoverflow.com/questions/4084921/what-does-the-git-index-exactly-contains)
-    to see a discussion on what exactly a Git index contains.
--   The final aspect of Git is your *workspace*. Think of this folder or
-    directory as the place on your computer where you make changes to
-    your version controlled files. From within your workspace, you can
-    add new files or modify or remove previously existing ones. From
-    there, you then instruct Git to update the repositories to reflect
-    the changes you make in your workspace. This is important - *don't
-    modify code inside the local repository - only ever edit files in
-    your workspace.* The local repository contains a load of files that
-    Git uses to keep track of your version controlled content. If you
-    start messing around with these files, you'll more than likely break
-    something!
+* As already explained, the **remote repository** is the copy of your project's repository stored on some remote server. This is particularly important for Git projects that have more than one contributor - you require a central place to store all the work that your team members produce. If you're feeling adventurous, you can set up a Git server on a computer with Internet access and a properly configured firewall (check out [this Git server tutorial](http://www.seifeet.com/2012/11/centos-63-configuring-git-server.html), for example), or use one of many services providing free Git repositories. One of the most widely-used services available today is [GitHub](https://github.com/). In fact, this book has a Git [repository](https://github.com/leifos/tango_with_django_19) on GitHub!
+* The **local repository** is a copy of the remote repository. The key difference however is that the local repository is stored on your own computer. It is to this repository you make all your additions, changes and deletions. When you reach a particular milestone, you can then push all your local changes to the remote repository. From there, you can instruct your team members to retrieve your changes. This concept is known as *pulling* from the remote repository, and we will explain that in a bit more detail later.
+* The **index** is technically part of the local repository. The index stores a list of files that you want to be managed with version control. This is explained in more detail in the commands and workflow section. You can have a look [here](http://stackoverflow.com/questions/4084921/what-does-the-git-index-exactly-contains) to see a discussion on what exactly a Git index contains.
+* The final aspect of Git is your **workspace**. Think of this folder or directory as the place on your computer where you make changes to your version controlled files. From within your workspace, you can add new files or modify or remove previously existing ones. From there, you then instruct Git to update the repositories to reflect the changes you make in your workspace. This is important - *don't modify code inside the local repository - only ever edit files in your workspace.* The local repository contains a load of files that it uses to keep track of your version controlled content. If you start messing around with these files, you'll more than likely break something!
 
 Next, we'll be looking at how to get your Git workspace set up. We'll
 also discuss the basic workflow you should use when using Git.
 
-Setting up Git
---------------
+## Setting up Git
 
 Setting up your Git workspace is a straightforward process. Once
 everything is set up, you will begin to make sense of the directory
@@ -192,8 +151,7 @@ The second entry prompts Git to ignore *all* instance of files with a
 `.pyc` extension. This is really cool: you can use *wildcards* to make
 generic entries if you need to!
 
-Basic Commands and Workflow
----------------------------
+## Basic Commands and Workflow
 
 With your repository cloned and ready to go on your local computer,
 you're ready to get to grips with the Git workflow. This section shows
@@ -426,8 +384,7 @@ need to enter the command. Check out [the official GitHub website's
 tutorial](https://help.github.com/articles/using-pull-requests) for more
 information.
 
-Recovering from Mistakes
-------------------------
+## Recovering from Mistakes
 
 This section presents a solution to a coder's worst nightmare: what if
 you find that your code no longer works? Perhaps a refactoring went
@@ -535,14 +492,5 @@ deploying your application. For now though, [check out this
 article](http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)
 to read up on what they are, and how they can benefit you.
 
-> **note**
->
-> There are many more advanced aspects of Git that we have not covered
-> here, such as branching and merging. There are many fantastic
-> tutorials available online if you are interested in taking your
-> super-awesome version control skills a step further. For more details
-> about such features take a look at this [tutorial on getting started
-> with
-> Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/),
-> the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning
-> about Git Branching](http://pcottle.github.io/learnGitBranching/).
+D> There's more!
+D> There are many more advanced aspects of Git that we have not covere here, such as branching and merging. There are many fantastic tutorials available online if you are interested in taking you super-awesome version control skills a step further. For more details about such features take a look at this [tutorial on getting started with Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/), the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning about Git Branching](http://pcottle.github.io/learnGitBranching/).
