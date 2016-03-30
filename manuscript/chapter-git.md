@@ -1,52 +1,25 @@
 #A Git Crash Course
 
-We strongly recommend that you spend some time familiarising yourself
-with a version control system. For your benefit, this section provides
-you with a crash course in how to use
-[Git](http://en.wikipedia.org/wiki/Git_(software)), one of the many
-version control systems available. Originally developed by [Linus
-Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds), Git is today
-very popular, and is used by open-source and closed-source projects
-alike.
+We strongly recommend that you spend some time familiarising yourself with a [version control](https://en.wikipedia.org/wiki/Version_control) system for your application's codebase. This chapter provides you with a crash course in how to use [Git](http://en.wikipedia.org/wiki/Git_(software)), one of the many version control systems available. Originally developed by [Linus Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds), Git is today [one of the most popular version control systems in use](https://en.wikipedia.org/wiki/Comparison_of_source_code_hosting_facilities#Popularity), and is used by open-source and closed-source projects alike.
 
-This tutorial demonstrates at a high level how Git works, explains the
-basic commands that you can use, and provides an explanation of Git's
-workflow.
+This tutorial demonstrates at a high level how Git works, explains the basic commands that you can use, and provides an explanation of Git's workflow. By the end of this chapter, you'll be able to make contributions to a Git repository, enabling you to work solo, or in a team.
 
-Why Use Version Control?
-------------------------
+## Why Use Version Control?
 
-As your software engineering skills develop, you will find that you are
-able to plan and implement ever more complex solutions to ever more
-complex problems. As a rule of thumb, the larger the problem
-specification, the more code you have to write. The more code you write,
-the greater the emphasis you should put on software engineering
-practices. Such practices include the use of design patterns and the DRY
-(don't repeat yourself) principle.
+As your software engineering skills develop, you will find that you are able to plan and implement solutions to ever more complex problems. As a rule of thumb, the larger the problem specification, the more code you have to write. The more code you write, the greater the emphasis you should put on software engineering practices. Such practices include the use of design patterns and the *DRY (Don't Repeat Yourself)* principle.
 
-Most projects have many files and many people working on those files.
-This is a recipe for chaos. Have you ever encountered one or more of the
-following situations:
+As a result of this complexity, software projects can contain many source code files. With it likely that more than one contributor exists within a given project, it can become difficult to avoid conflicts when working on files. Have you ever encountered one or more of the following situations:
 
--   Made a change to code, realised it was a mistake and wanted to go
-    back?
--   Lost code (through a faulty drive), or had a backup that was too
-    old?
--   Had to maintain multiple versions of a product (perhaps for
-    different organisations)?
--   Wanted to see the difference between two (or more) versions of your
-    codebase?
--   Wanted to show that a particular change broke of fixed a piece of
-    code?
--   Wanted to submit a change (patch) to someone else's code?
--   Wanted to see how much work is being done (where it was done, when
-    it was done, or who did it)?
--   Wanted to experiment with a new feature without interfering without
-    working code?
+* Made a change to code, realised it was a mistake and wanted to go back?
+* Lost code (through a faulty drive), or had a backup that was too old?
+* Had to maintain multiple versions of a product (perhaps for different organisations)?
+* Wanted to see the difference between two (or more) versions of your codebase?
+* Wanted to show that a particular change broke of fixed a piece of code?
+* Wanted to submit a change (patch) to someone else's code?
+* Wanted to see how much work is being done (where it was done, when it was done, or who did it)?
+* Wanted to experiment with a new feature without interfering without working code?
 
-Using a version control system makes your life easier in *all* of the
-above cases. While using version control systems at the beginning may
-seem like a hassle it will pay off later - so get into the habit now.
+Using a version control system makes your life easier in *all* of the above cases. While using version control systems at the beginning may seem like a hassle it will pay off later - so it's good to get into the habit now!
 
 Git on Windows
 --------------
