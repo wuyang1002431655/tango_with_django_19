@@ -21,25 +21,9 @@ As a result of this complexity, software projects can contain many source code f
 
 Using a version control system makes your life easier in *all* of the above cases. While using version control systems at the beginning may seem like a hassle it will pay off later - so it's good to get into the habit now!
 
-Git on Windows
---------------
-
-Like Python, Git doesn't come as part of a standard Windows
-installation. However, Windows implementations of the version control
-system can be downloaded and installed. You can download the official
-Windows Git client from the Git
-[website](http://git-scm.com/download/win). The installer provides the
-`git` command line program, which we use in this crash course.
-
-You can also download a program called *TortoiseGit*, a graphical
-extension to the Windows Explorer shell. The program provides a really
-nice right-click Git context menu for files. This makes version control
-really easy to use. You can [download TortoiseGit from
-here](https://code.google.com/p/tortoisegit/). Although we do not cover
-TortoiseGit in this crash course, many tutorials exist online for it.
-Check [this TortoiseGit
-tutorial](http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/)
-if you are interested in using it.
+I> ### Git on Windows
+I> Like Python, Git doesn't come as part of a standard Windows installation. However, Windows implementations of the version control system can be downloaded and installed. You can download the official Windows Git client from the Git [website](http://git-scm.com/download/win). The installer provides the `git` command line program, which we use in this crash course.
+I> You can also download a program called *TortoiseGit*, a graphical extension to the Windows Explorer shell. The program provides a really nice right-click Git context menu for files. This makes version control really easy to use. You can [download TortoiseGit](https://code.google.com/p/tortoisegit/) for free. Although we do not cover how to use TortoiseGit in this crash course, many tutorials exist online for it. Check [this tutorial](http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/) if you are interested in using it. We recommend however that you stick to the command line program. If you switch to a *NIX development environment, you'll be glad you know the commands!
 
 The Git System
 --------------
