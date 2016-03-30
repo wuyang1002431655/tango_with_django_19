@@ -159,6 +159,6 @@ With this assumption, we then produce a series of tables that describe each enti
 We will also have model for the `User` so that they can register and login. We have not shown it here, but shall introduce it later in the book when we discuss User Authentication. In the following chapters will we see how to instantiate these models in Django and how to use Django's ORM to connect to the database.
 
 ##Summary
-These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
+These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar with reading and producing such specifications and designs, which warrants another book on the topic. Here we will be focusing on using Django and the related technologies to implement this specification.
 
-If you already have Python 2.7/3.5 and Django 1.9 installed, you have a good working knowledge of the command line and configured your paths, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
+

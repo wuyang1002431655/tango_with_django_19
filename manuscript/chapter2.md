@@ -1,15 +1,19 @@
 #Getting Ready to Tango
-Now that you're ready to go, let's get set up so that you can *Tango with Django!* You'll need to ensure that you have everything you need installed on your computer, and that you have a sound understanding of your development environment. 
 
-This chapter outlines the five different components that you need to get setup. These are listed below.
+Before we get down to coding it is really important that we get our development environment setup so that you can *Tango with Django!* You'll need to ensure that you have everything you need installed on your computer. This chapter outlines the five key components that you need to get setup. 
 
-* Get your *Python* installation setup and working.
-* Setup your *virtual environment* and get to grips with *pip*.
-* Get *Django* installed and ready to go.
-* Setup an *Integrated Development Environment (IDE)*, if you choose to do so.
-* Understand how to use the *Git* version control system to store your code.
+* *Python* and your *Python* installation
+* The Python Package Manager *pip* and *Virtual Environment* 
+* Integrated Development Environment (IDE)
+* Version Control System *Git* 
+* Working with the Command Line
 
-Once you're familiar with all of these technologies, you're ready to go!
+If you already have Python 2.7/3.5 and Django 1.9 installed and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, below we explain each component why it is important. In the appendix of the book we have additional tutorial material on how to install and use the various components.
+
+<!--- get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
+-->
+
+
 
 ## Python
 Tango with Django requires you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family (e.g. `2.7.11`) or version `3.5` will do. If you're not sure how to install Python and would like some assistance, have a look at **the chapter dealing with installing components**.
