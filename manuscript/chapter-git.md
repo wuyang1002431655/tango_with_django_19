@@ -108,7 +108,7 @@ Check out the following example of a `.gitignore` file:
 
 In this example file, there are two entries - one on each line. The first entry prompts Git to ignore the file `api_keys.py` residing within the `config` directory of your repository. The second entry then prompts Git to ignore *all* instance of files with a `.pyc` extension, or compiled Python files. This is a really nice feature: you can use *wildcards* to make generic entries if you need to!
 
-I> ### `.gitignore` - Anything Else?
+I> ### `.gitignore` - What else should I ignore?
 I> There are many kinds of files you could safely ignore from being committed and pushed to your Git repositories.
 I> Examples include temporary files, databases (that can easily be recreated) and operating system-specific files. Operating system-specific files include configurations for the appearance of the directory when viewed in a given file browser. Windows computers create `thumbs.db` files, while OS X creates `.DS_Store` files.
 I>
@@ -116,17 +116,12 @@ I> When you create a new repository on GitHub, the service can offer to create a
 
 ## Basic Commands and Workflow {#section-git-workflow}
 
-With your repository cloned and ready to go on your local computer,
-you're ready to get to grips with the Git workflow. This section shows
-you the basic Git workflow - and the associated Git commands you can
-issue.
+With your repository cloned and ready to go on your local computer, you're ready to get to grips with the Git workflow. This section shows you the basic Git workflow - and the associated Git commands you can issue.
 
-![A diagram depicting the basic workflow and associated commands of
-interacting with a Git repository.](../images/git-sequence.svg)
+{id="fig-git-sequence"}
+![](images/git-sequence.png)
 
-We have provided a pictorial representation of the basic Git workflow in
-Figure fig-git-sequence. Match each of the numbers in the blue circles
-to the numbered descriptions below.
+We have provided a pictorial representation of the basic Git workflow as shown above. Match each of the numbers in the black circles to the numbered descriptions below to read more about each stage. **Refer to this diagram whenever you're unsure about the next step you should take - it's very useful!**
 
 ### 1. Starting Off
 
