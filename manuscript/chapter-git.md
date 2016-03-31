@@ -211,157 +211,64 @@ T> Although frequent commits may be a good thing, you will want to ensure that w
 
 ### 4. Synchronising your Repository
 
-After you've committed your local repository and committed your changes,
-you're just about ready to send your commits to the remote repository by
-*pushing* your changes. However, what if someone within your group
-pushes their changes before you do? This means your local repository
-will be out of sync with the remote repository, making any `git push`
-command very difficult to do!
+After you've committed your local repository and committed your changes, you're just about ready to send your commit(s) to the remote repository by *pushing* your changes. However, what if someone within your group pushes their changes before you do? This means your local repository will be out of sync with the remote repository, meaning that any `git push` command that you issue will fail.
 
-It's therefore always a good idea to check whether changes have been
-made on the remote repository before updating it. Running a `git pull`
-command will pull down any changes from the remote repository, and
-attempt to place them within your local repository. If no changes have
-been made, you're clear to push your changes. If changes have been made
-and cannot be easily rectified, you'll need to do a little bit more
-work.
+It's therefore always a good idea to check whether changes have been made on the remote repository before updating it. Running a `git pull` command will pull down any changes from the remote repository, and attempt to place them within your local repository. If no changes have been made, you're clear to push your changes. If changes have been made and cannot be easily rectified, you'll need to do a little bit more work.
 
-In scenarios such as this, you have the option to *merge* changes from
-the remote repository. After running the `git pull` command, a text
-editor will appear in which you can add a comment explaining why the
-merge is necessary. Upon saving the text document, Git will merge the
-changes in the remote repository to your local repository.
+In scenarios such as this, you have the option to *merge* changes from the remote repository. After running the `git pull` command, a text editor will appear in which you can add a comment explaining why the merge is necessary. Upon saving the text document, Git will merge the changes from the remote repository to your local repository.
 
-> **note**
->
-> If you do see a text editor on your Mac or Linux installation, it's
-> probably the [vi](http://en.wikipedia.org/wiki/Vi) text editor. If
-> you've never used vi before, check out [this helpful page containing a
-> list of basic commands](http://www.cs.colostate.edu/helpdocs/vi.html)
-> on the Colorado State University Computer Science Department website.
-> If you don't like vi, [you can change the default text
-> editor](http://git-scm.com/book/en/Customizing-Git-Git-Configuration#Basic-Client-Configuration)
-> that Git calls upon. Windows installations most likely will bring up
-> Notepad.
+T> ### Editing Merge Logs
+T> If you do see a text editor on your Mac or Linux installation, it's probably the [`vi`](http://en.wikipedia.org/wiki/Vi) text editor. If you've never used vi before, check out [this helpful page containing a list of basic commands](http://www.cs.colostate.edu/helpdocs/vi.html) on the Colorado State University Computer Science Department website. If you don't like vi, [you can change the default text editor](http://git-scm.com/book/en/Customizing-Git-Git-Configuration#Basic-Client-Configuration) that Git calls upon. Windows installations most likely will bring up Notepad.
 
 ### 5. Pushing your Commit(s)
 
-*Pushing* is the phrase used by Git to describe the sending of any
-changes in your local repository to the remote repository. This is the
-way in which your changes become available to your other team members,
-who can then retrieve them by running the `git pull` command in their
-respective local workspaces. The `git push` command isn't invoked as
-often as committing - *you require one or more commits to perform a
-push.* You could aim for one push per day, when a particular feature is
-completed, or at the request of a team member who is desperately after
-your updated code.
+*Pushing* is the phrase used by Git to describe the sending of any changes in your local repository to the remote repository. This is the way in which your changes become available to your other team members, who can then retrieve them by running the `git pull` command in their respective local workspaces. The `git push` command isn't invoked as often as committing - *you require one or more commits to perform a push.* You could aim for one push per day, when a particular feature is completed, or at the request of a team member who is after your updated code.
 
 To push your changes, the simplest command to run is:
 
-`$ git push origin master`
+{lang="text",linenos=off}
+    $ git push origin master
 
-As explained on [this Stack Overflow question and answer
-page](http://stackoverflow.com/questions/7311995/what-is-git-push-origin-master-help-with-gits-refs-heads-and-remotes),
-this command instructs the `git push` command to push your local master
-branch (where your changes are saved) to the *origin* (the remote server
-from which you originally cloned). If you are using a more complex setup
-involving [branching and
-merging](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging),
-alter `master` to the name of the branch you wish to push.
+As explained on [this Stack Overflow question and answer page](http://stackoverflow.com/questions/7311995/what-is-git-push-origin-master-help-with-gits-refs-heads-and-remotes) this command instructs the `git push` command to push your local master branch (where your changes are saved) to the *origin* (the remote server from which you originally cloned). If you are using a more complex setup involving [branching and merging](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging), alter `master` to the name of the branch you wish to push.
 
-If what you are pushing is particularly important, you can also
-optionally alert other team members to the fact they should really
-update their local repositories by pulling your changes. You can do this
-through a *pull request.* Issue one after pushing your latest changes by
-invoking the command `git request-pull master`, where master is your
-branch name (this is the default value). If you are using a service such
-as GitHub, the web interface allows you to generate requests without the
-need to enter the command. Check out [the official GitHub website's
-tutorial](https://help.github.com/articles/using-pull-requests) for more
-information.
+T> ### Important Push?
+T> If your `git push` is particularly important, you can also alert other team members to the fact they should really update their local repositories by pulling your changes. You can do this through a *pull request.* Issue one after pushing your latest changes by invoking the command `git request-pull master`, where master is your branch name (this is the default value). If you are using a service such as GitHub, the web interface allows you to generate requests without the need to enter the command. Check out [the official GitHub website's tutorial](https://help.github.com/articles/using-pull-requests) for more information.
 
 ## Recovering from Mistakes
 
-This section presents a solution to a coder's worst nightmare: what if
-you find that your code no longer works? Perhaps a refactoring went
-terribly wrong, someone changed something, or everything is so terribly
-messed up you have no idea what happened. Whatever the reason, using a
-form of version control always gives you a last resort: rolling back to
-a previous commit. This section details how to do just that. We follow
-the information given from [this Stack
-Overflow](http://stackoverflow.com/questions/2007662/rollback-to-an-old-commit-using-git)
-question and answer page.
+This section presents a solution to a coder's worst nightmare: what if you find that your code no longer works? Perhaps a refactoring went terribly wrong, or something was changed by another team member without discussion. Whatever the reason, using a form of version control always gives you a last resort: rolling back to a previous commit. This section details how to do just that. We follow the information given from [this Stack Overflow](http://stackoverflow.com/questions/2007662/rollback-to-an-old-commit-using-git) question and answer page.
 
-> **warning**
->
-> You should be aware that this guide will rollback your workspace to a
-> previous iteration. Any uncommitted changes that you have made will be
-> lost, with a very slim chance of recovery! Be wary. If you are having
-> a problem with only one file, you could always view the different
-> versions of the files for comparison. Have a look [at this Stack
-> Overflow page](http://stackoverflow.com/a/3338145) to see how to do
-> that.
+W> ### Changes may be Lost!
+W> You should be aware that this guide will rollback your workspace to a previous iteration. Any uncommitted changes that you have made will be lost, with a very slim chance of recovery! Be wary. If you are having a problem with only one file, you could always view the different versions of the files for comparison. Have a look [at this Stack Overflow page](http://stackoverflow.com/a/3338145) to see how to do that.
 
-Rolling back your workspace to a previous commit involves two distinct
-steps:
+Rolling back your workspace to a previous commit involves two steps: determining which commit to roll back to, an performing the rollback. To determine what commit to rollback to, you can make use of the `git log` command. Issuing this command within your workspace directory will provide a list of recent commits that you made, your name and the date at which you made the commit. Additionally, the message that is stored with each commit is displayed. This is where it is highly beneficial to supply commit messages that provide enough information to explain what is going on. Check out the following output from a `git log` invocation below to see for yourself.
 
--   determining which commit to roll back to; and
--   performing the rollback.
-
-To determine what commit to rollback to, you can make use of the
-`git log` command. Issuing this command within your workspace directory
-will provide a list of recent commits that you made, your name and the
-date at which you made the commit. Additionally, the message that is
-stored with each commit is displayed. This is where it is highly
-beneficial to supply commit messages that provide enough information to
-explain what is going on. Check out the following output from a
-`git log` invocation below to see for yourself.
-
+{lang="text",linenos=off}
     commit 88f41317640a2b62c2c63ca8d755feb9f17cf16e                      <- Commit hash
     Author: John Doe <someaddress@domain.com>                            <- Author
     Date:   Mon Jul 8 19:56:21 2013 +0100                                <- Date/time
-
         Nearly finished initial version of the requirements chapter      <- Message
-
     commit f910b7d557bf09783b43647f02dd6519fa593b9f
     Author: John Doe <someaddress@domain.com>
     Date:   Wed Jul 3 11:35:01 2013 +0100
-
         Added in the Git figures to the requirements chapter.
-
     commit c97bb329259ee392767b87cfe7750ce3712a8bdf
     Author: John Doe <someaddress@domain.com>
     Date:   Tue Jul 2 10:45:29 2013 +0100
-
         Added initial copy of Sphinx documentation and tutorial code.
-
     commit 2952efa9a24dbf16a7f32679315473b66e3ae6ad
     Author: John Doe <someaddress@domain.com>
     Date:   Mon Jul 1 03:56:53 2013 -0700
-
         Initial commit
 
-From this list, you can choose a commit to rollback to. For the selected
-commit, you must take the commit hash - the long string of letters and
-numbers. To demonstrate, the top (or HEAD) commit hash in the example
-output above is `88f41317640a2b62c2c63ca8d755feb9f17cf16e`. You can
-select this in your terminal and copy it to your computer's clipboard.
+From this list, you can choose a commit to rollback to. For the selected commit, you must take the commit hash - the long string of letters and numbers. To demonstrate, the top (or HEAD) commit hash in the example output above is `88f41317640a2b62c2c63ca8d755feb9f17cf16e`. You can select this in your terminal and copy it to your computer's clipboard.
 
-With your commit hash selected, you can now rollback your workspace to
-the previous revision. You can do this with the `git checkout` command.
-The following example command would rollback to the commit with hash
-`88f41317640a2b62c2c63ca8d755feb9f17cf16e`.
+With your commit hash selected, you can now rollback your workspace to the previous revision. You can do this with the `git checkout` command. The following example command would rollback to the commit with hash `88f41317640a2b62c2c63ca8d755feb9f17cf16e`.
 
-`$ git checkout 88f41317640a2b62c2c63ca8d755feb9f17cf16e .`
+{lang="text",linenos=off}
+    $ git checkout 88f41317640a2b62c2c63ca8d755feb9f17cf16e .
 
-Make sure that you run this command from the root of your workspace, and
-do not forget to include the dot at the end of the command! The dot
-indicates that you want to apply the changes to the entire workspace
-directory tree. After this has completed, you should then immediately
-commit with a message indicating that you performed a rollback. Push
-your changes and alert your team members. From there, you can start to
-recover from the mistake by putting your head down and getting on with
-your project.
+Make sure that you run this command from the root of your workspace, and do not forget to include the dot at the end of the command! The dot indicates that you want to apply the changes to the entire workspace directory tree. After this has completed, you should then immediately commit with a message indicating that you performed a rollback. Push your changes and alert your team members. From there, you can start to recover from the mistake by putting your head down and getting on with your project.
 
 X> ### Exercises
 X> If you haven't undertaken what we've been discussing in this chapter already, you should go through everything now to ensure your system and repository is ready to go.
