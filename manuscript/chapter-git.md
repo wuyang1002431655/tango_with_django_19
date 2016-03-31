@@ -80,13 +80,16 @@ If all is successful, you'll see some messages that looks like the output shown 
 
 If the output lines end with `done`, everything should have worked. Check your filesystem to see if the directory has been created.
 
+T> ### Not using GitHub?
+T> There are many websites that provide Git repositories - some free, some paid. While this chapter uses GitHub, you are free to use whatever service you wish. Other providers include [Atlassian Bitbucket](https://bitbucket.org/) and [Unfuddle](https://unfuddle.com/). You will of course have to change the URL from which you clone your repository if you use a service other than GitHub.
+
 ### The Directory Structure
 
 Once you have cloned your remote repository onto your local computer, navigate into the directory with your terminal, Command Prompt or GUI file browser. If you have cloned an empty repository the workspace directory should appear empty. This directory is therefore your blank workspace with which you can begin to add files for your project.
 
 However, the directory isn't blank at all! On closer inspection, you will notice a hidden directory called `.git`. Stored within this directory are both the local repository and local index. **Do not alter the contents of the `.git` directory.** Doing so could damage your Git setup and break version control functionality. *Your newly created workspace therefore actually contains within it the local repository and index.*
 
-### Final Tweaks
+### Final Tweaks {#section-git-setup-tweaks}
 
 With your workspace setup, now would be a good time to make some final tweaks. Here, we discuss two cool features you can try which could make your life (and your team members') a little bit easier.
 
@@ -156,87 +159,36 @@ T> Always `git pull` on your local copy of your repository before you begin work
 
 ### 2. Doing Some Work!
 
-Once your workspace has been updated with the latest changes, the onus
-is on you to do some work! Within your workspace, you can take existing
-files and modify them. You can delete them too, or add new files to be
-version controlled.
+Once your workspace has been cloned or updated with the latest changes, it's time for you to get some work done! Within your workspace directory, you can take existing files and modify them. You can delete them too, or add new files to be version controlled.
 
-It's not all plain sailing, however. You must be aware that as you work
-away, you need to keep Git up-to-date on the list of files you have
-added, removed or updated by modifying the *local index*. The list of
-files stored within the local index are then used to perform your next
-*commit*, which we'll be discussing in the next step. To keep Git
-informed, there are several Git commands which let you update the local
-index. Three of the commands are near-identical to those that were
-discussed in Chapter requirements-label, with the addition of a `git`
-prefix.
+When you modify your repository in any way, you need to keep Git up-to-date of any changes. Doing so allows Git to update your local index. The list of files stored within the local index are then used to perform your next *commit*, which we'll be discussing in the next step. To keep Git informed, there are several Git commands which let you update the local index. Three of the commands are near-identical to those that were discussed in the [Unix Crash Course](#section-unix-commands) (e.g. `cp`, `mv`), with the addition of a `git` prefix.
 
--   The first command `git add` allows you to request Git to add a
-    particular file to the next commit for you. A common newbie mistake
-    is to assume that `git add` is used for adding new files to your
-    repository only - *this is not the case! You must tell Git what
-    modified files you wish to commit, too!* The command can be used in
-    the fashion `git add <filename>`, where `<filename>` is the name of
-    the file you wish to add to your next commit. Multiple files and
-    directories can be added with the command `git add .` - [but be
-    careful with this](http://stackoverflow.com/a/16969786)!
--   `git mv` performs the same function as the Unix `mv` command - it
-    moves files. The only difference between the two is that `git mv`
-    updates the local index for you before moving the file. Specify the
-    filename with the syntax `git mv <filename>`. For example, with this
-    command you can move files to a different directory within your
-    repository. This will be reflected in your next commit.
--   `git cp` allows you to make a copy of a file or directory while
-    adding references to the new files into the local index for you. The
-    syntax is the same as `git mv` above where the filename or directory
-    name is specified thus: `git cp <filename>`.
--   The command `git rm` adds a file or directory delete request into
-    the local index. While the `git rm` command does not delete the file
-    straight away, the requested file or directory is removed from your
-    filesystem and the Git repository upon the next commit. The syntax
-    is the same as the above commands, where a filename can be specified
-    thus: `git rm <filename>`. Note that you can add a large number of
-    requests to your local index in one go, rather than removing each
-    file manually. For example, `git rm -rf media/` creates delete
-    requests in your local index for the `media/` directory. The `r`
-    switch enables Git to *recursively* remove each file within the
-    `media/` directory, while `f` allows Git to *forcibly* remove the
-    files. Check out the [Wikipedia
-    page](http://en.wikipedia.org/wiki/Rm_(Unix)#Options) on the `rm`
-    command for more information.
+* The first command `git add` allows you to request Git to add a particular file to the next commit for you. A common newcomer mistake is to assume that `git add` is used for adding new files to your repository only - *this is not the case. You must tell Git what modified files you wish to commit, too.* The command is invoked by typing `git add <filename>`, where `<filename>` is the name of the file you wish to add to your next commit. Multiple files and directories can be added with the command `git add .` - [**but be careful with this**](http://stackoverflow.com/a/16969786).
+* `git mv` performs the same function as the Unix `mv` command - it moves files. The only difference between the two is that `git mv` updates the local index for you before moving the file. Specify the filename with the syntax `git mv <current_filename> <new_filename>`. For example, with this command you can move files to a different directory within your repository. This will be reflected in your next commit. The command is also used to rename files - from the old filename to the new.
+* `git cp` allows you to make a copy of a file or directory while adding references to the new files into the local index for you. The syntax is the same as `git mv` above where the filename or directory name is specified thus: `git cp <current_filename> <copied_filename>`.
+* The command `git rm` adds a file or directory delete request into the local index. While the `git rm` command does not delete the file straight away, the requested file or directory is removed from your filesystem and the Git repository upon the next commit. The syntax is similar to the `git add` command, where a filename can be specified thus: `git rm <filename>`. Note that you can add a large number of requests to your local index in one go, rather than removing each file manually. For example, `git rm -rf media/` creates delete requests in your local index for the `media/` directory. The `r` switch enables Git to *recursively* remove each file within the `media/` directory, while `f` allows Git to *forcibly* remove the files. Check out the [Wikipedia page](http://en.wikipedia.org/wiki/Rm_(Unix)#Options) on the `rm` command for more information.
 
-Lots of changes between commits can make things pretty confusing. You
-may easily forgot what files you've already instructed Git to remove,
-for example. Fortunately, you can run the `git status` command to see a
-list of files which have been modified from your current working
-directory, but haven't been added to the local index for processing.
-Check out typical output from the command below to get a taste of what
-you can see.
+Lots of changes between commits can make things pretty confusing. You may easily forgot what files you've already instructed Git to remove, for example. Fortunately, you can run the `git status` command to see a list of files which have been modified from your current working directory, but haven't been added to the local index for processing. Check out typical output from the command below to get a taste of what you can see.
 
-``` {.sourceCode .python}
-$ git status
+I> ### Working with `.gitignore`
+I> If you have [set up your `.gitignore` file correctly](#section-git-setup-tweaks), you'll notice that files matching those specified within the `.gitignore` file are...ignored when you `git add` them. This is the intended behaviour - these files are not supposed to be committed to version control! If you however do need a file to be included that is in `.gitignore`, you can *force* Git to include it if necessary with the `git add -f <filename>` command.
 
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#   modified:   chapters/requirements.rst
-#
-# Changes not staged for commit:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#   modified:   ../TODO.txt
-#   modified:   chapters/deploy.rst
-#   deleted:    chapters/index.rst
-#   deleted:    images/css-font.png
-#   modified:   images/git-sequence.pdf
-#   modified:   omnigraffle/git-sequence.graffle
-#
-```
+{lang="text",linenos=off}
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Changes to be committed:
+      (use "git reset HEAD <file>..." to unstage)
+    	modified:   chapter-unix.md
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working directory)
+    	modified:   chapter-git.md
 
-For further information on this useful command, check out the [official
-Git documentation](http://git-scm.com/docs/git-status).
+From this example above, we can see that the file `chapter-unix.md` has been added to the latest commit, and will therefore be updated in the next `git push`. The file `chapter-git.md` has been updated, but `git add` hasn't been run on the file, so the changes won't be applied to the repository.
+
+I> ### Checking Status
+I> For further information on the `git status` command, check out the [official Git documentation](http://git-scm.com/docs/git-status).
 
 ### 3. Committing your Changes
 

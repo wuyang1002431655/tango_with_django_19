@@ -1,4 +1,4 @@
-###A Crash Course in UNIX-based Commands
+# A Crash Course in UNIX-based Commands {#chapter-unix}
 
 
 ####Using the Terminal
@@ -150,7 +150,7 @@ straightforward editor - unlike [vi](http://en.wikipedia.org/wiki/Vi)
 which can take some time to learn. Below are a list of commonly-used
 UNIX commands that you will find useful.
 
-### Core Commands
+### Core Commands {#section-unix-commands}
 
 All UNIX-based operating systems come with a series of built-in
 commands - with most focusing exclusively on file management. The
