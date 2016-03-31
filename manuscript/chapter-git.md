@@ -50,7 +50,7 @@ Setting up your Git workspace is a straightforward process. Once everything is s
 2.  *Clone* the remote repository - or in other words, make a copy of it. Check out how to do this below.
 3.  Navigate into the newly created directory. That's your workspace in which you can add files to be version controlled!
 
-### How to Clone a Remote Repository
+### How to Clone a Remote Repository {#section-git-setup-clone}
 
 Cloning your repository is a straightforward process with the `git clone` command. Supplement this command with the URL of your remote repository - and if required, authentication details, too. The URL of your repository varies depending on the provider you use. If you are unsure of the URL to enter, it may be worth querying it with your search engine or asking someone in the know.
 
@@ -125,18 +125,34 @@ We have provided a pictorial representation of the basic Git workflow as shown a
 
 ### 1. Starting Off
 
-Before you can start work on your project, you must prepare Git for your
-forthcoming geek session. If you haven't yet sorted out your project's
-Git workspace, you'll need to `clone` the repository to obtain a copy of
-all of its files. Check out Section requirements-git-clone-label for
-more information on how to achieve this.
+Before you can start work on your project, you must prepare Git. If you haven't yet sorted out your project's Git workspace, you'll need to [`clone` your repository to set it up](#section-git-setup-clone).
 
-If you have previously made a clone of the remote repository, it's good
-practice to get into the habit of updating you local copy by using the
-`git pull` command. This 'pulls' changes from the remote repository. By
-doing this, you'll be working from the same page as your team members,
-which will help keep the issue of conflicting file contents from making
-your life a nightmare.
+If you've already cloned your repository, it's good practice to get into the habit of updating your local copy by using the `git pull` command. This *pulls* the latest changes from the remote repository onto your computer. By doing this, you'll be working from the same page as your team members. This will reduce the possibility of conflicting versions of files, which really does make your life a bit of a nightmare.
+
+To perform a `git pull`, first navigate to your `<workspace>` directory within your Command Prompt or terminal, then issue `git pull`. Check out the snippet below from a Bash terminal to see exactly what you need to do, and what output you should expect to see.
+
+{lang="text",linenos=off}
+    $ cd <workspace>
+    $ git pull
+    remote: Counting objects: 3, done.
+    remote: Compressing objects: 100% (2/2), done.
+    remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+    Unpacking objects: 100% (3/3), done.
+    From https://github.com/someuser/somerepository
+       86a0b3b..a7cec3d  master     -> origin/master
+    Updating 86a0b3b..a7cec3d
+    Fast-forward
+     README.md | 1 +
+     1 file changed, 1 insertion(+)
+     create mode 100644 README.md
+
+This example shows that a `README.md` file has been updated or created from the latest pull. 
+
+E> ### Getting an Error?
+E> If you receive `fatal: Not a git repository (or any of the parent directories): .git`, you're not in the correct directory. You need `cd` to your workspace directory - the one in which you cloned your repository to. A majority of Git commands only work when you're in a Git repository.
+
+T> ### Pull before you Push!
+T> Always `git pull` on your local copy of your repository before you begin work. **Always!**
 
 ### 2. Doing Some Work!
 
