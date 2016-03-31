@@ -271,17 +271,22 @@ With your commit hash selected, you can now rollback your workspace to the previ
 Make sure that you run this command from the root of your workspace, and do not forget to include the dot at the end of the command! The dot indicates that you want to apply the changes to the entire workspace directory tree. After this has completed, you should then immediately commit with a message indicating that you performed a rollback. Push your changes and alert your team members. From there, you can start to recover from the mistake by putting your head down and getting on with your project.
 
 X> ### Exercises
-X> If you haven't undertaken what we've been discussing in this chapter already, you should go through everything now to ensure your system and repository is ready to go.
-X> First, ensure that you have setup your environment correctly. Install all of the prerequisites, including Python and Django. Django should be installed by Pip, the package manager.
-X> Once that is complete, create a new Git repository on Github for your project. To try out the commands, you can create a new file `readme.md` in the root of your workspace. The file [will be used by GitHub](https://help.github.com/articles/github-flavored-markdown) to provide information on your project's GitHub homepage.
+X> If you haven't undertaken what we've been discussing in this chapter already, you should go through everything now to ensure your Git repository is ready to go. To try everything out, you can create a new file `README.md` in the root of your `<workspace>` directory. The file [will be used by GitHub](https://help.github.com/articles/github-flavored-markdown) to provide information on your project's GitHub homepage.
 X>
 X> * Create the file, and write some introductory text to your project.
 X> * Add the file to the local index upon completion of writing, and commit your changes.
 X> * Push the new file to the remote repository and observe the changes on the GitHub website.
 X>
-X> Once you have completed these basic steps, you can then go back and edit the file some more. Add, commit and push - and then try to revert to the initial version to see if it all works as expected.
+X> Once you have completed these basic steps, you can then go back and edit the readme file some more. Add, commit and push - and then try to revert to the initial version to see if it all works as expected.
 
-Upon completion of these exercises, all that is left for us to discuss
+D> ### There's More!
+D> There are other more advanced features of Git that we have not covered in this chapter. Examples include **branching** and **merging**, which are useful for projects with different release versions, for example. There are many fantastic tutorials available online if you are interested in taking you super-awesome version control skills a step further. For more details about such features take a look at this [tutorial on getting started with Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/), the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning about Git Branching](http://pcottle.github.io/learnGitBranching/).
+D> 
+D> However, if you're only using this chapter as a simple guide to getting to grips with Git, everything that we've covered should be enough. Good luck!
+
+<!---
+DMAX COMMENTS THIS OUT - IT DOESN'T FIT HERE ANYMORE.
+Upon completion of the above exercise, all that is left for us to discuss
 is the environment you just setup. While all may be good just now, what
 if you have another Python application that requires a different version
 to run? This is where the concept of [virtual
@@ -294,8 +299,4 @@ now but you will be using a virtual environment when it comes to
 deploying your application. For now though, [check out this
 article](http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)
 to read up on what they are, and how they can benefit you.
-
-D> ### There's more!
-D> There are other more advanced features of Git that we have not covered in this chapter. Examples include **branching** and **merging**, which are useful for projects with different release versions, for example. There are many fantastic tutorials available online if you are interested in taking you super-awesome version control skills a step further. For more details about such features take a look at this [tutorial on getting started with Git](http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/), the [Git Guide](http://rogerdudler.github.io/git-guide/) or [Learning about Git Branching](http://pcottle.github.io/learnGitBranching/).
-D> 
-D> However, if you're only using this chapter as a simple guide to getting to grips with Git, everything that we've covered should be enough. Good luck!
+-->
