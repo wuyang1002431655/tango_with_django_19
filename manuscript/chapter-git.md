@@ -192,52 +192,22 @@ I> For further information on the `git status` command, check out the [official 
 
 ### 3. Committing your Changes
 
-We've mentioned *committing* several times in the previous step - but
-what on earth does it mean? In the world of Git, committing is when you
-save changes - which are listed in the local index - that you have made
-within your workspace. The more often you commit, the greater the number
-of opportunities you'll have to revert back to an older version of your
-code if things go disastrously wrong! Make sure you commit often - but
-don't commit an incomplete or broken version of a particular module or
-function! There's a lot of online discussion about when the ideal time
-to commit is - [have a look on this Stack Overflow
-page](http://stackoverflow.com/questions/1480723/dvcs-how-often-and-when-to-commit-changes)
-for the opinions of several developers.
+We've mentioned *committing* several times in the previous step - but what does it mean? Committing is when you save changes - which are listed in the local index - that you have made within your workspace. The more often you commit, the greater the number of opportunities you'll have to revert back to an older version of your code if things go wrong. Make sure you commit often, but don't commit an incomplete or broken version of a particular module or function. There's a lot of discussion as to when the ideal time to commit is. [Have a look at this Stack Overflow page](http://stackoverflow.com/questions/1480723/dvcs-how-often-and-when-to-commit-changes) for the opinions of several developers. It does however make sense to commit only when everything is working. If you find you need to roll back to a previous commit only to find nothing works, you won't be too happy.
 
-To commit, you issue the `git commit` command. Any changes to existing
-files that you have indexed will be saved to version control at this
-point. Additionally, any files that you've requested to be copied,
-removed, moved or added to version control via the local index will be
-undertaken at this point. When you commit, you are updating the *HEAD*
-of your local repository. The HEAD is essentially the *latest commit at
-the top of the pile* - have a look at [this Stack Overflow
-page](http://stackoverflow.com/questions/2304087/what-is-git-head-exactly)
-for more information.
+To commit, you issue the `git commit` command. Any changes to existing files that you have indexed will be saved to version control at this point. Additionally, any files that you've requested to be copied, removed, moved or added to version control via the local index will be undertaken at this point. When you commit, you are updating the *HEAD* of your local repository. The HEAD is essentially the *latest commit at the top of the pile* - have a look at [this Stack Overflow page](http://stackoverflow.com/questions/2304087/what-is-git-head-exactly) for more information.
 
-As part of a commit, it's incredibly useful to your future self and
-others to explain why you committed when you did. You can supply an
-optional message with your commit if you wish to do so - though we
-highly recommend it. Instead of simply issuing `git commit`, run the
-following amended command.
+I> ### Commit Requirements
+I> In order to successfully commit, you need to modify at least one file in your repository and instruct Git to commit it, through the `git add` command. See the previous step for more information on how to do this.
 
-`$ git commit -m "Updated helpers.py to include a Unicode conversion function, str_to_unicode()."`
+As part of a commit, it's incredibly useful to your future self and others to explain why you committed when you did. You can supply an optional message with your commit if you wish to do so. Instead of simply issuing `git commit`, run the following amended command.
 
-From the example above, you can see that using the `-m` switch followed
-by a string provides you with the opportunity to append a message to
-your commit. Be as explicit as you can, but don't write too much. People
-want to see at a glance what you did, and do not want to be bored with a
-long essay. At the same time, don't be too vague. Simply specifying
-`Updated helpers.py` may tell a developer what file you modified, but
-they will require further investigation to see exactly what you changed.
+{lang="text",linenos=off}
+    $ git commit -m "Updated helpers.py to include a Unicode conversion function, str_to_unicode()."
 
-> **note**
->
-> Although frequent commits may be a good thing, you will want to ensure
-> that what you have written actually *works* before you commit. This
-> may sound silly, but it's an incredibly easy thing to not think about.
-> Committing code which doesn't actually work can be infuriating to your
-> team members if they then rollback to a version of your project's
-> codebase which is broken!
+From the example above, you can see that using the `-m` switch followed by a string provides you with the opportunity to append a message to your commit. Be as explicit as you can, but don't write too much. People want to see at a glance what you did, and do not want to be bored or confused with a long essay. At the same time, don't be too vague. Simply specifying `Updated helpers.py` may tell a developer what file you modified, but they will require further investigation to see exactly what you changed.
+
+T> ### Sensible Commits
+T> Although frequent commits may be a good thing, you will want to ensure that what you have written actually *works* before you commit. This may sound silly, but it's an incredibly easy thing to not think about. To reiterate, committing code which doesn't actually work can be infuriating to your team members if they then rollback to a version of your project's codebase which is broken!
 
 ### 4. Synchronising your Repository
 
