@@ -244,10 +244,10 @@ W> You should be aware that this guide will rollback your workspace to a previou
 Rolling back your workspace to a previous commit involves two steps: determining which commit to roll back to, an performing the rollback. To determine what commit to rollback to, you can make use of the `git log` command. Issuing this command within your workspace directory will provide a list of recent commits that you made, your name and the date at which you made the commit. Additionally, the message that is stored with each commit is displayed. This is where it is highly beneficial to supply commit messages that provide enough information to explain what is going on. Check out the following output from a `git log` invocation below to see for yourself.
 
 {lang="text",linenos=off}
-    commit 88f41317640a2b62c2c63ca8d755feb9f17cf16e                      <- Commit hash
-    Author: John Doe <someaddress@domain.com>                            <- Author
-    Date:   Mon Jul 8 19:56:21 2013 +0100                                <- Date/time
-        Nearly finished initial version of the requirements chapter      <- Message
+    commit 88f41317640a2b62c2c63ca8d755feb9f17cf16e                 <- Commit hash
+    Author: John Doe <someaddress@domain.com>                       <- Author
+    Date:   Mon Jul 8 19:56:21 2013 +0100                           <- Date/time
+        Nearly finished initial version of the requirements chapter <- Message
     commit f910b7d557bf09783b43647f02dd6519fa593b9f
     Author: John Doe <someaddress@domain.com>
     Date:   Wed Jul 3 11:35:01 2013 +0100
