@@ -417,3 +417,7 @@ exercises.
             out the repository and see how we completed them.
 			
 ### IDE
+
+### Installing Git
+
+Setup Git - the Git crash course expects a small section in this chapter detailing what you have to do to install git. Perhaps move the Windows information bit in the setting up Git part to here.

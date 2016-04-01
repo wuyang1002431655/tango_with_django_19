@@ -8,23 +8,19 @@ This tutorial demonstrates at a high level how Git works, explains the basic com
 
 As your software engineering skills develop, you will find that you are able to plan and implement solutions to ever more complex problems. As a rule of thumb, the larger the problem specification, the more code you have to write. The more code you write, the greater the emphasis you should put on software engineering practices. Such practices include the use of design patterns and the *DRY (Don't Repeat Yourself)* principle.
 
-As a result of this complexity, software projects can contain many source code files. With it likely that more than one contributor exists within a given project, it can become difficult to avoid conflicts when working on files. Have you ever encountered one or more of the following situations:
+Think about your experiences with programming thus far. Have you ever found yourself in any of these scenarios?
 
-* Made a change to code, realised it was a mistake and wanted to go back?
+* Made a mistake to code, realised it was a mistake and wanted to go back?
 * Lost code (through a faulty drive), or had a backup that was too old?
 * Had to maintain multiple versions of a product (perhaps for different organisations)?
 * Wanted to see the difference between two (or more) versions of your codebase?
 * Wanted to show that a particular change broke of fixed a piece of code?
 * Wanted to submit a change (patch) to someone else's code?
 * Wanted to see how much work is being done (where it was done, when it was done, or who did it)?
-* Wanted to experiment with a new feature without interfering without working code?
 
 Using a version control system makes your life easier in *all* of the above cases. While using version control systems at the beginning may seem like a hassle it will pay off later - so it's good to get into the habit now!
 
-I> ### Using Git on Windows
-I> Like Python, Git doesn't come as part of a standard Windows installation. However, Windows implementations of the version control system can be downloaded and installed. You can download the official Windows Git client from the Git [website](http://git-scm.com/download/win). The installer provides the `git` command line program, which we use in this crash course. You can also download a program called *TortoiseGit*, a graphical extension to the Windows Explorer shell. The program provides a really nice right-click Git context menu for files. This makes version control really easy to use. You can [download TortoiseGit](https://code.google.com/p/tortoisegit/) for free. Although we do not cover how to use TortoiseGit in this crash course, many tutorials exist online for it. Check [this tutorial](http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/) if you are interested in using it.
-I>
-I> We recommend however that you stick to the command line program. If you switch to a *NIX development environment at a later stage, you'll be glad you know the commands!
+We missed one final (and important) argument for using version control. With ever more complex problems to solve, your software projects will undoubtedly contain a large number of files containing source code. It'll also be likely that you *aren't working alone on the project; your project will probably have more than one contributor.* In this scenario, it can become difficult to avoid conflicts when working on files. 
 
 ## How Git Works
 
@@ -43,6 +39,13 @@ For now though, let's provide an overview of each of the different aspects of th
 Next, we'll be looking at how to [get your Git workspace set up and ready to go](#section-git-setup). We'll also [discuss the basic workflow](#section-git-workflow) you should use when using Git.
 
 ## Setting up Git {#section-git-setup}
+
+We assume that you've got Git installed with the software to go. One easy way to test the software out is to simply issue `git` to your terminal or Command Prompt. If you don't see a `command not found` error, you're good to go. Otherwise, have a look at how to install Git to your system.
+
+I> ### Using Git on Windows
+I> Like Python, Git doesn't come as part of a standard Windows installation. However, Windows implementations of the version control system can be downloaded and installed. You can download the official Windows Git client from the Git [website](http://git-scm.com/download/win). The installer provides the `git` command line program, which we use in this crash course. You can also download a program called *TortoiseGit*, a graphical extension to the Windows Explorer shell. The program provides a really nice right-click Git context menu for files. This makes version control really easy to use. You can [download TortoiseGit](https://code.google.com/p/tortoisegit/) for free. Although we do not cover how to use TortoiseGit in this crash course, many tutorials exist online for it. Check [this tutorial](http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/) if you are interested in using it.
+I>
+I> We recommend however that you stick to the command line program. We'll be using the commands in this crash course. Furthermore, if you switch to a UNIX/Linux development environment at a later stage, you'll be glad you know the commands!
 
 Setting up your Git workspace is a straightforward process. Once everything is set up, you will begin to make sense of the directory structure that Git uses. Assume that you have signed up for a new account on [GitHub](https://github.com/) and [created a new repository on the service](https://help.github.com/articles/create-a-repo) for your project. With your remote repository setup, follow these steps to get your local repository and workspace setup on your computer. We'll assume you will be working from your `<workspace>` directory.
 
