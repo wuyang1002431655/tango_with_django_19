@@ -1,25 +1,13 @@
 # A Crash Course in UNIX-based Commands {#chapter-unix}
 
+Depending on your computing background, you may or may not have encountered a UNIX based system, or a derivative of. This small crash course focuses on getting you up to speed with the *terminal*, an application in which you issue commands for the computer to execute. This differs from a point-and-click *Graphical User Interface (GUI)*, the kind of interface that has made computing so much more accessible. A terminal based interface may be more complex to use, but the benefits of using such an interface include getting things done quicker, and more accurately, too.
 
-####Using the Terminal
-------------------
+I> ### Not for Windows!
+I> Note that we're focusing on the Bash shell, a shell for UNIX-based operating systems and their derivatives, including OS X and Linux distributions. If you're a Windows user, you can use the [Windows Command Prompt](http://www.ai.uga.edu/mc/winforunix.html) or [Windows PowerShell](https://msdn.microsoft.com/en-us/powershell/mt173057.aspx). Users of Windows 10 will [also be able to issue Bash commands directly to the Command Prompt](http://www.pcworld.com/article/3050473/windows/heres-how-windows-10s-ubuntu-based-bash-shell-will-actually-work.html). You could also experiment by [installing Cygwin](https://www.cygwin.com/) to bring Bash commands to Windows.
 
-In order to set up your environment learning how to use the *Command
-Line Interpreter (CLI)* provided by your Operating System is really
-important. Through the course of this tutorial, you will be interacting
-with the CLI routinely. If you are already familiar with using the
-command line interface you can skip directly to
-Installing the Software \<installing-software\> section.
+## Using the Terminal
 
-UNIX-based operating systems all use a similar-looking
-[terminal](http://www.ee.surrey.ac.uk/Teaching/Unix/unixintro.html).
-Descendants, derivatives and clones of UNIX include [Apple's OS
-X](http://en.wikipedia.org/wiki/OS_X) and the [many available Linux
-distributions](http://en.wikipedia.org/wiki/List_of_Linux_distributions)
-available today. All of these operating systems contain a core set of
-commands which help you navigate through your filesystem and launch
-programs, all without the need of any graphical interface. This section
-provides the key commands you should familiarise yourself with.
+UNIX based operating systems and derivatives - such as OS X and Linux distributions - all use a similar looking terminal application, typically using the [Bash shell](https://en.wikipedia.org/wiki/Bash_(Unix_shell)). All possess a core set of commands which allow you to navigate through your computer's filesystem and launch programs - all without the need for any graphical interface.
 
 > **note**
 >
@@ -150,7 +138,7 @@ straightforward editor - unlike [vi](http://en.wikipedia.org/wiki/Vi)
 which can take some time to learn. Below are a list of commonly-used
 UNIX commands that you will find useful.
 
-### Core Commands {#section-unix-commands}
+## Core Commands {#section-unix-commands}
 
 All UNIX-based operating systems come with a series of built-in
 commands - with most focusing exclusively on file management. The
