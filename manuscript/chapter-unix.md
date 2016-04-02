@@ -62,8 +62,8 @@ There's no confirmation that the command succeeded. We can check that the `code`
 
 Issuing a subsequent `pwd` command to confirm our present working directory yields `/users/grad/david/code` - our home directory, with `code` appended to the end. You can also see from the prompt in the example above that the present working directory changes from `~` to `code`.
 
-E> ### Change Back
-E> Now issue the command to change back to your home directory. What command do you enter?
+X> ### Change Back
+X> Now issue the command to change back to your home directory. What command do you enter?
 
 From your home directory, let's now try out another command to see what files and directories exist. This new command is called `ls`, shorthand for *list*. Issuing `ls` in your home directory will yield something similar to the following.
 
@@ -113,40 +113,34 @@ Note the filesize of `new.txt` - it is zero bytes, indicating an empty file. We 
 
 ## Core Commands {#section-unix-commands}
 
-All UNIX-based operating systems come with a series of built-in
-commands - with most focusing exclusively on file management. The
-commands you will use most frequently are listed below, each with a
-short explanation on what they do and how to use them.
+In the short tutorial above, you've covered a few of the core commands such as `pwd`, `ls` and `cd`. There are however a few more standard UNIX commands that you should familiarise yourself with before you start working for real. These are listed below for your reference, with most of them focusing upon file management. The list comes with an explanation of each, and an example of how to use them.
 
--   `pwd`: *Prints* your current *working directory* to the terminal.
-    The full path of where you are presently is displayed.
--   `ls`: Prints a list of files in the current working directory to the
-    terminal. By default, you do not see the sizes of files - this can
-    be achieved by appending `-lh` to `ls`, giving the command `ls -lh`.
--   `cd`: In conjunction with a path, allows you to *change* your
+* `pwd`: As explained previously, this command displays your *present working directory* to the terminal. The full path of where you are presently is displayed.
+* `ls`: Displays a list of files in the current working directory to the terminal. 
+* `cd`: In conjunction with a path, allows you to *change* your
     current working *directory*. For example, the command
     `cd /home/leif/` changes the current working directory to
     `/home/leif/`. You can also move up a directory level without having
     to provide the [absolute
     path](http://www.uvsc.edu/disted/decourses/dgm/2120/IN/steinja/lessons/06/06_04.html)
     by using two dots, e.g. `cd ..`.
--   `cp`: Copies files and/or directories. You must provide the *source*
+* `cp`: Copies files and/or directories. You must provide the *source*
     and the *target*. For example, to make a copy of the file `input.py`
     in the same directory, you could issue the command
     `cp input.py input_backup.py`.
--   `mv`: Moves files/directories. Like `cp`, you must provide the
+* `mv`: Moves files/directories. Like `cp`, you must provide the
     *source* and *target*. This command is also used to rename files.
     For example, to rename `numbers.txt` to `letters.txt`, issue the
     command `mv numbers.txt letters.txt`. To move a file to a different
     directory, you would supply either an absolute or relative path as
     part of the target - like `mv numbers.txt /home/david/numbers.txt`.
--   `mkdir`: Creates a directory in your current working directory. You
+* `mkdir`: Creates a directory in your current working directory. You
     need to supply a name for the new directory after the `mkdir`
     command. For example, if your current working directory was
     `/home/david/` and you ran `mkdir music`, you would then have a
     directory `/home/david/music/`. You will need to then `cd` into the
     newly created directory to access it.
--   `rm`: Shorthand for *remove*, this command removes or deletes files
+* `rm`: Shorthand for *remove*, this command removes or deletes files
     from your filesystem. You must supply the filename(s) you wish to
     remove. Upon issuing a `rm` command, you will be prompted if you
     wish to delete the file(s) selected. You can also remove directories
@@ -154,21 +148,14 @@ short explanation on what they do and how to use them.
     switch](http://www.computerhope.com/issues/ch000798.htm). Be careful
     with this command - recovering deleted files is very difficult, if
     not impossible!
--   `rmdir`: An alternative command to remove directories from your
+* `rmdir`: An alternative command to remove directories from your
     filesystem. Provide a directory that you wish to remove. Again, be
     careful: you will not be prompted to confirm your intentions.
--   `sudo`: A program which allows you to run commands with the security
+* `sudo`: A program which allows you to run commands with the security
     privileges of another user. Typically, the program is used to run
     other programs as `root` - the
     [superuser](http://en.wikipedia.org/wiki/Superuser) of any
     UNIX-based or UNIX-derived operating system.
 
-> **note**
->
-> This is only a brief list of commands. Check out ubuntu's
-> documentation on [Using the
-> Terminal](https://help.ubuntu.com/community/UsingTheTerminal) for a
-> more detailed overview, or the \`Cheat Sheet
-
-> \<<http://fosswire.com/post/2007/08/unixlinux-command-cheat-sheet/>\>\`\_
-> by FOSSwire for a quick reference guide.
+I> ### There's More!
+I> This is only a brief list of commands. Check out Ubuntu's documentation on [Using the Terminal](https://help.ubuntu.com/community/UsingTheTerminal) for a more detailed overview, or the [Cheat Sheet](http://fosswire.com/post/2007/08/unixlinux-command-cheat-sheet/) by FOSSwire for a quick, handy reference guide. Like anything else, the more you practice, the more comfortable you will feel working with the terminal.
