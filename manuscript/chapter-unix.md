@@ -48,6 +48,12 @@ If you are not in your home directory, you can *Change Directory* (`cd`) by issu
 
 Note how the present working directory switches from `/` to `~` upon issuing the `cd ~` command.
 
+I> ### Path Shortcuts
+I> UNIX shells have a number of different shorthand ways for you to move around your computer's filesystem. You've already seen that a forward slash (`/`) represents the [root directory](https://en.wikipedia.org/wiki/Root_directory), and the tilde (`~`) represents your home directory in which you store all your personal files. However, there are a few more special characters you can use to move around your filesystem in conjunction with the `cd` command.
+I>
+I> * Issuing `cd ..` will move your present working directory **up one level** of the filesystem hierarchy. For example, if you are currently in `/users/grad/david/code/`, issuing `cd ..` will move you to `/users/grad/david/`.
+I> * Issuing `cd -` will move you to the **previous directory you were working in**. Your shell remembers where you were, so if you were in `/var/tmp/` and moved to `/users/grad/david/`, issuing `cd -` will move you straight back to `/var/tmp/`. This command obviously only works if you've move around at least once in a given terminal session.
+
 Now, let's create a directory within the home directory called `code`. To do this, you can use the *Make Directory* command, called `mkdir`.
 
 {lang="text",linenos=off}
