@@ -9,70 +9,35 @@ I> Note that we're focusing on the Bash shell, a shell for UNIX-based operating 
 
 UNIX based operating systems and derivatives - such as OS X and Linux distributions - all use a similar looking terminal application, typically using the [Bash shell](https://en.wikipedia.org/wiki/Bash_(Unix_shell)). All possess a core set of commands which allow you to navigate through your computer's filesystem and launch programs - all without the need for any graphical interface.
 
-> **note**
->
-> This tutorial is focused towards users of UNIX-based or UNIX-derived
-> operating systems. While Python and Django can run in a Windows-based
-> environment, many of the commands that we use in this book are for
-> UNIX-based terminals. These commands can however be replicated in
-> Windows by using the graphical user interface, [using the relevant
-> command in a Windows Command
-> Prompt](http://www.ai.uga.edu/mc/winforunix.html), or using [Windows
-> PowerShell](http://technet.microsoft.com/en-us/library/bb978526.aspx)
-> which provides an CLI like similar to a UNIX terminal.
+Upon launching a new terminal instance, you'll be typically presented with something resembling the following.
 
+{lang="text",linenos=off}
+    sibu:~ david$
 
+What you see is the *prompt*, and indicates when the system is waiting to execute your every command. The prompt you see varies depending on the operating system you are using, but all look generally very similar. In the example above, there are three key pieces of information to observe:
 
-Upon launching a new terminal instance, you'll typically be presented with something like:
+* your username and computer name (username of `david` and computer name of `sibu`);
+* your *current working directory* (the tilde, or `~`); and
+* the privilege of your user account (the dollar sign, or `$`).
 
-```
-sibu:~ leif$
+The dollar sign (`$`) typically indicates that the user is a standard user account. Conversely, a hash symbol (`#`) may be used to signify the user logged in has [root privileges](http://en.wikipedia.org/wiki/Superuser). Whatever symbol is present is used to signify that the computer is awaiting your input.
 
-```
+I> ### Prompts can Differ
+I> The information presented by the prompt on your computer may differ from the example shown above. For example, some prompts may display the current date and time, or any other information. It all depends how your computer is set up.
 
-This is called the *prompt*, and indicates when the system is waiting to
-execute your every command. The prompt you see varies depending on the
-operating system you are using, but all look generally very similar. In
-the example above, there are three key pieces of information to observe:
+When you are using the terminal, it is important to know where you are in the file system. To find out where you are, you can issue the command `pwd`. This will display your *Present Working Directory* (hence `pwd`). For example, check the example terminal interactions below.
 
--   your username and computer name (username of `leif` and computer
-    name of `sibu`);
--   your *current working directory* (the tilde, or `~`); and
--   the privilege of your user account (the dollar sign, or `$`).
+{lang="text",linenos=off}
+    Last login: Wed Mar 23 15:01:39 2016
+    sibu:~ david$ pwd
+    /users/grad/david
+    sibu:~ david$
 
-The dollar sign (`$`) typically indicates that the user is a standard
-user account. Conversely, a hash symbol (`#`) may be used to signify the
-user logged in has [root
-privileges](http://en.wikipedia.org/wiki/Superuser). Whatever symbol is
-present is used to signify that the computer is awaiting your input.
+You can see that the present working directory in this example is `/users/grad/david`.
 
-Open up a terminal window and see what your prompt looks like.
+You'll also note that the prompt indicates that my present working directory is \~. This is because the tilde (`~`) represents your *home directory*. The base directory in any UNIX-based file system is the *root directory*. The path of the root directory is denoted by a single forward slash (`/`).
 
-When you are using the terminal, it is important to know where you are
-in the file system. To find out where you are, you can issue the command
-`pwd`. This will display your present working directory. For example,
-check the example terminal interactions below.
-
-
-```
-Last login: Mon Sep 23 11:35:44 on ttys003
-sibu:~ leif$ pwd
-/Users/leif
-sibu:~ leif$
-```
-
-You can see that the present working directory in this example is:
-
-`/Users/leif`.
-
-You'll also note that the prompt indicates that my present working
-directory is \~. This is because the tilde (`~`) represents your *home
-directory*. The base directory in any UNIX-based file system is the
-*root directory*. The path of the root directory is denoted by a single
-forward slash (`/`).
-
-If you are not in your home directory you can change directory (`cd`) to
-your home directory by issuing the following command.
+If you are not in your home directory you can change directory (`cd`) to your home directory by issuing the following command.
 
 
 ```
