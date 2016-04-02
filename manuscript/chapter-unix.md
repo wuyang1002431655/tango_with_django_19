@@ -51,6 +51,7 @@ Note how the present working directory switches from `/` to `~` upon issuing the
 I> ### Path Shortcuts
 I> UNIX shells have a number of different shorthand ways for you to move around your computer's filesystem. You've already seen that a forward slash (`/`) represents the [root directory](https://en.wikipedia.org/wiki/Root_directory), and the tilde (`~`) represents your home directory in which you store all your personal files. However, there are a few more special characters you can use to move around your filesystem in conjunction with the `cd` command.
 I>
+I> * Issuing `cd ~` will always return you to your home directory. On some UNIX or UNIX derivatives, simply issuing `cd` will return you to your home directory, too.
 I> * Issuing `cd ..` will move your present working directory **up one level** of the filesystem hierarchy. For example, if you are currently in `/users/grad/david/code/`, issuing `cd ..` will move you to `/users/grad/david/`.
 I> * Issuing `cd -` will move you to the **previous directory you were working in**. Your shell remembers where you were, so if you were in `/var/tmp/` and moved to `/users/grad/david/`, issuing `cd -` will move you straight back to `/var/tmp/`. This command obviously only works if you've move around at least once in a given terminal session.
 
@@ -123,45 +124,13 @@ In the short tutorial above, you've covered a few of the core commands such as `
 
 * `pwd`: As explained previously, this command displays your *present working directory* to the terminal. The full path of where you are presently is displayed.
 * `ls`: Displays a list of files in the current working directory to the terminal. 
-* `cd`: In conjunction with a path, allows you to *change* your
-    current working *directory*. For example, the command
-    `cd /home/leif/` changes the current working directory to
-    `/home/leif/`. You can also move up a directory level without having
-    to provide the [absolute
-    path](http://www.uvsc.edu/disted/decourses/dgm/2120/IN/steinja/lessons/06/06_04.html)
-    by using two dots, e.g. `cd ..`.
-* `cp`: Copies files and/or directories. You must provide the *source*
-    and the *target*. For example, to make a copy of the file `input.py`
-    in the same directory, you could issue the command
-    `cp input.py input_backup.py`.
-* `mv`: Moves files/directories. Like `cp`, you must provide the
-    *source* and *target*. This command is also used to rename files.
-    For example, to rename `numbers.txt` to `letters.txt`, issue the
-    command `mv numbers.txt letters.txt`. To move a file to a different
-    directory, you would supply either an absolute or relative path as
-    part of the target - like `mv numbers.txt /home/david/numbers.txt`.
-* `mkdir`: Creates a directory in your current working directory. You
-    need to supply a name for the new directory after the `mkdir`
-    command. For example, if your current working directory was
-    `/home/david/` and you ran `mkdir music`, you would then have a
-    directory `/home/david/music/`. You will need to then `cd` into the
-    newly created directory to access it.
-* `rm`: Shorthand for *remove*, this command removes or deletes files
-    from your filesystem. You must supply the filename(s) you wish to
-    remove. Upon issuing a `rm` command, you will be prompted if you
-    wish to delete the file(s) selected. You can also remove directories
-    [using the recursive
-    switch](http://www.computerhope.com/issues/ch000798.htm). Be careful
-    with this command - recovering deleted files is very difficult, if
-    not impossible!
-* `rmdir`: An alternative command to remove directories from your
-    filesystem. Provide a directory that you wish to remove. Again, be
-    careful: you will not be prompted to confirm your intentions.
-* `sudo`: A program which allows you to run commands with the security
-    privileges of another user. Typically, the program is used to run
-    other programs as `root` - the
-    [superuser](http://en.wikipedia.org/wiki/Superuser) of any
-    UNIX-based or UNIX-derived operating system.
+* `cd`: In conjunction with a path, allows you to change your present working directory. For example, the command `cd /users/grad/david/` changes the current working directory to `/users/grad/david/`. You can also move up a directory level without having to provide the [absolute path](http://www.uvsc.edu/disted/decourses/dgm/2120/IN/steinja/lessons/06/06_04.html) by using two dots, e.g. `cd ..`.
+* `cp`: Copies files and/or directories. You must provide the *source* and the *target*. For example, to make a copy of the file `input.py` in the same directory, you could issue the command `cp input.py input_backup.py`.
+* `mv`: Moves files/directories. Like `cp`, you must provide the *source* and *target*. This command is also used to rename files. For example, to rename `numbers.txt` to `letters.txt`, issue the command `mv numbers.txt letters.txt`. To move a file to a different directory, you would supply either an absolute or relative path as part of the target - like `mv numbers.txt /home/david/numbers.txt`.
+* `mkdir`: Creates a directory in your current working directory. You need to supply a name for the new directory after the `mkdir` command. For example, if your current working directory was `/home/david/` and you ran `mkdir music`, you would then have a directory `/home/david/music/`. You will need to then `cd` into the newly created directory to access it.
+* `rm`: Shorthand for *remove*, this command removes or deletes filesfrom your filesystem. You must supply the filename(s) you wish to remove. Upon issuing a `rm` command, you will be prompted if you wish to delete the file(s) selected. You can also remove directories [using the recursive switch](http://www.computerhope.com/issues/ch000798.htm). Be careful with this command - recovering deleted files is very difficult, if not impossible!
+* `rmdir`: An alternative command to remove directories from your filesystem. Provide a directory that you wish to remove. Again, be careful: you will not be prompted to confirm your intentions.
+* `sudo`: A program which allows you to run commands with the security privileges of another user. Typically, the program is used to run other programs as `root` - the [superuser](http://en.wikipedia.org/wiki/Superuser) of any UNIX-based or UNIX-derived operating system.
 
 I> ### There's More!
 I> This is only a brief list of commands. Check out Ubuntu's documentation on [Using the Terminal](https://help.ubuntu.com/community/UsingTheTerminal) for a more detailed overview, or the [Cheat Sheet](http://fosswire.com/post/2007/08/unixlinux-command-cheat-sheet/) by FOSSwire for a quick, handy reference guide. Like anything else, the more you practice, the more comfortable you will feel working with the terminal.
