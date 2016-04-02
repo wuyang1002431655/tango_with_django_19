@@ -17,7 +17,7 @@ Upon launching a new terminal instance, you'll be typically presented with somet
 What you see is the *prompt*, and indicates when the system is waiting to execute your every command. The prompt you see varies depending on the operating system you are using, but all look generally very similar. In the example above, there are three key pieces of information to observe:
 
 * your username and computer name (username of `david` and computer name of `sibu`);
-* your *current working directory* (the tilde, or `~`); and
+* your *present working directory* (the tilde, or `~`); and
 * the privilege of your user account (the dollar sign, or `$`).
 
 The dollar sign (`$`) typically indicates that the user is a standard user account. Conversely, a hash symbol (`#`) may be used to signify the user logged in has [root privileges](http://en.wikipedia.org/wiki/Superuser). Whatever symbol is present is used to signify that the computer is awaiting your input.
@@ -35,41 +35,29 @@ When you are using the terminal, it is important to know where you are in the fi
 
 You can see that the present working directory in this example is `/users/grad/david`.
 
-You'll also note that the prompt indicates that my present working directory is \~. This is because the tilde (`~`) represents your *home directory*. The base directory in any UNIX-based file system is the *root directory*. The path of the root directory is denoted by a single forward slash (`/`).
+You'll also note that the prompt indicates that the present working directory is a tilde `~`. The tilde is used a special symbol which represents your *home directory*. The base directory in any UNIX based file system is the *root directory*. The path of the root directory is denoted by a single forward slash (`/`). As folders (or directories) are separated in UNIX paths with a `/`, a single `/` denotes the root!
 
-If you are not in your home directory you can change directory (`cd`) to your home directory by issuing the following command.
+If you are not in your home directory, you can *Change Directory* (`cd`) by issuing the following command:
 
+{lang="text",linenos=off}
+    sibu:/ david$ cd ~
+    sibu:~ david$
 
-```
-$ cd ~
-```
+Note how the present working directory switches from `/` to `~` upon issuing the `cd ~` command.
 
+Now, let's create a directory within the home directory called `code`. To do this, you can use the *Make Directory* command, called `mkdir`.
 
-Let's create a directory called `code`. To do thus, use the make
-directory command (`mkdir`), as shown below.
+{lang="text",linenos=off}
+    sibu:~ david$ mkdir code
+    sibu:~ david$
 
+There's no confirmation that the command succeeded. We can check that the `code` directory was created by changing the present working directory with the `cd` command.
 
-```
-$ mkdir code
-```
+{lang="text",linenos=off}
+    sibu:~ david$ cd code
+    sibu:code david$
 
-To move to the newly-created `code` directory, enter `cd code`. If you
-now check your current working directory, you'll notice that you will be
-in `~/code/`. This may also be reflected by your prompt. Note in the
-example below that the current working directory is printed after the `sibu` computer name.
-
-> **note**
->
-> Whenever we refer to `<workspace>`, we'll be referring to your `code` directory.
-
-
-```
-sibu:~ leif$ mkdir code
-sibu:~ leif$ cd code
-sibu:code leif$
-sibu:code leif$ pwd
-/Users/leif/code
-```
+Issuing a subsequent `pwd` command to confirm our present working directory yields `/users/grad/david/code` - our home directory, with `code` appended to the end. You can also see from the prompt in the example above that the present working directory changes from `~` to `code`.
 
 To list the files that are in a directory, you can issue the command
 `ls`. You can also see hidden files or directories - if you have any -
