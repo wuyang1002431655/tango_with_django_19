@@ -20,6 +20,9 @@ What you see is the *prompt*, and indicates when the system is waiting to execut
 * your *present working directory* (the tilde, or `~`); and
 * the privilege of your user account (the dollar sign, or `$`).
 
+D> ### What is a Directory?
+D> Above, we refer to your present working directory. But what exactly is a *directory*? If you have used a Windows computer up until now, you'll probably know a directory as a *folder*. The concept of a folder is analogous to a directory - it is a cataloguing structure which can contain references to other files and directories.
+
 The dollar sign (`$`) typically indicates that the user is a standard user account. Conversely, a hash symbol (`#`) may be used to signify the user logged in has [root privileges](http://en.wikipedia.org/wiki/Superuser). Whatever symbol is present is used to signify that the computer is awaiting your input.
 
 I> ### Prompts can Differ
@@ -59,37 +62,54 @@ There's no confirmation that the command succeeded. We can check that the `code`
 
 Issuing a subsequent `pwd` command to confirm our present working directory yields `/users/grad/david/code` - our home directory, with `code` appended to the end. You can also see from the prompt in the example above that the present working directory changes from `~` to `code`.
 
-To list the files that are in a directory, you can issue the command
-`ls`. You can also see hidden files or directories - if you have any -
-you can issue the command `ls -a`, where `a` stands for *all.* If you
-`cd` back to your home directory (`cd ~`) and then issue `ls`, you'll
-see that you have something called `code` in your home directory.
+E> ### Change Back
+E> Now issue the command to change back to your home directory. What command do you enter?
 
-To find out a bit more about what is in your directory, issue `ls -l`.
-This will provide a more detailed *listing* of your files and whether it
-is a directory or not (denoted by a `d` at the start of the line).
+From your home directory, let's now try out another command to see what files and directories exist. This new command is called `ls`, shorthand for *list*. Issuing `ls` in your home directory will yield something similar to the following.
 
+{lang="text",linenos=off}
+    sibu:~ david$ ls
+    code
 
-```
-sibu:~ leif$ cd ~
-sibu:~ leif$ ls -l
+This shows us that there's something present our home directory called `code`, as we would expect. We can obtain more detailed information by adding a `l` switch to the end of the `ls` command - with `l` standing for *list*.
 
-drwxr-xr-x   36 leif  staff    1224 23 Sep 10:42 code
-```
+{lang="text",linenos=off}
+    sibu:~ david$ ls -l
+    drwxr-xr-x  2 david  grad  68  2 Apr 11:07 code
 
-The output also contains information on the [permissions associated to
-the
-directory](http://www.elated.com/articles/understanding-permissions/),
-who created it (`leif`), the group (`staff`), the size, the date/time
-the file was modified at, and, of course, the name.
+This provides us with additional information, such as the modification date (`2 Apr 11:07`), who the file belongs to (user `david` of group `grad`), the size of the entry (`68` bytes), and the file permissions (`drwxr-xr-x`). While we don't go into file permissions here, the key thing to note is the `d` at the start of the string which denotes the entry is a directory. If we then add some files to our home directory and reissue the `ls -l` command, we then can observe differences in the way files are displayed as opposed to directories.
 
-You may also find it useful to be able to edit files within your
-terminal. There are many editors which you can use - some of which may
-already be installed on your computer. The
-[nano](http://www.nano-editor.org/) editor for example is a
-straightforward editor - unlike [vi](http://en.wikipedia.org/wiki/Vi)
-which can take some time to learn. Below are a list of commonly-used
-UNIX commands that you will find useful.
+{lang="text",linenos=off}
+    sibu:~ david$ ls -l
+    drwxr-xr-x  2 david  grad      68  2 Apr 11:07 code
+    -rw-r--r--@ 1 david  grad  303844  1 Apr 16:16 document.pdf
+    -rw-r--r--  1 david  grad      14  2 Apr 11:14 readme.md
+
+One final useful switch to the `ls` command is the `a` switch, which displays *all* files and directories. This is useful because some directories and files can be *hidden* by the operating system to keep things looking tidy. Issuing the command yields more files and directories!
+
+{lang="text",linenos=off}
+    sibu:~ david$ ls -la
+    -rw-r--r--   1  david  grad     463 20 Feb 19:58 .profile
+    drwxr-xr-x   16 david  grad     544 25 Mar 11:39 .virtualenvs
+    drwxr-xr-x   2  david  grad      68  2 Apr 11:07 code
+    -rw-r--r--@  1  david  grad  303844  1 Apr 16:16 document.pdf
+    -rw-r--r--   1  david  grad      14  2 Apr 11:14 readme.md
+
+This command shows a hidden directory `.virtualenvs` and a hidden file `.profile`. Note that hidden files on a UNIX based computer (or derivative) start with a period (`.`). There's no special `hidden` file attribute you can apply, unlike on Windows computers.
+
+D> ### Combining `ls` Switches
+D> You may have noticed that we combined the `l` and `a` switches in the above `ls` example to force the command to output a list displaying all hidden files. This is a valid command - and there are [even more switches you can use](http://man7.org/linux/man-pages/man1/ls.1.html) to customise the output of `ls`.
+
+Creating files is also easy to do, straight from the terminal. The `touch` command creates a new, blank file. If we wish to create a file called `new.txt`, issue `touch new.txt`. If we then list our directory, we then see the file added.
+
+{lang="text",linenos=off}
+    sibu:~ david$ ls -l
+    drwxr-xr-x  2 david  grad      68  2 Apr 11:07 code
+    -rw-r--r--@ 1 david  grad  303844  1 Apr 16:16 document.pdf
+    -rw-r--r--  1 david  grad       0  2 Apr 11:35 new.txt
+    -rw-r--r--  1 david  grad      14  2 Apr 11:14 readme.md
+
+Note the filesize of `new.txt` - it is zero bytes, indicating an empty file. We can start editing the file using one of the many available text editors that are available for use directly from a terminal, such as [`nano`](http://www.nano-editor.org/) or [`vi`](http://en.wikipedia.org/wiki/Vi). While we don't cover how to use these editors here, you can [have a look online for a simple how-to tutorial](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/). We suggest starting with `nano` - while there are not as many features available compared to other editors, using `nano` is much simpler.
 
 ## Core Commands {#section-unix-commands}
 
