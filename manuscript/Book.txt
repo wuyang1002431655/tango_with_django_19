@@ -1,7 +1,7 @@
 chapter1.md
 chapter2.md
 chapter3.md
-chapter4-template-static-media.md
+chapter4-templates-static-media.md
 chapter5-database-setup.md
 
 chapter-work-in-progress.md
