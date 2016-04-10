@@ -370,64 +370,21 @@ This code imports the relevant Django machinery for
 URL mappings and the `views` module from `rango`. This allows us to call the function `url` and point to the `index` view for the mapping in `urlpatterns`. 
 
 The URL mapping we have created calls Django's `url()` function, where the first parameter is the regular expression `^$`,
-which matches to an empty string. Any URL supplied by the user that
+which matches to an empty string. Any URL string supplied by the user that
 matches this pattern means that the view `views.index()` would be
 invoked by Django. You might be thinking that matching a blank URL is pretty pointless -
-what use would it serve? When the URL pattern matching takes place,
+what use would it serve? But remember that when the URL pattern matching takes place,
 only a portion of the original URL string is considered. This is
 because our Django project will first process the original URL string
-(i.e. `http://www.tangowithdjango.com/rango/`). 
+(i.e. `rango/`). 
+
+The next parameter passed to the `url()` function is the `index` view, which will handle the incoming requests, followed by the optional parameter, `name`, which set to a string `'index'`. By naming our URL mappings we can employ *reverse URL matching* later on. That is we can reference the URL mapping by name rather than by the URL. Later we will explain how to use this when creating templates. But do check out [the Official Django documentation
+on this topic](https://docs.djangoproject.com/en/1.9/topics/http/urls/#naming-url-patterns)
+for more information.
 
 
-
-Once this has been
-processed, it is removed, with the remained being passed for pattern
-matching. In this instance, there would be nothing left - so an empty
-string would match!
-
-
-
-
-
-
- The `index` view is then passed the incoming `HttpRequest` object as a
-parameter, containing information about the user's request to the
-server. We also make use of the optional parameter to the `url()`
-function, `name`, using the string `'index'` as the associated value.
-
-
-> **note**
->
-> The `name` parameter is optional to the `django.conf.urls.url()`
-> function. This is provided by Django to allow you to distinguish one
-> mapping from another. It is entirely plausible that two separate URL
-> mappings expressions could end calling the same view. `name` allows
-> you to differentiate between them - something which is useful for
-> *reverse URL matching.* Check out [the Official Django documentation
-> on this
-> topic](https://docs.djangoproject.com/en/1.9/topics/http/urls/#naming-url-patterns)
-> for more information.
-
-You may have seen that within your project configuration directory a
-`urls.py` file already exists. Why make another? Technically, you can
-put *all* the URLs for your project's applications within this file.
-However, this is considered bad practice as it increases coupling on
-your individual applications. A separate `urls.py` file for each
-application allows you to set URLs for individual applications. With
-minimal coupling, you can then join them up to your project's master
-`urls.py` file later.
-
-This means we need to configure the `urls.py` of our project
-`tango_with_django_project` and connect up our main project with our
-Rango application.
-
-
-
-
-
-
-Restart the Django development server and visit
-`http://127.0.0.1:8000/rango`. If all went well, you should see the text
+Now, restart the Django development server and visit
+`http://127.0.0.1:8000/rango/`. If all went well, you should see the text
 `Rango says hey there partner!`. It should look just like the screenshot shown
 in Figure fig-rango-hello-world.
 
@@ -438,30 +395,28 @@ files.](../images/url-chain.svg)
 ![A screenshot of Google Chrome displaying our first Django-powered
 webpage. Hello, Rango!](../images/ch3-hey-there.png){id="img-ch3-hey-there"}
 
-Within each application, you will create a number of URL to view
-mappings. This initial mapping is quite simple. As we progress, we will
-create more sophisticated mappings that using allow the URLs to be
-parameterised.
+Within each application, you will create a number of URL 
+mappings. This initial mapping is quite simple but as we progress through the tutorial we will
+create more sophisticated mappings to extract parameters from the URLS. 
 
 It's important to have a good understanding of how URLs are handled in
-Django. If you are still bit confused or would like to know more check
+Django. So, if you are still bit confused or would like to know more check
 out the [official Django documentation on
 URLs](https://docs.djangoproject.com/en/1.9/topics/http/urls/) for
 further details and further examples.
 
-> **note**
->
-> The URL patterns use [regular
-> expressions](http://en.wikipedia.org/wiki/Regular_expression) to
-> perform the matching. It is worthwhile familiarising yourself on how
-> to use regular expressions in Python. The official Python
-> documentation contains a [useful guide on regular
-> expressions](http://docs.python.org/2/howto/regex.html) , while
-> regexcheatsheet.com provides a [neat summary of regular
-> expressions](http://regexcheatsheet.com/).
+I> ###Note on Regular Expressions
+I>
+I> The URL patterns use [regular
+I> expressions](http://en.wikipedia.org/wiki/Regular_expression) to
+I> perform the matching. It is worthwhile familiarising yourself on how
+I> to use regular expressions in Python. The official Python
+I> documentation contains a [useful guide on regular
+I> expressions](http://docs.python.org/2/howto/regex.html) , while
+I> regexcheatsheet.com provides a [neat summary of regular
+I> expressions](http://regexcheatsheet.com/).
 
 ##Basic Workflows
-
 
 What you've just learnt in this chapter can be succinctly summarised
 into a list of actions. Here, we provide these lists for the two
