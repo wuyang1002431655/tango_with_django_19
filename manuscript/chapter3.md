@@ -285,13 +285,13 @@ Breaking down the three lines of code, we observe the following points
 about creating this simple view.
 
 -   We first import the
-    [HttpResponse](https://docs.djangoproject.com/en/1.7/ref/request-response/#django.http.HttpResponse)
+    [HttpResponse](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpResponse)
     object from the `django.http` module.
 -   Each view exists within the `views.py` file as a series of
     individual functions. In this instance, we only created one view -
     called `index`.
 -   Each view takes in at least one argument - a
-    [HttpRequest](https://docs.djangoproject.com/en/1.7/ref/request-response/#django.http.HttpRequest)
+    [HttpRequest](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpRequest)
     object, which also lives in the `django.http` module. Convention
     dictates that this is named `request`, but you can rename this to
     whatever you want if you so desire.
@@ -305,52 +305,96 @@ Resources Locator
 (URL)](http://en.wikipedia.org/wiki/Uniform_resource_locator) to the
 view.
 
-##Mapping URLs
+To create an initial mapping, open `urls.py` located in your project directory, and add the following lines of code to the `urlpatterns`:
 
-
-Within the `rango` application directory, we now need to create a new
-file called `urls.py`. The contents of the file will allow you to map
-URLs for your application (e.g. `http://www.tangowithdjango.com/rango/`)
-to specific views. Check out the simple `urls.py` file below.
 
 ```python
-from django.conf.urls import patterns, url
+
 from rango import views
 
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'))
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^admin/', admin.site.urls),
+]
 ```
 
-This code imports the relevant Django machinery that we use to create
-URL mappings. Importing the `views` module from `rango` also provides us
-with access to our simple view implemented previously, allowing us to
-reference the view in the URL mapping we will create.
+This maps the basic URL to the `index` view in the `rango` application. Run the development server (e.g. `python manage.py runserver`) and visit http://127.0.0.1:8000 or whatever address your development server is running on.
 
-To create our mappings, we use a
-[tuple](http://en.wikipedia.org/wiki/Tuple). For Django to pick your
-mappings up, this tuple *must* be called `urlpatterns`. The
-`urlpatterns` tuple contains a series of calls to the
-`django.conf.urls.url()` function, with each call handling a unique
-mapping. In the code example above, we only use `url()` once, so we have
-therefore defined only one URL mapping. The first parameter we provide
-to the `django.conf.urls.url()` function is the regular expression `^$`,
+
+##Mapping URLs
+Rather than directly mapping URLs from the project to the application, we can make our application more modular (and thus re-usable) by changing how we route the incoming URL to a view. To do this we first need to modify the project's `urls.py` and have it point to the application to handle any specific rango application requests. Then, we need to specify how rango deals with such requests.
+
+First, open the project's `urls.py` file
+which is located inside your project configuration directory. As a
+relative path from your workspace directory, this would be the file
+`<workspace>/tango_with_django_project/tango_with_django_project/urls.py`.
+Update the `urlpatterns` list as shown in the example below.
+
+```python
+from django.conf.urls import url
+from django.contrib import admin
+from django.conf.urls import include  # New import added
+
+urlpatterns = [
+	url(r'^$', views.index, name='index'),
+    url(r'^rango/', include('rango.urls')),   #maps any URLs with starting 
+											  #with rango/ to be handled by
+											  #the rango application
+    url(r'^admin/', admin.site.urls),
+]
+```
+
+You will see that the `urlpatterns` is a Python list, which is expected by the Django framework.  The added mapping looks for URL strings that match the patterns `^rango/`. When a match is made the remainder of the url string is then
+passed onto and handled by `rango.urls` through the use of the  `include()` function from
+within `django.conf.urls`.  
+
+Think of this as a chain that processors the
+URL string - as illustrated in Figure fig-url-chain. In this chain, the
+domain is stripped out and the remainder of the url string (`rango/`) is
+passed on to tango\_with\_django project, where it finds a match and
+strips away `rango/` leaving and empty string to be passed on to the
+application `rango`.  
+
+Consequently, we need to create a new file called `urls.py` in the `rango` application directory, to handle the remaining URL string (and map the empty string to the `index` view):
+
+```python
+from django.conf.urls import url
+from rango import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+	]
+```
+
+This code imports the relevant Django machinery for
+URL mappings and the `views` module from `rango`. This allows us to call the function `url` and point to the `index` view for the mapping in `urlpatterns`. 
+
+The URL mapping we have created calls Django's `url()` function, where the first parameter is the regular expression `^$`,
 which matches to an empty string. Any URL supplied by the user that
 matches this pattern means that the view `views.index()` would be
-invoked by Django. The view would be passed a `HttpRequest` object as a
+invoked by Django. You might be thinking that matching a blank URL is pretty pointless -
+what use would it serve? When the URL pattern matching takes place,
+only a portion of the original URL string is considered. This is
+because our Django project will first process the original URL string
+(i.e. `http://www.tangowithdjango.com/rango/`). 
+
+
+
+Once this has been
+processed, it is removed, with the remained being passed for pattern
+matching. In this instance, there would be nothing left - so an empty
+string would match!
+
+
+
+
+
+
+ The `index` view is then passed the incoming `HttpRequest` object as a
 parameter, containing information about the user's request to the
 server. We also make use of the optional parameter to the `url()`
 function, `name`, using the string `'index'` as the associated value.
 
-> **note**
->
-> You might be thinking that matching a blank URL is pretty pointless -
-> what use would it serve? When the URL pattern matching takes place,
-> only a portion of the original URL string is considered. This is
-> because our Django project will first process the original URL string
-> (i.e. `http://www.tangowithdjango.com/rango/`). Once this has been
-> processed, it is removed, with the remained being passed for pattern
-> matching. In this instance, there would be nothing left - so an empty
-> string would match!
 
 > **note**
 >
@@ -361,7 +405,7 @@ function, `name`, using the string `'index'` as the associated value.
 > you to differentiate between them - something which is useful for
 > *reverse URL matching.* Check out [the Official Django documentation
 > on this
-> topic](https://docs.djangoproject.com/en/1.7/topics/http/urls/#naming-url-patterns)
+> topic](https://docs.djangoproject.com/en/1.9/topics/http/urls/#naming-url-patterns)
 > for more information.
 
 You may have seen that within your project configuration directory a
@@ -377,34 +421,10 @@ This means we need to configure the `urls.py` of our project
 `tango_with_django_project` and connect up our main project with our
 Rango application.
 
-How do we do this? It's quite simple. Open the project's `urls.py` file
-which is located inside your project configuration directory. As a
-relative path from your workspace directory, this would be the file
-`<workspace>/tango_with_django_project/tango_with_django_project/urls.py`.
-Update the `urlpatterns` tuple as shown in the example below.
 
-```python
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'tango_with_django_project_17.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^rango/', include('rango.urls')), # ADD THIS NEW TUPLE!
-)
-```
 
-The added mapping looks for url strings that match the patterns
-`^rango/`. When a match is made the remainder of the url string is then
-passed onto and handled by `rango.urls` (which we have already
-configured). This is done with the help of the `include()` function from
-within `django.conf.urls`. Think of this as a chain that processors the
-URL string - as illustrated in Figure fig-url-chain. In this chain, the
-domain is stripped out and the remainder of the url string (`rango/`) is
-passed on to tango\_with\_django project, where it finds a match and
-strips away `rango/` leaving and empty string to be passed on to the
-application rango. Rango now tries to match the empty string, which it
-does, and this then dispatches the `index()` view that we created.
+
 
 Restart the Django development server and visit
 `http://127.0.0.1:8000/rango`. If all went well, you should see the text
