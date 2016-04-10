@@ -248,7 +248,9 @@ T>
 T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. This is a common problem - make sure you have specified the filenames correctly!
 T>
 T> {lang="text",linenos=off}
-T>     [10/Apr/2016 15:12:48] "GET /rango/ HTTP/1.1" 200 374
+T>     <pre>
+T>     [10/Apr/2016 15:12:48] "GET /rango/ HTTP/1.1" <b>200</b> 374
+T>     </pre>
 T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
