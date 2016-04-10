@@ -252,6 +252,33 @@ T> ![Check out the HTTP response codes for the different requests (e.g. HTTP 200
 T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
+## Basic Workflow
+With the chapter complete, you should now know how to setup and create templates, use templates within your views, setup and use the Django development server to serve static media files, *and* include images within your templates. We've covered quite a lot!
+
+Creating a template and integrating it within a Django view is a key concept for you to understand. It takes several steps, but becomes second nature to you after a few attempts.
+
+* First, create the template you wish to use and save it within the ``templates`` directory you specified in your project's ``settings.py`` file. You may wish to use Django template variables (e.g. ``{{ variable_name }}``) within your template. You'll be able to replace these with whatever you like within the corresponding view.
+* Find or create a new view within an application's ``views.py`` file.
+*. Add your view-specific logic (if you have any) to the view. For example, this may involve extracting data from a database.
+* Within the view, construct a dictionary object which you can pass to the template engine as part of the template's *context*.
+* Make use of the  ``render()`` helper function to generate the rendered response. Ensure you reference the request, then the template file, followed by the context dictionary!
+* If you haven't already done so, map the view to a URL by modifying your project's ``urls.py`` file - and the application-specific ``urls.py`` file if you have one.
+
+The steps involved for getting a static media file onto one of your pages is another important process you should be familiar with. Check out the steps below on how to do this.
+
+* Take the static media file you wish to use and place it within your project's ``static`` directory. This is the directory you specify in your project's ``STATICFILES_DIRS`` tuple within ``settings.py``.
+* Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the ``<img />`` tag. 
+* Remember to use the ``{% load staticfiles %}`` and ``{% static "filename" %}`` commands within the template to access the static files.
+
+X> ### Exercises
+X> Give the following exercises a go to reinforce what you've learnt from this chapter.
+X> 
+X> * Convert the about page to use a template as well, using a template called `about.html`.
+X> * Within the new `about.html` template, add a picture stored within your project's static files.
+
+
+
+<!---
 #TODO(leifos): Note that this not the best practice when you go to deployment, and that they should see: https://docs.djangoproject.com/en/1.7/howto/static-files/deployment/ and that the following solution works when ``DEBUG=True``
 
 #TODO(leifos): the DEBUG variable in settings.py, lets you control the output when an error occurs, and is used for debugging. When the application is deployed it is not secure to leave DEBUG equal to True. When you set DEBUG to be False, then you will need to set the ALLOWED_HOSTS variable in settings.py, when running on your local machine this would be ``127.0.0.1``. You will also need to update the project urls.py file:
@@ -309,31 +336,4 @@ The first variable ``MEDIA_URL`` defines the base URL from which all media files
 You can test this setup works by placing an image file in your newly created ``media`` directory. Drop the file in, start the Django development server, and request the image in your browser. For example, if you added the file ``rango.jpg`` to ``media``, the URL you should enter would look like ``http://127.0.0.1:8000/media/rango.jpg``. The image should show in your browser. If it doesn't, you'll need to go back and check your setup.
 
 #TODO(leifos): check that this still works (certainly you can access the images.. need to check the uploading)
-
-Basic Workflow
---------------
-With the chapter complete, you should now know how to setup and create templates, use templates within your views, setup and use Django to send static media files, include images within your templates *and* setup Django's static media server to allow for file uploads. We've actually covered quite a lot!
-
-Creating a template and integrating it within a Django view is a key concept for you to understand. It takes several steps, but becomes second nature to you after a few attempts.
-
-#. First, create the template you wish to use and save it within the ``templates`` directory you specified in your project's ``settings.py`` file. You may wish to use Django template variables (e.g. ``{{ variable_name }}``) within your template. You'll be able to replace these with whatever you like within the corresponding view.
-#. Find or create a new view within an application's ``views.py`` file.
-#. Add your view-specific logic (if you have any) to the view. For example, this may involve extracting data from a database.
-#. Within the view, construct a dictionary object which you can pass to the template engine as part of the template's *context*.
-#. Make use of the  ``render()`` helper function to generate the rendered response. Ensure you reference the request, then the template file, followed by the context dictionary!
-#. If you haven't already done so, map the view to a URL by modifying your project's ``urls.py`` file - and the application-specific ``urls.py`` file if you have one.
-
-The steps involved for getting a static media file onto one of your pages is another important process you should be familiar with. Check out the steps below on how to do this.
-
-#. Take the static media file you wish to use and place it within your project's ``static`` directory. This is the directory you specify in your project's ``STATICFILES_DIRS`` tuple within ``settings.py``.
-#. Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the ``<img />`` tag. 
-#. Remember to use the ``{% load staticfiles %}`` and ``{% static "filename" %}`` commands within the template to access the static files.
-
-The next chapter will look at databases. We'll see how to make use of Django's excellent database layer to make your life easier and SQL free!
-
-Exercises
----------
-Give the following exercises a go to reinforce what you've learnt from this chapter.
-
-* Convert the about page to use a template too from a template called ``about.html``.
-* Within the ``about.html`` template, add a picture stored within your project's static media.
+-->
