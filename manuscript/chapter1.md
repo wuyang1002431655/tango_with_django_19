@@ -125,7 +125,7 @@ As we build our application, we will probably need to create other URL mappings.
 
 As we progress through the book, we will flesh out how to construct these pages using the Django framework and use its Model-View-Template design pattern. However, now that we have a gist of the URL mappings and what the pages are going to look like, we need to define the data model that will house the data for our web application.
 
-###Entity-Relationship Diagram
+###Entity-Relationship Diagram {#overview-er}
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
 
 {id="fig-rango-erd"}

@@ -1,84 +1,43 @@
-Models and Databases
-====================
+# Models and Databases {#chapter-models-databases}
+When you think of databases, you will usually think of the *Structured Query Language (SQL)*, the common means with which we query the database for the data we require. You may be relieved to know that with Django, querying an underlying database - which can store all sorts of data, such as your website's user details - is taken care of by the [*object relational mapper (ORM)*](https://en.wikipedia.org/wiki/Object-relational_mapping). In essence, data stored within a database table can be encapsulated within a *model*. A model is a Python object that describes your database table's data. Instead of directly working on the database via SQL, you only need to manipulate the corresponding Python model object.
 
-Working with databases often requires you to get your hands dirty
-messing about with SQL. In Django, a lot of this hassle is taken care of
-for you by Django's *object relational mapping (ORM)* functions, and how
-Django encapsulates databases tables through models. Essentially, a
-model is a Python object that describes your data model/table. Instead
-of directly working on the database table via SQL, all you have to do is
-manipulate the corresponding Python object. In this chapter, we'll
-walkthrough how to setup a database and the models required for Rango.
+This chapter walks you through the basics of data management with Django and its ORM. You'll find it's incredibly easy to add, modify and delete data within your app's underlying database, and how straightforward it is to get data from the database to the Web browsers of your users.
 
-Rango's Requirements
---------------------
+## Rango's Requirements
+Before we get started, let's go over the data requirements for the Rango app that we are developing. Full requirements for the application are [provided in detail earlier on](#overview-er), but to refresh your memory, let's quickly summarise our client's requirements.
 
-First, let's go over the data requirements for Rango. The following list
-provides the key details of Rango's data requirements.
+* Rango is a essentially a *web page directory* - a site containing links to other websites.
+* There are a number of different *webpage categories* with each category housing a number of links. [We assumed in the overview chapter](#overview-er) that this is a one-to-many relationship. Check out the [Entity Relationship Diagram below](#fig-rango-erd-repeat).
+* A category has a name, a number of visits, and a number of likes.
+* A page refers to a category, has a title, URL and a number of views.
 
--   Rango is a essentially a *web page directory* - a site containing
-    links to other websites.
--   There are a number of different *webpage categories*, and each
-    category houses a number of links. We assumed in Chapter
-    overview-label that this is a one-to-many relationship. See the
-    Entity Relationship Diagram below.
--   A category has a name, number of visits, and number of likes.
--   A page refers to a category, has a title, URL and a number of views.
+{id="fig-rango-erd-repeat"}
+![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.png)
 
-![The Entity Relationship Diagram of Rango's two main
-entities.](../images/rango-erd.svg)
+## Telling Django about your Database
+Before we can create any models, we need to set up our database with Django. In Django 1.9, a `DATABASES` variable is automatically created in your `settings.py` module when you set up a new project. It'll look similar to the following example.
 
-Telling Django About Your Database
-----------------------------------
-
-Before we can create any models, the database configuration needs to be
-setup. In Django 1.7, when you create a project, Django automatically
-populates the dictionary called `DATABASES`, which is located in your
-`settings.py`. It will contain something like:
-
-``` {.sourceCode .python}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+{lang="python",linenos=on}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-```
 
-As you can see the default engine will be a SQLite3 backend. This
-provides us with access to the lightweight python database,
-[SQLite](http://www.sqlite.org/), which is great for development
-purposes. The only other value we need to set is the `NAME` key/value
-pair, which we have set to `DATABASE_PATH`. For other database engines,
-other keys like `USER`, `PASSWORD`, `HOST` and `PORT` can also be added
-to the dictionary.
+We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is then the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
 
-> **note**
->
-> While using an SQLite engine for this tutorial is fine, it may not
-> perhaps be the best option when it comes to deploying your
-> application. Instead, it may be better to use a more robust and
-> scalable database engine. Django comes with out of the box support for
-> several other popular database engines, such as
-> [PostgreSQL](http://www.postgresql.org/) and
-> [MySQL](http://www.mysql.com/). See the [official Django documentation
-> on Database
-> Engines](https://docs.djangoproject.com/en/1.7/ref/settings/#std:setting-DATABASE-ENGINE)
-> for more details. You can also check out [this excellent
-> article](http://www.sqlite.org/whentouse.html) on the SQLite website
-> which explains situation where you should and you shouldn't consider
-> using the lightweight SQLite engine.
+I> ### Using other Database Engines
+I> The Django database framework has been created to cater for a variety of different database backends, such as [PostgresSQL](http://www.postgresql.org/), [MySQL](https://www.mysql.com/) and [Microsoft's SQL Server](https://en.wikipedia.org/wiki/Microsoft_SQL_Server). For other database engines, other keys like `USER`, `PASSWORD`, `HOST` and `PORT` exist for you to configure the database with Django.
+I>
+I> While we don't cover how to use other database engines in this book, there are guides online which show you how to do this. A good starting point is the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/databases/#storage-engines).
+I>
+I> Note that SQLite is sufficient for demonstrating the functionality of the Django ORM. When you find your app has become viral and has accumulated thousands of users, you may want to consider [switching the database backend to something more robust](http://www.sqlite.org/whentouse.html).
 
-Creating Models
----------------
+## Creating Models
+With your database configured in `settings.py`, let's create the two initial data models for the Rango application.
 
-With your database configured in `settings.py`, let's create the two
-initial data models for the Rango application.
-
-In `rango/models.py`, we will define two classes - both of which must
-inherit from `django.db.models.Model`. The two Python classes will be
-the definitions for models representing *categories* and *pages*. Define
-the `Category` and `Page` models as follows.
+In `rango/models.py`, we will define two classes - both of which must inherit from `django.db.models.Model`. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the `Category` and `Page` models as follows.
 
 ``` {.sourceCode .python}
 class Category(models.Model):
