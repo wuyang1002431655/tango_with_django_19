@@ -90,7 +90,7 @@ I> Why is defining these methods important? Doing so will make your life easier 
 I>
 I> Including a `__unicode__()` and/or `__str__()` method in your classes is also useful when debugging your code. Issuing a `print` on a `Category` model instance *without* a `__unicode__()` or `__str__()` method will return `<Category: Category object>`. We know it's a category, but *which one?* Including `__unicode__()` or `__str__()` would then return `<Category: python>`, where `python` is the `name` of a given category.
 
-Creating and Migrating the Database
+GOT TO HERE: Creating and Migrating the Database
 -----------------------------------
 
 With our models defined, we can now let Django work its magic and create
