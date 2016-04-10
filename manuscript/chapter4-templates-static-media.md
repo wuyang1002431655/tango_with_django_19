@@ -119,19 +119,14 @@ First, we construct a dictionary of key/value pairs that we want to use within t
 I> ### What is the Context?
 I> When a template file is loaded with the Django templating system, a *template context* is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In the template we created earlier, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `I am bold font from the context` is mapped to template variable `boldmessage`. The string `I am bold font from the context` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
 
-Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the example shown in UPDATE THIS FIGURE Figure :num:`fig-rango-hello-world-template`. 
+Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the [example screenshot shown below](#fig-ch4-first-template).
 
 If you don't, read the error message presented to see what the problem is, and then double check all the changes that you have made. One of the most common issues people have with templates is that the path is set incorrectly in `settings.py`. Sometimes it's worth adding a `print` statement to `settings.py` to report the `BASE_DIR` and `TEMPLATE_DIR` to make sure everything is correct.
 
 This example demonstrates how to use templates within your views. However, we have only touched upon a fraction of the functionality provided by the Django templating engine. We will use templates in more sophisticated ways as you progress through this book. In the meantime, you can find out more about [templates from the official Django documentation](https://docs.djangoproject.com/en/1.9/ref/templates/).
 
-<!---
-RETAKE THIS SCREENSHOT!
- .. _fig-rango-hello-world-template:
-
-.. figure:: ../images/rango-hello-world-template.png
-    :figclass: align-center
- A screenshot of Google Chrome rendering the template used with this tutorial. -->
+{id="fig-ch4-first-template"}
+![](images/ch4-first-template.png)
 
 ## Serving Static Media
 While you've got templates working, your Rango app is admittedly looking a bit plain right now - there's no styling or imagery. We can add references to other files in our HTML template such as [*Cascading Style Sheets (CSS)*](http://en.wikipedia.org/wiki/Cascading_Style_Sheets), [*JavaScript*](https://en.wikipedia.org/wiki/JavaScript) and images to improve the show. These are called *static files*, because they are not generated dynamically by a Web server; they are simply sent as is to a client's Web browser.
