@@ -209,37 +209,43 @@ If for some reason the image cannot be loaded, it is always a good idea to speci
 
 With these minor changes in place, start Django development server once more and visit `http://127.0.0.1:8000/rango`. If done correctly, you will see a Webpage that looks similar to the [screenshot shown below](#fig-ch4-rango-site-with-pic).
 
+T> ### Templates and `<!DOCTYPE>`
+T> When creating correctly formatted HTML templates, always ensure that the [`DOCTYPE` declaration](http://www.w3schools.com/tags/tag_doctype.asp) appears on the **fist line**. Not doing this will cause your HTML code to [fail validation](https://validator.w3.org/), and your page may be rendered incorrectly on some browsers. Don't be tempted to put `{% load %}` tags before the declaration - these are processed by Django's templating engine and are replaced with linebreaks, meaning your `DOCTYPE` declaration will not appear on the first line.
+
 {id="fig-ch4-rango-site-with-pic"}
 ![Our first Rango template, complete with a picture of Rango the chameleon.](images/rango-site-with-pic.png)
 
-The ``{% static %}`` template tag call should be used whenever you wish to reference static media within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates - all within the correct HTML markup.
+T> ### Loading other Static Files
+T> The ``{% static %}`` template tag call can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
+T>
+T> {lang="html",linenos=on}
+T>
+T>
 
 .. code-block:: html
 	
-	<!DOCTYPE html>
-	
-	{% load static %}
-	
-	<html>
-	
-	    <head>
-	        <title>Rango</title>
-	        <link rel="stylesheet" href="{% static "css/base.css" %}" /> <!-- CSS -->
-	        <script src="{% static "js/jquery.js" %}"></script> <!-- JavaScript -->
-	    </head>
-	    
-	    <body>
-	        <h1>Including Static Media</h1>
-	        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- Images -->
-	    </body>
-	
-	</html>
-
-Static files you reference will obviously need to be present within your ``static`` directory. If the file is not there or you have referenced it incorrectly, the console output provide by Django's lightweight development server will flag up any errors. Try referencing a non-existent file and see what happens.
-
-For further information about including static media you can read through the official `Django documentation on working with static files in templates <https://docs.djangoproject.com/en/1.7/howto/static-files/#staticfiles-in-templates>`_.
-
-.. caution:: Care should be taken in your templates to ensure that any `document type declaration <http://en.wikipedia.org/wiki/Document_Type_Declaration>`_ (e.g. ``<!DOCTYPE html>``) you use in your webpages appears in the rendered output on the *first line*. This is why we put the Django template command ``{% load static %}`` on a line underneath the document type declaration, rather than at the very top. It is a requirement of HTML/XHTML variations that the document type declaration be declared on the very first line. Django commands placed before will obviously be removed in the final rendered output, but they may leave behind residual whitespace which means your output `will fail validation <http://www.w3schools.com/web/web_validate.ASP>`_ on `the W3C markup validation service <http://validator.w3.org/>`_.
+T>    <!DOCTYPE html>
+T>    
+T>    {% load static %}
+T>    
+T>    <html>
+T>    
+T>        <head>
+T>            <title>Rango</title>
+T>            <link rel="stylesheet" href="{% static "css/base.css" %}" /> <!-- CSS -->
+T>            <script src="{% static "js/jquery.js" %}"></script> <!-- JavaScript -->
+T>        </head>
+T>    
+T>        <body>
+T>            <h1>Including Static Media</h1>
+T>            <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- Images -->
+T>        </body>
+T>    
+T>    </html>
+T>    
+T> Static files you reference will obviously need to be present within your ``static`` directory. If the file is not there or you have referenced it incorrectly, the console output provide by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens.
+T>
+T> For further information about including static media you can read through the official `Django documentation on working with static files in templates <https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates>`_.
 
 #TODO(leifos): Note that this not the best practice when you go to deployment, and that they should see: https://docs.djangoproject.com/en/1.7/howto/static-files/deployment/ and that the following solution works when ``DEBUG=True``
 
