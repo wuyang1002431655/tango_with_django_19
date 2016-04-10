@@ -240,7 +240,7 @@ T>    </html>
 T>    
 T> Static files you reference will obviously need to be present within your ``static`` directory. If the file is not there or you have referenced it incorrectly, the console output provide by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens.
 T>
-T> For further information about including static media you can read through the official `Django documentation on working with static files in templates <https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates>`_.
+T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
 #TODO(leifos): Note that this not the best practice when you go to deployment, and that they should see: https://docs.djangoproject.com/en/1.7/howto/static-files/deployment/ and that the following solution works when ``DEBUG=True``
 
