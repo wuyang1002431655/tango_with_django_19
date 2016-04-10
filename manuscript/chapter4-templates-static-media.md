@@ -270,10 +270,7 @@ The steps involved for getting a static media file onto one of your pages is ano
 
 1. Take the static media file you wish to use and place it within your project's `static` directory. This is the directory you specify in your project's `STATICFILES_DIRS` list within `settings.py`.
 2. Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the `<img />` tag. 
-3. Remember to use the `{% load staticfiles %}` and `{% static "<filename>" %}` commands within the template to access the static files. Replace `<filename>` with the path to the image or resource you wish to reference.
-
-T> ### Always use `staticfiles` and `static`
-T> Using the `{% static "<filename>" %}` template tag allows you to be flexible with the `STATIC_URL` option. If you were to deploy your app, you may have to host static files elsewhere; hard coding the static path in would cause you serious headaches. `{% static "<filename>" %}` avoids this problem, so make sure you use it!
+3. Remember to use the `{% load staticfiles %}` and `{% static "<filename>" %}` commands within the template to access the static files. Replace `<filename>` with the path to the image or resource you wish to reference. **Whenever you wish to refer to a static file, use the `static` template tag!**
 
 X> ### Exercises
 X> Give the following exercises a go to reinforce what you've learnt from this chapter.
