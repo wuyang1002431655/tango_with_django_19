@@ -4,7 +4,7 @@ In this chapter, we'll be introducing you to the Django templating engine, as we
 ## Using Templates
 Up until this point, you have plugged a few things together to create a Django powered webpage. This is coupled to a view, which is in turn coupled with a series of URL mappings. Here we will delve into how to combine templates into the mix.
 
-Well-designed websites use a lot of repetition in their structure or layout. Whether you see a common header or footer on a website's pages, the `repetition of page layouts <http://www.techrepublic.com/blog/web-designer/effective-design-principles-for-web-designers-repetition/>`_ aids users with navigation, promotes organisation of the website and reinforces a sense of continuity. Django provides `templates  <https://docs.djangoproject.com/en/1.9/ref/templates/>`_ to make it easier for developers to achieve this design goal, as well as separating application logic from presentational concerns. In this chapter, you'll create a basic template which will be used to create a HTML page. This template will then be dispatched via a Django view. In the [chapter concerning databases and models](#chapter-models), we will take this a step further by using templates in conjunction with models to dispatch dynamically generated data.
+Well-designed websites use a lot of repetition in their structure or layout. Whether you see a common header or footer on a website's pages, the [repetition of page layouts](http://www.techrepublic.com/blog/web-designer/effective-design-principles-for-web-designers-repetition/) aids users with navigation, promotes organisation of the website and reinforces a sense of continuity. [Django provides templates](https://docs.djangoproject.com/en/1.9/ref/templates/) to make it easier for developers to achieve this design goal, as well as separating application logic from presentational concerns. In this chapter, you'll create a basic template which will be used to create a HTML page. This template will then be dispatched via a Django view. In the [chapter concerning databases and models](#chapter-models), we will take this a step further by using templates in conjunction with models to dispatch dynamically generated data.
 
 Q> ### Summary: What is a Template?
 Q> In the world of Django, think of a *template* as the scaffolding that is required to build a complete HTML webpage. A template contains the *static parts* of a webpage (that is, parts that never change), complete with special syntax (or tags) which can be overriden and replaced with *dynamic content* that your Django app's views can replace to produce a final HTML response.
@@ -99,7 +99,7 @@ In `rango/views.py`, add the following import statement at the top of the file.
 
 You can then update the `index()` view function as follows. Check out the inline commentary to see what each line does.
 
-.. code-block:: python	
+{lang="python",linenos=off}
     def index(request):
         # Construct a dictionary to pass to the template engine as its context.
         # Note the key boldmessage is the same as {{ boldmessage }} in the template!
