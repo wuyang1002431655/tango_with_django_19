@@ -145,7 +145,7 @@ I>
 I> {lang="text",linenos=off}
 I>     $ python manage.py sqlmigrate rango 0001
 I>
-I> In this example, `rango` is the name of your app, and `0001` is the migration you wish to view the SQL code for. Doing this allows you to get a better understanding of what exactly is going on underneath the hood, and what tables are created. You may find for complex database schemas including a many-to-many relationship that additional tables are created for you.
+I> In this example, `rango` is the name of your app, and `0001` is the migration you wish to view the SQL code for. Doing this allows you to get a better understanding of what exactly is going on at the database layer, such as what tables are created. You may find for complex database schemas including a many-to-many relationship that additional tables are created for you.
 
 After you have created migrations for your app, you need to commit them to the database. Do so by once again issuing the `migrate` command.
 
@@ -162,31 +162,21 @@ This output confirms that the database tables have been created in your database
 
 However, you may have noticed that our `Category` moel is currently lacking some fields that [were specified in Rango's requirements](#section-models-databases-requirements). **You'll be adding these in later to remind you of the migration process.**
 
-
-
-
-
-
-
-
-
-Django Models and the Django Shell
-----------------------------------
-Before we turn our attention to demonstrating the Django admin interface, it's worth noting that you can interact with Django models from the Django shell - a very useful aid for debugging purposes. We'll demonstrate how to create a ``Category`` instance using this method.
+## Django Models and the Shell
+Before we turn our attention to demonstrating the Django admin interface, it's worth noting that you can interact with Django models directly from the Django shell - a very useful tool for debugging purposes. We'll demonstrate how to create a ``Category`` instance using this method.
 
 To access the shell, we need to call ``manage.py`` from within your Django project's root directory once more. Run the following command.
 
 ``$ python manage.py shell``
 
-This will start an instance of the Python interpreter and load in your project's settings for you. You can then interact with the models. The following terminal session demonstrates this functionality. Check out the inline commentary to see what each command does.
+This will start an instance of the Python interpreter and load in your project's settings for you. You can then interact with the models, with the following terminal session demonstrating this functionality. Check out the inline commentary that we added to see what each command achieves.
 
-.. code-block:: python
-	
+{lang="python",linenos=off}
 	# Import the Category model from the Rango application
 	>>> from rango.models import Category
 	
 	# Show all the current categories
-	>>> print Category.objects.all()
+	>>> print(Category.objects.all())
 	[] # Returns an empty list (no categories have been defined!)
 	
 	# Create a new category object, and save it to the database.
@@ -194,20 +184,18 @@ This will start an instance of the Python interpreter and load in your project's
 	>>> c.save()
 	
 	# Now list all the category objects stored once more.
-	>>> print Category.objects.all()
+	>>> print(Category.objects.all())
 	[<Category: test>] # We now have a category called 'test' saved in the database!
 	
 	# Quit the Django shell.
 	>>> quit()
 
-In the example, we first import the model that we want to manipulate. We then print out all the existing categories, of which there are none because our table is empty. Then we create and save a Category, before printing out all the categories again. This second ``print`` should then show the ``Category`` just added.
+In the example, we first import the model that we want to manipulate. We then print out all the existing categories. As our underlying `Category` table is empty, an empty list is returned. Then we create and save a `Category`, before printing out all the categories again. This second `print` then shows the new ``Category`` just added. Note the name, `Test` appears in the second `print` - this is your `__str__()` or `__unicode__()` method at work!
 
-.. note:: The example we provide above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it is good time to complete part one of the `official Django Tutorial to learn more about interacting with the models <https://docs.djangoproject.com/en/1.7/intro/tutorial01/>`_. Also check out the `official Django documentation on the list of available commands <https://docs.djangoproject.com/en/1.7/ref/django-admin/#available-commands>`_ for working with models.
+E> ### Complete the Official Tutorial
+E> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete part one of the [official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
 
-.. _admin-section:
-
-Configuring the Admin Interface
--------------------------------
+## Configuring the Admin Interface
 One of the stand-out features of Django is that it provides a built in, web-based administrative interface that allows us to browse and edit data stored within our models and corresponding database tables. In the ``settings.py`` file, you will notice that one of the pre-installed apps is ``django.contrib.admin``, and in your project's ``urls.py`` there is a urlpattern that matches ``admin/``.
 
 Start the development server:
