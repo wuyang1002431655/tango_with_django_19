@@ -221,7 +221,7 @@ within it are another five Python scripts:
     previously;
 -   `admin.py`, where you can register your models so that you can benefit
 	    from some Django machinery which creates an admin interface for you.
--   `apps.py`, 
+-   `apps.py`, provides a place for any application specific configuration 
 -   `models.py`, a place to store your application's data models - where
     you specify the entities and relationships between data;
 -   `tests.py`, where you can store a series of functions to test your

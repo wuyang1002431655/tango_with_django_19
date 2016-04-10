@@ -1,8 +1,6 @@
-Setting up your System {#chapter-system-setup}
-==============================================
+#Setting up your System {#chapter-system-setup}
 
-Installing the Software
------------------------
+##Installing the Software
 Now that you have a decent understanding of how to interact with the
 terminal, you can begin to install the software required for this
 tutorial.
