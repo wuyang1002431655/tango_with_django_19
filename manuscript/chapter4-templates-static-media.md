@@ -116,7 +116,7 @@ You can then update the `index()` view function as follows. Check out the inline
 
 First, we construct a dictionary of key/value pairs that we want to use within the template. Then, we call the `render()` helper function. This function takes as input the user's `request`, the template file name, and the context dictionary. The `render()` function will take this data and mash it together with the template to produce a complete HTML page. This is then returned and dispatched to the user's web browser.
 
-I> ### What is the Template Context?
+I> ### What is the Template Context? {#section-templates-static-context}
 I> When a template file is loaded with the Django templating system, a *template context* is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In the template we created earlier, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `I am bold font from the context` is mapped to template variable `boldmessage`. The string `I am bold font from the context` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
 
 Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the [example screenshot shown below](#fig-ch4-first-template).
@@ -245,30 +245,33 @@ T>         </body>
 T>     
 T>     </html>
 T>    
-T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. This is a common problem - make sure you have specified the filenames correctly! Have a look at the [figure below as an example of what you can expect to see](#fig-ch4-terminal).
+T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. This is a common problem - make sure you have specified the filenames correctly!
 T>
-T> {id="fig-ch4-terminal",float="left",width="60%"}
-T> ![Check out the HTTP response codes for the different requests (e.g. HTTP 200, 304 and 404).](images/ch4-terminal.png)
+T> {lang="text",linenos=off}
+T>     [10/Apr/2016 15:12:48] "GET /rango/ HTTP/1.1" 200 374
 T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
 ## Basic Workflow
 With the chapter complete, you should now know how to setup and create templates, use templates within your views, setup and use the Django development server to serve static media files, *and* include images within your templates. We've covered quite a lot!
 
-Creating a template and integrating it within a Django view is a key concept for you to understand. It takes several steps, but becomes second nature to you after a few attempts.
+Creating a template and integrating it within a Django view is a key concept for you to understand. It takes several steps, but will become second nature to you after a few attempts.
 
-* First, create the template you wish to use and save it within the ``templates`` directory you specified in your project's ``settings.py`` file. You may wish to use Django template variables (e.g. ``{{ variable_name }}``) within your template. You'll be able to replace these with whatever you like within the corresponding view.
-* Find or create a new view within an application's ``views.py`` file.
-*. Add your view-specific logic (if you have any) to the view. For example, this may involve extracting data from a database.
-* Within the view, construct a dictionary object which you can pass to the template engine as part of the template's *context*.
-* Make use of the  ``render()`` helper function to generate the rendered response. Ensure you reference the request, then the template file, followed by the context dictionary!
-* If you haven't already done so, map the view to a URL by modifying your project's ``urls.py`` file - and the application-specific ``urls.py`` file if you have one.
+1. First, create the template you wish to use and save it within the `templates` directory you specified in your project's `settings.py` module. You may wish to use Django template variables (e.g. `{{ variable_name }}`) or [template tags](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/) within your template. You'll be able to replace these with whatever you like within the corresponding view.
+2. Find or create a new view within an application's `views.py` file.
+3. Add your view specific logic (if you have any) to the view. For example, this may involve extracting data from a database and storing it within a list.
+4. Within the view, construct a dictionary object which you can pass to the template engine as part of the [template's *context*](#section-templates-static-context).
+5. Make use of the  `render()` helper function to generate the rendered response. Ensure you reference the request, then the template file, followed by the context dictionary.
+6. If you haven't already done so, map the view to a URL by modifying your project's `urls.py` file and the application specific `urls.py` file if you have one.
 
 The steps involved for getting a static media file onto one of your pages is another important process you should be familiar with. Check out the steps below on how to do this.
 
-* Take the static media file you wish to use and place it within your project's ``static`` directory. This is the directory you specify in your project's ``STATICFILES_DIRS`` tuple within ``settings.py``.
-* Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the ``<img />`` tag. 
-* Remember to use the ``{% load staticfiles %}`` and ``{% static "filename" %}`` commands within the template to access the static files.
+1. Take the static media file you wish to use and place it within your project's `static` directory. This is the directory you specify in your project's `STATICFILES_DIRS` list within `settings.py`.
+2. Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the `<img />` tag. 
+3. Remember to use the `{% load staticfiles %}` and `{% static "<filename>" %}` commands within the template to access the static files. Replace `<filename>` with the path to the image or resource you wish to reference.
+
+T> ### Always use `staticfiles` and `static`
+T> Using the `{% static "<filename>" %}` template tag allows you to be flexible with the `STATIC_URL` option. If you were to deploy your app, you may have to host static files elsewhere; hard coding the static path in would cause you serious headaches. `{% static "<filename>" %}` avoids this problem, so make sure you use it!
 
 X> ### Exercises
 X> Give the following exercises a go to reinforce what you've learnt from this chapter.
