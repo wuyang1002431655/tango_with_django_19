@@ -22,10 +22,10 @@ The response should be either:
 
 or:
 
-    3.4.3
+    3.5.1
 
 
-Any 2.7.5+ or 3+ versions of Python should work fine. If you need to upgrade or install Python go to the Section on installing software. 
+Any 2.7.5+ or 3.4+ versions of Python should work fine. If you need to upgrade or install Python go to the Section on installing software. 
 
 After verifying your Python installation, check your Django installation
 by issuing the following command.
@@ -38,7 +38,7 @@ of the `-c` switch. After importing Django, you should see `1.7` printed
 underneath. If you see a different set of numbers or are greeted with a
 Python `ImportError`, go back to Section installing-software or consult
 the [Django Documentation on Installing
-Django](https://docs.djangoproject.com/en/1.7/topics/install/) for more
+Django](https://docs.djangoproject.com/en/1.9/topics/install/) for more
 information. If you find that you have got a different version of
 Django, it is possible that you will come across problems at some point.
 It's definitely worth making sure you have Django 1.7 installed.
