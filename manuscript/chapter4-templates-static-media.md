@@ -56,18 +56,18 @@ At the top of your `settings.py` file, there is a variable called `BASE_DIR`. Th
     print os.path.dirname(__file__)
     print os.path.dirname(os.path.dirname(__file__))
 	
-Let's employ this technique now. Create a new variable in `settings.py` called `TEMPLATE_PATH` under `BASE_DIR`, and point it to the `templates` directory that you created earlier. Using the `os.path.join()` function, your new variable should be defined like the example below.
+Let's employ this technique now. Create a new variable in `settings.py` called `TEMPLATE_DIR` under `BASE_DIR`, and point it to the `templates` directory that you created earlier. Using the `os.path.join()` function, your new variable should be defined like the example below.
 
 {lang="python",linenos=on}
-    TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+    TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
-Here we make use of `os.path.join()` to mash together the `BASE_DIR` variable and `'templates'`, which would yield `<workspace>/tango_with_django_project/templates/`. This means we can then use our new `TEMPLATE_PATH` variable to replace the hard coded path we defined earlier in `TEMPLATES`. Update the `DIRS` key/value pairing to look like the following.
+Here we make use of `os.path.join()` to mash together the `BASE_DIR` variable and `'templates'`, which would yield `<workspace>/tango_with_django_project/templates/`. This means we can then use our new `TEMPLATE_DIR` variable to replace the hard coded path we defined earlier in `TEMPLATES`. Update the `DIRS` key/value pairing to look like the following.
 
 {lang="python",linenos=off}
-    'DIRS': [TEMPLATE_PATH]
+    'DIRS': [TEMPLATE_DIR]
 
-I> ### Why `TEMPLATE_PATH`?
-I> You've created a new variable called `TEMPLATE PATH` at the top of your `settings.py` module because it's easier to access should you ever need to change it. For more complex Django projects, the `DIRS` list allows you to specify more than one template directory - but for this book, one location is sufficient to get everything working.
+I> ### Why `TEMPLATE_DIR`?
+I> You've created a new variable called `TEMPLATE_DIR` at the top of your `settings.py` module because it's easier to access should you ever need to change it. For more complex Django projects, the `DIRS` list allows you to specify more than one template directory - but for this book, one location is sufficient to get everything working.
 
 W> ### Concatenating Paths
 W> When concatenating system paths together, always use `os.path.join()`. Using this built-in function ensures that the correct path separators are used. On a UNIX operating system (or derivative of), forward slashes (`/`) would be used to separate directories, whereas a Windows operating system would use backward slashes (`\`). If you manually append slashes to paths, you may end up with path errors when attempting to run your code on a different operating system, thus reducing your project's portability.
@@ -77,22 +77,26 @@ With your template directory and path now set up, create a file called `index.ht
 
 {lang="html",linenos=on}
     <!DOCTYPE html>
+    
     <html>
+        
         <head>
             <title>Rango</title>
         </head>
+        
         <body>
             <h1>Rango says...</h1>
-            hello world! <strong>{{ boldmessage }}</strong><br />
+            hey there partner! <strong>{{ boldmessage }}</strong><br />
             <a href="/rango/about/">About</a><br />
         </body>
+        
     </html>
 
 From this HTML code, it should be clear that a simple HTML page is going to be generated that greets a user with a *hello world* message. You might also notice some non-HTML in the form of `{{ boldmessage }}`. This is a *Django template variable*. We can set values to these variables so they are replaced with whatever we want when the template is rendered. We'll get to that in a moment.
 
 To use this template, we need to re-configure the `index()` view that we created earlier. Instead of dispatching a simple response, we will change the view to dispatch our template.
 
-In `rango/views.py`, add the following import statement at the top of the file.
+In `rango/views.py`, check to see if the following `import` statement exists at the top of the file. If it is not present, add it.
 
 {lang="python",linenos=off}
 	from django.shortcuts import render
@@ -115,9 +119,9 @@ First, we construct a dictionary of key/value pairs that we want to use within t
 I> ### What is the Context?
 I> When a template file is loaded with the Django templating system, a *template context* is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In the template we created earlier, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `I am bold font from the context` is mapped to template variable `boldmessage`. The string `I am bold font from the context` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
 
-Now that you have updated the view to employ the use of your template, start the Django development server and visit http://127.0.0.1:8000/rango/. You should see your simple HTML template rendered, just like the example shown in Figure :num:`fig-rango-hello-world-template`. 
+Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the example shown in UPDATE THIS FIGURE Figure :num:`fig-rango-hello-world-template`. 
 
-If you don't, read the error message presented to see what the problem is, and then double check all the changes that you have made. One of the most common issues people have with templates is that the path is set incorrectly in `settings.py`. Sometimes it's worth adding a `print` statement to `settings.py` to report the `BASE_DIR` and `TEMPLATE_PATH` to make sure everything is correct.
+If you don't, read the error message presented to see what the problem is, and then double check all the changes that you have made. One of the most common issues people have with templates is that the path is set incorrectly in `settings.py`. Sometimes it's worth adding a `print` statement to `settings.py` to report the `BASE_DIR` and `TEMPLATE_DIR` to make sure everything is correct.
 
 This example demonstrates how to use templates within your views. However, we have only touched upon a fraction of the functionality provided by the Django templating engine. We will use templates in more sophisticated ways as you progress through this book. In the meantime, you can find out more about [templates from the official Django documentation](https://docs.djangoproject.com/en/1.9/ref/templates/).
 
@@ -129,12 +133,11 @@ RETAKE THIS SCREENSHOT!
     :figclass: align-center
  A screenshot of Google Chrome rendering the template used with this tutorial. -->
 
-##Serving Static Media
-Admittedly, the *Rango* website is pretty plain as we have not included any styling or imagery.  `Cascading Style Sheets (CSS) <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_, `JavaScript <https://en.wikipedia.org/wiki/JavaScript>`_ and images are essentially *static media* files which we can include in our webpages to add style and introduce dynamic behaviour. These files are served in a slightly different way from webpages. This is because they aren't generated on the fly like our HTML pages. This section shows you how to setup your Django project to serve static media to the client. We'll also modify our template to include some example static media.
+## Serving Static Media
+While you've got templates working, your Rango app is admittedly looking a bit plain right now - there's no styling or imagery. We can add references to other files in our HTML template such as [*Cascading Style Sheets (CSS)*](http://en.wikipedia.org/wiki/Cascading_Style_Sheets), [*JavaScript*](https://en.wikipedia.org/wiki/JavaScript) and images to improve the show. These are called *static files*, because they are not generated dynamically by a Web server; they are simply sent as is to a client's Web browser.
 
-Configuring the Static Media Directory
-......................................
-To get static media up and running, you will need to set up a directory in which static media files are stored. In your project directory (e.g. ``<workspace>/tango_with_django_project/``), create a new directory called ``static`` and a new directory called ``images`` inside ``static``
+### Configuring the Static Media Directory
+To get static media up and running, you will need to set up a directory in which static media files are stored. In your project directory (e.g. `<workspace>/tango_with_django_project/`), create a new directory called `static` and a new directory called `images` inside `static`.
 
 Now place an image within the ``static/images`` directory. As shown in Figure :num:`fig-rango-picture`, we chose a picture of the chameleon, `Rango <http://www.imdb.com/title/tt1192628/>`_ - a fitting mascot, if ever there was one.
 
