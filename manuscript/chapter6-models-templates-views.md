@@ -1,5 +1,4 @@
-Models and Databases
-====================
+# Models and Databases {#chapter-models}
 
 Working with databases often requires you to get your hands dirty
 messing about with SQL. In Django, a lot of this hassle is taken care of
