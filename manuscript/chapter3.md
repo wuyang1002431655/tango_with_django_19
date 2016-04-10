@@ -1,26 +1,31 @@
-Django Basics {#chapter-django-basics}
-======================================
+#Django Basics {#chapter-django-basics}
+
 
 Let's get started with Django! In this chapter, we'll be giving you an
-overview of the how to get started with Django. You'll be setting up a
+overview of the creation process . You'll be setting up a
 new project and a new web application. By the end of this chapter, you
 will have a simple Django-power webpage up and running!
 
-Testing your Setup
-------------------
+##Testing your Setup
 
 Let's start by checking that your Python and Django installations are
-installed correctly, and are at the correct version for this tutorial.
-To do this, open a new terminal instance and issue the following
-command.
+correct, and are at the right versions for this tutorial.
+To do this, open a new terminal window and issue the following
+command, which tells you what Python version you have:
 
     $ python --version
-    2.7.5
 
-This print the Python version number and exit. If the version displayed
-is anything but `2.7.5`, you will need to go back to Section
-installing-software and verify you have completed all the relevant steps
-for your operating system.
+
+The response should be either:
+
+    2.7.10
+
+or:
+
+    3.4.3
+
+
+Any 2.7.5+ or 3+ versions of Python should work fine. If you need to upgrade or install Python go to the Section on installing software. 
 
 After verifying your Python installation, check your Django installation
 by issuing the following command.
