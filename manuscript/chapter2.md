@@ -1,6 +1,6 @@
 #Getting Ready to Tango
 
-Before we get down to coding it is really important that we get our development environment setup so that you can *Tango with Django!* You'll need to ensure that you have everything you need installed on your computer. This chapter outlines the five key components that you need to get setup. 
+Before we get down to coding it is really important that we get our development environment setup so that you can *Tango with Django!* You'll need to ensure that you have all the necessary components installed on your computer. This chapter outlines the five key components that you need to be aware or, setup and use:
 
 * Working with the Command Line
 * *Python* and your *Python* installation
@@ -9,10 +9,15 @@ Before we get down to coding it is really important that we get our development 
 * Version Control System *Git* 
 
 
-If you already have Python 2.7/3.5 and Django 1.9 installed and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, below we explain each component why it is important. In the appendix of the book we have additional tutorial material on how to install and use the various components.
+If you already have Python 2.7/3.5 and Django 1.9 installed and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, below we provide an overview of the different components and why they are important. We also provide a series of pointers on how to setup the various components.
 
-<!--- get started with [the chapter which details how to setup your system for Django development](#chapter-system-setup).
--->
+
+>H ###Development Environment Protocol
+>H
+>H Setting up your development environment is pretty tedious and often a real pain because you only do >H it occasionally. So creating a protocol like this and noting it down
+>H will save you a lot of hassle in the future.
+
+
 
 
 ## Python
