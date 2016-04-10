@@ -137,34 +137,37 @@ To start, you will need to set up a directory in which static media files are st
 Next, place an image inside the `images` directory. As shown in below, we chose a picture of [the chameleon Rango](http://www.imdb.com/title/tt1192628/) - a fitting mascot, if ever there was one.
 
 {id="fig-ch4-rango"}
-![It's Rango!](images/ch4-rango.png)
+![Rango the chameleon within our `static/images` media directory.](images/ch4-rango-picture.png)
 
-.. _fig-rango-picture:
+Just like the `templates` directory we created earlier, we need to tell Django about our new `static` directory. To do this, we once again need to edit our project's `settings.py` module. Within this file, we need to add a new variable pointing to our `static` directory, and a data structure that Django can parse to work out where our new directory is.
 
-.. figure:: ../images/rango-picture.png
-	:figclass: align-center
+First of all, create a variable called `STATIC_DIR` at the top of `settings.py`, preferably underneath `BASE_DIR` and `TEMPLATES_DIR` to keep your paths all in the same place. `STATIC_DIR` should make use of the same `os.path.join` trick - but point to `static` this time around, just as shown below.
 
-	Rango the chameleon within our static media directory.
+{lang="python",linenos=off}
+	STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-With our ``static`` directory created, we need to tell Django about it, just like we did with our ``templates`` directory earlier. In ``settings.py`` file, we need to update two variables:  ``STATIC_URL`` and the ``STATICFILES_DIRS`` tuple. First, create a variable to store the path to the static directory (``STATIC_PATH``) as follows.
+This will ultimately provide an absolute path to the location `<workspace>/tango_with_django_project/static/`. Once this variable has been created, we then need to create a new data structure called `STATICFILES_DIRS`. This is essentially a list of paths with which Django can expect to find static files that can be served. By default, this list does not exist - **check** it doesn't before you create it. If you define it twice, you can start to confuse Django - and yourself.
 
-.. code-block:: python
-	
-	STATIC_PATH = os.path.join(BASE_DIR,'static')
+For this book, we're only going to be using one location to store our project's static files - the path defined in `STATIC_DIR`. As such, we can simply set up `STATICFILES_DIRS` with the following.
 
-	STATIC_URL = '/static/' # You may find this is already defined as such.
-	
-	STATICFILES_DIRS = (
-	    STATIC_PATH,
-	)
+{lang="python",linenos=off}
+	STATICFILES_DIRS = [STATIC_DIR]
 
-You've typed in some code, but what does it represent? The first variable ``STATIC_URL`` defines the base URL with which your Django applications will find static media files when the server is running. For example, when running the Django development server with ``STATIC_URL`` set to ``/static/`` like in the code example above, static media will be available at ``http://127.0.0.1:8000/static/``.  The `official documentation on serving up static media <https://docs.djangoproject.com/en/1.7/ref/settings/#std:setting-STATIC_URL>`_ warns that it is vitally  important to make sure that those slashes are there. Not configuring this problem can lead to a world of pain.
+T> ### Keep `settings.py` Tidy!
+T> It's in your best interests to keep your `settings.py` module tidy and in good order. Don't just put things in random places; keep it organised. Keep your `DIRS` variables at the top of the module so they are easy to find, and place `STATICFILES_DIRS` in the portion of the module responsible for static media (close to the bottom). When you come back to edit the file later, it'll be easier for you or other collaborators to find the necessary variables.
 
-While ``STATIC_URL`` defines the URL to access media via the web server, ``STATICFILES_DIRS`` allows you to specify the location of the newly created ``static`` directory on your local disk. Just like the ``TEMPLATE_DIRS`` tuple, ``STATICFILES_DIRS`` requires an absolute path to the ``static`` directory. Here, we re-used the ``BASE_DIR`` defined in Section :ref:`model-setup-templates-label` to create the ``STATIC_PATH``.
+Finally, check that the `STATIC_URL` variable is defined within your `settings.py` module. If it is not, then define it as shown below. Note that this variable by default in Django 1.9 appears close to the end of the module, so you may have to scroll down to find it.
 
-With those two settings updated, run your Django project's development server once more. If we want to view our image of Rango,  visit the URL ``http://127.0.0.1:8000/static/images/rango.jpg``. If it doesn't appear, you will want to check to see if everything has been correctly spelt and that you saved your ``settings.py`` file, and restart the development server. If it does appear, try putting in additional file types into the ``static`` directory and request them via your browser.
+{lang="python",linenos=off}
+    STATIC_URL = '/static/'
 
-.. caution:: While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production - or *live* - environment. The `official Django documentation on Deployment <https://docs.djangoproject.com/en/1.7/howto/static-files/deployment/>`_ provides further information about deploying static files in a production environment.
+With everything required now entered, what does it all mean? Put simply, the first two variables `STATIC_DIR` and `STATICFILES_DIRS` refers to the locations on your computer where static files are stored. The final variable `STATIC_URL` then allows us to specify the URL with which static files can be accessed when we run our Django development server. For example, with `STATIC_URL` set to `/static/`, we would be able to access static content at `http://127.0.0.1:8000/static/`. *Think of the first two variables as server-side locations, and the third variable as the location with which clients can access static content.*
+
+W> ### Don't forget the Slashes!
+W> When setting `STATIC_URL`, please ensure that you end the URL you specify with a forward slash (e.g. `/static/`, not `/static`). As per the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-STATIC_URL), not doing so can open you up to a world of pain. The extra slash at the end ensures that the root of the URL (e.g. `/static/`) is separated from the static content you want to serve (e.g. `images/rango.jpg`).
+
+I> ### Serving Static Content
+I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production - or *live* - environment. The [official Django documentation on Deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when you deploy Rango.
 
 Static Media Files and Templates
 --------------------------------
