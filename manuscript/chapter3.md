@@ -245,17 +245,18 @@ contained within your project's configuration directory. Open the file
 and find the `INSTALLED_APPS` tuple. Add the `rango` application to the
 end of the tuple, which should then look like the following example.
 
-```python
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rango',
-)
-```
+{lang="python", linenos=off}
+	
+	INSTALLED_APPS = [
+    	'django.contrib.admin',
+    	'django.contrib.auth',
+    	'django.contrib.contenttypes',
+    	'django.contrib.sessions',
+    	'django.contrib.messages',
+    	'django.contrib.staticfiles',
+    	'rango',
+	]
+
 
 Verify that Django picked up your new application by running the
 development server again. If you can start the server without errors,
@@ -310,7 +311,7 @@ view.
 To create an initial mapping, open `urls.py` located in your project directory, and add the following lines of code to the `urlpatterns`:
 
 
-{lang="python",linenos=on}
+{lang="python", linenos=on}
 	from rango import views
 	
 	urlpatterns = [
@@ -332,15 +333,16 @@ relative path from your workspace directory, this would be the file
 Update the `urlpatterns` list as shown in the example below.
 
 {lang="python",linenos=on}
+
 	from django.conf.urls import url
 	from django.contrib import admin
 	from django.conf.urls import include  # New import added
-
+	
 	urlpatterns = [
 		url(r'^$', views.index, name='index'),
     	url(r'^rango/', include('rango.urls')),   #maps any URLs with starting 
-												  #with rango/ to be handled by
-											  	#the rango application
+		#with rango/ to be handled by
+		#the rango application
 		url(r'^admin/', admin.site.urls),
 		]
 
