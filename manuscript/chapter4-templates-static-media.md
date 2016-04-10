@@ -219,11 +219,6 @@ T> ### Loading other Static Files
 T> The ``{% static %}`` template tag call can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
 T>
 T> {lang="html",linenos=on}
-T>
-T>
-
-.. code-block:: html
-	
 T>    <!DOCTYPE html>
 T>    
 T>    {% load static %}
