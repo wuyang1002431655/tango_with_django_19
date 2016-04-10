@@ -254,16 +254,12 @@ T>             return self.name
 I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango application is the most simple, functional example available. There are many different features which you can use in the to perform all sorts of nice customisations, such as changing the way models are presented. You can refer to the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
-.. _model-population-script-label:
+## Creating a Population Script
+Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `dghiewrojbfjro`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
 
-Creating a Population Script
-----------------------------
-Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys like they are a monkey trying to write Shakespeare. If you are in a small development team, then everyone has to enter in some data. Rather than do this independently, it is better to write a script so that everyone has similar data, and so that everyone has useful and appropriate data, rather than junk test data. So it is good practice to create what we call a *population script* for your database. This script is designed to automatically populate your database with test data for you.
+To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
 
-To create a population script for Rango's database, we start by creating a new Python module within our Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
-
-.. code-block:: python
-	
+{lang="python",linenos=on}	
 	import os
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
 
@@ -271,7 +267,6 @@ To create a population script for Rango's database, we start by creating a new P
 	django.setup()
 
 	from rango.models import Category, Page
-	
 	
 	def populate():
 	    python_cat = add_cat('Python')
@@ -315,7 +310,7 @@ To create a population script for Rango's database, we start by creating a new P
 	    # Print out what we have added to the user.
 	    for c in Category.objects.all():
 	        for p in Page.objects.filter(category=c):
-	            print "- {0} - {1}".format(str(c), str(p))
+	            print("- {0} - {1}".format(str(c), str(p)))
 	
 	def add_page(cat, title, url, views=0):
 	    p = Page.objects.get_or_create(category=cat, title=title)[0]
@@ -330,8 +325,11 @@ To create a population script for Rango's database, we start by creating a new P
 	
 	# Start execution here!
 	if __name__ == '__main__':
-	    print "Starting Rango population script..."
+	    print("Starting Rango population script...")
 	    populate()
+
+T> ### Understand this Code!
+T> Don't copy, paste and leave. Add the code to your new module, but read the explanations below as to what is going on. You'll learn something new!
 
 While this looks like a lot of code, what it does is relatively simple. As we define a series of functions at the top of the file, code execution begins towards the bottom - look for the line ``if __name__ == '__main__'``. We call the ``populate()`` function.
 
