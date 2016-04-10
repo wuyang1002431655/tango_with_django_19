@@ -259,7 +259,7 @@ Entering test data into your database tends to be a hassle. Many developers will
 
 To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
 
-{lang="python",linenos=on}	
+{lang="python",linenos=on}
 	import os
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
 
@@ -338,20 +338,22 @@ E> When importing Django models, make sure you have imported your project's sett
 E>
 E> If you don't do this crucial step, **an exception will be raised when you attempt to import your models as the necessary infrastructure has not yet been initialised**. This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
 
-The ``populate()`` function is responsible for the calling the ``add_cat()`` and ``add_page()`` functions, who are in turn responsible for the creation of new categories and pages respectively. ``populate()`` keeps tabs on category references for us as we create each individual ``Page`` model instance and store them within our database. Finally, we loop through our ``Category`` and ``Page`` models to print to the user all the ``Page`` instances and their corresponding categories.
+The `populate()` function is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to the `Python` category is stored in local variable `python_cat` - check line 11 above. This is done as a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
 
-.. note:: We make use of the convenience ``get_or_create()`` method for creating model instances. As we don't want to create duplicates of the same entry, we can use ``get_or_create()`` to check if the entry exists in the database for us. If it doesn't exist, the method creates it. This can remove a lot of repetitive code for us - rather than doing this laborious check ourselves, we can make use of code that does exactly this for us. As we mentioned previously, why reinvent the wheel if it’s already there?
-	
-	The ``get_or_create()`` method returns a tuple of ``(object, created)``. The first element ``object`` is a reference to the model instance that the ``get_or_create()`` method creates if the database entry was not found. The entry is created using the parameters you pass to the method - just like ``category``, ``title``, ``url`` and ``views`` in the example above. If the entry already exists in the database, the method simply returns the model instance corresponding to the entry. ``created`` is a boolean value; ``true`` is returned if ``get_or_create()`` had to create a model instance.
-	
-	The ``[0]`` at the end of our call to the method to retrieve the ``object`` portion of the tuple returned from ``get_or_create()``. Like most other programming language data structures, Python tuples use `zero-based numbering <http://en.wikipedia.org/wiki/Zero-based_numbering>`_.
-	
-	You can check out the `official Django documentation <https://docs.djangoproject.com/en/1.7/ref/models/querysets/#get-or-create>`_ for more information on the handy ``get_or_create()`` method.
+I> ### Creating Model Instances
+I> We make use of the convenience `get_or_create()` method for creating model instances in the population script above. As we don't want to create duplicates of the same entry, we can use `get_or_create()` to check if the entry exists in the database for us. If it doesn't exist, the method creates it. It it does, then a reference to the specific model instance is returned.
+I> 
+I> This helper method can remove a lot of repetitive code for us. Rather than doing this laborious check ourselves, we can make use of code that does exactly this for us. *Why reinvent the wheel if it’s already there?*
+I>
+I> The `get_or_create()` method returns a tuple of `(object, created)`. The first element `object` is a reference to the model instance that the `get_or_create()` method creates if the database entry was not found. The entry is created using the parameters you pass to the method - just like `category`, `title`, `url` and `views` in the example above. If the entry already exists in the database, the method simply returns the model instance corresponding to the entry. `created` is a boolean value; `True` is returned if `get_or_create()` had to create a model instance.
+I>
+I> This explanation therefore means that the `[0]` at the end of our call to the `get_or_create()` returns the object reference only. Like most other programming language data structures, Python tuples use [zero-based numbering](http://en.wikipedia.org/wiki/Zero-based_numbering).
+I> 
+I> You can check out the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/models/querysets/#get-or-create) for more information on the handy `get_or_create()` method.
 
-When saved, we can run the script by changing the current working directory in a terminal to our Django project's root and executing the module with the command ``$ python populate_rango.py``. You should then see output similar to that shown below.
+When saved, you can then run your new populations script by changing the present working directory in a terminal to the Django project's root. It's then a simple case of executing the command ``$ python populate_rango.py``. You should then see output similar to that shown below.
 
-::
-	
+{lang="text",linenos=off}
 	$ python populate_rango.py
 	
 	Starting Rango population script...
@@ -364,20 +366,15 @@ When saved, we can run the script by changing the current working directory in a
 	- Other Frameworks - Bottle
 	- Other Frameworks - Flask
 
-Now let's verify that the population script populated the database. Restart the Django development server, navigate to the admin interface, and check that you have some new categories and pages. Do you see all the pages if you click ``Pages``, like in Figure :num:`fig-admin-populated`?
+Next, verify that the population script actually populated the database. Restart the Django development server, navigate to the admin interface (at `http://127.0.0.1:8000/admin/`) and check that you have some new categories and pages. Do you see all the pages if you click `Pages`, like in the figure shown below?
 
-.. _fig-admin-populated:
+{id="fig-admin-populated"}
+![The Django admin interface, showing the `Page` model populated with the new population script. Success!](images/ch5-admin-populated.png)
 
-.. figure:: ../images/ch5-rango-admin.png
-	:figclass: align-center
+While creating a population script may take time, you will save yourself time in the long run. When deploying your app elsewhere, running the population script after setting everything up means you can start demonstrating your app straight away. You'll also find it very handy when it comes to [unit testing your code](#chapter-testing).
 
-	The Django admin interface, showing the Page table populated with sample data from our population script.
-
-A population script takes a little bit of time to write but when you are working with a team, you will be able to share the population script so that everyone can create the database and have it populated. Also, for unit testing it will come in handy.
-
-Basic Workflows
----------------
-Now that we've covered the core principles of dealing with Django's models functionality, now is a good time to summarise the processes involved in setting everything up. We've split the core tasks into separate sections for you.
+## Basic Workflow
+Now that we've covered the core principles of dealing with Django's ORM, now is a good time to summarise the processes involved in setting everything up. We've split the core tasks into separate sections for you. Check this sectio out when you need to quickly refresh your mind of the different steps.
 
 Setting up your Database
 ........................

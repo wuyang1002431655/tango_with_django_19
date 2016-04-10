@@ -1,4 +1,4 @@
-#Automated Testing
+#Automated Testing {#chapter-testing}
 
 
 It is good practice to get into the habit of writing and developing
