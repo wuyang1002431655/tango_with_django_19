@@ -7,7 +7,7 @@ This chapter walks you through the basics of data management with Django and its
 Before we get started, let's go over the data requirements for the Rango app that we are developing. Full requirements for the application are [provided in detail earlier on](#overview-er), but to refresh your memory, let's quickly summarise our client's requirements.
 
 * Rango is a essentially a *web page directory* - a site containing links to other websites.
-* There are a number of different *webpage categories* with each category housing a number of links. [We assumed in the overview chapter](#overview-er) that this is a one-to-many relationship. Check out the [Entity Relationship Diagram below](#fig-rango-erd-repeat).
+* There are a number of different *webpage categories* with each category housing a number of links. [We assumed in the overview chapter](#overview-er) that this is a one-to-many relationship. Check out the [Entity Relationship diagram below](#fig-rango-erd-repeat).
 * A category has a name, a number of visits, and a number of likes.
 * A page refers to a category, has a title, URL and a number of views.
 
@@ -35,49 +35,45 @@ I>
 I> Note that SQLite is sufficient for demonstrating the functionality of the Django ORM. When you find your app has become viral and has accumulated thousands of users, you may want to consider [switching the database backend to something more robust](http://www.sqlite.org/whentouse.html).
 
 ## Creating Models
-With your database configured in `settings.py`, let's create the two initial data models for the Rango application.
+With your database configured in `settings.py`, let's create the two initial data models for the Rango application. Models for a Django app are stored in the respective `models.py` module. This means that for Rango, models are stored within `rango/models.py`.
 
-In `rango/models.py`, we will define two classes - both of which must inherit from `django.db.models.Model`. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the `Category` and `Page` models as follows.
+For the models themselves, we will create two classes - one class representing each model. Both must [inherit](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)) from the `Model` base class, `django.db.models.Model`. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the `Category` and `Page` model as follows.
 
-``` {.sourceCode .python}
-class Category(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+{lang="python",linenos=on}
+    class Category(models.Model):
+        name = models.CharField(max_length=128, unique=True)
+        
+        def __str__(self):  # For Python 2, use __unicode__ instead
+            return self.name
+    
+    class Page(models.Model):
+        category = models.ForeignKey(Category)
+        title = models.CharField(max_length=128)
+        url = models.URLField()
+        views = models.IntegerField(default=0)
+        
+        def __str__(self):  # For Python 2, use __unicode__ instead
+            return self.title
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
-        return self.name
+T> ### Check `import` Statements
+T> At the top of the `models.py` module, you should see `from django.db import models`. If you don't see it, add it in.
 
-class Page(models.Model):
-    category = models.ForeignKey(Category)
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
+I> ### `__str__()` or `__unicode__()`?
+I> The `__str__()` and `__unicode__()` methods in Python are essentially the `toString()` method of a Python class, if you're familiar with other object-orientated programming languages such as Java. Which method you should use depends on the version of Python you are using. Strings in version 2.x are represented in ASCII format, which therefore necessitates the use of the `__unicode__()` if you need [Unicode support](https://docs.python.org/2/howto/unicode.html). Strings in Python 3.x are Unicode by default, which removes the need for a separate `__unicode__()` method.
+I>
+I> In short, if you are using Python 2.x, include both a `__str__()` and `__unicode__()` method, with `__unicode__()` returning a Unicode representation of the string. If you are using Python 3.x, just use `__str__()` - the string is Unicode by default.
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
-        return self.title
-```
+When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. Django provides a [comprehensive series of built-in field types](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types). Some of the most commonly used are detailed below.
 
-When you define a model, you need to specify the list of attributes and
-their associated types along with any optional parameters. Django
-provides a number of built-in fields. Some of the most commonly used are
-listed below.
+* `CharField`, a field for storing character data (e.g. strings). Specify `max_length` to provide a maximum number o characters the field can store.
+* `URLField`, much like a `CharField`, but designed for storing resource URLs. You may also specify a `max_length` parameter.
+* `IntegerField`, which stores integers.
+* `DateField`, which stores a Python `datetime.date` object.
 
--   `CharField`, a field for storing character data (e.g. strings).
-    Specify `max_length` to provide a maximum number of characters the
-    field can store.
--   `URLField`, much like a `CharField`, but designed for storing
-    resource URLs. You may also specify a `max_length` parameter.
--   `IntegerField`, which stores integers.
--   `DateField`, which stores a Python `datetime.date`.
+I> ### Other Field Types
+I> Check out the [Django documentation on model fields](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types) for a full listing of the Django field types you can use, along with details on the required and optional parameters that each has.
 
-Check out the [Django documentation on model
-fields](https://docs.djangoproject.com/en/1.7/ref/models/fields/) for a
-full listing.
-
-For each field, you can specify the `unique` attribute. If set to
-`True`, only one instance of a particular value in that field may exist
-throughout the entire database model. For example, take a look at our
-`Category` model defined above. The field `name` has been set to
-unique - thus every category name must be unique.
+For each field, you can specify the `unique` attribute. If set to `True`, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique - thus every category name must be unique.
 
 This is useful if you wish to use a particular field as an additional
 database key. You can also specify additional attributes for each field
