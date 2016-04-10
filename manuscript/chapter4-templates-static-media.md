@@ -52,11 +52,11 @@ The solution to the problem of hard coding paths is to make use of built-in Pyth
 At the top of your `settings.py` file, there is a variable called `BASE_DIR`. This variables stores the path to the directory in which your project's `settings.py` module will be contained. This is obtained by using the special Python `__file__` attribute, which is [set to the absolute path of your settings module](http://stackoverflow.com/a/9271479).  The `__file__` gives the absolute path to the settings file, then the call to `os.path.dirname()` provides the reference to the absolute path of the directory. Calling `os.path.dirname()` again, removes another layer, so that `BASE_DIR` contains, `<workspace>/tango_with_django_project/`. You can see this process in action, if you are curious, by adding the following lines to your `settings.py` file.
 
 {lang="python",linenos=on}
-    print __file__
-    print os.path.dirname(__file__)
-    print os.path.dirname(os.path.dirname(__file__))
-	
-Let's employ this technique now. Create a new variable in `settings.py` called `TEMPLATE_DIR` under `BASE_DIR`, and point it to the `templates` directory that you created earlier. Using the `os.path.join()` function, your new variable should be defined like the example below.
+    print(__file__)
+    print(os.path.dirname(__file__))
+    print(os.path.dirname(os.path.dirname(__file__)))
+
+At the top of the `settings.py` module, you'll find a `BASE_DIR` variable which does exactly this for you. It provides the absolute path to the root of your Django project, so it's easy for you to specify a path to other directories within your project. We can then easily create a new variable called `TEMPLATE_DIR` that uses the `os.path.join()` function to join up multiple paths. Your new variable should be defined like the example below.
 
 {lang="python",linenos=on}
     TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -163,20 +163,24 @@ Finally, check that the `STATIC_URL` variable is defined within your `settings.p
 
 With everything required now entered, what does it all mean? Put simply, the first two variables `STATIC_DIR` and `STATICFILES_DIRS` refers to the locations on your computer where static files are stored. The final variable `STATIC_URL` then allows us to specify the URL with which static files can be accessed when we run our Django development server. For example, with `STATIC_URL` set to `/static/`, we would be able to access static content at `http://127.0.0.1:8000/static/`. *Think of the first two variables as server-side locations, and the third variable as the location with which clients can access static content.*
 
+X> ### Test your Configuration
+X> As a small exercise, test to see if everything is working correctly. Try and view the `rango.jpg` image in your browser when the Django development server is running.
+X> If your `STATIC_URL` is set to `/static/` and `rango.jpg` can be found at `images/rango.jpg`, what is the URL you enter into your Web browser's window?
+X>
+X> **Don't proceed until you are sure your configuration is working!**
+
 W> ### Don't forget the Slashes!
 W> When setting `STATIC_URL`, please ensure that you end the URL you specify with a forward slash (e.g. `/static/`, not `/static`). As per the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-STATIC_URL), not doing so can open you up to a world of pain. The extra slash at the end ensures that the root of the URL (e.g. `/static/`) is separated from the static content you want to serve (e.g. `images/rango.jpg`).
 
 I> ### Serving Static Content
-I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production - or *live* - environment. The [official Django documentation on Deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when you deploy Rango.
+I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production - or *live* - environment. The [official Django documentation on deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when you deploy Rango.
 
-Static Media Files and Templates
---------------------------------
-Now that you have your Django project set up to handle static media, you can now access such media within your templates.
+### Static Media Files and Templates
+Now that you have your Django project set up to handle static files, you can now make use of these files within your templates to improve their appearance and add additional functionality.
 
-To demonstrate how to include static media, open up ``index.html`` located in the ``<workspace>/templates/rango/`` directory. Modify the HTML source code as follows. The two lines that we add are shown with a HTML comment next to them for easy identification.
+To demonstrate how to include static files, open up `index.html` located in the `<workspace>/templates/rango/` directory. Modify the HTML source code as follows. The two lines that we add are shown with a HTML comment next to them for easy identification.
 
-.. code-block:: html
-
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	
 	{% load staticfiles %} <!-- New line -->
@@ -189,31 +193,26 @@ To demonstrate how to include static media, open up ``index.html`` located in th
 	    
 	    <body>
 	        <h1>Rango says...</h1>
-	        hello world! <strong>{{ boldmessage }}</strong><br />
+	        hey there partner! <strong>{{ boldmessage }}</strong><br />
 	        <a href="/rango/about/">About</a><br />
 	        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
 	    </body>
 	
 	</html>
 
-First, we need to inform Django's template system that we will be using static media with the ``{% load static %}`` tag. This allows us to call the ``static`` template tag as done in ``{% static "rango.jpg" %}``. As you can see, Django template tags are denoted by curly brackets ``{ }``. In this example, the ``static`` tag will combine the ``STATIC_URL`` with ``"rango.jpg"`` so that the rendered HTML looks like the following.
+The first new line (`{% load staticfiles %}`) informs Django's templating engine that we will be using static files with the template. This then enables us to call the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/) on our second line, stating that we wish to provide the URL to `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{ }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`, the complete and valid address to your image of Rango. This in turn means that the rendered HTML would look like the following example.
 
-.. code-block:: html
+{lang="html",linenos=on}
+    <img src="{% static "/static/images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
 
-	<img src="/static/images/rango.jpg" alt="Picture of Rango" /> <!-- New line -->
+If for some reason the image cannot be loaded, it is always a good idea to specify an alternative text tagline. This is what the ``alt`` attribute provides inside the `img` tag.
 
-If for some reason the image cannot be loaded, it is always nice to specify an alternative text tagline. This is what the ``alt`` attribute provides - the text here is used in the event the image fails to load.
+With these minor changes in place, start Django development server once more and visit `http://127.0.0.1:8000/rango`. If done correctly, you will see a Webpage that looks similar to the [screenshot shown below](#fig-ch4-rango-site-with-pic).
 
-With these minor changes in place, kick off the Django development server once more and visit ``http://127.0.0.1:8000/rango``. Hopefully, you will see web page something like the one shown in Figure :num:`fig-rango-site-with-pic`.
+{id="fig-ch4-rango-site-with-pic"}
+![Our first Rango template, complete with a picture of Rango the chameleon.](images/rango-site-with-pic.png)
 
-.. _fig-rango-site-with-pic:
-
-.. figure:: ../images/rango-site-with-pic.png
-	:figclass: align-center
-
-	Our first Rango template, complete with a picture of Rango the chameleon.
-
-The ``{% static %}`` function call should be used whenever you wish to reference static media within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates - all with the correct HTML markup.
+The ``{% static %}`` template tag call should be used whenever you wish to reference static media within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates - all within the correct HTML markup.
 
 .. code-block:: html
 	
