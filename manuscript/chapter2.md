@@ -36,12 +36,9 @@ I> * [**Learn to Program**](https://www.coursera.org/course/programming1) by Jen
 ##Pip
 Pip is the python package manager, which lets you install various Python libraries. The package manager simplifies the process of upgrading and handling your packages. So you do not have to manually delete and remove libraries, or work out what dependencies the libraries you want to install have, as the package manager takes care of this. Also, you don't have to worry about added the libraries to the Python path, the package manager also takes care of this. If you don't have `pip` installed, go to the [System Setup Chapter](#chapter-system-setup), otherwise make sure you have the following installed:
 
-```text
-
+{lang="text",linenos=off}
 	pip install -U django==1.9.5
 	pip install pillow
-
-```
 
 
 ##Virtual Environments

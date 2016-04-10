@@ -13,30 +13,30 @@ correct, and are at the right versions for this tutorial.
 To do this, open a new terminal window and issue the following
 command, which tells you what Python version you have:
 
-```text
-    $ python --version
-```
+{lang="text",linenos=off}
+	$ python --version
+
 
 The response should be something like: `2.7.10` or `3.5.1`, but any 2.7.5+ or 3.4+ versions of Python should work fine. If you need to upgrade or install Python go to the Section on installing software. 
 
 After verifying your Python installation, check your Django installation. In your terminal window, run the Python interpreter by issuing the following command.
 
-```text
+{lang="text",linenos=off}    
     $ python 
 	Python 2.7.10 (default, Jul 14 2015, 19:46:27) 
 	[GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.39)] on darwin
 	Type "help", "copyright", "credits" or "license" for more information.
 	>>>
-```
+	
 
 At the prompt, enter the following commands:
 
-```text
+{lang="text",linenos=off}
 	>>> import django
 	>>> django.get_version()
 	'1.9.5'
 	>>> exit()
-```	
+
 
 All going well you should see the correct version of Django, and then can use `exit()` to leave the Python interpreter. If `import django` fails to import, then check that you are in your virtual environment, and check what packages are installed with `pip list` at the terminal window. 
 
@@ -47,9 +47,9 @@ information.
 ##Creating your Django Project
 To create a new Django Project, go to your `code` or `workspace` directory, and issue the following command:
 
-```text
+{lang="text",linenos=off}
 	$ django-admin.py startproject tango_with_django_project`
-```
+
 
 I> ### Windows Note
 I>
@@ -116,7 +116,7 @@ Executing this command will instruct Django to initiate its lightweight
 development server. You should see the output in your terminal window similar
 to the example shown below:
 
-```text
+{lang="text",linenos=off}
     $ python manage.py runserver
 	
 	Performing system checks...
@@ -130,7 +130,7 @@ to the example shown below:
 	Django version 1.9.5, using settings 'tango_with_django_project.settings'
 	Starting development server at http://127.0.0.1:8000/
 	Quit the server with CONTROL-C.
-```
+
 
 In the output you can see a number of things. First, there are no issues. However, second there is an issue, i.e. unapplied migrations. We will talk about these in more detail when we setup our database, but for now we can ignore these. Third, and most importantly, you can see that a URL has been specified: `http://127.0.0.1:8000/`, which is the address of the Django development webserver.
    
@@ -148,9 +148,10 @@ your terminal window. If you wish to run the development server on a
 different port, or allow users from other machines to access it, you can
 do so by supplying optional arguments. Consider the following command:
 
-```
+{lang="text",linenos=off}
 	$ python manage.py runserver <your_machines_ip_address>:5555
-```
+
+
 Executing this command will force the development server to respond to
 incoming requests on TCP port 5555. You will need to replace
 `<your_machines_ip_address>` with your computer's IP address or 127.0.0.1. 
@@ -274,12 +275,13 @@ newly created `rango` application directory. Remove the comment
 
 You can now add in the following code.
 
-```python
-from django.http import HttpResponse
+{lang="python",linenos=on}
 
-def index(request):
-    return HttpResponse("Rango says hey there partner!")
-```
+	from django.http import HttpResponse
+	
+	def index(request):
+    	return HttpResponse("Rango says hey there partner!")
+
 
 Breaking down the three lines of code, we observe the following points
 about creating this simple view.
@@ -308,15 +310,14 @@ view.
 To create an initial mapping, open `urls.py` located in your project directory, and add the following lines of code to the `urlpatterns`:
 
 
-```python
+{lang="python",linenos=on}
+	from rango import views
+	
+	urlpatterns = [
+    	url(r'^$', views.index, name='index'),
+    	url(r'^admin/', admin.site.urls),
+		]
 
-from rango import views
-
-urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^admin/', admin.site.urls),
-]
-```
 
 This maps the basic URL to the `index` view in the `rango` application. Run the development server (e.g. `python manage.py runserver`) and visit http://127.0.0.1:8000 or whatever address your development server is running on.
 
@@ -330,19 +331,19 @@ relative path from your workspace directory, this would be the file
 `<workspace>/tango_with_django_project/tango_with_django_project/urls.py`.
 Update the `urlpatterns` list as shown in the example below.
 
-```python
-from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls import include  # New import added
+{lang="python",linenos=on}
+	from django.conf.urls import url
+	from django.contrib import admin
+	from django.conf.urls import include  # New import added
 
-urlpatterns = [
-	url(r'^$', views.index, name='index'),
-    url(r'^rango/', include('rango.urls')),   #maps any URLs with starting 
-											  #with rango/ to be handled by
-											  #the rango application
-    url(r'^admin/', admin.site.urls),
-]
-```
+	urlpatterns = [
+		url(r'^$', views.index, name='index'),
+    	url(r'^rango/', include('rango.urls')),   #maps any URLs with starting 
+												  #with rango/ to be handled by
+											  	#the rango application
+		url(r'^admin/', admin.site.urls),
+		]
+
 
 You will see that the `urlpatterns` is a Python list, which is expected by the Django framework.  The added mapping looks for URL strings that match the patterns `^rango/`. When a match is made the remainder of the url string is then
 passed onto and handled by `rango.urls` through the use of the  `include()` function from
@@ -357,15 +358,15 @@ application `rango`.
 
 Consequently, we need to create a new file called `urls.py` in the `rango` application directory, to handle the remaining URL string (and map the empty string to the `index` view):
 
-```python
-from django.conf.urls import url
-from rango import views
-
-urlpatterns = [
-    url(r'^$', views.index, name='index'),
+{lang="python",linenos=on}
+	
+	from django.conf.urls import url
+	from rango import views
+	
+	urlpatterns = [
+    	url(r'^$', views.index, name='index'),
 	]
-```
-
+		
 This code imports the relevant Django machinery for
 URL mappings and the `views` module from `rango`. This allows us to call the function `url` and point to the `index` view for the mapping in `urlpatterns`. 
 
