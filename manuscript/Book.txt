@@ -9,6 +9,7 @@ chapter-work-in-progress.md
 
 chapter-testing.md
 chapter-deployment.md
+chapter-summary.md
 chapter-system-setup.md
 chapter-unix.md
 chapter-virtual-env.md
