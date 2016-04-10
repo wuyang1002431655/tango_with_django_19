@@ -247,7 +247,7 @@ T>     </html>
 T>    
 T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. This is a common problem - make sure you have specified the filenames correctly! Have a look at the [figure below as an example of what you can expect to see](#fig-ch4-terminal).
 T>
-T> {id="fig-ch4-terminal"}
+T> {id="fig-ch4-terminal",float="left",width="60%"}
 T> ![Check out the HTTP response codes for the different requests (e.g. HTTP 200, 304 and 404).](images/ch4-terminal.png)
 T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
