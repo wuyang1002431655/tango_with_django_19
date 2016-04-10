@@ -15,9 +15,6 @@ If you already have Python 2.7/3.5 and Django 1.9 installed and are familiar wit
 -->
 
 
-
-
-
 ## Python
 Tango with Django requires you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family (e.g. `2.7.5+`) or version `3.4+` will do. If you're not sure how to install Python and would like some assistance, have a look at **the chapter dealing with installing components**.
 
@@ -72,9 +69,10 @@ provides an up-to-date list of Python IDEs.
 
 Research which one is right for you, and be aware that some may require
 you to purchase a licence. Ideally, you'll want to select an IDE that
-supports integration with Django. PyCharm and PyDev both support Django
-integration out of the box - though you will have to point the IDE to
-the version of Python that you are using.
+supports integration with Django.  
+
+We use PyCharm as it supports virtual environments and Django
+integration - though you will have to configure the IDE accordingly.
 
 ##Git - Code Repository
 
@@ -91,17 +89,17 @@ X> ###Exercises
 X> 
 X> To get comfortable with your environment, try out the following exercises.
 X> 
-X> -   Install Python 2.7.5+/3.0+ and Pip.
-X> -   Play around with your CLI and create a directory called `code`,    which we use to create our projects in.
-X>  -   Install the Django and Pillow packages.
-X>  -   Setup your Virtual Environment
-X>  -   Setup your account on GitHub
-X>  -   Download and setup a Integrated Development Environment (like
+X> -   Install Python 2.7.5+/3.4+ and Pip.
+X> -   Play around with your CLI and create a directory called `code`,  which we use to create our projects in.
+X>  -   Setup your Virtual Environment (optional)
+X>  -   Install the Django and Pillow packages
+X>  -   Setup your account on GitHub, BitBucket, etc if dont have a code repository
+X>  -   Download and setup an Integrated Development Environment (like
     PyCharm)
 X> -
 X> 
 X>     We have made the code for the book and application that you build available on GitHub, see [Tango With Django 
-X>  Book](https://github.com/leifos/tango_with_django_19) .
+X>  Book](https://github.com/leifos/tango_with_django_19/) .
 X> 
 X>    -   If you spot any errors or problem with the book, you can
 X>             make a change request!
