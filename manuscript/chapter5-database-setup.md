@@ -331,9 +331,12 @@ To create a population script for Rango, start by creating a new Python module w
 T> ### Understand this Code!
 T> Don't copy, paste and leave. Add the code to your new module, but read the explanations below as to what is going on. You'll learn something new!
 
-While this looks like a lot of code, what it does is relatively simple. As we define a series of functions at the top of the file, code execution begins towards the bottom - look for the line ``if __name__ == '__main__'``. We call the ``populate()`` function.
+While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look for line 65. This is because above this point, we define functions - these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we hit the `populate()` function.
 
-.. warning:: When importing Django models, make sure you have imported your project's settings by importing django and setting the environment variable ``DJANGO_SETTINGS_MODULE`` to be the project setting file. Then you can call ``django.setup()`` to import the django settings. If you don't, an exception will be raised. This is why we import ``Category`` and ``Page`` after the settings have been loaded.
+E> ### Importing Models
+E> When importing Django models, make sure you have imported your project's settings by importing `django` and setting the environment variable `DJANGO_SETTINGS_MODULE` to be your project's setting file, as demonstrated in lines 1 to 6 above. You then call ``django.setup()`` to import your Django project's settings.
+E>
+E> If you don't do this crucial step, **an exception will be raised when you attempt to import your models as the necessary infrastructure has not yet been initialised**. This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
 
 The ``populate()`` function is responsible for the calling the ``add_cat()`` and ``add_page()`` functions, who are in turn responsible for the creation of new categories and pages respectively. ``populate()`` keeps tabs on category references for us as we create each individual ``Page`` model instance and store them within our database. Finally, we loop through our ``Category`` and ``Page`` models to print to the user all the ``Page`` instances and their corresponding categories.
 
