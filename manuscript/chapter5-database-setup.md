@@ -228,13 +228,31 @@ With these changes saved, restart the Django development server and revisit `htt
 {id="fig-ch5-admin-second"}
 ![The Django admin interface, complete with Rango models.](images/ch5-admin-second.png)
 
-	The Django admin interface. Note the Rango category, and the two models contained within.
+Try clicking the `Categorys` link within the `Rango` section. From here, you should see the `test` category that we created earlier via the Django shell.
 
-Try clicking the ``Categorys`` link within the ``Rango`` section. From here, you should see the ``test`` category that we created via the Django shell. Try deleting the category as we'll be populating the database with a population script next. The interface is easy to use. Spend a few minutes creating, modifying and deleting both categories and pages. You can also add new users who can login to the Django admin interface for your project by adding a user to the ``User`` in the ``Auth`` application.
+X> ### Experiment with the Admin Interface
+X> You'll be using the admin interface quite a bit to verify data is stored correctly as you develop the Rango app. Experiment with it, and see how it all works. The interface is self-explanatory and straightforward to understand.
+X>
+X> Delete the `test` category that was previously created. We'll be populating the database shortly with more example data.
 
-.. note:: Note the typo within the admin interface (categorys, not categories). This problem can be fixed by adding a nested ``Meta`` class into your model definitions with the ``verbose_name_plural`` attribute. Check out `Django's official documentation on models <https://docs.djangoproject.com/en/1.7/topics/db/models/#meta-options>`_ for more information.
+I> ### User Management
+I> The Django admin interface is your port of call for user management, through the Authentication and Authorisation section. Here, you can create, modify and delete user accounts, all with varying privilege levels.
 
-.. note:: The example ``admin.py`` file for our Rango application is the most simple, functional example available. There are many different features which you can use in the ``admin.py`` to perform all sorts of cool customisations, such as changing the way models appear in the admin interface. For this tutorial, we'll stick with the bare-bones admin interface, but you can check out the `official Django documentation on the admin interface <https://docs.djangoproject.com/en/1.7/ref/contrib/admin/>`_ for more information if you're interested.
+T> ### Plural vs. Singular Spellings
+T>  Note the typo within the admin interface (`Categorys`, not `Categories`). This typo can be fixed by adding a nested `Meta` class into your model definitions with the `verbose_name_plural` attribute. Check out a modified version of the `Category` model below for an example, and [Django's official documentation on models](https://docs.djangoproject.com/en/1.9/topics/db/models/#meta-options) for more information about what can be stored within the `Meta` class.
+T>
+T> {lang="python",linenos=on}
+T>     class Category(models.Model):
+T>         name = models.CharField(max_length=128, unique=True)
+T>     
+T>         class Meta:
+T>             verbose_name_plural = 'categories'
+T>     
+T>         def __str__(self):
+T>             return self.name
+
+I> ### Expanding `admin.py`
+I> It should be noted that the example ``admin.py`` module for your Rango application is the most simple, functional example available. There are many different features which you can use in the to perform all sorts of nice customisations, such as changing the way models are presented. You can refer to the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
 .. _model-population-script-label:
 
