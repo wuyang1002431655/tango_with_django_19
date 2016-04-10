@@ -43,7 +43,7 @@ For the models themselves, we will create two classes - one class representing e
     class Category(models.Model):
         name = models.CharField(max_length=128, unique=True)
         
-        def __str__(self):  # For Python 2, use __unicode__ instead
+        def __str__(self):  # For Python 2, use __unicode__ too
             return self.name
     
     class Page(models.Model):
@@ -52,7 +52,7 @@ For the models themselves, we will create two classes - one class representing e
         url = models.URLField()
         views = models.IntegerField(default=0)
         
-        def __str__(self):  # For Python 2, use __unicode__ instead
+        def __str__(self):  # For Python 2, use __unicode__ too
             return self.title
 
 T> ### Check `import` Statements
@@ -75,49 +75,20 @@ I> Check out the [Django documentation on model fields](https://docs.djangoproje
 
 For each field, you can specify the `unique` attribute. If set to `True`, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique - thus every category name must be unique.
 
-This is useful if you wish to use a particular field as an additional
-database key. You can also specify additional attributes for each field
-such as specifying a default value (`default='value'`), and whether the
-value for a field can be `NULL` (`null=True`) or not.
+This is useful if you wish to use a particular field as an additional database key. You can also specify additional attributes for each field such as specifying a default value (`default='value'`), and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
 
-Django also provides simple mechanisms that allows us to relate
-models/database tables together. These mechanisms are encapsulated in
-three further field types, and are listed below.
+Django also provides simple mechanisms that allows you to relate models/database tables together in some way. These mechanisms are contained in three further field types, and are listed below.
 
--   `ForeignKey`, a field type that allows us to create a one-to-many
-    relationship.
--   `OneToOneField`, a field type that allows us to define a strict
-    one-to-one relationship.
--   `ManyToManyField`, a field type which allows us to define a
-    many-to-many relationship.
+* `ForeignKey`, a field type that allows us to create a [one-to-many relationship](https://en.wikipedia.org/wiki/One-to-many_(data_model)).
+* `OneToOneField`, a field type that allows us to define a strict [one-to-one relationship](https://en.wikipedia.org/wiki/One-to-one_(data_model)).
+* `ManyToManyField`, a field type which allows us to define a [many-to-many relationship](https://en.wikipedia.org/wiki/Many-to-many_(data_model)).
 
-From our model examples above, the field `category` in model `Page` is
-of type `ForeignKey`. This allows us to create a one-to-many
-relationship with model/table `Category`, which is specified as an
-argument to the field's constructor. *You should be aware that Django
-creates an ID field for you automatically in each table relating to a
-model. You therefore do not need to explicitly define a primary key for
-each model - it's done for you!*
+From our model examples above, the field `category` in model `Page` is of type `ForeignKey`. This allows us to create a one-to-many relationship with model/table `Category`, which is specified as an argument to the field's constructor. *You should be aware that Django creates an ID field for you automatically in each table relating to a model. You therefore do not need to explicitly define a primary key for each model - it's done for you!*
 
-> **note**
->
-> When creating a Django model, it's good practice to make sure you
-> include the `__unicode__()` method - a method almost identical to the
-> `__str__()` method. If you're unfamiliar with both of these, think of
-> them as methods analogous to the `toString()` method in a Java class.
-> The `__unicode__()` method is therefore used to provide a unicode
-> representation of a model instance. Our `Category` model for example
-> returns the name of the category in the `__unicode__()` method -
-> something which will be incredibly handy to you when you begin to use
-> the Django admin interface later on in this chapter.
->
-> Including a `__unicode__()` method in your classes is also useful when
-> debugging your code. Issuing a `print` on a `Category` model instance
-> *without* a `__unicode__()` method will return
-> `<Category: Category object>`. We know it's a category, but *which
-> one?* Including `__unicode__()` would then return
-> `<Category: python>`, where `python` is the `name` of a given
-> category. Much better!
+I> ### Using `__unicode__()` or `__str__()`
+I> Why is defining these methods important? Doing so will make your life easier when you begin to use the Django admin interface later on in this chapter.
+I>
+I> Including a `__unicode__()` and/or `__str__()` method in your classes is also useful when debugging your code. Issuing a `print` on a `Category` model instance *without* a `__unicode__()` or `__str__()` method will return `<Category: Category object>`. We know it's a category, but *which one?* Including `__unicode__()` or `__str__()` would then return `<Category: python>`, where `python` is the `name` of a given category.
 
 Creating and Migrating the Database
 -----------------------------------
