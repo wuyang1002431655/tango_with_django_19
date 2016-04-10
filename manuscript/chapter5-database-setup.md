@@ -192,40 +192,41 @@ This will start an instance of the Python interpreter and load in your project's
 
 In the example, we first import the model that we want to manipulate. We then print out all the existing categories. As our underlying `Category` table is empty, an empty list is returned. Then we create and save a `Category`, before printing out all the categories again. This second `print` then shows the new ``Category`` just added. Note the name, `Test` appears in the second `print` - this is your `__str__()` or `__unicode__()` method at work!
 
-E> ### Complete the Official Tutorial
-E> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete part one of the [official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
+X> ### Complete the Official Tutorial
+X> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete part one of the [official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
 
 ## Configuring the Admin Interface
-One of the stand-out features of Django is that it provides a built in, web-based administrative interface that allows us to browse and edit data stored within our models and corresponding database tables. In the ``settings.py`` file, you will notice that one of the pre-installed apps is ``django.contrib.admin``, and in your project's ``urls.py`` there is a urlpattern that matches ``admin/``.
+One of the eye-catching features of Django is the built-in, Web-based administrative interface that allows you to browse and edit data represented as model instances (from the corresponding database tables).
 
-Start the development server:
+Setting everything up is relatively straightforward. In your project's `settings.py` module, you will notice that one of the preinstalled apps (within the `INSTALLED_APPS` list) is `django.contrib.admin`. Furthermore, there is a `urlpattern` that matches `admin/` within your project's `urls.py` module.
 
-::
+By default, things are pretty much ready to go. Start the Django development server in the usual way with the following command.
 
+{lang="text",linenos=off}
+    $ python manage.py runserver
 
-	$ python manage.py runserver
-	
-	
-and visit the url, ``http://127.0.0.1:8000/admin/``. You should be able to log into the Django Admin interface using the username and password created for the superuser. The admin interface only contains tables relevant to the sites adminstration, ``Groups`` and ``Users``. So we will need to instruct Django to also include the models from ``rango``.
+Navigate your Web browser to `http://127.0.0.1:8000/admin/`. You are then presented with a login prompt. Using the username and password you created previously with the `python manage.py createsuperuser` command, login. You are then presented with an interface looking [similar to the one shown below](#fig-ch5-admin-first).
 
- To do this,  open the file ``rango/admin.py`` and add the following code:
+{id="fig-ch5-admin-first"}
+![The Django admin interface, sans Rango models.](images/ch5-admin-first.png)
 
-.. code-block:: python
-	
-	from django.contrib import admin
-	from rango.models import Category, Page
+While this looks good, we are missing the `Category` and `Page` models that were defined for the Rango app. To include these models, we need to give Rango some help.
 
-	admin.site.register(Category)
-	admin.site.register(Page)
-	
-This will *register* the models with the admin interface. If we were to have another model, it would be a trivial case of calling the ``admin.site.register()`` function, passing the model in as a parameter.
+To do this, open the file `rango/admin.py`. With an `include` statement already present, modify the module so that you `register` each class you want to include. The example below registers both the `Category` and `Page` class to the admin interface.
 
-With all of these changes made, re-visit/refresh: ``http://127.0.0.1:8000/admin/``. You should now be able to see the Category and Page models, like in Figure :num:`fig-rango-admin`. 
+{lang="python",linenos=on}
+    from django.contrib import admin
+    from rango.models import Category, Page
+    
+    admin.site.register(Category)
+    admin.site.register(Page)
 
-.. _fig-rango-admin:
+Adding further classes which may be created in the future is as simple as adding another call to the `admin.site.register()` method.
 
-.. figure:: ../images/ch5-rango-admin-models.png
-	:figclass: align-center
+With these changes saved, restart the Django development server and revisit `http://127.0.0.1:8000/admin/`. You will now see the `Category` and `Page` models, [as shown below](#fig-ch5-admin-second).
+
+{id="fig-ch5-admin-second"}
+![The Django admin interface, complete with Rango models.](images/ch5-admin-second.png)
 
 	The Django admin interface. Note the Rango category, and the two models contained within.
 
