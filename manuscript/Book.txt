@@ -7,6 +7,7 @@ chapter5-database-setup.md
 
 chapter-work-in-progress.md
 
+chapter-testing.md
 chapter-deployment.md
 chapter-system-setup.md
 chapter-unix.md
