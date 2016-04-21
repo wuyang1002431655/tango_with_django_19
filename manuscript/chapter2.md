@@ -12,12 +12,11 @@ Before we get down to coding it is really important that we get our development 
 If you already have Python 2.7/3.5 and Django 1.9 installed and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, below we provide an overview of the different components and why they are important. We also provide a series of pointers on how to setup the various components.
 
 
->I ###Development Environment Protocol
->I
->I Setting up your development environment is pretty tedious and often a real pain because you only do >I it occasionally. So creating a protocol like this and noting it down
->I will save you a lot of hassle in the future.
-
-
+I> ###Development Environment 
+I>
+I> Setting up your development environment is pretty tedious and often a real pain because you only do it occasionally. 
+I> Below we have put together the list of core technologies you need to get started and pointers on how to install them
+I> It is a good idea when setting up your environment to note down the steps you took - because invariably you will forget I> the next time you go to re-install everything on a new machine or someone else's machine.
 
 
 ## Python
@@ -33,7 +32,7 @@ I> * [**Think Python: How to Think like a Computer Scientist**](http://www.green
 I> * [**Learn to Program**](https://www.coursera.org/course/programming1) by Jennifer Campbell and Paul Gries.
 
 
-##Pip
+##Python Package Manager 
 Pip is the python package manager, which lets you install various Python libraries. The package manager simplifies the process of upgrading and handling your packages. So you do not have to manually delete and remove libraries, or work out what dependencies the libraries you want to install have, as the package manager takes care of this. Also, you don't have to worry about added the libraries to the Python path, the package manager also takes care of this. If you don't have `pip` installed, go to the [System Setup Chapter](#chapter-system-setup), otherwise make sure you have the following installed:
 
 {lang="text",linenos=off}
@@ -76,37 +75,34 @@ supports integration with Django.
 We use PyCharm as it supports virtual environments and Django
 integration - though you will have to configure the IDE accordingly.
 
-##Git - Code Repository
+##Code Repository
 
 We should also point out that when you develop code, you should always
 house your code within a version-controlled repository such as
 [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We
 won't be going through this right now so that we can get stuck into
-developing an application in Django. We have however provided a
-crash course on GIT \<git-crash-course\>. We highly recommend that you
-set up a GIT repository for your own projects. Doing so could save you
+developing an application in Django. We have provided a
+[crash course on GIT](#chapter-git). We highly recommend that you
+set up a GIT repository for your own projects. Doing so will could save you
 from disaster.
 
 X> ###Exercises
 X> 
 X> To get comfortable with your environment, try out the following exercises.
 X> 
-X> -   Install Python 2.7.5+/3.4+ and Pip.
-X> -   Play around with your CLI and create a directory called `code`,  which we use to create our projects in.
+X>  -   Install Python 2.7.5+/3.4+ and Pip.
+X>  -   Play around with your CLI and create a directory called `code`,  which we use to create our projects in.
 X>  -   Setup your Virtual Environment (optional)
 X>  -   Install the Django and Pillow packages
-X>  -   Setup your account on GitHub, BitBucket, etc if dont have a code repository
-X>  -   Download and setup an Integrated Development Environment (like
-    PyCharm)
-X> -
+X>  -   Setup an account on a Git Repository site like: GitHub, BitBucket, etc if you haven't already done so.
+X>  -   Download and setup an Integrated Development Environment like [PyCharm](https://www.jetbrains.com/pycharm/)
 X> 
-X>     We have made the code for the book and application that you build available on GitHub, see [Tango With Django 
+X> 
+X>  We have made the code for the book and application available on GitHub, see [Tango With Django 
 X>  Book](https://github.com/leifos/tango_with_django_19/) .
 X> 
-X>    -   If you spot any errors or problem with the book, you can
-X>             make a change request!
-X>         -   If you have any problems with the exercises, you can check
-X>             out the repository and see how we completed them.
+X>  -   If you spot any errors or problem, please let us know by making a change request on GitHub!
+X>  -   If you have any problems with the exercises, you can check out the repository to see how we completed them.
 X> 
 
 

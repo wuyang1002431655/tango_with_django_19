@@ -1,19 +1,19 @@
 #Overview
-The aim of this book is to provide you with a practical guide to web development using *Django 1.9.* The book is designed primarily for students, providing a walkthrough of the steps involved in getting your first web applications up and running, as well as deploying them to a web server.
+The aim of this book is to provide you with a practical guide to web development using *Django 1.9.* and *Python*. The book is designed primarily for students, providing a walkthrough of the steps involved in getting your first web applications up and running, as well as deploying them to a web server.
 
 This book seeks to complement the [official Django Tutorials](https://docs.djangoproject.com/en/1.9/intro/tutorial01/) and many of the other excellent tutorials available online. By putting everything together in one place, this book fills in many of the gaps in the official Django documentation providing an example-based design driven approach to learning the Django framework. Furthermore, this book provides an introduction to many of the aspects required to master web application development.
 
 ##Why Work with this Book?
-**This book will save you time.** On many occasions we've seen clever students get stuck, spending hours trying to fight with Django and other aspects of web development. More often than not, the problem was usually because a key piece of information was not provided, or something was not made clear. While the occasional blip might set you back 10-15 minutes, sometimes they can take hours to resolve. We've tried to remove as many of these hurdles as possible. This will mean you can get on with developing your application, and not have to sit there scratching your head.
+**This book will save you time.** On many occasions we've seen clever students get stuck, spending hours trying to fight with Django and other aspects of web development. More often than not, the problem was usually because a key piece of information was not provided, or something was not made clear. While the occasional blip might set you back 10-15 minutes, sometimes they can take hours to resolve. We've tried to remove as many of these hurdles as possible. This will mean you can get on with developing your application instead of stumbling along.
 
-**This book will lower the learning curve.** Web application frameworks can save you a lot of hassle and lot of time. Well, that is if you know how to use them in the first place! Often the learning curve is steep. This book tries to get you going - and going fast. By showing you how to put together a web application with all the bells and whistle from the onset, the book shortens the learning curve.
+**This book will lower the learning curve.** Web application frameworks can save you a lot of hassle and lot of time. Well, that is if you know how to use them in the first place! Often the learning curve is steep. This book tries to get you going - and going fast by explaining how all the pieces fit together.
 
-**This book will improve your workflow.** Using web application frameworks requires you to pick up and run with a particular design pattern - so you only have to fill in certain pieces in certain places. After working with many students, we heard lots of complaints about using web application frameworks - specifically about how they take control away from them (i.e. inversion of control).  To help you, we've created a number of workflows to focus your development process so that you can regain that sense of control and build your web application in a disciplined manner.
+**This book will improve your workflow.** Using web application frameworks requires you to pick up and run with a particular design pattern - so you only have to fill in certain pieces in certain places. After working with many students, we heard lots of complaints about using web application frameworks - specifically about how they take control away from them (i.e. inversion of control).  To help you, we've created a number of *workflows* to focus your development process so that you can regain that sense of control and build your web application in a disciplined manner.
 
-**This book is not designed to be read.** Whatever you do, do not read this book! It is a hands-on guide to building web applications in Django. Reading is not doing. To increase the value you gain from this experience, go through and develop the application. When you code up the application, *do not just cut and paste the code.* Type it in, think about what it does, then read the explanations we have provided to describe what is going on. If you still do not understand, then check out the Django documentation, go to [Stack Overflow](http://stackoverflow.com/questions/tagged/django) or other helpful websites and fill in this gap in your knowledge. If you think it is worth mentioning, please get in touch with us so that we can improve the book - we already have a number of contributors and we will happily acknowledge your contribution!
+**This book is not designed to be read.** Whatever you do, *do not read this book!* It is a hands-on guide to building web applications in Django. Reading is not doing. To increase the value you gain from this experience, go through and develop the application. When you code up the application, *do not just cut and paste the code.* Type it in, think about what it does, then read the explanations we have provided to describe what is going on. If you still do not understand, then check out the Django documentation, go to [Stack Overflow](http://stackoverflow.com/questions/tagged/django) or other helpful websites and fill in this gap in your knowledge. If you think it is worth mentioning, please get in touch with us so that we can improve the book - we already have a number of contributors and we will happily acknowledge your contribution!
 
 ##What You will Learn
-In this book, we will be taking an exampled-based approach (or inquiry-based learning). The book will show you how to design a web application called *Rango* ([see the Design Brief below](#overview-design-brief-label)). Along the way, we'll show you how to perform the following key tasks.
+In this book, we will be taking an exampled-based approach. The book will show you how to design a web application called *Rango* ([see the Design Brief below](#overview-design-brief-label)). Along the way, we'll show you how to perform the following key tasks.
 
 * **How to setup your development environment** - including how to use the terminal, your virtual environment, the `pip` installer, how to work with Git, and more.
 * **Setup a Django project** and create a basic Django application.
@@ -24,7 +24,7 @@ In this book, we will be taking an exampled-based approach (or inquiry-based lea
 * Use the **user authentication** services provided by Django.
 * Incorporate **external services** into your Django application.
 * Include *Cascading Styling Sheets (CSS)* and *JavaScript* within a web application.
-* **Design and apply CSS** to improve the look and feel of the web application.
+* **Apply CSS** to give your application a professional look  and feel.
 * Work with **cookies and sessions** with Django.
 * Include more advanced functionality like *AJAX* into your application.
 * **Deploy your application** to a web server using *PythonAnywhere.*
@@ -33,13 +33,15 @@ At the end of each chapter, we have included a number of exercises designed to p
 
 X> ### Exercises will be clearly delineated like this!
 X> In each chapter we have added a number of exercises to test your knowledge and skill.
-X> You will need to complete these exercises as the subsequent chapters are dependent on them.
-X> If you get stuck, you can look at our code solution in *GitHUb*  [https://github.com/leifos/tango_with_django_19](https://github.com/leifos/tango_with_django_19).
+X>
+X> *You will need to complete these exercises as the subsequent chapters are dependent on them.*
+X>
+X> But don't worry if you get stuck, you can look at our solutions in *GitHUb*  [https://github.com/leifos/tango_with_django_19](https://github.com/leifos/tango_with_django_19).
 
-To see a fully-functional version of the application, you can also visit the [How to Tango with Django website](http://www.tangowithdjango.com/).
+
 
 ##Technologies and Services
-Through the course of this book, we will used various technologies and external services. Click one of the listed technologies or services to learn more about them.
+Through the course of this book, we will used various technologies and external services including:
 
 * [Python](http://www.python.org)
 * [Pip package manager](http://www.pip-installer.org)
@@ -54,10 +56,12 @@ Through the course of this book, we will used various technologies and external 
 * [Bing Search API](http://datamarket.azure.com) via Azure Datamarket
 * [PythonAnywhere](https://www.pythonanywhere.com)
 
-We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits (like *Twitter Bootstrap*), external services like (those provided by *Microsoft Azure*) and deploy your application quickly and easily (with *PythonAnywhere*).
+We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits like *Twitter Bootstrap*, external services like those provided by *Microsoft Azure* and deploy your application quickly and easily with *PythonAnywhere*.
 
 ##Rango: Initial Design and Specification {#overview-design-brief-label}
-As previously mentioned, the focus of this book will be to develop an application called *Rango*. As we develop this application, it will cover the core components that need to be developed when building any web application.
+As previously mentioned, the focus of this book will be to develop an application called *Rango*. As we develop this application, it will cover the core components that need to be developed when building any web application. 
+
+To see a fully-functional version of the application, you can visit the [How to Tango with Django website](http://www.tangowithdjango.com/).
 
 ###Design Brief
 Your client would like you to create a website called *Rango* that lets users browse through user-defined categories to access various web pages. In [Spanish, the word rango](https://www.vocabulary.com/dictionary/es/rango) is used to mean *"a league ranked by quality"* or *"a position in a social hierarchy"*.
@@ -111,19 +115,18 @@ Wireframes are great way to provide clients with some idea of what the applicati
 ![The category page showing the pages in the category (along with the number of views). Below, a search for *Python* has been conducted, with the results shown underneath.](images/ch1-rango-cat-page.png)
 
 ###Pages and URL Mappings
-From the specification, we have already identified two pages that our application will present to the user at different points in time. To access each of these pages we will need to describe in some fashion the URL mappings. Think of a URL mapping as the text a user will have to enter into a browser's address bar to reach the given page. The basic URL mappings for Rango are shown below.
+From the specification, we have already identified two pages that our application will present to the user at different points in time. To access each page we will need to describe URL mappings. Think of a URL mapping as the text a user will have to enter into a browser's address bar to reach the given page. The basic URL mappings for Rango are shown below.
 
-* ``/rango/`` will point to the main (or index) page view.
-* ``/rango/about/`` will point to an about page view.
-* ``/rango/category/<category_name>/`` will point to the category page view for ``<category_name>``, where the category might be:
+* ``/rango/`` will point to the main (or index) page.
+* ``/rango/about/`` will point to the about page.
+* ``/rango/category/<category_name>/`` will point to the category page for ``<category_name>``, where the category might be:
 	* games;
-	* Python recipes; or
-	* code and compilers.
-* ``/rango/etc/``, where ``etc`` could be replaced with a URL for any later function we wish to implement.
+	* python-recipes; or
+	* code-and-compilers.
 
-As we build our application, we will probably need to create other URL mappings. However, the ones listed above will get us started. We will also at some point have to transform category names in a valid URL string, as well as handle scenarios where the supplied category name does not exist.
+As we build our application, we will probably need to create other URL mappings. However, the ones listed above will get us started and give us an idea of the different pages. 
 
-As we progress through the book, we will flesh out how to construct these pages using the Django framework and use its Model-View-Template design pattern. However, now that we have a gist of the URL mappings and what the pages are going to look like, we need to define the data model that will house the data for our web application.
+As we progress through the book, we will flesh out how to construct these pages using the Django framework and use its [Model-View-Template](https://docs.djangoproject.com/en/1.9/) design pattern. However, now that we have a gist of the URL mappings and what the pages are going to look like, we need to define the data model that will house the data for our web application.
 
 ###Entity-Relationship Diagram {#overview-er}
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
@@ -136,7 +139,7 @@ Note that this specification is rather vague. A single page could in theory exis
 D> ### Take Note!
 D> It's good practice to note down any working assumptions you make, just like the one-to-many relationship assumption we assume above. You never know when they may come back to bite you later on! By noting them down, this means you can communicate it with your development team and make sure that the assumption is sensible and that they are happy to proceed under such an assumption.
 
-With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity.  We use Django `ModelField` types to define the type of each field (i.e. Integer, Char, URL or ForeignKey). Note that in Django *primary keys* are implicit such that Django adds an `id` to each Model, but we will talk more about that later in the Models and Database chapter.
+With this assumption, we then produce a series of tables that describe each entity in more detail. The tables contain information on what fields are contained within each entity.  We use Django `ModelField` types to define the type of each field (i.e. `IntegerField`, `CharField`, `URLField` or `ForeignKey`). Note that in Django *primary keys* are implicit such that Django adds an `id` to each Model, but we will talk more about that later in the Models and Database chapter.
 
 
 #### Category Model
