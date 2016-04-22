@@ -398,7 +398,7 @@ in Figure fig-rango-hello-world.
 {id="fig-url-chain"}
 ![An illustration of a URL, showing how the different parts of the URL
 are the responsibility of different `url.py`
-files.](../images/url-chain.svg)
+files.](../images/ch3-url-chain.png)
 
 ![A screenshot of Google Chrome displaying our first Django-powered
 webpage. Hello, Rango!](../images/ch3-hey-there.png){id="img-ch3-hey-there"}
