@@ -39,6 +39,7 @@ X>
 X> But don't worry if you get stuck, you can look at our solutions in *GitHUb*  [https://github.com/leifos/tango_with_django_19](https://github.com/leifos/tango_with_django_19).
 
 
+{pagebreak}
 
 ##Technologies and Services
 Through the course of this book, we will used various technologies and external services including:
@@ -57,6 +58,9 @@ Through the course of this book, we will used various technologies and external 
 * [PythonAnywhere](https://www.pythonanywhere.com)
 
 We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits like *Twitter Bootstrap*, external services like those provided by *Microsoft Azure* and deploy your application quickly and easily with *PythonAnywhere*.
+
+
+{pagebreak}
 
 ##Rango: Initial Design and Specification {#overview-design-brief-label}
 As previously mentioned, the focus of this book will be to develop an application called *Rango*. As we develop this application, it will cover the core components that need to be developed when building any web application. 
@@ -88,6 +92,9 @@ X> * A series of **URL mappings** for the application.
 X> * An [***Entity-Relationship (ER)***](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model) diagram to describe the data model that we'll be implementing.
 X>
 X> It's good practice for you to try these exercises out before moving on to examine how we went about creating all of the above.
+
+
+{pagebreak}
 
 ###N-Tier Architecture
 
