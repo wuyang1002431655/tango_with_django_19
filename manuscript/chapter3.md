@@ -152,7 +152,8 @@ Now open up your favourite Web browser and enter the URL
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/). You should see a webpage similar to
 the one shown in [Figure](#img-ch3-django-powered-page).
 
-{id="img-ch3-django-powered-page"} ![A screenshot of the initial Django page you will see when running the
+{id="img-ch3-django-powered-page"}
+![A screenshot of the initial Django page you will see when running the
 development server for the first time.](images/ch3-django-powered-page.png)
 
 You can stop the development server at anytime by pushing `CTRL + C` in
@@ -169,9 +170,9 @@ incoming requests on TCP port 5555. You will need to replace
 `<your_machines_ip_address>` with your computer's IP address or 127.0.0.1. 
 
 
-I> ### Don't know your IP Address
+I> ### Don't know your IP Address?
 I> 
-I> If you use 0.0.0.0 Django figures out what your IP address is. Go ahead try:
+I> If you use 0.0.0.0 Django figures out what your IP address is. Go ahead and try:
 I>
 I> `python manage.py runserver 0.0.0.0:5555`
 
@@ -214,7 +215,6 @@ To do this, from within your Django project directory (e.g. `<workspace>/tango_w
 run the following command.
 
 {lang="text",linenos=off}
-
     $ python manage.py startapp rango
 
 The `startapp` command creates a new directory within your project's
@@ -249,7 +249,6 @@ and find the `INSTALLED_APPS` tuple. Add the `rango` application to the
 end of the tuple, which should then look like the following example.
 
 {lang="python",linenos=off}
-
 	INSTALLED_APPS = [
     	'django.contrib.admin',
     	'django.contrib.auth',
@@ -280,7 +279,6 @@ newly created `rango` application directory. Remove the comment
 You can now add in the following code.
 
 {lang="python",linenos=off}
-
 	from django.http import HttpResponse
 	
 	def index(request):
@@ -315,7 +313,6 @@ To create an initial mapping, open `urls.py` located in your project directory, 
 
 
 {lang="python", linenos=off}
-
 	from rango import views
 	
 	urlpatterns = [
@@ -337,7 +334,6 @@ relative path from your workspace directory, this would be the file
 Update the `urlpatterns` list as shown in the example below.
 
 {lang="python",linenos=off}
-
 	from django.conf.urls import url
 	from django.contrib import admin
 	from django.conf.urls import include  # New import added
@@ -365,7 +361,6 @@ application `rango`.
 Consequently, we need to create a new file called `urls.py` in the `rango` application directory, to handle the remaining URL string (and map the empty string to the `index` view):
 
 {lang="python",linenos=off}
-	
 	from django.conf.urls import url
 	from rango import views
 	
@@ -400,8 +395,8 @@ in Figure fig-rango-hello-world.
 are the responsibility of different `url.py`
 files.](images/ch3-url-chain.png)
 
-![A screenshot of Google Chrome displaying our first Django-powered
-webpage. Hello, Rango!](images/ch3-hey-there.png){id="img-ch3-hey-there"}
+{id="img-ch3-hey-there"}![A screenshot of Google Chrome displaying our first Django-powered
+webpage. Hello, Rango!](images/ch3-hey-there.png)
 
 Within each application, you will create a number of URL 
 mappings. This initial mapping is quite simple but as we progress through the tutorial we will
