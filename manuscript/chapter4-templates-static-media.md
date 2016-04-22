@@ -21,6 +21,7 @@ T> It's good practice to separate out your templates into subdirectories for eac
 To tell your Django project where templates will be stored, open your project's `settings.py` file. Next, locate the `TEMPLATES` data structure. By default, when you create a new Django 1.9 project, it will look like the following.
 
 {lang="python",linenos=off}
+
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -40,11 +41,13 @@ To tell your Django project where templates will be stored, open your project's 
 What we need to do to tell Django where our templates are stored is modify the `DIRS` list. Change the dictionary key/value pair to look like the following.
 
 {lang="python",linenos=off}
+
     'DIRS': ['<workspace>/templates']
 
 Note that you are *required to use absolute paths* to locate the `templates` directory. If you are collaborating with team members or working on different computers, then this will become a problem. You'll have different usernames and different drive structures, meaning the paths to the `<workspace>` directory will be different. One solution would be to the path for each different configuration, for example:
 	
 {lang="python",linenos=off}
+
     'DIRS': [ '/Users/leifos/templates',
 			  '/Users/maxwelld90/templates',
 			  '/Users/clueless/noob/templates',	
@@ -62,18 +65,21 @@ A better solution is to make use of built-in Python functions to work out the pa
 At the top of your `settings.py` file, there is a variable called `BASE_DIR`. This variables stores the path to the directory in which your project's `settings.py` module will be contained. This is obtained by using the special Python `__file__` attribute, which is [set to the absolute path of your settings module](http://stackoverflow.com/a/9271479).  The `__file__` gives the absolute path to the settings file, then the call to `os.path.dirname()` provides the reference to the absolute path of the directory. Calling `os.path.dirname()` again, removes another layer, so that `BASE_DIR` contains, `<workspace>/tango_with_django_project/`. You can see this process in action, if you are curious, by adding the following lines to your `settings.py` file.
 
 {lang="python",linenos=off}
+
     print(__file__)
     print(os.path.dirname(__file__))
     print(os.path.dirname(os.path.dirname(__file__)))
 
 At the top of the `settings.py` file, you'll find a `BASE_DIR` variable which does exactly this for you. It provides the absolute path to the root of your Django project, so it's easy for you to specify a path to other directories within your project. We can then easily create a new variable called `TEMPLATE_DIR` that uses the `os.path.join()` function to join up multiple paths. Your new variable should be defined like the example below.
 
-{lang="python",linenos=on}
+{lang="python",linenos=off}
+
     TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 Here we make use of `os.path.join()` to mash together the `BASE_DIR` variable and `'templates'`, which would yield `<workspace>/tango_with_django_project/templates/`. This means we can then use our new `TEMPLATE_DIR` variable to replace the hard coded path we defined earlier in `TEMPLATES`. Update the `DIRS` key/value pairing to look like the following.
 
 {lang="python",linenos=off}
+
     'DIRS': [TEMPLATE_DIR, ]
 
 I> ### Why `TEMPLATE_DIR`?
@@ -86,6 +92,7 @@ W> When concatenating system paths together, always use `os.path.join()`. Using 
 With your template directory and path now set up, create a file called `index.html` and place it in the `templates/rango/` directory. Within this new file, add the following HTML code.
 
 {lang="html",linenos=off}
+
     <!DOCTYPE html>
     
     <html>
@@ -111,11 +118,13 @@ To use this template, we need to re-configure the `index()` view that we created
 In `rango/views.py`, check to see if the following `import` statement exists at the top of the file. If it is not present, add it.
 
 {lang="python",linenos=off}
+
 	from django.shortcuts import render
 
 You can then update the `index()` view function as follows. Check out the inline commentary to see what each line does.
 
 {lang="python",linenos=off}
+
     def index(request):
         # Construct a dictionary to pass to the template engine as its context.
         # Note the key boldmessage is the same as {{ boldmessage }} in the template!

@@ -16,7 +16,8 @@ I> ###Development Environment
 I>
 I> Setting up your development environment is pretty tedious and often a real pain because you only do it occasionally. 
 I> Below we have put together the list of core technologies you need to get started and pointers on how to install them
-I> It is a good idea when setting up your environment to note down the steps you took - because invariably you will forget I> the next time you go to re-install everything on a new machine or someone else's machine.
+I> It is a good idea when setting up your environment to note down the steps you took - because invariably you will forget 
+I> the next time you go to re-install everything on a new machine or someone else's machine.
 
 
 ## Python

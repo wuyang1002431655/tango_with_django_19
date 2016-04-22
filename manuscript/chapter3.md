@@ -153,7 +153,7 @@ Now open up your favourite Web browser and enter the URL
 the one shown in [Figure](#img-ch3-django-powered-page).
 
 {id="img-ch3-django-powered-page"} ![A screenshot of the initial Django page you will see when running the
-development server for the first time.](../images/ch3-django-powered-page.png)
+development server for the first time.](images/ch3-django-powered-page.png)
 
 You can stop the development server at anytime by pushing `CTRL + C` in
 your terminal window. If you wish to run the development server on a
@@ -398,10 +398,10 @@ in Figure fig-rango-hello-world.
 {id="fig-url-chain"}
 ![An illustration of a URL, showing how the different parts of the URL
 are the responsibility of different `url.py`
-files.](../images/ch3-url-chain.png)
+files.](images/ch3-url-chain.png)
 
 ![A screenshot of Google Chrome displaying our first Django-powered
-webpage. Hello, Rango!](../images/ch3-hey-there.png){id="img-ch3-hey-there"}
+webpage. Hello, Rango!](images/ch3-hey-there.png){id="img-ch3-hey-there"}
 
 Within each application, you will create a number of URL 
 mappings. This initial mapping is quite simple but as we progress through the tutorial we will
