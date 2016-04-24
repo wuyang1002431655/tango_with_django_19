@@ -17,7 +17,7 @@ Before we get started, let's go over the data requirements for the Rango app tha
 ## Telling Django about your Database {#section-models-database-telling}
 Before we can create any models, we need to set up our database with Django. In Django 1.9, a `DATABASES` variable is automatically created in your `settings.py` module when you set up a new project. It'll look similar to the following example.
 
-{lang="python",linenos=on}
+{lang="python",linenos=off}
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -25,7 +25,18 @@ Before we can create any models, we need to set up our database with Django. In 
         }
     }
 
-We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is then the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
+We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
+
+
+H> ### Git Tip
+H> If you are using Git, you might be tempted to add and commit the database file. 
+H> This is not a good idea because if you are working on the app with other people
+H> they are likely to change the database and this will cause endless conflicts.
+H>
+H> Instead, add `db.sqlites3` to your `.gitignore` file so that it wont be added. 
+H> You can also do this for other files like `*.pyc` etc that are specific to your machine, 
+H> settings, etc but different on other machines
+
 
 I> ### Using other Database Engines
 I> The Django database framework has been created to cater for a variety of different database backends, such as [PostgresSQL](http://www.postgresql.org/), [MySQL](https://www.mysql.com/) and [Microsoft's SQL Server](https://en.wikipedia.org/wiki/Microsoft_SQL_Server). For other database engines, other keys like `USER`, `PASSWORD`, `HOST` and `PORT` exist for you to configure the database with Django.
@@ -39,7 +50,7 @@ With your database configured in `settings.py`, let's create the two initial dat
 
 For the models themselves, we will create two classes - one class representing each model. Both must [inherit](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)) from the `Model` base class, `django.db.models.Model`. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the `Category` and `Page` model as follows.
 
-{lang="python",linenos=on}
+{lang="python",linenos=off}
     class Category(models.Model):
         name = models.CharField(max_length=128, unique=True)
         
@@ -53,17 +64,21 @@ For the models themselves, we will create two classes - one class representing e
         views = models.IntegerField(default=0)
         
         def __str__(self):  # For Python 2, use __unicode__ too
-            return self.title
+            return '<Category: {0}>'.format(self.title)
 
 T> ### Check `import` Statements
 T> At the top of the `models.py` module, you should see `from django.db import models`. If you don't see it, add it in.
 
 I> ### `__str__()` or `__unicode__()`?
-I> The `__str__()` and `__unicode__()` methods in Python are essentially the `toString()` method of a Python class, if you're familiar with other object-orientated programming languages such as Java. Which method you should use depends on the version of Python you are using. Strings in version 2.x are represented in ASCII format, which therefore necessitates the use of the `__unicode__()` if you need [Unicode support](https://docs.python.org/2/howto/unicode.html). Strings in Python 3.x are Unicode by default, which removes the need for a separate `__unicode__()` method.
-I>
-I> In short, if you are using Python 2.x, include both a `__str__()` and `__unicode__()` method, with `__unicode__()` returning a Unicode representation of the string. If you are using Python 3.x, just use `__str__()` - the string is Unicode by default.
+I> The `__str__()` and `__unicode__()` methods in Python generate a string representation of the class (similar to the  `toString()` method in Java).
+I> In Python 2.x  strings are represented in ASCII format in the `__str__()` method so if you want [Unicode support](https://docs.python.org/2/howto/unicode.html) then you need to also implement the
+`__unicode__()` method.
+I> In Python 3.x strings are Unicode by default, so you only need to implement the `__str__()` method.
 
-When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. Django provides a [comprehensive series of built-in field types](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types). Some of the most commonly used are detailed below.
+
+When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. By default, all models have an auto-increment integer x field called `id` which is automatically assigned and acts a primary key.
+
+Django provides a [comprehensive series of built-in field types](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types). Some of the most commonly used are detailed below.
 
 * `CharField`, a field for storing character data (e.g. strings). Specify `max_length` to provide a maximum number o characters the field can store.
 * `URLField`, much like a `CharField`, but designed for storing resource URLs. You may also specify a `max_length` parameter.
@@ -73,25 +88,24 @@ When you define a model, you need to specify the list of fields and their associ
 I> ### Other Field Types
 I> Check out the [Django documentation on model fields](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types) for a full listing of the Django field types you can use, along with details on the required and optional parameters that each has.
 
-For each field, you can specify the `unique` attribute. If set to `True`, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique - thus every category name must be unique.
+For each field, you can specify the `unique` attribute. If set to `True`, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique - thus every category name must be unique. This means that you can use the field like a primary key.
 
-This is useful if you wish to use a particular field as an additional database key. You can also specify additional attributes for each field such as specifying a default value (`default='value'`), and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
+You can also specify additional attributes for each field such as specifying a default value (`default='value'`), and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
 
-Django also provides simple mechanisms that allows you to relate models/database tables together in some way. These mechanisms are contained in three further field types, and are listed below.
+Django provides three  mechanisms to related models in the database, these are:.
 
 * `ForeignKey`, a field type that allows us to create a [one-to-many relationship](https://en.wikipedia.org/wiki/One-to-many_(data_model)).
 * `OneToOneField`, a field type that allows us to define a strict [one-to-one relationship](https://en.wikipedia.org/wiki/One-to-one_(data_model)).
 * `ManyToManyField`, a field type which allows us to define a [many-to-many relationship](https://en.wikipedia.org/wiki/Many-to-many_(data_model)).
 
-From our model examples above, the field `category` in model `Page` is of type `ForeignKey`. This allows us to create a one-to-many relationship with model/table `Category`, which is specified as an argument to the field's constructor. *You should be aware that Django creates an ID field for you automatically in each table relating to a model. You therefore do not need to explicitly define a primary key for each model - it's done for you!*
+From our model examples above, the field `category` in model `Page` is of type `ForeignKey`. This allows us to create a one-to-many relationship with model/table `Category`, which is specified as an argument to the field's constructor. 
 
-I> ### Using `__unicode__()` or `__str__()`
-I> Why is defining these methods important? Doing so will make your life easier when you begin to use the Django admin interface later on in this chapter.
-I>
-I> Including a `__unicode__()` and/or `__str__()` method in your classes is also useful when debugging your code. Issuing a `print` on a `Category` model instance *without* a `__unicode__()` or `__str__()` method will return `<Category: Category object>`. We know it's a category, but *which one?* Including `__unicode__()` or `__str__()` would then return `<Category: python>`, where `python` is the `name` of a given category.
+
+Finally, it is good practice to implement the `__str__()` and/or `__unicode__()` methods. Without this method implemented when you go to `print` the object it will show as `<Category: Category object>`. This isn't very useful when debugging or accessing the object - instead the code above will print, for example, `<Category: Python>` for the Python category. It is also helpful when we go to use the Admin Interface because Django will display the string representation of the object.
+
 
 ## Creating and Migrating the Database
-With our models defined in `models.py`, we can now let Django work its magic and create the table representations in the underlying database. Django provides what is called a [*migration tool*](https://en.wikipedia.org/wiki/Data_migration) to help us set up and update the database to reflect any changes that may happen in representations of your models. For example, if you were to add a new field to a model, updating the database to reflect this change becomes straightforward.
+With our models defined in `models.py`, we can now let Django work its magic and create the tables in the underlying database. Django provides what is called a [*migration tool*](https://en.wikipedia.org/wiki/Data_migration) to help us set up and update the database to reflect any changes to your models. For example, if you were to add a new field then you can use the migration tools to update the database.
 
 ### Setting up
 First of all, the database must be *initialised*. This means creating it and all the associated tables within it so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command.
@@ -160,7 +174,7 @@ After you have created migrations for your app, you need to commit them to the d
 
 This output confirms that the database tables have been created in your database, and you are good to go.
 
-However, you may have noticed that our `Category` moel is currently lacking some fields that [were specified in Rango's requirements](#section-models-databases-requirements). **You'll be adding these in later to remind you of the migration process.**
+However, you may have noticed that our `Category` model is currently lacking some fields that [were specified in Rango's requirements](#section-models-databases-requirements). **Don't worry we'll be adding these in later to go through the migration process again.**
 
 ## Django Models and the Shell
 Before we turn our attention to demonstrating the Django admin interface, it's worth noting that you can interact with Django models directly from the Django shell - a very useful tool for debugging purposes. We'll demonstrate how to create a ``Category`` instance using this method.
@@ -214,7 +228,7 @@ While this looks good, we are missing the `Category` and `Page` models that were
 
 To do this, open the file `rango/admin.py`. With an `include` statement already present, modify the module so that you `register` each class you want to include. The example below registers both the `Category` and `Page` class to the admin interface.
 
-{lang="python",linenos=on}
+{lang="python",linenos=off}
     from django.contrib import admin
     from rango.models import Category, Page
     
@@ -252,10 +266,10 @@ T>         def __str__(self):
 T>             return self.name
 
 I> ### Expanding `admin.py`
-I> It should be noted that the example ``admin.py`` module for your Rango application is the most simple, functional example available. There are many different features which you can use in the to perform all sorts of nice customisations, such as changing the way models are presented. You can refer to the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
+I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
 ## Creating a Population Script
-Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `dghiewrojbfjro`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
+Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `wadhdafuccbrro`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
 
 To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
 
@@ -269,44 +283,42 @@ To create a population script for Rango, start by creating a new Python module w
 	from rango.models import Category, Page
 	
 	def populate():
-	    python_cat = add_cat('Python')
+		
+	    python_pages = [
+			{"title": "Official Python Tutorial", "url":"http://docs.python.org/2/tutorial/"},
+			{"title":"How to Think like a Computer Scientist", "url":"http://www.greenteapress.com/thinkpython/"},
+		    {"title":"Learn Python in 10 Minutes", "url":"http://www.korokithakis.net/tutorials/python/"} ]
+    
+	    django_pages = [
+			{"title":"Official Django Tutorial",
+		        "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+			{"title":"Django Rocks",
+		        "url":"http://www.djangorocks.com/"},
+			{ "title":"How to Tango with Django",
+		        "url":"http://www.tangowithdjango.com/"} ]
+    
+	    other_pages = [
+			{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
+			{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
+    
+	    cats = {"Python": python_pages,
+				"Django": django_pages,
+	        	"Other Frameworks": other_pages }
+    
+	    # if you want to add more catergories or pages, add them to the dictionaries above
 	
-	    add_page(cat=python_cat,
-	        title="Official Python Tutorial",
-	        url="http://docs.python.org/2/tutorial/")
-	
-	    add_page(cat=python_cat,
-	        title="How to Think like a Computer Scientist",
-	        url="http://www.greenteapress.com/thinkpython/")
-	
-	    add_page(cat=python_cat,
-	        title="Learn Python in 10 Minutes",
-	        url="http://www.korokithakis.net/tutorials/python/")
-	
-	    django_cat = add_cat("Django")
-	
-	    add_page(cat=django_cat,
-	        title="Official Django Tutorial",
-	        url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
-	
-	    add_page(cat=django_cat,
-	        title="Django Rocks",
-	        url="http://www.djangorocks.com/")
-	    
-	    add_page(cat=django_cat,
-	        title="How to Tango with Django",
-	        url="http://www.tangowithdjango.com/")
-	
-	    frame_cat = add_cat("Other Frameworks")
-	
-	    add_page(cat=frame_cat,
-	        title="Bottle",
-	        url="http://bottlepy.org/docs/dev/")
-	
-	    add_page(cat=frame_cat,
-	        title="Flask",
-	        url="http://flask.pocoo.org")
-	
+		# The code below goes through the cats dictionary, then adds each category,
+		# and then adds all the associated pages for that category
+		# if you are using Python 2.x then use cats.iteritems() see
+		# http://docs.quantifiedcode.com/python-anti-patterns/readability/not_using_items_to_iterate_over_a_dictionary.html
+		# for more information about using items() and how to iterate over a dictionary properly
+    
+	    for cat, pages in cats.items():
+	        c = add_cat(cat)
+	        for p in pages:
+	            print page
+	            add_page(c, p["title"], p["url"])
+    
 	    # Print out what we have added to the user.
 	    for c in Category.objects.all():
 	        for p in Page.objects.filter(category=c):
@@ -341,9 +353,9 @@ E> If you don't do this crucial step, **an exception will be raised when you att
 The `populate()` function is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to the `Python` category is stored in local variable `python_cat` - check line 11 above. This is done as a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
 
 I> ### Creating Model Instances
-I> We make use of the convenience `get_or_create()` method for creating model instances in the population script above. As we don't want to create duplicates of the same entry, we can use `get_or_create()` to check if the entry exists in the database for us. If it doesn't exist, the method creates it. It it does, then a reference to the specific model instance is returned.
+I> We make use of the convenience `get_or_create()` method for creating model instances in the population script above. As we don't want to create duplicates of the same entry, we can use `get_or_create()` to check if the entry exists in the database for us. If it doesn't exist, the method creates it. It does, then a reference to the specific model instance is returned.
 I> 
-I> This helper method can remove a lot of repetitive code for us. Rather than doing this laborious check ourselves, we can make use of code that does exactly this for us. *Why reinvent the wheel if it’s already there?*
+I> This helper method can remove a lot of repetitive code for us. Rather than doing this laborious check ourselves, we can make use of code that does exactly this for us.
 I>
 I> The `get_or_create()` method returns a tuple of `(object, created)`. The first element `object` is a reference to the model instance that the `get_or_create()` method creates if the database entry was not found. The entry is created using the parameters you pass to the method - just like `category`, `title`, `url` and `views` in the example above. If the entry already exists in the database, the method simply returns the model instance corresponding to the entry. `created` is a boolean value; `True` is returned if `get_or_create()` had to create a model instance.
 I>

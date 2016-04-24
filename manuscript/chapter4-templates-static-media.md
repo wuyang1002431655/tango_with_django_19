@@ -305,6 +305,7 @@ X> Give the following exercises a go to reinforce what you've learnt from this c
 X> 
 X> * Convert the about page to use a template as well, using a template called `about.html`.
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
+X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`
 
 
 
