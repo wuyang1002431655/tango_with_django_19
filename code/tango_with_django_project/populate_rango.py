@@ -25,9 +25,9 @@ def populate():
 		{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
 		{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
     
-    cats = {'Python': python_pages,
-			'Django': django_pages,
-        	'Other Frameworks': other_pages }
+    cats = {"Python": python_pages,
+			"Django": django_pages,
+        	"Other Frameworks": other_pages }
     
     # if you want to add more catergories or pages, add them to the dictionaries above
 	
