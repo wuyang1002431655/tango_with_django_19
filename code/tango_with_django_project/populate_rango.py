@@ -7,44 +7,41 @@ django.setup()
 from rango.models import Category, Page
 
 def populate():
-    python_cat = add_cat('Python', views=128, likes=64)
-
-    add_page(cat=python_cat,
-        title="Official Python Tutorial",
-        url="http://docs.python.org/2/tutorial/")
-
-    add_page(cat=python_cat,
-        title="How to Think like a Computer Scientist",
-        url="http://www.greenteapress.com/thinkpython/")
-
-    add_page(cat=python_cat,
-        title="Learn Python in 10 Minutes",
-        url="http://www.korokithakis.net/tutorials/python/")
-
-    django_cat = add_cat("Django", views=64, likes=32)
-
-    add_page(cat=django_cat,
-        title="Official Django Tutorial",
-        url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
-
-    add_page(cat=django_cat,
-        title="Django Rocks",
-        url="http://www.djangorocks.com/")
     
-    add_page(cat=django_cat,
-        title="How to Tango with Django",
-        url="http://www.tangowithdjango.com/")
-
-    frame_cat = add_cat("Other Frameworks", views=32, likes=16)
-
-    add_page(cat=frame_cat,
-        title="Bottle",
-        url="http://bottlepy.org/docs/dev/")
-
-    add_page(cat=frame_cat,
-        title="Flask",
-        url="http://flask.pocoo.org")
-
+    python_pages = [
+		{"title": "Official Python Tutorial", "url":"http://docs.python.org/2/tutorial/"},
+		{"title":"How to Think like a Computer Scientist", "url":"http://www.greenteapress.com/thinkpython/"},
+	    {"title":"Learn Python in 10 Minutes", "url":"http://www.korokithakis.net/tutorials/python/"} ]
+    
+    django_pages = [
+		{"title":"Official Django Tutorial",
+	        "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+		{"title":"Django Rocks",
+	        "url":"http://www.djangorocks.com/"},
+		{ "title":"How to Tango with Django",
+	        "url":"http://www.tangowithdjango.com/"} ]
+    
+    other_pages = [
+		{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
+		{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
+    
+    cats = {'Python': python_pages,
+			'Django': django_pages,
+        	'Other Frameworks': other_pages }
+    
+    # if you want to add more catergories or pages, add them to the dictionaries above
+	
+	# The code below goes through the cats dictionary, then adds each category,
+	# and then adds all the associated pages for that category
+	# if you are using Python 2.x then use cats.iteritems() see
+	# http://docs.quantifiedcode.com/python-anti-patterns/readability/not_using_items_to_iterate_over_a_dictionary.html
+	# for more information about using items() and how to iterate over a dictionary properly
+    
+    for cat, pages in cats.items():
+        c = add_cat(cat)
+        for p in pages:
+            add_page(c, p["title"], p["url"])
+    
     # Print out what we have added to the user.
     for c in Category.objects.all():
         for p in Page.objects.filter(category=c):
