@@ -11,7 +11,7 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
     
     def __str__(self):
-        return self.name
+        return '<Category: {0}>'.format(self.name)
 
 class Page(models.Model):
     category = models.ForeignKey(Category)
@@ -20,4 +20,4 @@ class Page(models.Model):
     views = models.IntegerField(default=0)
     
     def __str__(self):
-        return self.title
+        return '<Page: {0}>'.format(self.title)

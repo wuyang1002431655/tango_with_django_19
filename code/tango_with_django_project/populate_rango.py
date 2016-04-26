@@ -25,9 +25,9 @@ def populate():
 		{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
 		{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
     
-    cats = {"Python": {"pages": python_pages},
-			"Django": {"pages": django_pages},
-        	"Other Frameworks": {"pages": other_pages} }
+    cats = {"Python": {"pages": python_pages, "views": 128, "likes": 64},
+			"Django": {"pages": django_pages, "views": 64, "likes": 32},
+        	"Other Frameworks": {"pages": other_pages, "views": 32, "likes": 16} }
     
     # if you want to add more catergories or pages, add them to the dictionaries above
 	
@@ -37,8 +37,11 @@ def populate():
 	# http://docs.quantifiedcode.com/python-anti-patterns/readability/not_using_items_to_iterate_over_a_dictionary.html
 	# for more information about using items() and how to iterate over a dictionary properly
     
+    # Using the .items returns the key and the value. In this case the key is "Python", "Django" or "Other Frameworks" and the value (cat_data) is the corresponding dictionary in cats.
     for cat, cat_data in cats.items():
-        c = add_cat(cat)
+        # c = add_cat(cat)
+        # Updated the population script to pass through the specific values for views and likes
+        c = add_cat(cat, cat_data["views"], cat_data["likes"])
         for p in cat_data["pages"]:
             add_page(c, p["title"], p["url"])
     
@@ -51,6 +54,7 @@ def add_page(cat, title, url, views=0):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
     p.url=url
     p.views=views
+    # we need to save the changes we made!!
     p.save()
     return p
 

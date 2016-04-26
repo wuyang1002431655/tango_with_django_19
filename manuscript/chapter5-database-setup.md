@@ -55,7 +55,8 @@ For the models themselves, we will create two classes - one class representing e
         name = models.CharField(max_length=128, unique=True)
         
         def __str__(self):  # For Python 2, use __unicode__ too
-            return self.name
+			return '<Category: {0}>'.format(self.name)
+            
     
     class Page(models.Model):
         category = models.ForeignKey(Category)
@@ -64,7 +65,7 @@ For the models themselves, we will create two classes - one class representing e
         views = models.IntegerField(default=0)
         
         def __str__(self):  # For Python 2, use __unicode__ too
-            return '<Category: {0}>'.format(self.title)
+            return '<Page: {0}>'.format(self.title)
 
 T> ### Check `import` Statements
 T> At the top of the `models.py` module, you should see `from django.db import models`. If you don't see it, add it in.
@@ -283,11 +284,20 @@ To create a population script for Rango, start by creating a new Python module w
 	from rango.models import Category, Page
 	
 	def populate():
+	
+		# First we will create lists of dictionaries containing the pages
+		# we want to add into each category
+		# Then we will create a dictionary of dictionaries for our categories
+		# This might seem a little bit confusing, but it allows us to iterate through
+		# through each data structure and add the data to our models.
 		
 	    python_pages = [
-			{"title": "Official Python Tutorial", "url":"http://docs.python.org/2/tutorial/"},
-			{"title":"How to Think like a Computer Scientist", "url":"http://www.greenteapress.com/thinkpython/"},
-		    {"title":"Learn Python in 10 Minutes", "url":"http://www.korokithakis.net/tutorials/python/"} ]
+			{"title": "Official Python Tutorial", 
+			"url":"http://docs.python.org/2/tutorial/"},
+			{"title":"How to Think like a Computer Scientist", 
+			"url":"http://www.greenteapress.com/thinkpython/"},
+		    {"title":"Learn Python in 10 Minutes", 
+			"url":"http://www.korokithakis.net/tutorials/python/"} ]
     
 	    django_pages = [
 			{"title":"Official Django Tutorial",
@@ -298,26 +308,33 @@ To create a population script for Rango, start by creating a new Python module w
 		        "url":"http://www.tangowithdjango.com/"} ]
     
 	    other_pages = [
-			{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
-			{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
+			{ "title":"Bottle", 
+			"url":"http://bottlepy.org/docs/dev/"},
+			{ "title":"Flask",
+			 "url":"http://flask.pocoo.org"} ]
     
-	    cats = {"Python": python_pages,
-				"Django": django_pages,
-	        	"Other Frameworks": other_pages }
+	    cats = {"Python": {"pages": python_pages},
+				"Django": {"pages": django_pages},
+	        	"Other Frameworks": {"pages": other_pages} }
     
-	    # if you want to add more catergories or pages, add them to the dictionaries above
+	    # if you want to add more catergories or pages, 
+		# add them to the dictionaries above
 	
 		# The code below goes through the cats dictionary, then adds each category,
 		# and then adds all the associated pages for that category
 		# if you are using Python 2.x then use cats.iteritems() see
-		# http://docs.quantifiedcode.com/python-anti-patterns/readability/not_using_items_to_iterate_over_a_dictionary.html
-		# for more information about using items() and how to iterate over a dictionary properly
+		# http://docs.quantifiedcode.com/python-anti-patterns/readability/
+		# for more information about how to iterate over a dictionary properly
     
-	    for cat, pages in cats.items():
+	    for cat, cat_data in cats.items():
 	        c = add_cat(cat)
-	        for p in pages:
-	            print page
+	        for p in cat_data["pages"]:
 	            add_page(c, p["title"], p["url"])
+    
+	    # Print out what we have added to the user.
+	    for c in Category.objects.all():
+	        for p in Page.objects.filter(category=c):
+	            print("- {0} - {1}".format(str(c), str(p)))
     
 	    # Print out what we have added to the user.
 	    for c in Category.objects.all():
@@ -341,7 +358,7 @@ To create a population script for Rango, start by creating a new Python module w
 	    populate()
 
 T> ### Understand this Code!
-T> Don't copy, paste and leave. Add the code to your new module, but read the explanations below as to what is going on. You'll learn something new!
+T> Don't copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. Below we have provided explanations - hopefully you'll learn something new!
 
 While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look for line 65. This is because above this point, we define functions - these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we hit the `populate()` function.
 
@@ -426,3 +443,20 @@ T> * Finally, register the `PageAdmin` class with Django's admin interface. You 
 
 {id="fig-admin-completed"}
 ![The updated admin interface `Page` view, complete with columns for category and URL.](images/ch5-admin-completed.png)
+
+
+
+I> ### Tests
+I>
+I> We have written a few tests to check if you have completed the exercises. To check your work so far 
+I> [download the `tests.py` script]( https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/rango/tests.py) from our GitHub account: https://github.com/leifos/tango_with_django_19/ and save it within your `rango` app directory.
+I>
+I> To run the tests, issue the following command in the terminal:
+I>
+I>	$ python manage.py tests rango
+I>
+I> If you are interested in learning about automated testing it is good time to check out the [chapter on testing](#chapter-testing) which will run through some of the basics on testing you can perform in Django.
+
+
+
+
