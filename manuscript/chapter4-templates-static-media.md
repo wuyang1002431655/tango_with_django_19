@@ -21,7 +21,6 @@ T> It's good practice to separate out your templates into subdirectories for eac
 To tell your Django project where templates will be stored, open your project's `settings.py` file. Next, locate the `TEMPLATES` data structure. By default, when you create a new Django 1.9 project, it will look like the following.
 
 {lang="python",linenos=off}
-
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -41,13 +40,11 @@ To tell your Django project where templates will be stored, open your project's 
 What we need to do to tell Django where our templates are stored is modify the `DIRS` list. Change the dictionary key/value pair to look like the following.
 
 {lang="python",linenos=off}
-
     'DIRS': ['<workspace>/templates']
 
 Note that you are *required to use absolute paths* to locate the `templates` directory. If you are collaborating with team members or working on different computers, then this will become a problem. You'll have different usernames and different drive structures, meaning the paths to the `<workspace>` directory will be different. One solution would be to the path for each different configuration, for example:
 	
 {lang="python",linenos=off}
-
     'DIRS': [ '/Users/leifos/templates',
 			  '/Users/maxwelld90/templates',
 			  '/Users/clueless/noob/templates',	
@@ -65,7 +62,6 @@ A better solution is to make use of built-in Python functions to work out the pa
 At the top of your `settings.py` file, there is a variable called `BASE_DIR`. This variables stores the path to the directory in which your project's `settings.py` module will be contained. This is obtained by using the special Python `__file__` attribute, which is [set to the absolute path of your settings module](http://stackoverflow.com/a/9271479).  The `__file__` gives the absolute path to the settings file, then the call to `os.path.dirname()` provides the reference to the absolute path of the directory. Calling `os.path.dirname()` again, removes another layer, so that `BASE_DIR` contains, `<workspace>/tango_with_django_project/`. You can see this process in action, if you are curious, by adding the following lines to your `settings.py` file.
 
 {lang="python",linenos=off}
-
     print(__file__)
     print(os.path.dirname(__file__))
     print(os.path.dirname(os.path.dirname(__file__)))
@@ -73,13 +69,11 @@ At the top of your `settings.py` file, there is a variable called `BASE_DIR`. Th
 At the top of the `settings.py` file, you'll find a `BASE_DIR` variable which does exactly this for you. It provides the absolute path to the root of your Django project, so it's easy for you to specify a path to other directories within your project. We can then easily create a new variable called `TEMPLATE_DIR` that uses the `os.path.join()` function to join up multiple paths. Your new variable should be defined like the example below.
 
 {lang="python",linenos=off}
-
     TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 Here we make use of `os.path.join()` to mash together the `BASE_DIR` variable and `'templates'`, which would yield `<workspace>/tango_with_django_project/templates/`. This means we can then use our new `TEMPLATE_DIR` variable to replace the hard coded path we defined earlier in `TEMPLATES`. Update the `DIRS` key/value pairing to look like the following.
 
 {lang="python",linenos=off}
-
     'DIRS': [TEMPLATE_DIR, ]
 
 I> ### Why `TEMPLATE_DIR`?
@@ -92,7 +86,6 @@ W> When concatenating system paths together, always use `os.path.join()`. Using 
 With your template directory and path now set up, create a file called `index.html` and place it in the `templates/rango/` directory. Within this new file, add the following HTML code.
 
 {lang="html",linenos=off}
-
     <!DOCTYPE html>
     
     <html>
@@ -118,13 +111,11 @@ To use this template, we need to re-configure the `index()` view that we created
 In `rango/views.py`, check to see if the following `import` statement exists at the top of the file. If it is not present, add it.
 
 {lang="python",linenos=off}
-
 	from django.shortcuts import render
 
 You can then update the `index()` view function as follows. Check out the inline commentary to see what each line does.
 
 {lang="python",linenos=off}
-
     def index(request):
         # Construct a dictionary to pass to the template engine as its context.
         # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -165,7 +156,6 @@ Just like the `templates` directory we created earlier, we need to tell Django a
 First of all, create a variable called `STATIC_DIR` at the top of `settings.py`, preferably underneath `BASE_DIR` and `TEMPLATES_DIR` to keep your paths all in the same place. `STATIC_DIR` should make use of the same `os.path.join` trick - but point to `static` this time around, just as shown below.
 
 {lang="python",linenos=off}
-
 	STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 This will provide an absolute path to the location `<workspace>/tango_with_django_project/static/`. Once this variable has been created, we then need to create a new data structure called `STATICFILES_DIRS`. This is essentially a list of paths with which Django can expect to find static files that can be served. By default, this list does not exist - **check** it doesn't before you create it. If you define it twice, you can start to confuse Django - and yourself.
@@ -173,7 +163,6 @@ This will provide an absolute path to the location `<workspace>/tango_with_djang
 For this book, we're only going to be using one location to store our project's static files - the path defined in `STATIC_DIR`. As such, we can simply set up `STATICFILES_DIRS` with the following.
 
 {lang="python",linenos=off}
-
 	STATICFILES_DIRS = [STATIC_DIR, ]
 
 T> ### Keep `settings.py` Tidy!
@@ -182,7 +171,6 @@ T> It's in your best interests to keep your `settings.py` module tidy and in goo
 Finally, check that the `STATIC_URL` variable is defined within your `settings.py` module. If it is not, then define it as shown below. Note that this variable by default in Django 1.9 appears close to the end of the module, so you may have to scroll down to find it.
 
 {lang="python",linenos=off}
-
     STATIC_URL = '/static/'
 
 With everything required now entered, what does it all mean? Put simply, the first two variables `STATIC_DIR` and `STATICFILES_DIRS` refers to the locations on your computer where static files are stored. The final variable `STATIC_URL` then allows us to specify the URL with which static files can be accessed when we run our Django development server. For example, with `STATIC_URL` set to `/static/`, we would be able to access static content at `http://127.0.0.1:8000/static/`. *Think of the first two variables as server-side locations, and the third variable as the location with which clients can access static content.*
@@ -230,7 +218,6 @@ To demonstrate how to include static files, open up the `index.html` templates y
 The first new line added ( i.e. `{% load staticfiles %}`) informs Django's template engine that we will be using static files with the template. This then enables us to access the media in the static directories via the use of the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/). This indicates to Django that we wish to show the image located in the static media directory called `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{%  % }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`. The HTML generated as a result would be:
 
 {lang="html",linenos=off}
-
     <img src="{% static "/static/images/rango.jpg" %}" alt="Picture of Rango" /> 
 
 If for some reason the image cannot be loaded, it is always a good idea to specify an alternative text tagline. This is what the ``alt`` attribute provides inside the `img` tag.

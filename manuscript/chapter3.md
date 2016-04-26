@@ -50,8 +50,7 @@ I>
 I> Whenever you see code and the prompt starts with $ then this refers to
 I> commands typed into your terminal window at the command line
 I>
-I> Whenever you see >>> then it refers to commands types in to your terminal window, but into the Python interpreter.
-I>
+I> Whenever you see >>> then it refers to commands typed into the Python interpreter.
 
 
 ##Creating your Django Project
@@ -395,12 +394,13 @@ in Figure fig-rango-hello-world.
 are the responsibility of different `url.py`
 files.](images/ch3-url-chain.png)
 
-{id="img-ch3-hey-there"}![A screenshot of Google Chrome displaying our first Django-powered
+
+{id="img-ch3-hey-there"}
+![A screenshot of Google Chrome displaying our first Django-powered
 webpage. Hello, Rango!](images/ch3-hey-there.png)
 
 Within each application, you will create a number of URL 
-mappings. This initial mapping is quite simple but as we progress through the tutorial we will
-create more sophisticated parameterised URL mappings. 
+mappings. This initial mapping is quite simple but as we progress through the tutorial we will create more sophisticated parameterised URL mappings. 
 
 It's important to have a good understanding of how URLs are handled in
 Django. So, if you are still bit confused or would like to know more check

@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles import finders
 
+# Thanks to Enzo Roiz https://github.com/enzoroiz who made these tests during an internship with us
 
-# Create your tests here.
 class GeneralTests(TestCase):
     def test_serving_static_files(self):
         # If using static media properly result is not NONE once it finds rango.jpg
@@ -66,14 +66,21 @@ class AboutPageTests(TestCase):
 class ModelTests(TestCase):
 
     def setUp(self):
+        try:
+            from populate_rango import populate
+            populate()
+        except ImportError:
+            print('The module populate_rango does not exist')
+        except NameError:
+            print('The function populate() does not exist or is not correct')
+        except:
+            print('Something went wrong in the populate() function :-(')
         
-        from populate_rango import populate
-        populate()
         
     def get_category(self, name):
-        from rango.models import Category
         
-        try:
+        from rango.models import Category
+        try:                  
             cat = Category.objects.get(name=name)
         except Category.DoesNotExist:    
             cat = None

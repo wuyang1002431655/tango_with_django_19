@@ -25,9 +25,9 @@ def populate():
 		{ "title":"Bottle", "url":"http://bottlepy.org/docs/dev/"},
 		{ "title":"Flask", "url":"http://flask.pocoo.org"} ]
     
-    cats = {"Python": python_pages,
-			"Django": django_pages,
-        	"Other Frameworks": other_pages }
+    cats = {"Python": {"pages": python_pages},
+			"Django": {"pages": django_pages},
+        	"Other Frameworks": {"pages": other_pages} }
     
     # if you want to add more catergories or pages, add them to the dictionaries above
 	
@@ -37,9 +37,9 @@ def populate():
 	# http://docs.quantifiedcode.com/python-anti-patterns/readability/not_using_items_to_iterate_over_a_dictionary.html
 	# for more information about using items() and how to iterate over a dictionary properly
     
-    for cat, pages in cats.items():
+    for cat, cat_data in cats.items():
         c = add_cat(cat)
-        for p in pages:
+        for p in cat_data["pages"]:
             add_page(c, p["title"], p["url"])
     
     # Print out what we have added to the user.
