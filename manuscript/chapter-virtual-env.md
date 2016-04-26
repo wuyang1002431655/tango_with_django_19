@@ -1,4 +1,4 @@
-# Virtual Environments{#chapter-virtual-environments}
+#Virtual Environments {#chapter-virtual-environments}
 Virtual environments allow multiple installations of Python and their relevant
 packages to exist in harmony. This is the generally accepted approach to
 configuring a Python setup nowadays.

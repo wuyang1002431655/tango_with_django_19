@@ -452,8 +452,8 @@ I> We have written a few tests to check if you have completed the exercises. To 
 I> [download the `tests.py` script]( https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/rango/tests.py) from our GitHub account: https://github.com/leifos/tango_with_django_19/ and save it within your `rango` app directory.
 I>
 I> To run the tests, issue the following command in the terminal:
-I>
-I>	$ python manage.py tests rango
+I>	{lang="text",linenos=off}
+I>		$ python manage.py tests rango
 I>
 I> If you are interested in learning about automated testing it is good time to check out the [chapter on testing](#chapter-testing) which will run through some of the basics on testing you can perform in Django.
 
