@@ -155,11 +155,11 @@ Python category. This is a simple, readable and meaningful URL. If we go
 with this approach, we'll have to handle categories which have multiple
 words, like 'Other Frameworks', etc.
 
-> **note**
->
-> Designing clean URLs is an important aspect of web design. See
-> [Wikipedia's article on Clean
-> URLs](http://en.wikipedia.org/wiki/Clean_URL) for more details.
+T> ### Clean your URLs
+T>
+T> Designing clean URLs is an important aspect of web design. See
+T> [Wikipedia's article on Clean
+T> URLs](http://en.wikipedia.org/wiki/Clean_URL) for more details.
 
 To handle this problem we are going to make use of the slugify function
 provided by Django, based on the answers provided at:
@@ -172,7 +172,7 @@ To make clean urls we are going to include a slug field in the
 django, which will replace whitespace with hyphens, i.e "how do i create
 a slug in django" turns into "how-do-i-create-a-slug-in-django".
 
-W> **warning**
+W> Unsafe URLs
 W>
 W> While you can use spaces in URLs, it is considered to be unsafe to use
 W> them. Check out [IETF Memo on
@@ -270,7 +270,8 @@ Next, we can add our new view, `category()`.
 
 {lang="python",linenos=off}
 	def category(request, category_name_slug):
-    	# Create a context dictionary which we can pass to the template rendering engine.
+    	# Create a context dictionary which we can pass 
+		# to the template rendering engine.
     	context_dict = {}
 		
     	try:
@@ -286,13 +287,15 @@ Next, we can add our new view, `category()`.
 
         	# Adds our results list to the template context under name pages.
         	context_dict['pages'] = pages
-        	# We also add the category object from the database to the context dictionary.
+        	# We also add the category object from 
+			# the database to the context dictionary.
         	# We'll use this in the template to verify that the category exists.
         	context_dict['category'] = category
     	except Category.DoesNotExist:
         	# We get here if we didn't find the specified category.
-        	# Don't do anything - the template displays the "no category" message for us.
-        	pass
+        	# Don't do anything - 
+			# the template will display the "no category" message for us.
+			pass
 
     	# Go render the response and return it to the client.
     	return render(request, 'rango/category.html', context_dict)
@@ -375,7 +378,8 @@ as follows.
 	urlpatterns = patterns('',
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
-    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),)  # New!
+    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
+		views.category, name='category'),)  # New!
 
 As you can see, we have added in a rather complex entry that will invoke
 `view.category()` when the regular expression
@@ -418,7 +422,10 @@ the *name* that must match anything defined within the URL pattern.
  Note how `category_name_slug` defined in the URL pattern matches the
  `category_name_slug` parameter defined for our view. Using  `category_name_slug` in our view will give `python-books`, or whatever value was supplied as that part of the URL.
 
-I> **note**
+I> ###Regex Hell
+I> Some people, when confronted with a problem, think 
+I> “I know, I'll use regular expressions.”   Now they have two problems.
+I> [Jamie Zawinski](http://regex.info/blog/2006-09-15/247)
 I>
 I> Regular expressions may seem horrible and confusing at first, but
 I> there are tons of resources online to help you. [This cheat
