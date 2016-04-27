@@ -1,253 +1,500 @@
-# Models and Databases {#chapter-models}
+#Models, Templates and Views {#chapter-mtv}
 
-Working with databases often requires you to get your hands dirty
-messing about with SQL. In Django, a lot of this hassle is taken care of
-for you by Django's *object relational mapping (ORM)* functions, and how
-Django encapsulates databases tables through models. Essentially, a
-model is a Python object that describes your data model/table. Instead
-of directly working on the database table via SQL, all you have to do is
-manipulate the corresponding Python object. In this chapter, we'll
-walkthrough how to setup a database and the models required for Rango.
+Now that we have the models set up and populated the database with some sample data, we can
+now start connecting the models with the views and templates. 
 
-Rango's Requirements
---------------------
+##Basic Workflow: Data Driven Pages
 
-First, let's go over the data requirements for Rango. The following list
-provides the key details of Rango's data requirements.
+To do this there are five main steps that you must undertake to create a data
+driven webpage in Django.
 
--   Rango is a essentially a *web page directory* - a site containing
-    links to other websites.
--   There are a number of different *webpage categories*, and each
-    category houses a number of links. We assumed in Chapter
-    overview-label that this is a one-to-many relationship. See the
-    Entity Relationship Diagram below.
--   A category has a name, number of visits, and number of likes.
--   A page refers to a category, has a title, URL and a number of views.
+1.  First, import the models you wish to use into your application's
+    `views.py` file.
+2.  Within the view you wish to use, query the model to get the data you
+    want to present.
+3.  Pass the results from your model into the template's context.
+4.  Setup your template to present the data to the user in whatever way
+    you wish.
+5.  If you have not done so already, map a URL to your view.
 
-![The Entity Relationship Diagram of Rango's two main
-entities.](../images/rango-erd.svg)
+These steps highlight how Django's framework separates the concerns
+between models, views and templates.
 
-Telling Django About Your Database
-----------------------------------
+##Showing Categories on Rango's Homepage
+One of the requirements regarding the main page was to show the top
+five rango'ed categories.
 
-Before we can create any models, the database configuration needs to be
-setup. In Django 1.7, when you create a project, Django automatically
-populates the dictionary called `DATABASES`, which is located in your
-`settings.py`. It will contain something like:
+### Importing Required Models
 
-``` {.sourceCode .python}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-```
+To fulfil this requirement, we will go through each of the above steps.
+First, open `rango/views.py` and import the `Category` model from
+Rango's `models.py` file.
 
-As you can see the default engine will be a SQLite3 backend. This
-provides us with access to the lightweight python database,
-[SQLite](http://www.sqlite.org/), which is great for development
-purposes. The only other value we need to set is the `NAME` key/value
-pair, which we have set to `DATABASE_PATH`. For other database engines,
-other keys like `USER`, `PASSWORD`, `HOST` and `PORT` can also be added
-to the dictionary.
+{lang="python",linenos=off}
+	# Import the Category model
+	from rango.models import Category
+
+### Modifying the Index View
+
+With the first step out of the way, we then want to modify our `index()`
+function. If we cast our minds back, we should remember the `index()`
+function is responsible for the main page view. Modify the function to
+look like the example below.
+
+{lang="python",linenos=off}
+	def index(request):
+    	# Query the database for a list of ALL categories currently stored.
+    	# Order the categories by no. likes in descending order.
+    	# Retrieve the top 5 only - or all if less than 5.
+    	# Place the list in our context_dict dictionary which will be passed to the template engine.
+    	category_list = Category.objects.order_by('-likes')[:5]
+    	context_dict = {'categories': category_list}
+
+    	# Render the response and send it back!
+    	return render(request, 'rango/index.html', context_dict)
+
+
+Here we have performed steps two and three in one go. First, we queried
+the `Category` model to retrieve the top five categories. Here we used
+the `order_by()` method to sort by the number of likes in descending
+order - hence the inclusion of the `-`. We then restricted this list to
+the first 5 `Category` objects in the list.
+
+With the query complete, we passed a reference to the list (stored as
+variable `category_list`) to the dictionary, `context_dict`. This
+dictionary is then passed as part of the context for the template engine
+in the `render()` call.
+
+W> ###Warning
+W>
+W> Note that the Category Model contains the field `likes`. So for this
+W> to work you need to have completed the exercises in the previous
+W> chapter, i.e. the Category Model needs to be updated to include the
+W> `likes` field.
+
+### Modifying the Index Template
+
+With the view updated, all that is left for us to do is update the
+template `rango/index.html`, located within your project's `templates`
+directory. Change the HTML code of the file so that it looks like the
+example shown below.
+
+{lang="html",linenos=off}
+	<!DOCTYPE html>
+	<html>
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+        <h1>Rango says...hello world!</h1>
+
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <li>{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+
+        <a href="/rango/about/">About</a>
+    </body>
+	</html>
+
+
+Here, we make use of Django's template language to present the data
+using `if` and `for` control statements. Within the `<body>` of the
+page, we test to see if `categories` - the name of the context variable
+containing our list - actually contains any categories (i.e.
+`{% if categories %}`).
+
+If so, we proceed to construct an unordered HTML list (within the `<ul>`
+tags). The for loop (`{% for category in categories %}`) then iterates
+through the list of results, printing out each category's name
+(`{{ category.name }})` within a pair of `<li>` tags to indicate a list
+element.
+
+If no categories exist, a message is displayed instead indicating so.
+
+As the example shows in Django's template language, all commands are
+enclosed within the tags `{%` and `%}`, while variables are referenced
+within `{{` and `}}` brackets.
+
+If you now visit Rango's homepage at <http://127.0.0.1:8000/rango/>, you
+should see a list of three categories underneath the page title just
+like in Figure fig-rango-categories-simple.
+
+![The Rango homepage - now dynamically generated - showing a list of
+categories. How exciting!](../images/rango-categories-simple.png)
+
+##Creating a Details Page
+
+
+According to Rango's specification, we also need to show a list of pages
+that are associated with each category. We have a number of challenges
+here to overcome. A new view must be created, which should be
+parameterised. We also need to create URL patterns and URL strings that
+encode category names.
+
+### URL Design and Mapping
+
+Let's start by considering the URL problem. One way we could handle this
+problem is to use the unique ID for each category within the URL. For
+example, we could create URLs like `/rango/category/1/` or
+`/rango/category/2/`, where the numbers correspond to the categories
+with unique IDs 1 and 2 respectively. However, these URLs are not easily
+understood by humans. Although we could probably infer that the number
+relates to a category, how would a user know what category relates to
+unique IDs 1 or 2? The user wouldn't know without trying.
+
+Instead, we could just use the category name as part of the URL.
+`/rango/category/Python/` should give us a list of pages related to the
+Python category. This is a simple, readable and meaningful URL. If we go
+with this approach, we'll have to handle categories which have multiple
+words, like 'Other Frameworks', etc.
 
 > **note**
 >
-> While using an SQLite engine for this tutorial is fine, it may not
-> perhaps be the best option when it comes to deploying your
-> application. Instead, it may be better to use a more robust and
-> scalable database engine. Django comes with out of the box support for
-> several other popular database engines, such as
-> [PostgreSQL](http://www.postgresql.org/) and
-> [MySQL](http://www.mysql.com/). See the [official Django documentation
-> on Database
-> Engines](https://docs.djangoproject.com/en/1.7/ref/settings/#std:setting-DATABASE-ENGINE)
-> for more details. You can also check out [this excellent
-> article](http://www.sqlite.org/whentouse.html) on the SQLite website
-> which explains situation where you should and you shouldn't consider
-> using the lightweight SQLite engine.
+> Designing clean URLs is an important aspect of web design. See
+> [Wikipedia's article on Clean
+> URLs](http://en.wikipedia.org/wiki/Clean_URL) for more details.
 
-Creating Models
----------------
+To handle this problem we are going to make use of the slugify function
+provided by Django, based on the answers provided at:
+<http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django>
 
-With your database configured in `settings.py`, let's create the two
-initial data models for the Rango application.
+### Update Category Table with Slug Field
 
-In `rango/models.py`, we will define two classes - both of which must
-inherit from `django.db.models.Model`. The two Python classes will be
-the definitions for models representing *categories* and *pages*. Define
-the `Category` and `Page` models as follows.
+To make clean urls we are going to include a slug field in the
+`Category` model. First we need to import the function `slugify` from
+django, which will replace whitespace with hyphens, i.e "how do i create
+a slug in django" turns into "how-do-i-create-a-slug-in-django".
 
-``` {.sourceCode .python}
-class Category(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+W> **warning**
+W>
+W> While you can use spaces in URLs, it is considered to be unsafe to use
+W> them. Check out [IETF Memo on
+W> URLs](http://www.ietf.org/rfc/rfc1738.txt) to read more.
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
-        return self.name
+Then we need to override the `save` method of the `Category` model,
+which we will call the `slugify` method and update the `slug` field with
+it. Note that everytime the category name changes, the slug will also
+change. Update your model, as shown below, and add in the import.
 
-class Page(models.Model):
-    category = models.ForeignKey(Category)
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
+{lang="python",linenos=off}
+	from django.template.defaultfilters import slugify
+	
+	class Category(models.Model):
+    	name = models.CharField(max_length=128, unique=True)
+    	views = models.IntegerField(default=0)
+    	likes = models.IntegerField(default=0)
+    	slug = models.SlugField(unique=True)
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
-        return self.title
-```
+    	def save(self, *args, **kwargs):
+        	self.slug = slugify(self.name)
+        	super(Category, self).save(*args, **kwargs)
 
-When you define a model, you need to specify the list of attributes and
-their associated types along with any optional parameters. Django
-provides a number of built-in fields. Some of the most commonly used are
-listed below.
-
--   `CharField`, a field for storing character data (e.g. strings).
-    Specify `max_length` to provide a maximum number of characters the
-    field can store.
--   `URLField`, much like a `CharField`, but designed for storing
-    resource URLs. You may also specify a `max_length` parameter.
--   `IntegerField`, which stores integers.
--   `DateField`, which stores a Python `datetime.date`.
-
-Check out the [Django documentation on model
-fields](https://docs.djangoproject.com/en/1.7/ref/models/fields/) for a
-full listing.
-
-For each field, you can specify the `unique` attribute. If set to
-`True`, only one instance of a particular value in that field may exist
-throughout the entire database model. For example, take a look at our
-`Category` model defined above. The field `name` has been set to
-unique - thus every category name must be unique.
-
-This is useful if you wish to use a particular field as an additional
-database key. You can also specify additional attributes for each field
-such as specifying a default value (`default='value'`), and whether the
-value for a field can be `NULL` (`null=True`) or not.
-
-Django also provides simple mechanisms that allows us to relate
-models/database tables together. These mechanisms are encapsulated in
-three further field types, and are listed below.
-
--   `ForeignKey`, a field type that allows us to create a one-to-many
-    relationship.
--   `OneToOneField`, a field type that allows us to define a strict
-    one-to-one relationship.
--   `ManyToManyField`, a field type which allows us to define a
-    many-to-many relationship.
-
-From our model examples above, the field `category` in model `Page` is
-of type `ForeignKey`. This allows us to create a one-to-many
-relationship with model/table `Category`, which is specified as an
-argument to the field's constructor. *You should be aware that Django
-creates an ID field for you automatically in each table relating to a
-model. You therefore do not need to explicitly define a primary key for
-each model - it's done for you!*
-
-> **note**
->
-> When creating a Django model, it's good practice to make sure you
-> include the `__unicode__()` method - a method almost identical to the
-> `__str__()` method. If you're unfamiliar with both of these, think of
-> them as methods analogous to the `toString()` method in a Java class.
-> The `__unicode__()` method is therefore used to provide a unicode
-> representation of a model instance. Our `Category` model for example
-> returns the name of the category in the `__unicode__()` method -
-> something which will be incredibly handy to you when you begin to use
-> the Django admin interface later on in this chapter.
->
-> Including a `__unicode__()` method in your classes is also useful when
-> debugging your code. Issuing a `print` on a `Category` model instance
-> *without* a `__unicode__()` method will return
-> `<Category: Category object>`. We know it's a category, but *which
-> one?* Including `__unicode__()` would then return
-> `<Category: python>`, where `python` is the `name` of a given
-> category. Much better!
-
-Creating and Migrating the Database
------------------------------------
-
-With our models defined, we can now let Django work its magic and create
-the table representations in our database. In previous versions of
-Django this would be performed using the command:
-
-`$ python manage.py syncdb`
-
-However, Django 1.7 provides a migration tool to setup and update the
-database to reflect changes in the models. So the process has become a
-little more complicated - but the idea is that if you make changes to
-the models, you will be able to update the database without having to
-delete it.
-
-### Setup Database and Create Superuser
-
-If you have not done so already you first need to initial the database.
-This is done via the migrate command.
-
-:
-
-    $ python manage.py migrate
+		def __unicode__(self):
+        	return self.name
 
 
-    Operations to perform:
-      Apply all migrations: admin, contenttypes, auth, sessions
-    Running migrations:
-      Applying contenttypes.0001_initial... OK
-      Applying auth.0001_initial... OK
-      Applying admin.0001_initial... OK
-      Applying sessions.0001_initial... OK
+Now that you have performed this update to the Model, you will need to
+perform the migration.
 
-If you rememnber in `settings.py` there was a list of INSTALLED\_APPS,
-this initial call to migrate, creates the tables for the associated
-apps, i.e. auth, admin, etc. There should be a file called, `db.sqlite`
-in your project base directory.
+{lang="text",linenos=off}
+	$ python manage.py makemigrations rango
+	$ python manage.py migrate
 
-Now you will want to create a superuser to manage the database. Run the
-following command.
 
-:
+Since we did not provide a default value for the slug, and we already
+have existing data in the model, then the migrate command will give you
+two options. Select the option to provide a default, and enter ''. Dont
+worry this will get updated shortly. Now re-run your population script.
+Since the `save` method is called for each Category, the overrided
+`save` method will be executed, updating the slug field. Run the server,
+and inspect the data in the models via the admin interface.
 
-    $ python manage.py createsuperuser
+In the admin interface you may want it to automatically pre-populate the
+slug field as your type in the category name. To do this you can update
+`rango/admin.py` with the following code:
 
-The superuser account will be used to access the Django admin interface
-later on in this tutorial. Enter a username for the account, e-mail
-address and provide a password when prompted. Once completed, the script
-should finish successfully. Make sure you take a note of the username
-and password for your superuser account.
+{lang="python",linenos=off}
+	from django.contrib import admin
+	from rango.models import Category, Page
 
-### Creating / Updating Models / Tables
+	# Add in this class to customized the Admin Interface
+	class CategoryAdmin(admin.ModelAdmin):
+    	prepopulated_fields = {'slug':('name',)}
 
-Whenever you make changes to the models, then you need to register the
-changes, via the `makemigrations` command for the particular app. So for
-*rango*, we need to issue:
+	# Update the registeration to include this customised interface
+	admin.site.register(Category, CategoryAdmin)
+	admin.site.register(Page)
+	
 
-    $ python manage.py makemigrations rango
+Try out the admin interface and add in a new category. Pretty cool, hey!
+Now that we have added in slug fields we can now use them as clean urls
+:-).
 
-    Migrations for 'rango':
-      0001_initial.py:
-        - Create model Category
-        - Create model Page
+### Category Page Workflow
 
-If you inspect the `rango/migrations` folder, you will see that a python
-script have been created, called,
-`0001_initial.py''. To see the SQL that will be performed to make this migration, you can issue the command,`python
-manage.py sqlmigrate \<app\_name\>
-\<migration\_no\>`. The migration number is show above as 0001, so we would issue the command,`python
-manage.py sqlmigrate rango
-0001`for *rango* to see the SQL. Try it out.  Now, to apply these migrations (which will essentially create the database tables), then you need to issue:   ::       $ python manage.py migrate      Operations to perform:       Apply all migrations: admin, rango, contenttypes, auth, sessions     Running migrations:       Applying rango.0001_initial... OK     .. warning:: Whenever you add to existing models, *you will have to repeat this process running*`python
-manage.py makemigrations \<app\_name\>`, and then`python manage.py
-migrate`You may have also noticed that our`Category`model is currently lacking some fields that we defined in Rango's requirements. We will add these in later to remind you of the updating process.   Django Models and the Django Shell ---------------------------------- Before we turn our attention to demonstrating the Django admin interface, it's worth noting that you can interact with Django models from the Django shell - a very useful aid for debugging purposes. We'll demonstrate how to create a`Category`instance using this method.  To access the shell, we need to call`manage.py`from within your Django project's root directory once more. Run the following command.`\$
-python manage.py
-shell`This will start an instance of the Python interpreter and load in your project's settings for you. You can then interact with the models. The following terminal session demonstrates this functionality. Check out the inline commentary to see what each command does.  .. code-block:: python      # Import the Category model from the Rango application     >>> from rango.models import Category      # Show all the current categories     >>> print Category.objects.all()     [] # Returns an empty list (no categories have been defined!)      # Create a new category object, and save it to the database.     >>> c = Category(name="Test")     >>> c.save()      # Now list all the category objects stored once more.     >>> print Category.objects.all()     [<Category: test>] # We now have a category called 'test' saved in the database!      # Quit the Django shell.     >>> quit()  In the example, we first import the model that we want to manipulate. We then print out all the existing categories, of which there are none because our table is empty. Then we create and save a Category, before printing out all the categories again. This second`print`should then show the`Category`` just added.  .. note:: The example we provide above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it is good time to complete part one of the `official Django Tutorial to learn more about interacting with the models <https://docs.djangoproject.com/en/1.7/intro/tutorial01/>`_. Also check out the `official Django documentation on the list of available commands <https://docs.djangoproject.com/en/1.7/ref/django-admin/#available-commands>`_ for working with models.  .. _admin-section:  Configuring the Admin Interface ------------------------------- One of the stand-out features of Django is that it provides a built in, web-based administrative interface that allows us to browse and edit data stored within our models and corresponding database tables. In the ``settings.py`file, you will notice that one of the pre-installed apps is`django.contrib.admin`, and in your project's`urls.py`there is a urlpattern that matches`admin/`.  Start the development server:  ::       $ python manage.py runserver   and visit the url,`<http://127.0.0.1:8000/admin/>`. You should be able to log into the Django Admin interface using the username and password created for the superuser. The admin interface only contains tables relevant to the sites adminstration,`Groups`and`Users`. So we will need to instruct Django to also include the models from`rango`.   To do this,  open the file`rango/admin.py`and add the following code:  .. code-block:: python      from django.contrib import admin     from rango.models import Category, Page      admin.site.register(Category)     admin.site.register(Page)  This will *register* the models with the admin interface. If we were to have another model, it would be a trivial case of calling the`admin.site.register()`function, passing the model in as a parameter.  With all of these changes made, re-visit/refresh:`<http://127.0.0.1:8000/admin/>`` . You should now be able to see the Category and Page models, like in Figure :num:`fig-rango-admin`.   .. _fig-rango-admin:  .. figure:: ../images/ch5-rango-admin-models.png     :figclass: align-center      The Django admin interface. Note the Rango category, and the two models contained within.  Try clicking the ``Categorys`link within the`Rango`section. From here, you should see the`test`category that we created via the Django shell. Try deleting the category as we'll be populating the database with a population script next. The interface is easy to use. Spend a few minutes creating, modifying and deleting both categories and pages. You can also add new users who can login to the Django admin interface for your project by adding a user to the`User`in the`Auth`application.  .. note:: Note the typo within the admin interface (categorys, not categories). This problem can be fixed by adding a nested`Meta`class into your model definitions with the`verbose\_name\_plural`` attribute. Check out `Django's official documentation on models <https://docs.djangoproject.com/en/1.7/topics/db/models/#meta-options>`_ for more information.  .. note:: The example ``admin.py`file for our Rango application is the most simple, functional example available. There are many different features which you can use in the`admin.py`` to perform all sorts of cool customisations, such as changing the way models appear in the admin interface. For this tutorial, we'll stick with the bare-bones admin interface, but you can check out the `official Django documentation on the admin interface <https://docs.djangoproject.com/en/1.7/ref/contrib/admin/>`_ for more information if you're interested.  .. _model-population-script-label:  Creating a Population Script ---------------------------- Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys like they are a monkey trying to write Shakespeare. If you are in a small development team, then everyone has to enter in some data. Rather than do this independently, it is better to write a script so that everyone has similar data, and so that everyone has useful and appropriate data, rather than junk test data. So it is good practice to create what we call a *population script* for your database. This script is designed to automatically populate your database with test data for you.  To create a population script for Rango's database, we start by creating a new Python module within our Django project's root directory (e.g. ``\<workspace\>/tango\_with\_django\_project/`). Create the`populate\_rango.py`file and add the following code.  .. code-block:: python      import os     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')      import django     django.setup()      from rango.models import Category, Page       def populate():         python_cat = add_cat('Python')          add_page(cat=python_cat,             title="Official Python Tutorial",             url="http://docs.python.org/2/tutorial/")          add_page(cat=python_cat,             title="How to Think like a Computer Scientist",             url="http://www.greenteapress.com/thinkpython/")          add_page(cat=python_cat,             title="Learn Python in 10 Minutes",             url="http://www.korokithakis.net/tutorials/python/")          django_cat = add_cat("Django")          add_page(cat=django_cat,             title="Official Django Tutorial",             url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")          add_page(cat=django_cat,             title="Django Rocks",             url="http://www.djangorocks.com/")          add_page(cat=django_cat,             title="How to Tango with Django",             url="http://www.tangowithdjango.com/")          frame_cat = add_cat("Other Frameworks")          add_page(cat=frame_cat,             title="Bottle",             url="http://bottlepy.org/docs/dev/")          add_page(cat=frame_cat,             title="Flask",             url="http://flask.pocoo.org")          # Print out what we have added to the user.         for c in Category.objects.all():             for p in Page.objects.filter(category=c):                 print "- {0} - {1}".format(str(c), str(p))      def add_page(cat, title, url, views=0):         p = Page.objects.get_or_create(category=cat, title=title)[0]         p.url=url         p.views=views         p.save()         return p      def add_cat(name):         c = Category.objects.get_or_create(name=name)[0]         return c      # Start execution here!     if __name__ == '__main__':         print "Starting Rango population script..."         populate()  While this looks like a lot of code, what it does is relatively simple. As we define a series of functions at the top of the file, code execution begins towards the bottom - look for the line`if
-\_\_name\_\_ ==
-'\_\_main\_\_'`. We call the`populate()`function.  .. warning:: When importing Django models, make sure you have imported your project's settings by importing django and setting the environment variable`DJANGO\_SETTINGS\_MODULE`to be the project setting file. Then you can call`django.setup()`to import the django settings. If you don't, an exception will be raised. This is why we import`Category`and`Page`after the settings have been loaded.  The`populate()`function is responsible for the calling the`add\_cat()`and`add\_page()`functions, who are in turn responsible for the creation of new categories and pages respectively.`populate()`keeps tabs on category references for us as we create each individual`Page`model instance and store them within our database. Finally, we loop through our`Category`and`Page`models to print to the user all the`Page`instances and their corresponding categories.  .. note:: We make use of the convenience`get\_or\_create()`method for creating model instances. As we don't want to create duplicates of the same entry, we can use`get\_or\_create()`to check if the entry exists in the database for us. If it doesn't exist, the method creates it. This can remove a lot of repetitive code for us - rather than doing this laborious check ourselves, we can make use of code that does exactly this for us. As we mentioned previously, why reinvent the wheel if it’s already there?      The`get\_or\_create()`method returns a tuple of`(object,
-created)`. The first element`object`is a reference to the model instance that the`get\_or\_create()`method creates if the database entry was not found. The entry is created using the parameters you pass to the method - just like`category`,`title`,`url`and`views`in the example above. If the entry already exists in the database, the method simply returns the model instance corresponding to the entry.`created`is a boolean value;`true`is returned if`get\_or\_create()`had to create a model instance.      The`[0]`at the end of our call to the method to retrieve the`object`portion of the tuple returned from`get\_or\_create()`` . Like most other programming language data structures, Python tuples use `zero-based numbering <http://en.wikipedia.org/wiki/Zero-based_numbering>`_.      You can check out the `official Django documentation <https://docs.djangoproject.com/en/1.7/ref/models/querysets/#get-or-create>`_ for more information on the handy ``get\_or\_create()`method.  When saved, we can run the script by changing the current working directory in a terminal to our Django project's root and executing the module with the command`\$
-python
-populate\_rango.py`. You should then see output similar to that shown below.  ::      $ python populate_rango.py      Starting Rango population script...     - Python - Official Python Tutorial     - Python - How to Think like a Computer Scientist     - Python - Learn Python in 10 Minutes     - Django - Official Django Tutorial     - Django - Django Rocks     - Django - How to Tango with Django     - Other Frameworks - Bottle     - Other Frameworks - Flask  Now let's verify that the population script populated the database. Restart the Django development server, navigate to the admin interface, and check that you have some new categories and pages. Do you see all the pages if you click`Pages`` , like in Figure :num:`fig-admin-populated`?  .. _fig-admin-populated:  .. figure:: ../images/ch5-rango-admin.png     :figclass: align-center      The Django admin interface, showing the Page table populated with sample data from our population script.  A population script takes a little bit of time to write but when you are working with a team, you will be able to share the population script so that everyone can create the database and have it populated. Also, for unit testing it will come in handy.  Basic Workflows --------------- Now that we've covered the core principles of dealing with Django's models functionality, now is a good time to summarise the processes involved in setting everything up. We've split the core tasks into separate sections for you.  Setting up your Database ........................ With a new Django project, you should first tell Django about the database you intend to use (i.e. configure ``DATABASES`in settings.py). You can also register any models in the`admin.py`file to make them accessible via the admin interface.  Adding a Model .............. The workflow for adding models can be broken down into five steps.  #. First, create your new model(s) in your Django application's`models.py`file. #. Update`admin.py`to include and register your new model(s). #. Then perform the migration`\$
-python manage.py makemigrations`#. Apply the changes`\$ python manage.py
-migrate`. This will create the necessary infrastructure within the database for your new model(s). #. Create/Edit your population script for your new model(s).  Invariably there will be times when you will have to delete your database. In which case you will have to run the`migrate`command, then`createsuperuser`command, followed by the`sqlmigrate`commands for each app, then you can populate the database.  Exercises --------- Now that you've completed the chapter, try out these exercises to reinforce and practice what you have learnt.  * Update the Category model to include the additional attributes,`views`and`likes`` where the default value  is zero. * Make the migrations for your app/model, then migrate your database * Update your population script so that the Python category has 128 views and 64 likes, the Django category has 64 views and 32 likes, and the Other Frameworks category has 32 views and 16 likes. * Undertake the `part two of official Django tutorial <https://docs.djangoproject.com/en/1.7/intro/tutorial02/>`_ if you have not done so. This will help to reinforce further what you have learnt here, and to learn more about customising the admin interface. * Customise the Admin Interface - so that when you view the Page model it displays in a list the category, the name of the page and the url.  Hints ..... If you require some help or inspiration to get these exercises done, these hints will hopefully help you out.  * Modify the ``Category`model by adding in the fields,`view`and`likes`as`IntegerFields`. * Modify the`add\_cat`function in the`populate.py`script, to take the`views`and`likes`. Once you get the Category c, then you can update the number of views with`c.views`, and similarly with likes. * To customise the admin interface, you will need to edit`rango/admin.py`and create a`PageAdmin`class that inherits from`admin.ModelAdmin`.  * Within your new`PageAdmin`class, add`list\_display
-= ('title', 'category',
-'url')`. * Finally, register the`PageAdmin`class with Django's admin interface. You should modify the line`admin.site.register(Page)`. Change it to`admin.site.register(Page,
-PageAdmin)`in Rango's`admin.py\`\` file.
+With our URLs design chosen, let's get started. We'll undertake the
+following steps.
 
-![The updated admin interface page view, complete with columns for
-category and URL.](../images/ch5-rango-admin-custom.png)
+1.  Import the Page model into `rango/views.py`.
+2.
+
+    Create a new view in `rango/views.py` - called `category` - The `category` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
+
+    :   -   We will need some help functions to encode and decode the
+            `category_name_url`.
+
+3.  Create a new template, `templates/rango/category.html`.
+4.  Update Rango's `urlpatterns` to map the new `category` view to a URL
+    pattern in `rango/urls.py`.
+
+We'll also need to update the `index()` view and `index.html` template
+to provide links to the category page view.
+
+### Category View
+
+In `rango/views.py`, we first need to import the `Page` model. This
+means we must add the following import statement at the top of the file.
+
+{lang="python",linenos=off}
+	from rango.models import Page
+
+
+Next, we can add our new view, `category()`.
+
+{lang="python",linenos=off}
+	def category(request, category_name_slug):
+    	# Create a context dictionary which we can pass to the template rendering engine.
+    	context_dict = {}
+		
+    	try:
+        	# Can we find a category name slug with the given name?
+        	# If we can't, the .get() method raises a DoesNotExist exception.
+        	# So the .get() method returns one model instance or raises an exception.
+        	category = Category.objects.get(slug=category_name_slug)
+        	context_dict['category_name'] = category.name
+
+        	# Retrieve all of the associated pages.
+        	# Note that filter returns >= 1 model instance.
+        	pages = Page.objects.filter(category=category)
+
+        	# Adds our results list to the template context under name pages.
+        	context_dict['pages'] = pages
+        	# We also add the category object from the database to the context dictionary.
+        	# We'll use this in the template to verify that the category exists.
+        	context_dict['category'] = category
+    	except Category.DoesNotExist:
+        	# We get here if we didn't find the specified category.
+        	# Don't do anything - the template displays the "no category" message for us.
+        	pass
+
+    	# Go render the response and return it to the client.
+    	return render(request, 'rango/category.html', context_dict)
+
+
+Our new view follows the same basic steps as our `index()` view. We
+first define a context dictionary, then we attempt to extract the data
+from the models, and add in the relevant data to the context dictionary.
+We determine which category by using the value passed as parameter
+`category_name_slug` to the `category()` view function. If the category
+is found in the Category model, we can then pull out the associated
+Pages, and add this to the context dictionary, `context_dict`.
+
+### Category Template
+
+Now let's create our template for the new view. In
+`<workspace>/tango_with_django_project/templates/rango/` directory,
+create `category.html`. In the new file, add the following code.
+
+{lang="hml",linenos=off}
+	<!DOCTYPE html>
+	<html>
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+        <h1>{{ category_name }}</h1>
+        {% if category %}
+            {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}
+        {% else %}
+            The specified category {{ category_name }} does not exist!
+        {% endif %}
+    </body>
+	</html>
+
+
+The HTML code example again demonstrates how we utilise the data passed
+to the template via its context. We make use of the `category_name`
+variable and our `category` and `pages` objects. If `category` is not
+defined within our template context, the category was not found within
+the database, and a friendly error message is displayed stating this
+fact. If the opposite is true, we then proceed to check for `pages`. If
+`pages` is undefined or contains no elements, we display a message
+stating there are no pages present. Otherwise, the pages within the
+category are presented in a HTML list. For each page in the `pages`
+list, we present their `title` and `url` attributes.
+
+I> ###Note on Conditional Tags
+I>
+I> The Django template conditional tag - `{% if %}` - is a really neat
+I> way of determining the existence of an object within the template's
+I> context. Try getting into the habit of performing these checks to
+I> reduce the scope for potential exceptions that could be raised within
+I> your code.
+I>
+I> Placing conditional checks in your templates - like
+I> `{% if category %}` in the example above - also makes sense
+I> semantically. The outcome of the conditional check directly affects
+I> the way in which the rendered page is presented to the user - and
+I> presentational aspects of your Django applications should be
+I> encapsulated within templates.
+
+### Parameterised URL Mapping
+
+Now let's have a look at how we actually pass the value of the
+`category_name_url` parameter to the `category()` function. To do so, we
+need to modify Rango's `urls.py` file and update the `urlpatterns` tuple
+as follows.
+
+{lang="python",linenos=off}
+	urlpatterns = patterns('',
+    	url(r'^$', views.index, name='index'),
+    	url(r'^about/$', views.about, name='about'),
+    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),)  # New!
+
+As you can see, we have added in a rather complex entry that will invoke
+`view.category()` when the regular expression
+`r'^(?P<category_name_slug>\w+)/$'` is matched. We set up our regular
+expression to look for any sequence of alphanumeric characters (e.g.
+a-z, A-Z, or 0-9) and the hyphen(-) before the trailing URL slash. This
+value is then passed to the view `views.category()` as parameter
+`category_name_slug`, the only argument after the mandatory `request`
+argument.
+
+When you wish to parameterise URLs, it's important to ensure that your
+URL pattern matches the parameters that the corresponding view takes
+in. To elaborate further, let's take the example we added above. The
+pattern added was as follows.
+
+{lang="python",linenos=off}
+ 	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category')
+ 
+ We can from here deduce that the characters (both alphanumeric and
+ underscores) between `category/` and the trailing `/` at the end of a
+ matching URL are to be passed to method `views.category()` as named
+ parameter `category_name_slug`. For example, the URL
+ `category/python-books/` would yield a `category_name_slug` of
+ `python-books`.
+
+ As you should remember, all view functions defined as part of a Django
+ project *must* take at least one parameter. This is typically called
+ `request` - and provides access to information related to the given
+ HTTP request made by the user. When parameterising URLs, you supply
+ additional named parameters to the signature for the given view. Using
+ the same example, our `category` view signature is altered such that
+ it now looks like the following.
+
+{lang="python",linenos=off}
+	 def category(request, category_name_slug):
+     	# ... code here ...
+
+It's not the position of the additional parameters that matters, it's
+the *name* that must match anything defined within the URL pattern.
+ Note how `category_name_slug` defined in the URL pattern matches the
+ `category_name_slug` parameter defined for our view. Using  `category_name_slug` in our view will give `python-books`, or whatever value was supplied as that part of the URL.
+
+I> **note**
+I>
+I> Regular expressions may seem horrible and confusing at first, but
+I> there are tons of resources online to help you. [This cheat
+I> sheet](http://cheatography.com/davechild/cheat-sheets/regular-expressions/)
+I> is an excellent resource for fixing regular expression problems.
+
+### Modifying the Index Template
+
+Our new view is set up and ready to go - but we need to do one more
+thing. Our index page template needs to be updated to provide users with
+a means to view the category pages that are listed. We can update the
+`index.html` template to now include a link to the category page via the
+slug.
+
+{lang="html",linenos=off}
+	<!DOCTYPE html>
+	<html>
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+        <h1>Rango says..hello world!</h1>
+
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+       {% else %}
+            <strong>There are no categories present.</strong>
+       {% endif %}
+
+    </body>
+	</html>
+
+
+Here we have updated each list element (`<li>`) adding a HTML hyperlink
+(`<a>`). The hyperlink has an `href` attribute, which we use to specify
+the target URL defined by `{{ category.slug }}`.
+
+### Demo
+
+Let's try everything out now by visiting the Rango's homepage. You
+should see your homepage listing all the categories. The categories
+should now be clickable links. Clicking on `Python` should then take you
+to the `Python` detailed category view, as demonstrated in Figure
+fig-rango-links. If you see a list of links like
+`Official Python Tutorial`, then you've successfully set up the new
+view. Try navigating a category which doesn't exist, like
+`/rango/category/computers`. You should see a message telling you that
+no pages exist in the category.
+
+![What your link structure should now look like. Starting with the Rango
+homepage, you are then presented with the category detail page. Clicking
+on a page link takes you to the linked
+website.](../images/rango-links.png)
+
+##Exercises
+
+
+Reinforce what you've learnt in this chapter by trying out the following
+exercises.
+
+-   Modify the index page to also include the top 5 most viewed pages.
+-   Undertake the [part three of official Django
+    tutorial](https://docs.djangoproject.com/en/1.7/intro/tutorial03/)
+    if you have not done so already to further what you've learnt here.
+
+### Hints
+
+To help you with the exercises above, the following hints may be of some
+use to you. Good luck!
+
+-   Update the population script to add some value to the views count
+    for each page.
+

@@ -1,5 +1,4 @@
-Fun with Forms
-==============
+#Forms {#chapter-forms}
 
 So far we have only presented data through the views and templates that
 we have created. In this chapter, we will run through how to capture
@@ -7,7 +6,7 @@ data through web forms. Django comes with some neat form handling
 functionality, making it a pretty straightforward process to gather
 information from users and send it back to your web application.
 According to [Django's documentation on
-forms](https://docs.djangoproject.com/en/1.7/topics/forms/), the form
+forms](https://docs.djangoproject.com/en/1.9/topics/forms/), the form
 handling functionality allows you to:
 
 1.  display an HTML form with automatically generated *form widgets*
@@ -22,8 +21,8 @@ tutorial will look at how to implement the necessary infrastructure that
 will allow users of Rango to add categories and pages to the database
 via forms.
 
-Basic Workflow
---------------
+##Basic Workflow
+
 
 The basic steps involved in creating a form and allowing users to enter
 data via the form is as follows.
@@ -46,8 +45,7 @@ views that we have to construct have a lot more complexity as well.
 However, once you undertake the process a few times it will be pretty
 clear how everything pieces together.
 
-Page and Category Forms
------------------------
+##Page and Category Forms
 
 First, create a file called `forms.py` within the `rango` application
 directory. While this step is not absolutely necessary, as you could put
@@ -65,44 +63,43 @@ pre-existing model. As we've already got two models defined for Rango
 
 In `rango/forms.py` add the following code.
 
-``` {.sourceCode .python}
-from django import forms
-from rango.models import Page, Category
+{lang="python",linenos=off}
+	from django import forms
+	from rango.models import Page, Category
 
-class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the category name.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+	class CategoryForm(forms.ModelForm):
+	    name = forms.CharField(max_length=128, help_text="Please enter the category name.")
+	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    # An inline class to provide additional information on the form.
-    class Meta:
-        # Provide an association between the ModelForm and a model
-        model = Category
-        fields = ('name',)
+	    # An inline class to provide additional information on the form.
+	    class Meta:
+	        # Provide an association between the ModelForm and a model
+	        model = Category
+	        fields = ('name',)
 
 
-class PageForm(forms.ModelForm):
-    title = forms.CharField(max_length=128, help_text="Please enter the title of the page.")
-    url = forms.URLField(max_length=200, help_text="Please enter the URL of the page.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	class PageForm(forms.ModelForm):
+	    title = forms.CharField(max_length=128, help_text="Please enter the title of the page.")
+	    url = forms.URLField(max_length=200, help_text="Please enter the URL of the page.")
+	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
-    class Meta:
-        # Provide an association between the ModelForm and a model
-        model = Page
+	    class Meta:
+	        # Provide an association between the ModelForm and a model
+	        model = Page
 
-        # What fields do we want to include in our form?
-        # This way we don't need every field in the model present.
-        # Some fields may allow NULL values, so we may not want to include them...
-        # Here, we are hiding the foreign key.
-        # we can either exclude the category field from the form,
-        exclude = ('category',)
-        #or specify the fields to include (i.e. not include the category field)
-        #fields = ('title', 'url', 'views')
-```
+	        # What fields do we want to include in our form?
+	        # This way we don't need every field in the model present.
+	        # Some fields may allow NULL values, so we may not want to include them...
+	        # Here, we are hiding the foreign key.
+	        # we can either exclude the category field from the form,
+	        exclude = ('category',)
+	        #or specify the fields to include (i.e. not include the category field)
+	        #fields = ('title', 'url', 'views')
 
-\#TODO(leifos): Note that in Django 1.7+ it is now required to specify
-the fields that are included, via `fields`, or specify the fields that
+
+We need to specify which fields that are included on the form, via `fields`, or specify the fields that
 are to be excluded, via `exclude`.
 
 Django provides us with a number of ways to customise the forms that are
@@ -165,11 +162,11 @@ We also use the `Meta` class to specify which fields that we wish to
 include in our form through the `fields` tuple. Use a tuple of field
 names to specify the fields you wish to include.
 
-> **note**
->
-> We highly recommend you check out the [official Django documentation
-> on forms](https://docs.djangoproject.com/en/1.7/ref/forms/) for
-> further information about how to customise them.
+I> More about Forms
+I>
+I> Check out the [official Django documentation
+I> on forms](https://docs.djangoproject.com/en/1.9/ref/forms/) for
+I> further information about how to customise them.
 
 ### Creating an *Add Category* View
 
@@ -177,33 +174,32 @@ With our `CategoryForm` class now defined, we're now ready to create a
 new view to display the form and handle the posting of form data. To do
 this, add the following code to `rango/views.py`.
 
-``` {.sourceCode .python}
-from rango.forms import CategoryForm
+{lang="python",linenos=off}
+	from rango.forms import CategoryForm
 
-def add_category(request):
-    # A HTTP POST?
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
+	def add_category(request):
+	    # A HTTP POST?
+	    if request.method == 'POST':
+	        form = CategoryForm(request.POST)
 
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            form.save(commit=True)
+	        # Have we been provided with a valid form?
+	        if form.is_valid():
+	            # Save the new category to the database.
+	            form.save(commit=True)
 
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            return index(request)
-        else:
-            # The supplied form contained errors - just print them to the terminal.
-            print form.errors
-    else:
-        # If the request was not a POST, display the form to enter details.
-        form = CategoryForm()
+	            # Now call the index() view.
+	            # The user will be shown the homepage.
+	            return index(request)
+	        else:
+	            # The supplied form contained errors - just print them to the terminal.
+	            print form.errors
+	    else:
+	        # If the request was not a POST, display the form to enter details.
+	        form = CategoryForm()
 
-    # Bad form (or form details), no form supplied...
-    # Render the form with error messages (if any).
-    return render(request, 'rango/add_category.html', {'form': form})
-```
+	    # Bad form (or form details), no form supplied...
+	    # Render the form with error messages (if any).
+	    return render(request, 'rango/add_category.html', {'form': form})
 
 The new `add_category()` view adds several key pieces of functionality
 for handling forms. First, we check the HTTP request method, to
@@ -218,20 +214,20 @@ scenarios:
     rendering the Rango homepage; and
 -   if there are errors, redisplay the form with error messages.
 
-> **note**
->
-> What do we mean by `GET` and `POST`? They are two different types of
-> *HTTP requests*.
->
-> -   A HTTP `GET` is used to *request a representation of the specified
->     resource.* In other words, we use a HTTP `GET` to retrieve a
->     particular resource, whether it is a webpage, image or other file.
-> -   In contrast, a HTTP `POST` *submits data from the client's web
->     browser to be processed.* This type of request is used for example
->     when submitting the contents of a HTML form.
-> -   Ultimately, a HTTP `POST` may end up being programmed to create a
->     new resource (e.g. a new database entry) on the server. This can
->     later be accessed through a HTTP `GET` request.
+I> ### Get and Post
+I>
+I> What do we mean by `GET` and `POST`? They are two different types of
+I> *HTTP requests*.
+I>
+I> -   A HTTP `GET` is used to *request a representation of the specified
+I>     resource.* In other words, we use a HTTP `GET` to retrieve a
+I>     particular resource, whether it is a webpage, image or other file.
+I> -   In contrast, a HTTP `POST` *submits data from the client's web
+I>     browser to be processed.* This type of request is used for example
+I>     when submitting the contents of a HTML form.
+I> -   Ultimately, a HTTP `POST` may end up being programmed to create a
+I>     new resource (e.g. a new database entry) on the server. This can
+I>     later be accessed through a HTTP `GET` request.
 
 Django's form handling machinery processes the data returned from a
 user's browser via a HTTP `POST` request. It not only handles the saving
@@ -251,35 +247,34 @@ relevant Django template code and HTML for the form and page.
 Create the file `templates/rango/add_category.html`. Within the file,
 add the following HTML markup and Django template code.
 
-``` {.sourceCode .html}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{lang="python",linenos=off}
+	<!DOCTYPE html>
+	<html>
+	    <head>
+	        <title>Rango</title>
+	    </head>
 
-    <body>
-        <h1>Add a Category</h1>
+	    <body>
+	        <h1>Add a Category</h1>
 
-        <form id="category_form" method="post" action="/rango/add_category/">
+	        <form id="category_form" method="post" action="/rango/add_category/">
 
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+	            {% csrf_token %}
+	            {% for hidden in form.hidden_fields %}
+	                {{ hidden }}
+	            {% endfor %}
 
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
+	            {% for field in form.visible_fields %}
+	                {{ field.errors }}
+	                {{ field.help_text }}
+	                {{ field }}
+	            {% endfor %}
 
-            <input type="submit" name="submit" value="Create Category" />
-        </form>
-    </body>
+	            <input type="submit" name="submit" value="Create Category" />
+	        </form>
+	    </body>
 
-</html>
-```
+	</html>
 
 Now, what does this code do? You can see that within the `<body>` of the
 HTML page that we place a `<form>` element. Looking at the attributes
@@ -294,16 +289,16 @@ markup for each form element. For visible form fields, we also add in
 any errors that may be present with a particular field and help text
 which can be used to explain to the user what he or she needs to enter.
 
-> **note**
->
-> The need for hidden as well as visible form fields is necessitated by
-> the fact that HTTP is a stateless protocol. You can't persist state
-> between different HTTP requests which can make certain parts of web
-> applications difficult to implement. To overcome this limitation,
-> hidden HTML form fields were created which allow web applications to
-> pass important information to a client (which cannot be seen on the
-> rendered page) in a HTML form, only to be sent back to the originating
-> server when the user submits the form.
+I> ### Hidden Fields
+I>
+I> The need for hidden as well as visible form fields is necessitated by
+I> the fact that HTTP is a stateless protocol. You can't persist state
+I> between different HTTP requests which can make certain parts of web
+I> applications difficult to implement. To overcome this limitation,
+I> hidden HTML form fields were created which allow web applications to
+I> pass important information to a client (which cannot be seen on the
+I> rendered page) in a HTML form, only to be sent back to the originating
+I> server when the user submits the form.
 
 You should also take note of the code snippet `{% csrf_token %}`. This
 is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect
@@ -322,13 +317,13 @@ we have used the URL `/rango/add_category/` in the form's submit
 attribute. So we will need to follow suit in `rango/urls.py` and modify
 the `urlpatterns` as follows.
 
-``` {.sourceCode .python}
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about'),
-    url(r'^add_category/$', views.add_category, name='add_category'), # NEW MAPPING!
-    url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),)
-```
+{lang="python",linenos=off}
+	urlpatterns = patterns('',
+    	url(r'^$', views.index, name='index'),
+    	url(r'^about/$', views.about, name='about'),
+    	url(r'^add_category/$', views.add_category, name='add_category'), # NEW MAPPING!
+    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),)
+
 
 Ordering doesn't necessarily matter in this instance. However, take a
 look at the [official Django documentation on how Django process a
@@ -342,9 +337,9 @@ As a final step let's put a link on the index page so that we can easily
 add categories. Edit the template `rango/index.html` and add the
 following HTML hyperlink just before the `</body>` closing tag.
 
-``` {.sourceCode .html}
-<a href="/rango/add_category/">Add a New Category</a><br />
-```
+{lang="html",linenos=off}
+	<a href="/rango/add_category/">Add a New Category</a><br />
+
 
 ### Demo
 
@@ -356,17 +351,17 @@ shows screenshots of the of the Add Category and Index Pages.
 ![Adding a new category to Rango with our new form. The diagram
 illustrates the steps involved.](../images/rango-form-steps.png)
 
-> **note**
->
-> If you add a number of categories, they will not always appear on the
-> index page, that is because we are only showing the top 5 categories
-> on the index page. If you log into the Admin interface you should be
-> able to view all the categories that you have entered. To see what is
-> happening as you entered them in `rango/views.py` in `add_category()`,
-> you can get the reference to the category model object created from
-> `form.save()`, with `cat = form.save(commit=True)` and then print to
-> console the category and slug, with `print cat, cat.slug` to see what
-> is being created.
+I> ### Note
+I>
+I> If you add a number of categories, they will not always appear on the
+I> index page, that is because we are only showing the top 5 categories
+I> on the index page. If you log into the Admin interface you should be
+I> able to view all the categories that you have entered. To see what is
+I> happening as you entered them in `rango/views.py` in `add_category()`,
+I> you can get the reference to the category model object created from
+I> `form.save()`, with `cat = form.save(commit=True)` and then print to
+I> console the category and slug, with `print cat, cat.slug` to see what
+I> is being created.
 
 ### Cleaner Forms
 
@@ -387,22 +382,22 @@ check if the value of `url` field entered by the user starts with
 `http://` - and if it doesn't, we can prepend `http://` to the user's
 input.
 
-``` {.sourceCode .python}
-class PageForm(forms.ModelForm):
+{lang="python",linenos=off}
+	class PageForm(forms.ModelForm):
 
-    ...
+	    ...
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        url = cleaned_data.get('url')
+	    def clean(self):
+	        cleaned_data = self.cleaned_data
+	        url = cleaned_data.get('url')
 
-        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
-        if url and not url.startswith('http://'):
-            url = 'http://' + url
-            cleaned_data['url'] = url
+	        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+	        if url and not url.startswith('http://'):
+	            url = 'http://' + url
+	            cleaned_data['url'] = url
 
-            return cleaned_data
-```
+	            return cleaned_data
+
 
 Within the `clean()` method, a simple pattern is observed which you can
 replicate in your own Django form handling code.
@@ -430,34 +425,30 @@ through the form before being stored. This is pretty handy, especially
 when particular fields need to have default values - or data within the
 form is missing, and we need to handle such data entry problems.
 
-> **note**
->
-> Overriding methods implemented as part of the Django framework can
-> provide you with an elegant way to add that extra bit of functionality
-> for your application. There are many methods which you can safely
-> override for your benefit, just like the `clean()` method in
-> `ModelForm` as shown above. Check out [the Official Django
-> Documentation on
-> Models](https://docs.djangoproject.com/en/1.7/topics/db/models/#overriding-predefined-model-methods)
-> for more examples on how you can override default functionality to
-> slot your own in.
+I> ### Clean Overrides
+I>
+I> Overriding methods implemented as part of the Django framework can
+I> provide you with an elegant way to add that extra bit of functionality
+I> for your application. There are many methods which you can safely
+I> override for your benefit, just like the `clean()` method in
+I> `ModelForm` as shown above. Check out [the Official Django
+I> Documentation on
+I> Models](https://docs.djangoproject.com/en/1.9/topics/db/models/#overriding-predefined-model-methods)
+I> for more examples on how you can override default functionality to
+I> slot your own in.
 
-Exercises
----------
 
-Now that you've worked through the chapter, try these exercises to
-solidify your knowledge on Django's form functionality.
-
--   What happens when you don't enter in a category name on the add
-    category form?
--   What happens when you try to add a category that already exists?
--   What happens when you visit a category that does not exist?
--   How could you gracefully handle when a user visits a category that
-    does not exist?
--   Undertake the [part four of the official Django
-    Tutorial](https://docs.djangoproject.com/en/dev/intro/tutorial04/)
-    if you have not done so already to reinforce what you have learnt
-    here.
+X> ###Exercises
+X>
+X> Now that you've worked through the chapter, try these exercises to
+X> solidify your knowledge on Django's form functionality.
+X> 
+X> -   What happens when you don't enter in a category name on the add category form?
+X> -   What happens when you try to add a category that already exists?
+X> -   What happens when you visit a category that does not exist?
+X> -   How could you gracefully handle when a user visits a category that does not exist?
+X>-   Undertake the [part four of the official Django Tutorial](https://docs.djangoproject.com/en/dev/intro/tutorial04/)
+X>    if you have not done so already to reinforce what you have learnt here.
 
 ### Creating an *Add Pages* View, Template and URL Mapping
 
@@ -467,46 +458,43 @@ a new view (`add_page()`), a new template (`rango/add_page.html`), URL
 mapping and then add a link from the category page. To get you started,
 here's the view logic for you.
 
-``` {.sourceCode .python}
-from rango.forms import PageForm
+{lang="python",linenos=off}
+	from rango.forms import PageForm
 
-def add_page(request, category_name_slug):
+	def add_page(request, category_name_slug):
 
-    try:
-        cat = Category.objects.get(slug=category_name_slug)
-    except Category.DoesNotExist:
-            cat = None
+	    try:
+	        cat = Category.objects.get(slug=category_name_slug)
+	    except Category.DoesNotExist:
+	            cat = None
 
-    if request.method == 'POST':
-        form = PageForm(request.POST)
-        if form.is_valid():
-            if cat:
-                page = form.save(commit=False)
-                page.category = cat
-                page.views = 0
-                page.save()
-                # probably better to use a redirect here.
-                return category(request, category_name_slug)
-        else:
-            print form.errors
-    else:
-        form = PageForm()
+	    if request.method == 'POST':
+	        form = PageForm(request.POST)
+	        if form.is_valid():
+	            if cat:
+	                page = form.save(commit=False)
+	                page.category = cat
+	                page.views = 0
+	                page.save()
+	                # probably better to use a redirect here.
+	                return category(request, category_name_slug)
+	        else:
+	            print form.errors
+	    else:
+	        form = PageForm()
 
-    context_dict = {'form':form, 'category': cat}
+	    context_dict = {'form':form, 'category': cat}
 
-    return render(request, 'rango/add_page.html', context_dict)
-```
+	    return render(request, 'rango/add_page.html', context_dict)
 
-### Hints
 
-To help you with the exercises above, the following hints may be of some
-use to you.
-
--   Update the `category()` view to pass `category_name_slug` by
-    inserting it to the view's `context_dict` dictionary.
--   Update the `category.html` with a link to
-    `/rango/category/<category_name_url>/add_page/`.
--   Ensure that the link only appears when *the requested category
-    exists* - with or without pages. i.e. in the template check with
-    `{% if category %} .... {% else %} A category by this name does not exist {% endif %}`.
--   Update `rango/urls.py` with a URL mapping to handle the above link.
+T> ### Hints
+T> 
+T> To help you with the exercises above, the following hints may be of some use to you.
+T>
+T> -   Update the `category()` view to pass `category_name_slug` by inserting it to the view's `context_dict` dictionary.
+T> -   Update the `category.html` with a link to  `/rango/category/<category_name_url>/add_page/`.
+T> -   Ensure that the link only appears when *the requested category
+T>    exists* - with or without pages. i.e. in the template check with
+T>    `{% if category %} .... {% else %} A category by this name does not exist {% endif %}`.
+T> -   Update `rango/urls.py` with a URL mapping to handle the above link.
