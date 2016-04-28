@@ -87,8 +87,9 @@ example shown below.
     </head>
 
     <body>
-        <h1>Rango says...hello world!</h1>
-
+        <h1>Rango says...</h1>
+        <p>hey there partner!<p>
+		<p>
         {% if categories %}
             <ul>
                 {% for category in categories %}
@@ -97,9 +98,11 @@ example shown below.
             </ul>
         {% else %}
             <strong>There are no categories present.</strong>
-        {% endif %}
-
-        <a href="/rango/about/">About</a>
+        {% endif %}	
+		</p>	
+			
+        <a href="/rango/about/">About Rango</a><br />
+        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
     </body>
 	</html>
 
@@ -150,7 +153,7 @@ relates to a category, how would a user know what category relates to
 unique IDs 1 or 2? The user wouldn't know without trying.
 
 Instead, we could just use the category name as part of the URL.
-`/rango/category/Python/` should give us a list of pages related to the
+`/rango/category/python/` should give us a list of pages related to the
 Python category. This is a simple, readable and meaningful URL. If we go
 with this approach, we'll have to handle categories which have multiple
 words, like 'Other Frameworks', etc.
@@ -180,24 +183,27 @@ W> URLs](http://www.ietf.org/rfc/rfc1738.txt) to read more.
 
 Then we need to override the `save` method of the `Category` model,
 which we will call the `slugify` method and update the `slug` field with
-it. Note that everytime the category name changes, the slug will also
+it. Note that every time the category name changes, the slug will also
 change. Update your model, as shown below, and add in the import.
 
 {lang="python",linenos=off}
 	from django.template.defaultfilters import slugify
 	
 	class Category(models.Model):
-    	name = models.CharField(max_length=128, unique=True)
-    	views = models.IntegerField(default=0)
-    	likes = models.IntegerField(default=0)
-    	slug = models.SlugField(unique=True)
-
-    	def save(self, *args, **kwargs):
-        	self.slug = slugify(self.name)
-        	super(Category, self).save(*args, **kwargs)
-
-		def __unicode__(self):
-        	return self.name
+	    name = models.CharField(max_length=128, unique=True)
+	    views = models.IntegerField(default=0)
+	    likes = models.IntegerField(default=0)
+	    slug = models.SlugField()
+    
+	    def save(self, *args, **kwargs):
+	        self.slug = slugify(self.name)
+	        super(Category, self).save(*args, **kwargs)
+    
+	    class Meta:
+	        verbose_name_plural = 'categories'
+    
+	    def __str__(self):
+	        return '<Category: {0}>'.format(self.name)
 
 
 Now that the model has been updated, we need to propagate these changes to the database.
@@ -221,8 +227,14 @@ Then re-run the population script, which will update the slug field:
 
 Now run the server (`python manage.py runserver`), and inspect the data in the models via the admin interface (`http://127.0.0.1:8000/admin/`).
 
-If you go to add in a new category via the admin interface you will have to save the record before the slug is generated. However, you can customize the admin interface so that it automatically pre-populates the slug field as you type in the category name. To do this update
-`rango/admin.py` with the following code:
+
+If you go to add in a new category via the admin interface you may encounter a problem, or two! Lets say we added in the category, `Python User Groups`. If you do so, and try to save the record Django will not let you save it unless you also fill in the slug field too. While we could type in `python-user-groups` this is error prone, and it would be neater to have this done automatically. The next problem is if we create another category say `django` where the `d` is lowercase, and then we enter in the slug, `django`. Now if we go to identify the Django/django category we can not uniquely select the record. To solve the first problem, we can either update our model so that the slug field allows blank entries, i.e 
+
+{lang="python",linenos=off}
+	slug = models.SlugField(blank=True) 
+	
+or we can customize the admin interface so that it automatically pre-populates the slug field as you type in the category name.
+To do this update `rango/admin.py` with the following code:
 
 {lang="python",linenos=off}
 	from django.contrib import admin
@@ -236,10 +248,24 @@ If you go to add in a new category via the admin interface you will have to save
 	admin.site.register(Category, CategoryAdmin)
 	admin.site.register(Page)
 	
-
 Try out the admin interface and add in a new category. Pretty cool, hey!
-Now that we have added in the slug field we can now use the slugs to uniquely identify the category via the URLs
-:-).
+
+Now that we have addressed the first problem, we can ensure that the slug field is also unique, by adding the contraint to the slug field i.e.
+
+{lang="python",linenos=off}
+	slug = models.SlugField(unique=True)
+
+Now that we have added in the slug field we can now use the slugs to uniquely identify each category :-). We could of added the unique constraint earlier, but if we performed the migration and set everything to be an empty string be default it would have given raised an error. This is because the unique constraint would have been violated. We could of deleted the database and then recreated everything - but that is not always desirable. 
+
+W> ###Migration Woes
+W>
+W> It is always best to plan out your database in advance and avoid changing them. 
+W> Making a population script means that you easily recreate your database if you need to delete it.
+W> Sometimes it is just better to just delete the database and recreate everything than try and work out where the conflict is coming from.
+W> A neat exercise is to write a script to output the data in the database so that any changes you make can be saved out into a file that can be read in later.
+
+
+
 
 ### Category Page Workflow
 Now to implement the category pages so that they can be accessed via `/rango/category/<category-name-slug>/` we need to make a number of changes and undertake the following steps:
