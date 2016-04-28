@@ -10,11 +10,9 @@ driven webpage in Django.
 
 1.  First, import the models you wish to use into your application's
     `views.py` file.
-2.  Within the view you wish to use, query the model to get the data you
-    want to present.
+2.  Within the view, query the model to get the data you want to present.
 3.  Pass the results from your model into the template's context.
-4.  Setup your template to present the data to the user in whatever way
-    you wish.
+4.  Setup your template to present the data to the user in whatever way you wish.
 5.  If you have not done so already, map a URL to your view.
 
 These steps highlight how Django's framework separates the concerns
@@ -46,8 +44,10 @@ look like the example below.
     	# Query the database for a list of ALL categories currently stored.
     	# Order the categories by no. likes in descending order.
     	# Retrieve the top 5 only - or all if less than 5.
-    	# Place the list in our context_dict dictionary which will be passed to the template engine.
-    	category_list = Category.objects.order_by('-likes')[:5]
+    	# Place the list in our context_dict dictionary
+		# which will be passed to the template engine.
+    	
+		category_list = Category.objects.order_by('-likes')[:5]
     	context_dict = {'categories': category_list}
 
     	# Render the response and send it back!
@@ -157,22 +157,22 @@ words, like 'Other Frameworks', etc.
 
 T> ### Clean your URLs
 T>
-T> Designing clean URLs is an important aspect of web design. See
-T> [Wikipedia's article on Clean
+T> Designing clean and readble URLs is an important aspect of web design.
+T> See [Wikipedia's article on Clean
 T> URLs](http://en.wikipedia.org/wiki/Clean_URL) for more details.
 
-To handle this problem we are going to make use of the slugify function
+To handle this problem we are going to make use of the `slugify` function
 provided by Django, based on the answers provided at:
 <http://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django>
 
 ### Update Category Table with Slug Field
 
-To make clean urls we are going to include a slug field in the
+To make readable URLs we are going to include a slug field in the
 `Category` model. First we need to import the function `slugify` from
-django, which will replace whitespace with hyphens, i.e "how do i create
+Django, which will replace whitespace with hyphens, i.e "how do i create
 a slug in django" turns into "how-do-i-create-a-slug-in-django".
 
-W> Unsafe URLs
+W> ###Unsafe URLs
 W>
 W> While you can use spaces in URLs, it is considered to be unsafe to use
 W> them. Check out [IETF Memo on
@@ -200,8 +200,11 @@ change. Update your model, as shown below, and add in the import.
         	return self.name
 
 
-Now that you have performed this update to the Model, you will need to
-perform the migration.
+Now that the model has been updated, we need to propagate these changes to the database.
+However, since we already have data in the database we need to consider the implications of this change.
+Basically, for all the existing category names, we want to turn them into slugs (which is performed when the record is saved). When we update the models via the migration tool, it will add the field, and provide the option of populating the field with a default value. Of course, we want a specific value in each field. In order to correctly populate the slug field we will need to first perform the migration and then re-run the population script - this is because in the population script we explicitly call the 'save' method for each entry. This will trigger the 'save' we have implemented and update the slug accordingly.
+
+To perform the migration issue the following commands:
 
 {lang="text",linenos=off}
 	$ python manage.py makemigrations rango
@@ -210,14 +213,15 @@ perform the migration.
 
 Since we did not provide a default value for the slug, and we already
 have existing data in the model, then the migrate command will give you
-two options. Select the option to provide a default, and enter ''. Dont
-worry this will get updated shortly. Now re-run your population script.
-Since the `save` method is called for each Category, the overrided
-`save` method will be executed, updating the slug field. Run the server,
-and inspect the data in the models via the admin interface.
+two options. Select the option to provide a default, and enter ''. 
+Then re-run the population script, which will update the slug field:
 
-In the admin interface you may want it to automatically pre-populate the
-slug field as your type in the category name. To do this you can update
+{lang="text",linenos=off}
+	$ python populate_rango.py
+
+Now run the server (`python manage.py runserver`), and inspect the data in the models via the admin interface (`http://127.0.0.1:8000/admin/`).
+
+If you go to add in a new category via the admin interface you will have to save the record before the slug is generated. However, you can customize the admin interface so that it automatically pre-populates the slug field as you type in the category name. To do this update
 `rango/admin.py` with the following code:
 
 {lang="python",linenos=off}
@@ -234,25 +238,17 @@ slug field as your type in the category name. To do this you can update
 	
 
 Try out the admin interface and add in a new category. Pretty cool, hey!
-Now that we have added in slug fields we can now use them as clean urls
+Now that we have added in the slug field we can now use the slugs to uniquely identify the category via the URLs
 :-).
 
 ### Category Page Workflow
+Now to implement the category pages so that they can be accessed via `/rango/category/<category-name-slug>/` we need to make a number of changes and undertake the following steps:
 
-With our URLs design chosen, let's get started. We'll undertake the
-following steps.
-
-1.  Import the Page model into `rango/views.py`.
-2.
-
-    Create a new view in `rango/views.py` - called `category` - The `category` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
-
-    :   -   We will need some help functions to encode and decode the
-            `category_name_url`.
-
+1. Import the Page model into `rango/views.py`.
+2. Create a new view in `rango/views.py` - called `category` - The `category` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
+	-   We will need helper functions to encode and decode the `category_name_url`.
 3.  Create a new template, `templates/rango/category.html`.
-4.  Update Rango's `urlpatterns` to map the new `category` view to a URL
-    pattern in `rango/urls.py`.
+4.  Update Rango's `urlpatterns` to map the new `category` view to a URL pattern in `rango/urls.py`.
 
 We'll also need to update the `index()` view and `index.html` template
 to provide links to the category page view.
@@ -295,7 +291,9 @@ Next, we can add our new view, `category()`.
         	# We get here if we didn't find the specified category.
         	# Don't do anything - 
 			# the template will display the "no category" message for us.
-			pass
+			context_dict['category'] = None
+			context_dict['pages'] = None
+			
 
     	# Go render the response and return it to the client.
     	return render(request, 'rango/category.html', context_dict)
@@ -305,9 +303,9 @@ Our new view follows the same basic steps as our `index()` view. We
 first define a context dictionary, then we attempt to extract the data
 from the models, and add in the relevant data to the context dictionary.
 We determine which category by using the value passed as parameter
-`category_name_slug` to the `category()` view function. If the category
-is found in the Category model, we can then pull out the associated
-Pages, and add this to the context dictionary, `context_dict`.
+`category_name_slug` to the `category()` view function. If the category slug
+is found in the `Category` model, we can then pull out the associated
+pages, and add this to the context dictionary, `context_dict`.
 
 ### Category Template
 
@@ -342,17 +340,14 @@ create `category.html`. In the new file, add the following code.
 
 
 The HTML code example again demonstrates how we utilise the data passed
-to the template via its context. We make use of the `category_name`
-variable and our `category` and `pages` objects. If `category` is not
-defined within our template context, the category was not found within
-the database, and a friendly error message is displayed stating this
-fact. If the opposite is true, we then proceed to check for `pages`. If
-`pages` is undefined or contains no elements, we display a message
-stating there are no pages present. Otherwise, the pages within the
-category are presented in a HTML list. For each page in the `pages`
-list, we present their `title` and `url` attributes.
+to the template via its context through the tags `{{ }}`. We access the `category_name`
+variable, `category` and `pages` objects. 
 
-I> ###Note on Conditional Tags
+If the `category` exists, then we check to see if there are any pages in the category. If so, we iterate through the pages using the `{% for page in pages %}` template tags.
+For each page in the `pages` list, we present their `title` and `url` attributes. This is displayed in an unordered HTML list (denoted by the `<ul>` tags). If you are not too familiar with HTML then check out the [HTML Tutorial by W3Schools.com](http://www.w3schools.com/html/) to learn more about the different tags.
+
+
+I> ###Note on Conditional Template Tags
 I>
 I> The Django template conditional tag - `{% if %}` - is a really neat
 I> way of determining the existence of an object within the template's
@@ -382,47 +377,40 @@ as follows.
 		views.category, name='category'),)  # New!
 
 As you can see, we have added in a rather complex entry that will invoke
-`view.category()` when the regular expression
-`r'^(?P<category_name_slug>\w+)/$'` is matched. We set up our regular
-expression to look for any sequence of alphanumeric characters (e.g.
-a-z, A-Z, or 0-9) and the hyphen(-) before the trailing URL slash. This
-value is then passed to the view `views.category()` as parameter
-`category_name_slug`, the only argument after the mandatory `request`
-argument.
+`view.category()` when the URL pattern
+`r'^category/(?P<category_name_slug>[\w\-]+)/$'` is matched. 
 
-When you wish to parameterise URLs, it's important to ensure that your
-URL pattern matches the parameters that the corresponding view takes
-in. To elaborate further, let's take the example we added above. The
-pattern added was as follows.
+There are a two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. So when you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
+The next thing to note is that the regular expression `[\w\-]+)` will look for any sequence of alphanumeric characters e.g. a-z, A-Z, or 0-9 denoted by `\w` and any hyphens (-) denoted by `\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
 
-{lang="python",linenos=off}
- 	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category')
- 
- We can from here deduce that the characters (both alphanumeric and
- underscores) between `category/` and the trailing `/` at the end of a
- matching URL are to be passed to method `views.category()` as named
+So essentially the characters (both alphanumeric and
+ hyphens) between `category/` and the trailing `/` at the end of a
+ matching URL will be passed to method `views.category()` as named
  parameter `category_name_slug`. For example, the URL
- `category/python-books/` would yield a `category_name_slug` of
+ `category/python-books/` would result in the `category_name_slug` having the value,
  `python-books`.
 
- As you should remember, all view functions defined as part of a Django
- project *must* take at least one parameter. This is typically called
+ All view functions defined as part of a Django
+ applications *must* take at least one parameter. This is typically called
  `request` - and provides access to information related to the given
  HTTP request made by the user. When parameterising URLs, you supply
- additional named parameters to the signature for the given view. Using
- the same example, our `category` view signature is altered such that
- it now looks like the following.
+ additional named parameters to the signature for the given view.  
+  That is why our `category()` view was defined as follows: 
 
 {lang="python",linenos=off}
 	 def category(request, category_name_slug):
-     	# ... code here ...
+    
 
+<!--
 It's not the position of the additional parameters that matters, it's
 the *name* that must match anything defined within the URL pattern.
  Note how `category_name_slug` defined in the URL pattern matches the
- `category_name_slug` parameter defined for our view. Using  `category_name_slug` in our view will give `python-books`, or whatever value was supplied as that part of the URL.
-
+ `category_name_slug` parameter defined for our view. 
+		Using  `category_name_slug` in our view will give `python-books`, or whatever value was supplied as that part of the URL.
+-->
+		
 I> ###Regex Hell
+I>
 I> Some people, when confronted with a problem, think 
 I> “I know, I'll use regular expressions.”   Now they have two problems.
 I> [Jamie Zawinski](http://regex.info/blog/2006-09-15/247)
@@ -435,9 +423,8 @@ I> is an excellent resource for fixing regular expression problems.
 ### Modifying the Index Template
 
 Our new view is set up and ready to go - but we need to do one more
-thing. Our index page template needs to be updated to provide users with
-a means to view the category pages that are listed. We can update the
-`index.html` template to now include a link to the category page via the
+thing. Our index page template needs to be updated so that it links to the category pages that are listed.
+ We can update the `index.html` template to now include a link to the category page via the
 slug.
 
 {lang="html",linenos=off}
@@ -448,7 +435,7 @@ slug.
     </head>
 
     <body>
-        <h1>Rango says..hello world!</h1>
+        <h1>Rango says.. hey there partner!</h1>
 
         {% if categories %}
             <ul>
@@ -465,20 +452,20 @@ slug.
 	</html>
 
 
-Here we have updated each list element (`<li>`) adding a HTML hyperlink
+Again we used the HTML tag `<ul>` to define an unordered list and create a series of list elements (`<li>`) which contain a HTML hyperlink
 (`<a>`). The hyperlink has an `href` attribute, which we use to specify
-the target URL defined by `{{ category.slug }}`.
+the target URL defined by `/rango/category/{{ category.slug }}`, i.e. `/rango/category/python-books/`.
 
 ### Demo
 
-Let's try everything out now by visiting the Rango's homepage. You
-should see your homepage listing all the categories. The categories
-should now be clickable links. Clicking on `Python` should then take you
-to the `Python` detailed category view, as demonstrated in Figure
+Let's try everything out now by visiting Rango's homepage. You
+should see up to five categories on the index page. The categories
+should now be links. Clicking on `Python` should then take you
+to the `Python` category page, as shown in Figure
 fig-rango-links. If you see a list of links like
 `Official Python Tutorial`, then you've successfully set up the new
-view. Try navigating a category which doesn't exist, like
-`/rango/category/computers`. You should see a message telling you that
+page. Try navigating a category which doesn't exist, like
+`/rango/category/computers/`. You should see a message telling you that
 no pages exist in the category.
 
 ![What your link structure should now look like. Starting with the Rango
@@ -494,14 +481,14 @@ exercises.
 
 -   Modify the index page to also include the top 5 most viewed pages.
 -   Undertake the [part three of official Django
-    tutorial](https://docs.djangoproject.com/en/1.7/intro/tutorial03/)
-    if you have not done so already to further what you've learnt here.
+    tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/)
+    if you have not done so already to reinforce what you've learnt here.
 
 ### Hints
 
 To help you with the exercises above, the following hints may be of some
 use to you. Good luck!
 
--   Update the population script to add some value to the views count
+-   Update the population script to add some value to the `views` count
     for each page.
 
