@@ -1,7 +1,6 @@
 #Forms {#chapter-forms}
 
-So far we have only presented data through the views and templates that
-we have created. In this chapter, we will run through how to capture
+So far we have only presented data, in this chapter we will run through how to capture
 data through web forms. Django comes with some neat form handling
 functionality, making it a pretty straightforward process to gather
 information from users and send it back to your web application.
@@ -23,9 +22,7 @@ via forms.
 
 ##Basic Workflow
 
-
-The basic steps involved in creating a form and allowing users to enter
-data via the form is as follows.
+The basic steps involved in creating a form and handling user input is as follows.
 
 1.  If you haven't already got one, create a `forms.py` file within your
     Django application's directory to store form-related classes.
@@ -49,21 +46,20 @@ clear how everything pieces together.
 
 First, create a file called `forms.py` within the `rango` application
 directory. While this step is not absolutely necessary, as you could put
-the forms in the `models.py`, this makes the codebase a lot cleaner and
-clearer to understand.
+the forms in the `models.py`, this makes the codebase tidier and easier to work with.
 
 ### Creating `ModelForm` Classes
 
 Within Rango's `forms.py` module, we will be creating a number of
 classes that inherit from Django's `ModelForm`. In essence, [a
-ModelForm](https://docs.djangoproject.com/en/1.7/topics/forms/modelforms/#modelform)
+ModelForm](https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/#modelform)
 is a *helper class* that allows you to create a Django `Form` from a
 pre-existing model. As we've already got two models defined for Rango
 (`Category` and `Page`), we'll create `ModelForms` for both.
 
 In `rango/forms.py` add the following code.
 
-{lang="python",linenos=off}
+{lang="python",linenos=on}
 	from django import forms
 	from rango.models import Page, Category
 
@@ -144,7 +140,7 @@ e-mail address entry), `ChoiceField` (for radio input buttons), and
 can use, which perform error checking for you (e.g. *is the value
 provided a valid integer?*). We highly recommend you have a look at the
 [official Django documentation on
-widgets](https://docs.djangoproject.com/en/1.7/ref/forms/widgets/) to
+widgets](https://docs.djangoproject.com/en/1.9/ref/forms/widgets/) to
 see what components exist and the arguments you can provide to customise
 them.
 
@@ -307,7 +303,7 @@ submission of a form. *The CSRF token is required by the Django
 framework. If you forget to include a CSRF token in your forms, a user
 may encounter errors when he or she submits the form.* Check out the
 [official Django documentation on CSRF
-tokens](https://docs.djangoproject.com/en/1.7/ref/contrib/csrf/) for
+tokens](https://docs.djangoproject.com/en/1.9/ref/contrib/csrf/) for
 more information about this.
 
 ### Mapping the *Add Category* View
@@ -327,7 +323,7 @@ the `urlpatterns` as follows.
 
 Ordering doesn't necessarily matter in this instance. However, take a
 look at the [official Django documentation on how Django process a
-request](https://docs.djangoproject.com/en/1.7/topics/http/urls/#how-django-processes-a-request)
+request](https://docs.djangoproject.com/en/1.9/topics/http/urls/#how-django-processes-a-request)
 for more information. Our new URL for adding a category is
 `/rango/add_category/`.
 
@@ -447,8 +443,8 @@ X> -   What happens when you don't enter in a category name on the add category 
 X> -   What happens when you try to add a category that already exists?
 X> -   What happens when you visit a category that does not exist?
 X> -   How could you gracefully handle when a user visits a category that does not exist?
-X>-   Undertake the [part four of the official Django Tutorial](https://docs.djangoproject.com/en/dev/intro/tutorial04/)
-X>    if you have not done so already to reinforce what you have learnt here.
+X> -   Undertake the [part four of the official Django Tutorial](https://docs.djangoproject.com/en/dev/intro/tutorial04/)
+X>     if you have not done so already to reinforce what you have learnt here.
 
 ### Creating an *Add Pages* View, Template and URL Mapping
 
