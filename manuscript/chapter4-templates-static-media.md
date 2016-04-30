@@ -87,25 +87,20 @@ With your template directory and path now set up, create a file called `index.ht
 
 {lang="html",linenos=off}
     <!DOCTYPE html>
-    
     <html>
-	
         <head>
             <title>Rango</title>
         </head>
-		
         <body>
             <h1>Rango says...</h1>
 			<div>
-            hey there partner! <br /> 
-			
-			<strong>{{ boldmessage }}</strong><br />
+				hey there partner! <br /> 
+				<strong>{{ boldmessage }}</strong><br />
 			</div>
 			<div>
-            <a href="/rango/about/">About</a><br />
+            	<a href="/rango/about/">About</a><br />
 			</div>
-        </body>
-        
+		</body>
     </html>
 
 From this HTML code, it should be clear that a simple HTML page is going to be generated that greets a user with a *hello world* message. You might also notice some non-HTML in the form of `{{ boldmessage }}`. This is a *Django template variable*. We can set values to these variables so they are replaced with whatever we want when the template is rendered. We'll get to that in a moment.
@@ -199,28 +194,22 @@ To demonstrate how to include static files, open up the `index.html` templates y
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
-	
 	{% load staticfiles %} <!-- New line -->
-	
 	<html>
-	
-	    <head>
-	        <title>Rango</title>
-	    </head>
-	    
-	    <body>
-	        
+		<head>
+			<title>Rango</title>
+		</head>
+		<body>
 			<h1>Rango says...</h1>
-	        <div>
-			hey there partner! <br />
-			<strong>{{ boldmessage }}</strong><br />
+			<div>
+				hey there partner! <br />
+				<strong>{{ boldmessage }}</strong><br />
 			</div>
-	        <div>
-			<a href="/rango/about/">About</a><br />
-	        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
-            </div>
-	    </body>
-	
+			<div>
+				<a href="/rango/about/">About</a><br />
+				<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+			</div>
+		</body>
 	</html>
 
 The first new line added ( i.e. `{% load staticfiles %}`) informs Django's template engine that we will be using static files with the template. This then enables us to access the media in the static directories via the use of the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/). This indicates to Django that we wish to show the image located in the static media directory called `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{%  % }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`. The HTML generated as a result would be:
@@ -242,32 +231,22 @@ T> When creating the HTML templates, always ensure that the [`DOCTYPE` declarati
 T> ### Loading other Static Files
 T> The ``{% static %}`` template tag call can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
 T>
-T> {lang="html",linenos=off}
-T>     <!DOCTYPE html>
+T>	{lang="html",linenos=off}
+T> 		<!DOCTYPE html>
+T>		{% load staticfiles %}
 T>     
-T>     {% load staticfiles %}
-T>     
-T>     <html>
-T>    
-T>         <head>
-T>             <title>Rango</title>
-T>             
-T>             <!-- CSS -->
+T>		<html>
+T>			<head>
+T>				<title>Rango</title>
+T>				<!-- CSS -->
 T>             <link rel="stylesheet" href="{% static "css/base.css" %}" />
-T>
 T>             <!-- JavaScript -->
 T>             <script src="{% static "js/jquery.js" %}"></script>
-T>         </head>
-T>     
-T>         <body>
-T>             <h1>Including Static Media</h1>
-T>             
-T>				<div>
-T>             <!-- Image -->
-T>             <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
-T>         		</div>
+T>			</head>
+T>			<body>
+T>				<!-- Image -->
+T>				<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
 T>			</body>
-T>     
 T>     </html>
 T>    
 T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. Looking at the output snippet below, notice how the last entry's HTTP status code is `404`.

@@ -256,7 +256,7 @@ I> The Django admin interface is your port of call for user management, through 
 T> ### Plural vs. Singular Spellings
 T>  Note the typo within the admin interface (`Categorys`, not `Categories`). This typo can be fixed by adding a nested `Meta` class into your model definitions with the `verbose_name_plural` attribute. Check out a modified version of the `Category` model below for an example, and [Django's official documentation on models](https://docs.djangoproject.com/en/1.9/topics/db/models/#meta-options) for more information about what can be stored within the `Meta` class.
 T>
-T> {lang="python",linenos=on}
+T> {lang="python",linenos=off}
 T>     class Category(models.Model):
 T>         name = models.CharField(max_length=128, unique=True)
 T>     
@@ -280,11 +280,9 @@ To create a population script for Rango, start by creating a new Python module w
 
 	import django
 	django.setup()
-
 	from rango.models import Category, Page
 	
-	def populate():
-	
+	def populate():	
 		# First we will create lists of dictionaries containing the pages
 		# we want to add into each category
 		# Then we will create a dictionary of dictionaries for our categories
