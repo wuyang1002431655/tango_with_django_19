@@ -96,10 +96,14 @@ With your template directory and path now set up, create a file called `index.ht
 		
         <body>
             <h1>Rango says...</h1>
+			<div>
             hey there partner! <br /> 
 			
 			<strong>{{ boldmessage }}</strong><br />
+			</div>
+			<div>
             <a href="/rango/about/">About</a><br />
+			</div>
         </body>
         
     </html>
@@ -205,12 +209,16 @@ To demonstrate how to include static files, open up the `index.html` templates y
 	    </head>
 	    
 	    <body>
-	        <h1>Rango says...</h1>
-	        hey there partner! <br />
+	        
+			<h1>Rango says...</h1>
+	        <div>
+			hey there partner! <br />
 			<strong>{{ boldmessage }}</strong><br />
-	        <a href="/rango/about/">About</a><br />
+			</div>
+	        <div>
+			<a href="/rango/about/">About</a><br />
 	        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
-                
+            </div>
 	    </body>
 	
 	</html>
@@ -254,9 +262,11 @@ T>
 T>         <body>
 T>             <h1>Including Static Media</h1>
 T>             
+T>				<div>
 T>             <!-- Image -->
 T>             <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
-T>         </body>
+T>         		</div>
+T>			</body>
 T>     
 T>     </html>
 T>    

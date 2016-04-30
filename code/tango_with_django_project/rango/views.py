@@ -9,7 +9,9 @@ def index(request):
     
     category_list = Category.objects.order_by('-likes')[:5]
     
-    context_dict = {'categories': category_list}
+    page_list = Page.objects.order_by('-views')[:5]
+    
+    context_dict = {'categories': category_list, 'pages': page_list}
     
     return render(request, 'rango/index.html', context=context_dict)
     
@@ -51,6 +53,5 @@ def category(request, category_name_slug):
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
-	
 	# Go render the response and return it to the client.
-	return render(request, 'rango/category.html', context_dict)
+    return render(request, 'rango/category.html', context_dict)

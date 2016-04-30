@@ -88,8 +88,8 @@ example shown below.
 
     <body>
         <h1>Rango says...</h1>
-        <p>hey there partner!<p>
-		<p>
+        <div>hey there partner!</div>
+		<div>
         {% if categories %}
             <ul>
                 {% for category in categories %}
@@ -99,10 +99,11 @@ example shown below.
         {% else %}
             <strong>There are no categories present.</strong>
         {% endif %}	
-		</p>	
-			
+		</div>	
+		<div>	
         <a href="/rango/about/">About Rango</a><br />
         <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+		</div>
     </body>
 	</html>
 
@@ -131,7 +132,7 @@ like in [Figure](#figch6-rango-categories-index).
 
 {id="fig-ch6-rango-categories-index"}
 ![The Rango homepage - now dynamically generated - shows a list of
-categories. How exciting!](../images/ch6-rango-categories-index.png)
+categories. How exciting :-)](../images/ch6-rango-categories-index.png)
 
 ##Creating a Details Page
 
@@ -161,7 +162,7 @@ words, like 'Other Frameworks', etc.
 
 T> ### Clean your URLs
 T>
-T> Designing clean and readble URLs is an important aspect of web design.
+T> Designing clean and readable URLs is an important aspect of web design.
 T> See [Wikipedia's article on Clean
 T> URLs](http://en.wikipedia.org/wiki/Clean_URL) for more details.
 
@@ -349,6 +350,7 @@ create `category.html`. In the new file, add the following code.
 
     <body>
         <h1>{{ category_name }}</h1>
+		<div>
         {% if category %}
             {% if pages %}
             <ul>
@@ -362,6 +364,7 @@ create `category.html`. In the new file, add the following code.
         {% else %}
             The specified category {{ category_name }} does not exist!
         {% endif %}
+		</div>
     </body>
 	</html>
 
@@ -457,24 +460,30 @@ slug.
 {lang="html",linenos=off}
 	<!DOCTYPE html>
 	<html>
-    <head>
-        <title>Rango</title>
-    </head>
-
+	<head>
+		<title>Rango</title>
+	</head>
     <body>
-        <h1>Rango says.. hey there partner!</h1>
-
+		<h1>Rango says...</h1>
+		<div>
+			 hey there partner!
+		 </div>
+		<div>
         {% if categories %}
-            <ul>
-                {% for category in categories %}
-                <!-- Following line changed to add an HTML hyperlink -->
+        <ul>
+			{% for category in categories %}
+            	<!-- Following line changed to add an HTML hyperlink -->
                 <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
                 {% endfor %}
-            </ul>
-       {% else %}
-            <strong>There are no categories present.</strong>
-       {% endif %}
-
+		</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
+		</div>
+		<div>	
+       		<a href="/rango/about/">About Rango</a><br />
+       	 	<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+		</div>
     </body>
 	</html>
 
@@ -487,37 +496,52 @@ the target URL defined by `/rango/category/{{ category.slug }}`, i.e. `/rango/ca
 
 Let's try everything out now by visiting Rango's homepage. You
 should see up to five categories on the index page. The categories
-should now be links. Clicking on `Python` should then take you
-to the `Python` category page, as shown in Figure
-fig-rango-links. If you see a list of links like
-`Official Python Tutorial`, then you've successfully set up the new
-page. Try navigating a category which doesn't exist, like
+should now be links. Clicking on `Djano` should then take you
+to the `Django` category page, as shown in the [Figure](#fig-ch6-rango-links). If you see a list of links like
+`Official Django Tutorial`, then you've successfully set up the new
+page. 
+
+
+What happens when you visit a category that does not exist? Try navigating a category which doesn't exist, like
 `/rango/category/computers/`. You should see a message telling you that
 no pages exist in the category.
 
-![What your link structure should now look like. Starting with the Rango
-homepage, you are then presented with the category detail page. Clicking
-on a page link takes you to the linked
-website.](../images/rango-links.png)
+{id="fig-ch6-rango-links"}
+![The links to Django pages.](../images/ch6-rango-links.png)
 
 X> ##Exercises
 X>
 X> 
 X> Reinforce what you've learnt in this chapter by trying out the following exercises.
 X> 
+X> - Update the population script to add some value to the `views` count for each page.
 X> -   Modify the index page to also include the top 5 most viewed pages.
+X> - Include a heading for the "Most Liked Categories" and "Most Viewed Pages"
+X> - Include a back to the index page from the category page.
 X> -   Undertake the [part three of official Django
 X>   tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/)
 X>    if you have not done so already to reinforce what you've learnt here.
 
+
+{id="fig-ch6-exercises"}
+![The index page after you complete the exercises, showing the most liked categories and most viewed pages.](../images/ch6-exercises.png)
+
+
+
 T> ### Hints
 T>
-T> To help you with the exercises above, the following hints may be of some use to you. Good luck!
+T> - When updating the population script add in the values to the page dictionaries first then when iterating through the page dictionaries for each category pass the views data through i.e. 'p["views"]'
+T> - Remember to re-run the population script so that the views are updated 
 T>
-T> -   Update the population script to add some value to the `views` count for each page.
+T> - You will need to edit both the `index` view and the `index.html` template to put the most viewed i.e. popular pages on the index page.
+T> - Instead of accessing the `Category` model, you will have to ask the `Page' model for the most viewed pages.
+T> - Remember to pass the list of pages through to the context.
+T> - If you are not sure about the HTML template code to use, then draw inspiration from the 'category.html' template code it is practically the same.
 
-T> ### Best practices working with model
+
+
+T> ### Model Tips
 T>
-T> Get some great tips on how to work with models from this blog on [Best Practices](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko 
+T> Check out this guide on [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko, if you want to be a real Pythonista!
 
 
