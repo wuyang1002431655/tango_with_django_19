@@ -387,7 +387,7 @@ for more information.
 Now, restart the Django development server and visit
 `http://127.0.0.1:8000/rango/`. If all went well, you should see the text
 `Rango says hey there partner!`. It should look just like the screenshot shown
-in Figure fig-rango-hello-world.
+in [Figure](#fig-ch3-hey-there).
 
 {id="fig-url-chain"}
 ![An illustration of a URL, showing how the different parts of the URL
@@ -395,7 +395,7 @@ are the responsibility of different `url.py`
 files.](images/ch3-url-chain.png)
 
 
-{id="img-ch3-hey-there"}
+{id="fig-ch3-hey-there"}
 ![A screenshot of Google Chrome displaying our first Django-powered
 webpage. Hello, Rango!](images/ch3-hey-there.png)
 
@@ -490,5 +490,7 @@ I> -   The HTML to link back to the index page is
 I>     `<a href="/rango/">Index</a>`. The link uses the same structure as
 I>     the link to the `about` page shown above.
 I> 
+
+
 
 

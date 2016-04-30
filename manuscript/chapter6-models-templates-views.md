@@ -126,11 +126,12 @@ enclosed within the tags `{%` and `%}`, while variables are referenced
 within `{{` and `}}` brackets.
 
 If you now visit Rango's homepage at <http://127.0.0.1:8000/rango/>, you
-should see a list of three categories underneath the page title just
-like in Figure fig-rango-categories-simple.
+should see a list of categories underneath the page title just
+like in [Figure](#figch6-rango-categories-index).
 
-![The Rango homepage - now dynamically generated - showing a list of
-categories. How exciting!](../images/rango-categories-simple.png)
+{id="fig-ch6-rango-categories-index"}
+![The Rango homepage - now dynamically generated - shows a list of
+categories. How exciting!](../images/ch6-rango-categories-index.png)
 
 ##Creating a Details Page
 
@@ -304,7 +305,7 @@ Next, we can add our new view, `category()`.
         	context_dict['category_name'] = category.name
 
         	# Retrieve all of the associated pages.
-        	# Note that filter returns >= 1 model instance.
+        	# Note that filter returns a list of page objects or and empty list
         	pages = Page.objects.filter(category=category)
 
         	# Adds our results list to the template context under name pages.
@@ -499,22 +500,24 @@ homepage, you are then presented with the category detail page. Clicking
 on a page link takes you to the linked
 website.](../images/rango-links.png)
 
-##Exercises
+X> ##Exercises
+X>
+X> 
+X> Reinforce what you've learnt in this chapter by trying out the following exercises.
+X> 
+X> -   Modify the index page to also include the top 5 most viewed pages.
+X> -   Undertake the [part three of official Django
+X>   tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/)
+X>    if you have not done so already to reinforce what you've learnt here.
 
+T> ### Hints
+T>
+T> To help you with the exercises above, the following hints may be of some use to you. Good luck!
+T>
+T> -   Update the population script to add some value to the `views` count for each page.
 
-Reinforce what you've learnt in this chapter by trying out the following
-exercises.
+T> ### Best practices working with model
+T>
+T> Get some great tips on how to work with models from this blog on [Best Practices](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko 
 
--   Modify the index page to also include the top 5 most viewed pages.
--   Undertake the [part three of official Django
-    tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/)
-    if you have not done so already to reinforce what you've learnt here.
-
-### Hints
-
-To help you with the exercises above, the following hints may be of some
-use to you. Good luck!
-
--   Update the population script to add some value to the `views` count
-    for each page.
 

@@ -172,3 +172,14 @@ We will also have model for the `User` so that they can register and login. We h
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar with reading and producing such specifications and designs, which warrants another book on the topic. Here we will be focusing on using Django and the related technologies to implement this specification.
 
 
+
+T> ### Cut and Paste Coding
+T>
+T> As you progress through the tutorial, you will be tempted to cut and paste the code from the book to your code editor.
+T> However, it is better to type in the code. We know this is a hassle, but
+T> it will help you to remember the process better and the commands that you will be using later on.
+T>
+T> Also, if you cut and paste Python code you are asking for trouble. The whitespace can get end up being interpreted as spaces, tabs or a mixture of spaces and tabs. This will lead to all sorts of weird errors, and not necessarily indent errors. If you do cut and paste the code be wary of this.
+T> 
+T> Most code editors will show the whitespace and whether it is tabs or spaces - if so turn it on and save yourself a lot of confusion.
+

@@ -222,7 +222,7 @@ The first new line added ( i.e. `{% load staticfiles %}`) informs Django's templ
 
 If for some reason the image cannot be loaded, it is always a good idea to specify an alternative text tagline. This is what the ``alt`` attribute provides inside the `img` tag.
 
-With these minor changes in place, start tha Django development server once more and navigate to `http://127.0.0.1:8000/rango`. If everything has been done correctly, you will see a Webpage that looks similar to the [screenshot shown below](#fig-ch4-rango-site-with-pic).
+With these minor changes in place, start the Django development server once more and navigate to `http://127.0.0.1:8000/rango`. If everything has been done correctly, you will see a Webpage that looks similar to the [screenshot shown below](#fig-ch4-rango-site-with-pic).
 
 {id="fig-ch4-rango-site-with-pic"}
 ![Our first Rango template, complete with a picture of Rango the chameleon.](images/ch4-rango-site-with-pic.png)
@@ -293,6 +293,9 @@ X>
 X> * Convert the about page to use a template as well, using a template called `about.html`.
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`
+
+
+
 
 
 
