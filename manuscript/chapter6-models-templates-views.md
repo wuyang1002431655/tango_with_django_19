@@ -132,7 +132,7 @@ like in [Figure](#figch6-rango-categories-index).
 
 {id="fig-ch6-rango-categories-index"}
 ![The Rango homepage - now dynamically generated - shows a list of
-categories. How exciting :-)](../images/ch6-rango-categories-index.png)
+categories. How exciting :-)](images/ch6-rango-categories-index.png)
 
 ##Creating a Details Page
 
@@ -403,15 +403,15 @@ as follows.
 	urlpatterns = patterns('',
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
-    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
-		views.category, name='category'),)  # New!
+    	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', 
+		views.category, name='category'),) 
 
 As you can see, we have added in a rather complex entry that will invoke
 `view.category()` when the URL pattern
-`r'^category/(?P<category_name_slug>[\w\-]+)/$'` is matched. 
+`r'^category/(?P<category_name_slug>[\\w\\-]+)/$'` is matched. 
 
 There are a two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. So when you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
-The next thing to note is that the regular expression `[\w\-]+)` will look for any sequence of alphanumeric characters e.g. a-z, A-Z, or 0-9 denoted by `\w` and any hyphens (-) denoted by `\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
+The next thing to note is that the regular expression `[\\w\\-]+)` will look for any sequence of alphanumeric characters e.g. a-z, A-Z, or 0-9 denoted by `\\w` and any hyphens (-) denoted by `\\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
 
 So essentially the characters (both alphanumeric and
  hyphens) between `category/` and the trailing `/` at the end of a
@@ -507,7 +507,7 @@ What happens when you visit a category that does not exist? Try navigating a cat
 no pages exist in the category.
 
 {id="fig-ch6-rango-links"}
-![The links to Django pages.](../images/ch6-rango-links.png)
+![The links to Django pages.](images/ch6-rango-links.png)
 
 X> ##Exercises
 X>
@@ -524,7 +524,7 @@ X>    if you have not done so already to reinforce what you've learnt here.
 
 
 {id="fig-ch6-exercises"}
-![The index page after you complete the exercises, showing the most liked categories and most viewed pages.](../images/ch6-exercises.png)
+![The index page after you complete the exercises, showing the most liked categories and most viewed pages.](images/ch6-exercises.png)
 
 
 

@@ -53,7 +53,7 @@ wiki](https://www.pythonanywhere.com/wiki/) provides a series of
 detailed explanations on how to use the other tabs.
 
 ![The PythonAnywhere dashboard, showing the *Consoles*
-tab.](../images/deploy-pythonanywhere.png)
+tab.](images/deploy-pythonanywhere.png)
 
 ##Creating a Virtual Environment
 
