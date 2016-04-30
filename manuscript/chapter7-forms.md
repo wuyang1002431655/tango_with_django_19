@@ -344,8 +344,9 @@ to `http://127.0.0.1:8000/rango/`. Use your new link to jump to the add
 category page, and try adding a category. Figure fig-rango-form-steps
 shows screenshots of the of the Add Category and Index Pages.
 
-![Adding a new category to Rango with our new form. The diagram
-illustrates the steps involved.](../images/rango-form-steps.png)
+<!-- >![Adding a new category to Rango with our new form. The diagram
+illustrates the steps involved.]()
+-->
 
 I> ### Note
 I>

@@ -52,8 +52,9 @@ Of the the five tabs provided, we'll be working primarily with the
 wiki](https://www.pythonanywhere.com/wiki/) provides a series of
 detailed explanations on how to use the other tabs.
 
-![The PythonAnywhere dashboard, showing the *Consoles*
+<!--- ![The PythonAnywhere dashboard, showing the *Consoles*
 tab.](images/deploy-pythonanywhere.png)
+-->
 
 ##Creating a Virtual Environment
 
