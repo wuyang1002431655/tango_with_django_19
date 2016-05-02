@@ -205,7 +205,7 @@ change. Update your model, as shown below, and add in the import.
 	        verbose_name_plural = 'categories'
     
 	    def __str__(self):
-	        return '<Category: {0}>'.format(self.name)
+	        return self.name
 
 
 Now that the model has been updated, we need to propagate these changes to the database.
@@ -290,10 +290,10 @@ means we must add the following import statement at the top of the file.
 	from rango.models import Page
 
 
-Next, we can add our new view, `category()`.
+Next, we can add our new view, `show_category()`.
 
 {lang="python",linenos=off}
-	def category(request, category_name_slug):
+	def show_category(request, category_name_slug):
     	# Create a context dictionary which we can pass 
 		# to the template rendering engine.
     	context_dict = {}
@@ -303,7 +303,6 @@ Next, we can add our new view, `category()`.
         	# If we can't, the .get() method raises a DoesNotExist exception.
         	# So the .get() method returns one model instance or raises an exception.
         	category = Category.objects.get(slug=category_name_slug)
-        	context_dict['category_name'] = category.name
 
         	# Retrieve all of the associated pages.
         	# Note that filter returns a list of page objects or and empty list
@@ -331,7 +330,7 @@ Our new view follows the same basic steps as our `index()` view. We
 first define a context dictionary, then we attempt to extract the data
 from the models, and add in the relevant data to the context dictionary.
 We determine which category by using the value passed as parameter
-`category_name_slug` to the `category()` view function. If the category slug
+`category_name_slug` to the `show_category()` view function. If the category slug
 is found in the `Category` model, we can then pull out the associated
 pages, and add this to the context dictionary, `context_dict`.
 
@@ -349,7 +348,7 @@ create `category.html`. In the new file, add the following code.
     </head>
 
     <body>
-        <h1>{{ category_name }}</h1>
+        <h1>{{ category.name }}</h1>
 		<div>
         {% if category %}
             {% if pages %}
@@ -362,7 +361,7 @@ create `category.html`. In the new file, add the following code.
                 <strong>No pages currently in category.</strong>
             {% endif %}
         {% else %}
-            The specified category {{ category_name }} does not exist!
+            The specified category does not exist!
         {% endif %}
 		</div>
     </body>
@@ -404,10 +403,10 @@ as follows.
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
     	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', 
-		views.category, name='category'),) 
+		views.show_category, name='show_category'),) 
 
 As you can see, we have added in a rather complex entry that will invoke
-`view.category()` when the URL pattern
+`view.show_category()` when the URL pattern
 `r'^category/(?P<category_name_slug>[\\w\\-]+)/$'` is matched. 
 
 There are a two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. So when you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
@@ -428,7 +427,7 @@ So essentially the characters (both alphanumeric and
   That is why our `category()` view was defined as follows: 
 
 {lang="python",linenos=off}
-	 def category(request, category_name_slug):
+	 def show_category(request, category_name_slug):
     
 
 <!--

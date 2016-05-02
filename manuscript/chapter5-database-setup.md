@@ -55,7 +55,7 @@ For the models themselves, we will create two classes - one class representing e
         name = models.CharField(max_length=128, unique=True)
         
         def __str__(self):  # For Python 2, use __unicode__ too
-			return '<Category: {0}>'.format(self.name)
+			return self.name
             
     
     class Page(models.Model):
@@ -65,7 +65,7 @@ For the models themselves, we will create two classes - one class representing e
         views = models.IntegerField(default=0)
         
         def __str__(self):  # For Python 2, use __unicode__ too
-            return '<Page: {0}>'.format(self.title)
+            return self.title
 
 T> ### Check `import` Statements
 T> At the top of the `models.py` module, you should see `from django.db import models`. If you don't see it, add it in.

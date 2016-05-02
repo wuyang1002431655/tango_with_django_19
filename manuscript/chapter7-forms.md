@@ -1,10 +1,7 @@
 #Forms {#chapter-forms}
-
-So far we have only presented data, in this chapter we will run through how to capture
+So far we have only presented data from the models. In this chapter, we will run through how to capture 
 data through web forms. Django comes with some neat form handling
-functionality, making it a pretty straightforward process to gather
-information from users and send it back to your web application.
-According to [Django's documentation on
+functionality, making it a pretty straightforward process to collect information from users and save it to the database via the models. According to [Django's documentation on
 forms](https://docs.djangoproject.com/en/1.9/topics/forms/), the form
 handling functionality allows you to:
 
@@ -15,10 +12,7 @@ handling functionality allows you to:
 4.  convert submitted form data to the relevant Python data types.
 
 One of the major advantages of using Django's forms functionality is
-that it can save you a lot of time and HTML hassle. This part of the
-tutorial will look at how to implement the necessary infrastructure that
-will allow users of Rango to add categories and pages to the database
-via forms.
+that it can save you a lot of time and hassle creating the HTML forms. 
 
 ##Basic Workflow
 
@@ -43,13 +37,14 @@ However, once you undertake the process a few times it will be pretty
 clear how everything pieces together.
 
 ##Page and Category Forms
+In this part of the tutorial, we will implement the necessary infrastructure that
+will allow users to add categories and pages to the database via forms.
 
 First, create a file called `forms.py` within the `rango` application
 directory. While this step is not absolutely necessary, as you could put
 the forms in the `models.py`, this makes the codebase tidier and easier to work with.
 
 ### Creating `ModelForm` Classes
-
 Within Rango's `forms.py` module, we will be creating a number of
 classes that inherit from Django's `ModelForm`. In essence, [a
 ModelForm](https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/#modelform)
@@ -172,28 +167,30 @@ this, add the following code to `rango/views.py`.
 
 {lang="python",linenos=off}
 	from rango.forms import CategoryForm
+	
+	...
 
 	def add_category(request):
 	    # A HTTP POST?
 	    if request.method == 'POST':
 	        form = CategoryForm(request.POST)
-
 	        # Have we been provided with a valid form?
 	        if form.is_valid():
 	            # Save the new category to the database.
 	            form.save(commit=True)
-
-	            # Now call the index() view.
-	            # The user will be shown the homepage.
+	            # Now that the category is saved
+	            # We could give a confirmation message
+	            # But instead since the most recent catergory added is on the index page
+	            # Then we can direct the user back to the index page.
 	            return index(request)
 	        else:
 	            # The supplied form contained errors - just print them to the terminal.
-	            print form.errors
+	            print(form.errors)
 	    else:
 	        # If the request was not a POST, display the form to enter details.
 	        form = CategoryForm()
 
-	    # Bad form (or form details), no form supplied...
+	    # Will handle the bad form (or form details), new form or no form supplied cases.
 	    # Render the form with error messages (if any).
 	    return render(request, 'rango/add_category.html', {'form': form})
 
@@ -252,7 +249,7 @@ add the following HTML markup and Django template code.
 
 	    <body>
 	        <h1>Add a Category</h1>
-
+			<div>
 	        <form id="category_form" method="post" action="/rango/add_category/">
 
 	            {% csrf_token %}
@@ -268,12 +265,13 @@ add the following HTML markup and Django template code.
 
 	            <input type="submit" name="submit" value="Create Category" />
 	        </form>
+			</div>
 	    </body>
 
 	</html>
 
 Now, what does this code do? You can see that within the `<body>` of the
-HTML page that we place a `<form>` element. Looking at the attributes
+HTML page we placed a `<form>` element. Looking at the attributes
 for the `<form>` element, you can see that all data captured within this
 form is sent to the URL `/rango/add_category/` as a HTTP `POST` request
 (the `method` attribute is case insensitive, so you can do `POST` or
@@ -296,15 +294,17 @@ I> pass important information to a client (which cannot be seen on the
 I> rendered page) in a HTML form, only to be sent back to the originating
 I> server when the user submits the form.
 
-You should also take note of the code snippet `{% csrf_token %}`. This
-is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect
-and secure the HTTP `POST` action that is initiated on the subsequent
-submission of a form. *The CSRF token is required by the Django
-framework. If you forget to include a CSRF token in your forms, a user
-may encounter errors when he or she submits the form.* Check out the
-[official Django documentation on CSRF
-tokens](https://docs.djangoproject.com/en/1.9/ref/contrib/csrf/) for
-more information about this.
+
+I> ### Cross Site Request Forgery Tokens
+I> 
+I> You should also take note of the code snippet `{% csrf_token %}`. This
+I>  is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect
+I> and secure the HTTP `POST` action that is initiated on the subsequent
+I> submission of a form. *The CSRF token is required by the Django
+I> framework. If you forget to include a CSRF token in your forms, a user
+I> may encounter errors when he or she submits the form.* Check out the
+I> [official Django documentation on CSRF tokens](https://docs.djangoproject.com/en/1.9/ref/contrib/csrf/) for
+I> more information about this.
 
 ### Mapping the *Add Category* View
 
@@ -331,7 +331,7 @@ for more information. Our new URL for adding a category is
 
 As a final step let's put a link on the index page so that we can easily
 add categories. Edit the template `rango/index.html` and add the
-following HTML hyperlink just before the `</body>` closing tag.
+following HTML hyperlink in the `div` element with the about link.
 
 {lang="html",linenos=off}
 	<a href="/rango/add_category/">Add a New Category</a><br />
@@ -344,20 +344,25 @@ to `http://127.0.0.1:8000/rango/`. Use your new link to jump to the add
 category page, and try adding a category. Figure fig-rango-form-steps
 shows screenshots of the of the Add Category and Index Pages.
 
-<!-- >![Adding a new category to Rango with our new form. The diagram
-illustrates the steps involved.]()
--->
+{id="fig-ch7-add-cat"}
+>![Adding a new category to Rango with our new form.](images/ch7-add-cat)
 
-I> ### Note
+
+I> ### Missing Categories
 I>
 I> If you add a number of categories, they will not always appear on the
 I> index page, that is because we are only showing the top 5 categories
 I> on the index page. If you log into the Admin interface you should be
-I> able to view all the categories that you have entered. To see what is
-I> happening as you entered them in `rango/views.py` in `add_category()`,
-I> you can get the reference to the category model object created from
-I> `form.save()`, with `cat = form.save(commit=True)` and then print to
-I> console the category and slug, with `print cat, cat.slug` to see what
+I> able to view all the categories that you have entered. 
+I> 
+I> If you want to check that the category is being added. Then in
+I> in  `add_category()` method in `rango/views.py` change the line 
+I> `form.save(commit=True)` to be `cat = form.save(commit=True)`. 
+I> This will give you a reference to an instance of the category object created from the form.
+I> You can then print or log the category. For example, add in  `print(cat)`
+
+I> `form.save()`, with  and then print to
+I> console the category and slug, with `print(cat, cat.slug)` to see what
 I> is being created.
 
 ### Cleaner Forms
@@ -374,7 +379,7 @@ In scenarios where user input may not be entirely correct, we can
 *override* the `clean()` method implemented in `ModelForm`. This method
 is called upon before saving form data to a new model instance, and thus
 provides us with a logical place to insert code which can verify - and
-even fix - any form data the user inputs. In our example above, we can
+even fix - any form data the user inputs. We can
 check if the value of `url` field entered by the user starts with
 `http://` - and if it doesn't, we can prepend `http://` to the user's
 input.
@@ -443,17 +448,21 @@ X>
 X> -   What happens when you don't enter in a category name on the add category form?
 X> -   What happens when you try to add a category that already exists?
 X> -   What happens when you visit a category that does not exist?
-X> -   How could you gracefully handle when a user visits a category that does not exist?
-X> -   Undertake the [part four of the official Django Tutorial](https://docs.djangoproject.com/en/dev/intro/tutorial04/)
-X>     if you have not done so already to reinforce what you have learnt here.
+X> -   How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
+X> -   if you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
+X>     to reinforce what you have learnt here.
 
 ### Creating an *Add Pages* View, Template and URL Mapping
 
 A next logical step would be to allow users to add pages to a given
-category. To do this, repeat the same workflow above for Pages - create
-a new view (`add_page()`), a new template (`rango/add_page.html`), URL
-mapping and then add a link from the category page. To get you started,
-here's the view logic for you.
+category. To do this, repeat the same workflow above for Pages
+
+- create a new view (`add_page()`), 
+- create a new template (`rango/add_page.html`), 
+- add a URL mapping, and
+- update the category page/view to provide a link from the category add page functionality.
+
+To get you started, here is the code for the `add_page()` view function.
 
 {lang="python",linenos=off}
 	from rango.forms import PageForm
@@ -489,9 +498,14 @@ T> ### Hints
 T> 
 T> To help you with the exercises above, the following hints may be of some use to you.
 T>
-T> -   Update the `category()` view to pass `category_name_slug` by inserting it to the view's `context_dict` dictionary.
-T> -   Update the `category.html` with a link to  `/rango/category/<category_name_url>/add_page/`.
+T> -   In the `add_page.html` template you can access the slug with ``{{ category.slug }}`` because the view passes the `category` object through to the template via the context dictionary.
 T> -   Ensure that the link only appears when *the requested category
 T>    exists* - with or without pages. i.e. in the template check with
-T>    `{% if category %} .... {% else %} A category by this name does not exist {% endif %}`.
-T> -   Update `rango/urls.py` with a URL mapping to handle the above link.
+T>    `{% if cat %} .... {% else %} A category by this name does not exist {% endif %}`.
+T> -   Update the `category.html` with a link to `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
+T> - Make sure that in your `add_page.html` template that the form posts to `/rango/category/{{ category.slug }}/add_page/`.
+
+
+T> -   Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
+T>
+T> If you get *really* stuck you can check out [our code on Github](https://github.com/leifos/tango_with_django_19/tree/master/code)
