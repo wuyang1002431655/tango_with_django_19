@@ -542,5 +542,7 @@ T> - If you are not sure about the HTML template code to use, then draw inspirat
 T> ### Model Tips
 T>
 T> Check out this guide on [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko, if you want to be a real Pythonista!
+T>
+T> Also check out the [how to make you Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam, if you want to see how you can use the `property` method of a class to reduce the amount of code when accessing the related models.
 
 
