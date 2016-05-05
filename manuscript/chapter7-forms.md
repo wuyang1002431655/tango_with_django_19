@@ -225,18 +225,18 @@ I>     when submitting the contents of a HTML form.
 I> -   Ultimately, a HTTP `POST` may end up being programmed to create a
 I>     new resource (e.g. a new database entry) on the server. This can
 I>     later be accessed through a HTTP `GET` request.
+I> -   Check out the [w3schools page on `GET` vs `POST`](http://www.w3schools.com/tags/ref_httpmethods.asp) for more details.
 
 Django's form handling machinery processes the data returned from a
 user's browser via a HTTP `POST` request. It not only handles the saving
 of form data into the chosen model, but will also automatically generate
 any error messages for each form field (if any are required). This means
 that Django will not store any submitted forms with missing information
-which could potentially cause problems for your database's referential
-integrity. For example, supplying no value in the category name field
-will return an error, as the field cannot be blank.
+which could potentially cause problems for your database's [referential
+integrity](https://en.wikipedia.org/wiki/Referential_integrity). For example, supplying no value in the `category` name field will return an error, as the field cannot be blank.
 
 You'll notice from the line in which we call `render()` that we refer to
-a new template called `add_category.html` which will contain the
+a new template called `add_category.html`. This will contain the
 relevant Django template code and HTML for the form and page.
 
 ### Creating the *Add Category* Template
@@ -244,47 +244,42 @@ relevant Django template code and HTML for the form and page.
 Create the file `templates/rango/add_category.html`. Within the file,
 add the following HTML markup and Django template code.
 
-{lang="python",linenos=off}
+{lang="python",linenos=on}
 	<!DOCTYPE html>
 	<html>
 	    <head>
-	        <title>Rango</title>
+			<title>Rango</title>
 	    </head>
-
-	    <body>
+		<body>
 	        <h1>Add a Category</h1>
 			<div>
-	        <form id="category_form" method="post" action="/rango/add_category/">
-
-	            {% csrf_token %}
-	            {% for hidden in form.hidden_fields %}
-	                {{ hidden }}
-	            {% endfor %}
-
-	            {% for field in form.visible_fields %}
-	                {{ field.errors }}
-	                {{ field.help_text }}
-	                {{ field }}
-	            {% endfor %}
-
-	            <input type="submit" name="submit" value="Create Category" />
-	        </form>
+	        	<form id="category_form" method="post" action="/rango/add_category/">
+	            	{% csrf_token %}
+	            	{% for hidden in form.hidden_fields %}
+	                	{{ hidden }}
+	            		{% endfor %}
+					{% for field in form.visible_fields %}
+	                	{{ field.errors }}
+	                	{{ field.help_text }}
+	                	{{ field }}
+	            	{% endfor %}
+	            	<input type="submit" name="submit" value="Create Category" />
+				</form>
 			</div>
-	    </body>
-
+		</body>
 	</html>
 
-Now, what does this code do? You can see that within the `<body>` of the
+You can see that within the `<body>` of the
 HTML page we placed a `<form>` element. Looking at the attributes
 for the `<form>` element, you can see that all data captured within this
 form is sent to the URL `/rango/add_category/` as a HTTP `POST` request
 (the `method` attribute is case insensitive, so you can do `POST` or
 `post` - both provide the same functionality). Within the form, we have
-two for loops - one controlling *hidden* form fields, the other
-*visible* form fields - with visible fields controlled by the `fields`
-attribute of your `ModelForm` `Meta` class. These loops produce HTML
-markup for each form element. For visible form fields, we also add in
-any errors that may be present with a particular field and help text
+two for loops: 
+	- one controlling *hidden* form fields, and
+	- the other *visible* form fields. 
+
+The visible fields i.e. those that will be displayed to the user, are controlled by the `fields` attribute within your `ModelForm` `Meta` class.  These loops produce HTML markup for each form element. For visible form fields, we also add in any errors that may be present with a particular field and help text
 which can be used to explain to the user what he or she needs to enter.
 
 I> ### Hidden Fields
@@ -313,8 +308,8 @@ I> more information about this.
 ### Mapping the *Add Category* View
 
 Now we need to map the `add_category()` view to a URL. In the template
-we have used the URL `/rango/add_category/` in the form's submit
-attribute. So we will need to follow suit in `rango/urls.py` and modify
+we have used the URL `/rango/add_category/` in the form's action
+attribute. We now need to create a mapping from the URL to the View. In `rango/urls.py` modify
 the `urlpatterns` as follows.
 
 {lang="python",linenos=off}
@@ -322,20 +317,21 @@ the `urlpatterns` as follows.
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
     	url(r'^add_category/$', views.add_category, name='add_category'),
-    	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', views.category, name='category'),)
+    	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', 
+			views.category, name='category'),)
 
 
 Ordering doesn't necessarily matter in this instance. However, take a
 look at the [official Django documentation on how Django process a
 request](https://docs.djangoproject.com/en/1.9/topics/http/urls/#how-django-processes-a-request)
-for more information. Our new URL for adding a category is
+for more information. The URL for adding a category is
 `/rango/add_category/`.
 
 ### Modifying the Index Page View
 
 As a final step let's put a link on the index page so that we can easily
 add categories. Edit the template `rango/index.html` and add the
-following HTML hyperlink in the `div` element with the about link.
+following HTML hyperlink in the `<div>` element with the about link.
 
 {lang="html",linenos=off}
 	<a href="/rango/add_category/">Add a New Category</a><br />
@@ -343,31 +339,27 @@ following HTML hyperlink in the `div` element with the about link.
 
 ### Demo
 
-Now let's try it out! Run your Django development server, and navigate
-to `http://127.0.0.1:8000/rango/`. Use your new link to jump to the add
-category page, and try adding a category. Figure fig-rango-form-steps
+Now let's try it out! Run your Django development server, and then visit `http://127.0.0.1:8000/rango/`. Use your new link to jump to the Add
+Category page, and try adding a category. The [figure below](#fig-ch7-add-cat)
 shows screenshots of the of the Add Category and Index Pages.
 
 {id="fig-ch7-add-cat"}
->![Adding a new category to Rango with our new form.](images/ch7-add-cat)
+>![Adding a new category to Rango with our new form.](images/ch7-add-cat.png)
 
 
 I> ### Missing Categories
 I>
 I> If you add a number of categories, they will not always appear on the
-I> index page, that is because we are only showing the top 5 categories
-I> on the index page. If you log into the Admin interface you should be
+I> index page. This is because we are only showing the top five categories
+I> on the index page. If you log into the Admin interface, you should be
 I> able to view all the categories that you have entered. 
 I> 
-I> If you want to check that the category is being added. Then in
-I> in  `add_category()` method in `rango/views.py` change the line 
+I> Another way to get some confirmation that the category is being added is to
+I> update the `add_category()` method in `rango/views.py` and change the line 
 I> `form.save(commit=True)` to be `cat = form.save(commit=True)`. 
-I> This will give you a reference to an instance of the category object created from the form.
-I> You can then print or log the category. For example, add in  `print(cat)`
+I> This will give you a reference to an instance of the category object created by the form.
+I> You can then print the category to console (e.g  `print(cat, cat.slug)` ).
 
-I> `form.save()`, with  and then print to
-I> console the category and slug, with `print(cat, cat.slug)` to see what
-I> is being created.
 
 ### Cleaner Forms
 
