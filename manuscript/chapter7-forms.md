@@ -389,7 +389,8 @@ input.
 	        cleaned_data = self.cleaned_data
 	        url = cleaned_data.get('url')
 
-	        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+	        # If url is not empty and doesn't start with 'http://', 
+			# then prepend 'http://'.
 	        if url and not url.startswith('http://'):
 	            url = 'http://' + url
 	            cleaned_data['url'] = url
@@ -412,11 +413,9 @@ replicate in your own Django form handling code.
 3.  For each form field that you wish to process, check that a value was
     retrieved. If something was entered, check what the value was. If it
     isn't what you expect, you can then add some logic to fix this issue
-    before *reassigning* the value in the `cleaned_data` dictionary for
-    the given field.
+    before *reassigning* the value in the `cleaned_data` dictionary.
 4.  You *must* always end the `clean()` method by returning the
-    reference to the `cleaned_data` dictionary. If you don't, you'll get
-    some really frustrating errors!
+    reference to the `cleaned_data` dictionary. Otherwise the changes wont be applied.
 
 This trivial example shows how we can clean the data being passed
 through the form before being stored. This is pretty handy, especially
@@ -438,20 +437,22 @@ I> slot your own in.
 
 X> ###Exercises
 X>
-X> Now that you've worked through the chapter, try these exercises to
-X> solidify your knowledge on Django's form functionality.
+X> Now that you've worked through the chapter, consider the following questions:
 X> 
-X> -   What happens when you don't enter in a category name on the add category form?
+X> -   What would happen if you don't enter in a category name on the add category form?
 X> -   What happens when you try to add a category that already exists?
 X> -   What happens when you visit a category that does not exist?
 X> -   How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
-X> -   if you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
+X>  
+x> Clearly there is a lot of other aspects we need to consider - but we will leave these for homework :-)
+
+X> -   If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
 X>     to reinforce what you have learnt here.
 
 ### Creating an *Add Pages* View, Template and URL Mapping
 
 A next logical step would be to allow users to add pages to a given
-category. To do this, repeat the same workflow above for Pages
+category. To do this, repeat the same workflow above but for adding pages.
 
 - create a new view (`add_page()`), 
 - create a new template (`rango/add_page.html`), 
@@ -478,7 +479,7 @@ To get you started, here is the code for the `add_page()` view function.
 	                page.category = cat
 	                page.views = 0
 	                page.save()
-	                # probably better to use a redirect here.
+	                # Alternatively we could use a redirect (see later chapters)
 	                return category(request, category_name_slug)
 	        else:
 	            print form.errors
@@ -504,4 +505,4 @@ T> - Make sure that in your `add_page.html` template that the form posts to `/ra
 
 T> -   Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
 T>
-T> If you get *really* stuck you can check out [our code on Github](https://github.com/leifos/tango_with_django_19/tree/master/code)
+T> If you get *really* stuck you can check out [our code on Github](https://github.com/leifos/tango_with_django_19/tree/master/code).
