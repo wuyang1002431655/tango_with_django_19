@@ -400,7 +400,7 @@ Next, verify that the population script actually populated the database. Restart
 
 While creating a population script may take time, you will save yourself time in the long run. When deploying your app elsewhere, running the population script after setting everything up means you can start demonstrating your app straight away. You'll also find it very handy when it comes to [unit testing your code](#chapter-testing).
 
-## Basic Workflow
+## Workflow: Model Setup
 Now that we've covered the core principles of dealing with Django's ORM, now is a good time to summarise the processes involved in setting everything up. We've split the core tasks into separate sections for you. Check this section out when you need to quickly refresh your mind of the different steps.
 
 ### Setting up your Database
