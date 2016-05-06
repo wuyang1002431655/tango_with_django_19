@@ -420,9 +420,9 @@ the *name* that must match anything defined within the URL pattern.
 		
 I> ###Regex Hell
 I>
-I> '' Some people, when confronted with a problem, think 
+I> ''Some people, when confronted with a problem, think 
 I> ''I know, I'll use regular expressions.''   Now they have two problems.''
-I>  [Jamie Zawinski](http://regex.info/blog/2006-09-15/247)
+I>  [Jamie Zawinski](http://blog.codinghorror.com/regular-expressions-now-you-have-two-problems/)
 I>
 I> Regular expressions may seem horrible and confusing at first, but
 I> there are tons of resources online to help you. [This cheat
