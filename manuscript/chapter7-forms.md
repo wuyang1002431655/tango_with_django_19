@@ -192,11 +192,10 @@ this, add the following code to `rango/views.py`.
 	        # If the request was not a POST, 
 			# display the form to enter details.
 	        form = CategoryForm()
-
-	    # Will handle the bad form, new form, or 
+		# Will handle the bad form, new form, or 
 		# no form supplied cases.
-	    # Render the form with error messages (if any).
-	    return render(request, 'rango/add_category.html', {'form': form})
+		# Render the form with error messages (if any).
+		return render(request, 'rango/add_category.html', {'form': form})
 
 The new `add_category()` view adds several key pieces of functionality
 for handling forms. First, we check the HTTP request method, to
@@ -247,23 +246,23 @@ add the following HTML markup and Django template code.
 {lang="python",linenos=on}
 	<!DOCTYPE html>
 	<html>
-	    <head>
-			<title>Rango</title>
-	    </head>
-		<body>
-	        <h1>Add a Category</h1>
-			<div>
-	        	<form id="category_form" method="post" action="/rango/add_category/">
-	            	{% csrf_token %}
-	            	{% for hidden in form.hidden_fields %}
-	                	{{ hidden }}
-					{% endfor %}
-					{% for field in form.visible_fields %}
-	                	{{ field.errors }}
-	                	{{ field.help_text }}
-	                	{{ field }}
-	            	{% endfor %}
-	            	<input type="submit" name="submit" value="Create Category" />
+	<head>
+		<title>Rango</title>
+	</head>
+	<body>
+		<h1>Add a Category</h1>
+		<div>
+			<form id="category_form" method="post" action="/rango/add_category/">
+				{% csrf_token %}
+				{% for hidden in form.hidden_fields %}
+					{{ hidden }}
+				{% endfor %}
+				{% for field in form.visible_fields %}
+					{{ field.errors }}
+					{{ field.help_text }}
+					{{ field }}
+				{% endfor %}
+				<input type="submit" name="submit" value="Create Category" />
 				</form>
 			</div>
 		</body>
@@ -276,8 +275,9 @@ form is sent to the URL `/rango/add_category/` as a HTTP `POST` request
 (the `method` attribute is case insensitive, so you can do `POST` or
 `post` - both provide the same functionality). Within the form, we have
 two for loops: 
-	- one controlling *hidden* form fields, and
-	- the other *visible* form fields. 
+
+- one controlling *hidden* form fields, and
+- the other *visible* form fields. 
 
 The visible fields i.e. those that will be displayed to the user, are controlled by the `fields` attribute within your `ModelForm` `Meta` class.  These loops produce HTML markup for each form element. For visible form fields, we also add in any errors that may be present with a particular field and help text
 which can be used to explain to the user what he or she needs to enter.
@@ -326,6 +326,8 @@ look at the [official Django documentation on how Django process a
 request](https://docs.djangoproject.com/en/1.9/topics/http/urls/#how-django-processes-a-request)
 for more information. The URL for adding a category is
 `/rango/add_category/`.
+
+<!--BREAK-->
 
 ### Modifying the Index Page View
 

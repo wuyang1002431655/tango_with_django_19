@@ -340,27 +340,27 @@ create `category.html`. In the new file, add the following code.
 {lang="hml",linenos=off}
 	<!DOCTYPE html>
 	<html>
-    <head>
-        <title>Rango</title>
-    </head>
-    <body>
+	<head>
+		<title>Rango</title>
+	</head>
+	<body>
 		<div>
 		{% if category %}
-        	<h1>{{ category.name }}</h1>
-            {% if pages %}
-            	<ul>
-                {% for page in pages %}
+			<h1>{{ category.name }}</h1>
+			{% if pages %}
+				<ul>
+				{% for page in pages %}
 					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
-                {% endfor %}
+				{% endfor %}
 				</ul>
             {% else %}
                 <strong>No pages currently in category.</strong>
             {% endif %}
         {% else %}
             The specified category does not exist!
-        {% endif %}
+		{% endif %}
 		</div>
-    </body>
+	</body>
 	</html>
 
 
@@ -442,13 +442,13 @@ slug.
 	<head>
 		<title>Rango</title>
 	</head>
-    <body>
+	<body>
 		<h1>Rango says...</h1>
 		<div>
-			 hey there partner!
-		 </div>
+			hey there partner!
+		</div>
 		<div>
-        {% if categories %}
+		{% if categories %}
         	<ul>
 			{% for category in categories %}
 				<!-- Following line changed to add an HTML hyperlink -->
@@ -465,7 +465,7 @@ slug.
 			<a href="/rango/about/">About Rango</a><br />
 			<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
 		</div>
-    </body>
+	</body>
 	</html>
 
 
@@ -522,7 +522,8 @@ T> - If you are not sure about the HTML template code to use, then draw inspirat
 
 T> ### Model Tips
 T>
-T> For more tips on working with models you can take a look through the following blog posts: 
+T> For more tips on working with models you can take a look through the following blog posts:
+T> 
 T> 1. [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko. In this post you will find a series of tips and tricks when working with models.
 T>
 T> 2. [How to make you Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
