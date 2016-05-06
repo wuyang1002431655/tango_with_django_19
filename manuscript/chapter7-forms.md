@@ -378,10 +378,9 @@ URL](https://support.google.com/webmasters/answer/76329?hl=en)!
 I> ### URL Checking
 I>
 I> Most modern browsers will now check to make sure that the URL is well-formed.
-I> So this example will only work on some browsers, however, it does show you how to
-I> clean data from the forms before you try to save it to the database.
-I> If you don't have an old browser to try this you could change the `URLField` to a `CharField`.
-I> But do note, that if you change the field you also lose out on the other checks that Django does for your automatically because it is a `URLField`.
+I> So this example will only work on some browsers. However, it does show you how to
+I> clean the data before you try to save it to the database.
+I> If you don't have an old browser to try this example (in case you don't believe it) you could change the `URLField` to a `CharField`.
 
 
 In scenarios where user input may not be entirely correct, we can
@@ -452,12 +451,12 @@ X> ###Exercises
 X>
 X> Now that you've worked through the chapter, consider the following questions:
 X> 
-X> -   What would happen if you don't enter in a category name on the add category form?
-X> -   What happens when you try to add a category that already exists?
-X> -   What happens when you visit a category that does not exist?
-X> -   How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
-X>  
-x> Clearly there is a lot of other aspects we need to consider - but we will leave these for homework :-)
+X> - What would happen if you don't enter in a category name on the add category form?
+X> - What happens when you try to add a category that already exists?
+X> - What happens when you visit a category that does not exist?
+X> - How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
+X>
+X> Clearly there is a lot of other aspects we need to consider - but we will leave these for homework :-)
 X> -   If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
 X>     to reinforce what you have learnt here.
 
