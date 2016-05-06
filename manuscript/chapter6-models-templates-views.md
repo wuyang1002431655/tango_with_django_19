@@ -49,8 +49,8 @@ Remember that the `index()` function is responsible for the main page view.  Mod
 
 
 
-Here, the expressions `Category.objects.order_by('-likes')`  queries the `Category` model to retrieve the top five categories. You can see that it uses
-the `order_by()` method to sort by the number of likes in descending order. The `-` in `-likes` denotes that we would like them in decreasing order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the last five objects from the list i.e  `[:5]` and thus return a sub-list of `Category` objects.
+Here, the expression `Category.objects.order_by('-likes')`  queries the `Category` model to retrieve the top five categories. You can see that it uses
+the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the last five objects from the list i.e  `[:5]` and thus return a sub-list of `Category` objects.
 
 With the query complete, we passed a reference to the list (stored as
 variable `category_list`) to the dictionary, `context_dict`. This
@@ -343,17 +343,16 @@ create `category.html`. In the new file, add the following code.
     <head>
         <title>Rango</title>
     </head>
-
     <body>
-        <h1>{{ category.name }}</h1>
 		<div>
-        {% if category %}
+		{% if category %}
+        	<h1>{{ category.name }}</h1>
             {% if pages %}
-            <ul>
+            	<ul>
                 {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
                 {% endfor %}
-            </ul>
+				</ul>
             {% else %}
                 <strong>No pages currently in category.</strong>
             {% endif %}
@@ -396,29 +395,19 @@ as follows.
 	urlpatterns = patterns('',
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
-    	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', 
+    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
 		views.show_category, name='show_category'),) 
 
 We have added in a rather complex entry that will invoke
 `view.show_category()` when the URL pattern
-`r'^category/(?P<category_name_slug>[\\w\\-]+)/$'` is matched. 
+`r'^category/(?P<category_name_slug>[\w\-]+)/$'` is matched. 
 
 There are a two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. When you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
-The next thing to note is that the regular expression `[\\w\\-]+)` will look for any sequence of alphanumeric characters e.g. `a-z`, `A-Z`, or `0-9` denoted by `\\w` and any hyphens (-) denoted by `\\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
+The next thing to note is that the regular expression `[\w\-]+)` will look for any sequence of alphanumeric characters e.g. `a-z`, `A-Z`, or `0-9` denoted by `\w` and any hyphens (-) denoted by `\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
 
-Essentially the characters (both alphanumeric and
- hyphens) between `category/` and the trailing `/` at the end of a
- matching URL will be passed to method `views.category()` as named
- parameter `category_name_slug`. For example, the URL
- `category/python-books/` would result in the `category_name_slug` having the value,
- `python-books`.
+The URL pattern will match a sequence of alphanumeric characters and hyphens which are between the `rango/category/` and the trailing `/`. This sequence will be stored in the parameter `category_name_slug` and passed to `views.category()`. For example, the URL `rango/category/python-books/` would result in the `category_name_slug` having the value, `python-books`. However, if the URL was `rango/category/python_books/` or `rango/category/££££-$$$$$/` then the sequence of characters between `rango/category/` and the trailing `/` would not match the regular expression, and a `404 not found` error would result because there would be no matching URL pattern.
 
- All view functions defined as part of a Django
- applications *must* take at least one parameter. This is typically called
- `request` - and provides access to information related to the given
- HTTP request made by the user. When parameterising URLs, you supply
- additional named parameters to the signature for the given view.  
-  That is why our `category()` view was defined as `def show_category(request, category_name_slug)`.
+ All view functions defined as part of a Django applications *must* take at least one parameter. This is typically called `request` - and provides access to information related to the given  HTTP request made by the user. When parameterising URLs, you supply additional named parameters to the signature for the given view.  That is why our `category()` view was defined as `def show_category(request, category_name_slug)`.
     
 
 <!--
@@ -431,9 +420,9 @@ the *name* that must match anything defined within the URL pattern.
 		
 I> ###Regex Hell
 I>
-I> Some people, when confronted with a problem, think 
-I> ''I know, I'll use regular expressions.''   Now they have two problems.
-I> [Jamie Zawinski](http://regex.info/blog/2006-09-15/247)
+I> '' Some people, when confronted with a problem, think 
+I> ''I know, I'll use regular expressions.''   Now they have two problems.''
+I>  [Jamie Zawinski](http://regex.info/blog/2006-09-15/247)
 I>
 I> Regular expressions may seem horrible and confusing at first, but
 I> there are tons of resources online to help you. [This cheat
@@ -460,19 +449,21 @@ slug.
 		 </div>
 		<div>
         {% if categories %}
-        <ul>
+        	<ul>
 			{% for category in categories %}
-            	<!-- Following line changed to add an HTML hyperlink -->
-                <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
-                {% endfor %}
-		</ul>
+				<!-- Following line changed to add an HTML hyperlink -->
+				<li>
+				<a href="/rango/category/{{ category.slug }}">{{ category.name }}</a>
+				</li>
+			{% endfor %}
+			</ul>
 		{% else %}
 			<strong>There are no categories present.</strong>
 		{% endif %}
 		</div>
-		<div>	
-       		<a href="/rango/about/">About Rango</a><br />
-       	 	<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+		<div>
+			<a href="/rango/about/">About Rango</a><br />
+			<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
 		</div>
     </body>
 	</html>
@@ -480,7 +471,7 @@ slug.
 
 Again, we used the HTML tag `<ul>` to define an unordered list and create a series of list elements (`<li>`) which contain a HTML hyperlink
 (`<a>`). The hyperlink has an `href` attribute, which we use to specify
-the target URL defined by `/rango/category/{{ category.slug }}` which would turn into `/rango/category/python-books/` for the category ''Python Books''.
+the target URL defined by `/rango/category/{{ category.slug }}` which, for example, would turn into `/rango/category/python-books/` for the category ''Python Books''.
 
 ### Demo
 
@@ -531,10 +522,9 @@ T> - If you are not sure about the HTML template code to use, then draw inspirat
 
 T> ### Model Tips
 T>
-T> For some tips on working with models you can take a look through the following blog posts: 
-
-T> 		1. [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko.
+T> For more tips on working with models you can take a look through the following blog posts: 
+T> 1. [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko. In this post you will find a series of tips and tricks when working with models.
 T>
-T> 		2. [How to make you Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
+T> 2. [How to make you Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
 
 

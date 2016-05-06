@@ -24,10 +24,9 @@ The basic steps involved in creating a form and handling user input is as follow
     as a form.
 3.  Customise the forms as you desire.
 4.  Create or update a view to handle the form 
-
-		- including *displaying* the form, 
-		- *saving* the form data, and 
-		- *flagging up errors* which may occur when the user enters incorrect data (or no data at all) in the form.
+  - including *displaying* the form, 
+  - *saving* the form data, and 
+  - *flagging up errors* which may occur when the user enters incorrect data (or no data at all) in the form.
 5.  Create or update a template to display the form.
 6.  Add a `urlpattern` to map to the new view (if you created a new
     one).
@@ -194,7 +193,8 @@ this, add the following code to `rango/views.py`.
 			# display the form to enter details.
 	        form = CategoryForm()
 
-	    # Will handle the bad form (or form details), new form or no form supplied cases.
+	    # Will handle the bad form, new form, or 
+		# no form supplied cases.
 	    # Render the form with error messages (if any).
 	    return render(request, 'rango/add_category.html', {'form': form})
 
@@ -206,10 +206,10 @@ it is a `GET`), or process form data (if it is a `POST`) - all from the
 same URL. The `add_category()` view function can handle three different
 scenarios:
 
-	-   showing a new, blank form for adding a category;
-	-   saving form data provided by the user to the associated model, and
+-   showing a new, blank form for adding a category;
+-   saving form data provided by the user to the associated model, and
     rendering the Rango homepage; and
-	-   if there are errors, redisplay the form with error messages.
+-   if there are errors, redisplay the form with error messages.
 
 I> ### `GET` and `POST`
 I>
@@ -257,7 +257,7 @@ add the following HTML markup and Django template code.
 	            	{% csrf_token %}
 	            	{% for hidden in form.hidden_fields %}
 	                	{{ hidden }}
-	            		{% endfor %}
+					{% endfor %}
 					{% for field in form.visible_fields %}
 	                	{{ field.errors }}
 	                	{{ field.help_text }}
@@ -317,7 +317,7 @@ the `urlpatterns` as follows.
     	url(r'^$', views.index, name='index'),
     	url(r'^about/$', views.about, name='about'),
     	url(r'^add_category/$', views.add_category, name='add_category'),
-    	url(r'^category/(?P<category_name_slug>[\\w\\-]+)/$', 
+    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
 			views.category, name='category'),)
 
 
@@ -370,6 +370,17 @@ well-formed, complete URL. However, users can find entering something
 like `http://www.url.com` to be cumbersome - indeed, users [may not even
 know what forms a correct
 URL](https://support.google.com/webmasters/answer/76329?hl=en)!
+
+
+
+I> ### URL Checking
+I>
+I> Most modern browsers will now check to make sure that the URL is well-formed.
+I> So this example will only work on some browsers, however, it does show you how to
+I> clean data from the forms before you try to save it to the database.
+I> If you don't have an old browser to try this you could change the `URLField` to a `CharField`.
+I> But do note, that if you change the field you also lose out on the other checks that Django does for your automatically because it is a `URLField`.
+
 
 In scenarios where user input may not be entirely correct, we can
 *override* the `clean()` method implemented in `ModelForm`. This method
@@ -445,7 +456,6 @@ X> -   What happens when you visit a category that does not exist?
 X> -   How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
 X>  
 x> Clearly there is a lot of other aspects we need to consider - but we will leave these for homework :-)
-
 X> -   If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
 X>     to reinforce what you have learnt here.
 
@@ -465,29 +475,24 @@ To get you started, here is the code for the `add_page()` view function.
 	from rango.forms import PageForm
 
 	def add_page(request, category_name_slug):
-
 	    try:
-	        cat = Category.objects.get(slug=category_name_slug)
+	        category = Category.objects.get(slug=category_name_slug)
 	    except Category.DoesNotExist:
-	            cat = None
-
+	            category = None
 	    if request.method == 'POST':
 	        form = PageForm(request.POST)
 	        if form.is_valid():
 	            if cat:
 	                page = form.save(commit=False)
-	                page.category = cat
+	                page.category = category
 	                page.views = 0
 	                page.save()
-	                # Alternatively we could use a redirect (see later chapters)
 	                return category(request, category_name_slug)
 	        else:
 	            print form.errors
 	    else:
 	        form = PageForm()
-
-	    context_dict = {'form':form, 'category': cat}
-
+	    context_dict = {'form':form, 'category': category}
 	    return render(request, 'rango/add_page.html', context_dict)
 
 
@@ -501,8 +506,6 @@ T>    exists* - with or without pages. i.e. in the template check with
 T>    `{% if cat %} .... {% else %} A category by this name does not exist {% endif %}`.
 T> -   Update the `category.html` with a link to `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
 T> - Make sure that in your `add_page.html` template that the form posts to `/rango/category/{{ category.slug }}/add_page/`.
-
-
 T> -   Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
 T>
 T> If you get *really* stuck you can check out [our code on Github](https://github.com/leifos/tango_with_django_19/tree/master/code).
