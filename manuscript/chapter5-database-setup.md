@@ -427,7 +427,8 @@ X> * Update the `Category` model to include the additional attributes `views` an
 X> * Make the migrations for your app, then migrate your database to commit the changes.
 X> * Update your population script so that the `Python` category has `128` views and `64` likes, the `Django` category has `64` views and `32` likes, and the `Other Frameworks` category has `32` views and `16` likes.
 X> * Delete and recreate your database, populating it with your updated population script.
-X> * Undertake the [second part of the official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) if you have not already done so. This will help to reinforce further what you have learnt here, and to learn more about customising the admin interface.
+X> * Undertake the [second part of the official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) if you have not already done so. This will help to reinforce what you've learnt about handling databases in Django - from setting everything up, to issuing ORM commands to extract the data you require.
+X> * You should also attempt the [seventh part of the official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) which focuses on manipulating the Django admin interface to suit your needs. There's also a short guide here that shows you how to customise the look and feel of the interface if you wish to change it.
 X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed).
 
 T> ### Exercise Hints
