@@ -93,14 +93,14 @@ With your template directory and path now set up, create a file called `index.ht
         </head>
         <body>
             <h1>Rango says...</h1>
-			<div>
-				hey there partner! <br /> 
-				<strong>{{ boldmessage }}</strong><br />
-			</div>
-			<div>
-            	<a href="/rango/about/">About</a><br />
-			</div>
-		</body>
+            <div>
+                hey there partner! <br /> 
+                <strong>{{ boldmessage }}</strong><br />
+            </div>
+            <div>
+                <a href="/rango/about/">About</a><br />
+            </div>
+        </body>
     </html>
 
 From this HTML code, it should be clear that a simple HTML page is going to be generated that greets a user with a *hello world* message. You might also notice some non-HTML in the form of `{{ boldmessage }}`. This is a *Django template variable*. We can set values to these variables so they are replaced with whatever we want when the template is rendered. We'll get to that in a moment.
