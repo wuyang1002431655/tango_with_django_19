@@ -243,7 +243,7 @@ relevant Django template code and HTML for the form and page.
 Create the file `templates/rango/add_category.html`. Within the file,
 add the following HTML markup and Django template code.
 
-{lang="python",linenos=on}
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	<html>
 	<head>
