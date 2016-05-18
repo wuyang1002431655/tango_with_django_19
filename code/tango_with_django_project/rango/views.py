@@ -36,7 +36,7 @@ def show_category(request, category_name_slug):
     	# So the .get() method returns one model instance or raises an exception.
     	category = Category.objects.get(slug=category_name_slug)
         # Retrieve all of the associated pages.
-        # Note that filter returns a list of page objects or and empty list
+        # Note that filter() returns a list of page objects or an empty list
         pages = Page.objects.filter(category=category)
         
         # Adds our results list to the template context under name pages.

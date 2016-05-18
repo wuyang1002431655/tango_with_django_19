@@ -35,22 +35,22 @@ Remember that the `index()` function is responsible for the main page view.  Mod
 
 {lang="python",linenos=off}
 	def index(request):
-    	# Query the database for a list of ALL categories currently stored.
-    	# Order the categories by no. likes in descending order.
-    	# Retrieve the top 5 only - or all if less than 5.
-    	# Place the list in our context_dict dictionary
+		# Query the database for a list of ALL categories currently stored.
+		# Order the categories by no. likes in descending order.
+		# Retrieve the top 5 only - or all if less than 5.
+		# Place the list in our context_dict dictionary
 		# that will be passed to the template engine.
-    	
+		
 		category_list = Category.objects.order_by('-likes')[:5]
-    	context_dict = {'categories': category_list}
-
-    	# Render the response and send it back!
-    	return render(request, 'rango/index.html', context_dict)
+		context_dict = {'categories': category_list}
+		
+		# Render the response and send it back!
+		return render(request, 'rango/index.html', context_dict)
 
 
 
 Here, the expression `Category.objects.order_by('-likes')`  queries the `Category` model to retrieve the top five categories. You can see that it uses
-the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the last five objects from the list i.e  `[:5]` and thus return a sub-list of `Category` objects.
+the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list i.e  `[:5]` and thus return a sub-list of `Category` objects.
 
 With the query complete, we passed a reference to the list (stored as
 variable `category_list`) to the dictionary, `context_dict`. This
@@ -72,30 +72,31 @@ example shown below.
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
-    <head>
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <h1>Rango says...</h1>
-        <div>hey there partner!</div>
+	<head>
+		<title>Rango</title>
+	</head>
+	
+	<body>
+		<h1>Rango says...</h1>
+		<div>hey there partner!</div>
 		<div>
-        {% if categories %}
-            <ul>
-                {% for category in categories %}
-                <li>{{ category.name }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
-        {% endif %}	
+		{% if categories %}
+		<ul>
+			{% for category in categories %}
+				<li>{{ category.name }}</li>
+			{% endfor %}
+		 </ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}	
 		</div>	
-		<div>	
-        	<a href="/rango/about/">About Rango</a><br />
-        	<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+		<div>
+			<a href="/rango/about/">About Rango</a><br />
+			<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
 		</div>
-    </body>
+	</body>
 	</html>
 
 
@@ -117,7 +118,7 @@ As the example shows in Django's template language, all commands are
 enclosed within the tags `{%` and `%}`, while variables are referenced
 within `{{` and `}}` brackets.
 
-If you now visit Rango's homepage at `<http://127.0.0.1:8000/>`, you
+If you now visit Rango's homepage at `<http://127.0.0.1:8000/rango/>`, you
 should see a list of categories underneath the page title just
 like in the [figure below](#figch6-rango-categories-index).
 
@@ -184,20 +185,20 @@ change. Update your model, as shown below, and add in the import.
 	...
 	
 	class Category(models.Model):
-	    name = models.CharField(max_length=128, unique=True)
-	    views = models.IntegerField(default=0)
-	    likes = models.IntegerField(default=0)
-	    slug = models.SlugField()
-    
-	    def save(self, *args, **kwargs):
-	        self.slug = slugify(self.name)
-	        super(Category, self).save(*args, **kwargs)
-    
-	    class Meta:
-	        verbose_name_plural = 'categories'
-    
-	    def __str__(self):
-	        return self.name
+		name = models.CharField(max_length=128, unique=True)
+		views = models.IntegerField(default=0)
+		likes = models.IntegerField(default=0)
+		slug = models.SlugField()
+		
+		def save(self, *args, **kwargs):
+			self.slug = slugify(self.name)
+			super(Category, self).save(*args, **kwargs)
+			
+		class Meta:
+			verbose_name_plural = 'categories'
+			
+		def __str__(self):
+			return self.name
 
 
 Now that the model has been updated, we need to propagate these changes to the database.
@@ -239,10 +240,10 @@ or we can customize the admin interface so that it automatically pre-populates t
 	from django.contrib import admin
 	from rango.models import Category, Page
 
-	# Add in this class to customized the Admin Interface
+	# Add in this class to customize the Admin Interface
 	class CategoryAdmin(admin.ModelAdmin):
-    	prepopulated_fields = {'slug':('name',)}
-
+		prepopulated_fields = {'slug':('name',)}
+		
 	# Update the registeration to include this customised interface
 	admin.site.register(Category, CategoryAdmin)
 	admin.site.register(Page)
@@ -254,7 +255,7 @@ Now that we have addressed the first problem, we can ensure that the slug field 
 {lang="python",linenos=off}
 	slug = models.SlugField(unique=True)
 
-Now that we have added in the slug field we can now use the slugs to uniquely identify each category. We could of added the unique constraint earlier, but if we performed the migration and set everything to be an empty string by default it would have given raised an error. This is because the unique constraint would have been violated. We could of deleted the database and then recreated everything - but that is not always desirable. 
+Now that we have added in the slug field we can now use the slugs to uniquely identify each category. We could have added the unique constraint earlier, but if we performed the migration and set everything to be an empty string by default it would have raised an error. This is because the unique constraint would have been violated. We could have deleted the database and then recreated everything - but that is not always desirable. 
 
 W> ###Migration Woes
 W>
@@ -291,36 +292,35 @@ Next, we can add our new view, `show_category()`.
 
 {lang="python",linenos=off}
 	def show_category(request, category_name_slug):
-    	# Create a context dictionary which we can pass 
+		# Create a context dictionary which we can pass 
 		# to the template rendering engine.
-    	context_dict = {}
+		context_dict = {}
 		
-    	try:
-        	# Can we find a category name slug with the given name?
-        	# If we can't, the .get() method raises a DoesNotExist exception.
-        	# So the .get() method returns one model instance or raises an exception.
-        	category = Category.objects.get(slug=category_name_slug)
-
-        	# Retrieve all of the associated pages.
-        	# Note that filter returns a list of page objects or and empty list
-        	pages = Page.objects.filter(category=category)
-
-        	# Adds our results list to the template context under name pages.
-        	context_dict['pages'] = pages
-        	# We also add the category object from 
+		try:
+			# Can we find a category name slug with the given name?
+			# If we can't, the .get() method raises a DoesNotExist exception.
+			# So the .get() method returns one model instance or raises an exception.
+			category = Category.objects.get(slug=category_name_slug)
+			
+			# Retrieve all of the associated pages.
+			# Note that filter() will return a list of page objects or an empty list
+			pages = Page.objects.filter(category=category)
+			
+			# Adds our results list to the template context under name pages.
+			context_dict['pages'] = pages
+			# We also add the category object from 
 			# the database to the context dictionary.
-        	# We'll use this in the template to verify that the category exists.
-        	context_dict['category'] = category
-    	except Category.DoesNotExist:
-        	# We get here if we didn't find the specified category.
-        	# Don't do anything - 
+			# We'll use this in the template to verify that the category exists.
+			context_dict['category'] = category
+		except Category.DoesNotExist:
+			# We get here if we didn't find the specified category.
+			# Don't do anything - 
 			# the template will display the "no category" message for us.
 			context_dict['category'] = None
 			context_dict['pages'] = None
-			
 
-    	# Go render the response and return it to the client.
-    	return render(request, 'rango/category.html', context_dict)
+		# Go render the response and return it to the client.
+		return render(request, 'rango/category.html', context_dict)
 
 
 Our new view follows the same basic steps as our `index()` view. We
@@ -353,11 +353,11 @@ create `category.html`. In the new file, add the following code.
 					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
 				{% endfor %}
 				</ul>
-            {% else %}
-                <strong>No pages currently in category.</strong>
-            {% endif %}
-        {% else %}
-            The specified category does not exist!
+			{% else %}
+				<strong>No pages currently in category.</strong>
+			{% endif %}
+		{% else %}
+			The specified category does not exist!
 		{% endif %}
 		</div>
 	</body>
@@ -393,9 +393,9 @@ as follows.
 
 {lang="python",linenos=off}
 	urlpatterns = patterns('',
-    	url(r'^$', views.index, name='index'),
-    	url(r'^about/$', views.about, name='about'),
-    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
+		url(r'^$', views.index, name='index'),
+		url(r'^about/$', views.about, name='about'),
+		url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
 		views.show_category, name='show_category'),) 
 
 We have added in a rather complex entry that will invoke
@@ -449,7 +449,7 @@ slug.
 		</div>
 		<div>
 		{% if categories %}
-        	<ul>
+			<ul>
 			{% for category in categories %}
 				<!-- Following line changed to add an HTML hyperlink -->
 				<li>

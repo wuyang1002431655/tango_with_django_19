@@ -1,4 +1,4 @@
-#Working with Templates{#chapter-templates-extra}
+#Working with Templates {#chapter-templates-extra}
 So far we've created several HTML templates for different pages
 in the application. You've probably noticed that there is a lot of repeated HTML code in the templates - and we are starting to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Also, you might have noticed that the way we have been referring to different pages using hard coded URL paths. In this chapter, we will use *template inheritance* to overcome the first problem and the *url template tag* to solve the second problem.
 
