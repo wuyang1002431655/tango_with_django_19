@@ -59,6 +59,7 @@ def show_category(request, category_name_slug):
     
     
 def add_category(request):
+    form = CategoryForm()
     # A HTTP POST?
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -75,10 +76,6 @@ def add_category(request):
         else:
             # The supplied form contained errors - just print them to the terminal.
             print(form.errors)
-    else:
-        # If the request was not a POST, display the form to enter details.
-        form = CategoryForm()
-
     # Will handle the bad form (or form details), new form or no form supplied cases.
     # Render the form with error messages (if any).
     return render(request, 'rango/add_category.html', {'form': form})
@@ -90,6 +87,7 @@ def add_page(request, category_name_slug):
     except Category.DoesNotExist:
         category = None
 
+    form = PageForm()
     if request.method == 'POST':
         form = PageForm(request.POST)
         if form.is_valid():
@@ -102,8 +100,6 @@ def add_page(request, category_name_slug):
             return show_category(request, category_name_slug)
         else:
             print(form.errors)
-    else:
-        form = PageForm()
 
     context_dict = {'form':form, 'category': category}
 

@@ -1,6 +1,39 @@
 #Working with Templates {#chapter-templates-extra}
 So far we've created several HTML templates for different pages
-in the application. You've probably noticed that there is a lot of repeated HTML code in the templates - and we are starting to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Also, you might have noticed that the way we have been referring to different pages using hard coded URL paths. In this chapter, we will use *template inheritance* to overcome the first problem and the *url template tag* to solve the second problem.
+in the application. You've probably noticed that there is a lot of repeated HTML code in the templates - and we are starting to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Also, you might have noticed that the way we have been referring to different pages using hard coded URL paths. In this chapter, we will use *template inheritance* to overcome the first problem and the *url template tag* to solve the second problem. We will start with addressing the later problem first.
+
+##Using Relative URLs in Templates
+So far we have been directly coding the URL of the page/view we want to
+show within the template, i.e. `<a href="/rango/about/"> About  </a>`. This kind of hard coding of URLs means that if we change our URL mappings in `urls.py` then we are going to have to change all of these URL references. So the preferred way is to use the template tag `url` to look up the URL in the `urls.py` files and dynamic insert the URL path. 
+
+It is pretty simple to include relative URLs in your templates. To refer to the *About* page, we would insert the following line into our templates:
+
+{lang="html",linenos=off}
+	<a href="{% url 'about' %}">About</a>
+
+The Django template engine will look up the `urls.py` files for a URL
+with the `name='about'` (and then reverse match the actual URL). This
+means if we change the URL mappings in `urls.py` then we do not have to
+go through all the templates and update them. If we had not given the 
+URL pattern a name, we could directly reference it as follows:
+
+{lang="html",linenos=off}
+	<a href="{% url 'rango.views.about' %}">About</a>
+
+In which case, we need to specify the application, 'rango' and the view, 'about'.
+
+In your `index.html` template you will notice that you have a
+parameterized URL pattern, i.e. the `category` URL/view takes the
+`category.slug` as a parameter. To handle this you can pass the 'url'
+template tag the name of the URL/view and the slug within the template, as follows:
+
+{lang="html",linenos=off}
+	{% for category in categories %}
+		<li><a href="{% url 'category'  category.slug %}">
+			{{ category.name }}</a></li>
+	{% endfor %}
+
+Before you charge off to update all the URLs in all your templates with relative URLs, we need to re-structured and re-factor our templates by using inheritance to remove repetition.
 
 
 ## Dealing with Repetition
@@ -33,6 +66,7 @@ structure that we have been repeating within each template.
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
 	<head>
 		<title>Rango</title>
@@ -43,32 +77,21 @@ structure that we have been repeating within each template.
 	</html>
 
 Let's make this our base template, for the time being, and save it as
-`base.html` in the `templates` directory (e.g. `templates/base.html`).
-
-I> ### Extract all common structure
-I>
-I> You should always aim to extract as much reoccurring content for your
-I> base templates. While it may be a bit more of a challenge for you to
-I> do initially, the time you will save in maintenance of your templates
-I> in the future far outweighs the initial overhead. Think about it:
-I> would you rather maintain one copy of your markup or multiple copies?
+`base.html` in the `templates/rango/` directory (e.g. `templates/rango/base.html`).
 
 W> ### DOCTYPE First
 W>
-W> Remember that your page `<!DOCTYPE html>` declaration needs to
-W> be placed on the first line for your template and thus webpage! 
-W> Not doing so will mean your markup will not comply with the [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
+W> Remember that the `<!DOCTYPE html>` declaration needs to
+W> be placed on the first line of your template.
+W> Not doing so will mean that the generated page will not comply with the [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
 
 ###Template Blocks
-Now that we've identified our base template, we can prepare it for our
-inheriting templates. To do this, we need to include a Template Tag to
-indicate what can be overridden in the base template - this is done
-through the use of *blocks*.
-
-Add a `body_block` to the base template as follows:
+Now that we've created our base template we can add template tags to denote what parts of the template can be overriden by templates that inherit from it. To do this we will be using the *block* tag.
+For example we can add a `body_block` to the base template as follows:
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
 	<head lang="en">
 		<meta charset="UTF-8">
@@ -90,11 +113,11 @@ enclosed within Django template tags.
 You can also specify 'default content' for your blocks, for example:
 
 {lang="html",linenos=off}
-	{% block body_block %}
-		This is body_block's default content.
-	{% endblock %}
+		{% block body_block %}
+			This is body_block's default content.
+		{% endblock %}
 
-When we create templates for each page we will inherit from `base.html`
+When we create templates for each page we will inherit from `rango/base.html`
 and override the contents of the `body_block`. However, you can place as
 many blocks in your templates as you so desire. For example, you could
 create a block for the page title, a footer, a sidebar, etc. Blocks are
@@ -102,21 +125,31 @@ a really powerful feature of Django's template system to learn more
 about them check out the [official Django documentation on
 templates](https://docs.djangoproject.com/en/1.9/topics/templates/#id1).
 
+I> ### Extract all common structure
+I>
+I> You should always aim to extract as much reoccurring content for your
+I> base templates. While it may be a bit more of a challenge for you to
+I> do initially, the time you will save in maintenance of your templates
+I> in the future far outweighs the initial overhead. Think about it:
+I> would you rather maintain one copy of your markup or multiple copies?
+
+
 ### Abstracting Further
 Now that you have an understanding of Django blocks, let's take the
 opportunity to abstract our base template a little bit further. Reopen
-the `base.html` template and modify it to look like the following.
+the `rango/base.html` template and modify it to look like the following.
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
-    <head>
+	<head>
 		<title>
 			Rango - 
-			{% block title %} 
+			{% block title_block_ %} 
 			How to Tango with Django!
 			{% endblock %}
-			</title>
+		</title>
 	</head>
 	<body>
 		<div>
@@ -126,15 +159,9 @@ the `base.html` template and modify it to look like the following.
 		<hr />
 		<div>
 			<ul>
-			{% if user.is_authenticated %}
-				<li><a href="/rango/restricted/">Restricted Page</a></li>
-				<li><a href="/rango/logout/">Logout</a></li>
-				<li><a href="/rango/add_category/">Add a New Category</a></li>
-			{% else %}
-				<li><a href="/rango/register/">Register Here</a></li>
-				<li><a href="/rango/login/">Login</a></li>
-			{% endif %}
-				<li><a href="/rango/about/">About</a></li>
+				<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+				<li><a href="{% url 'about' %}">About</a></li>
+				<li><a href="{% url 'index' %}">Index</a></li>		
 			</ul>
 		</div>
 	</body>
@@ -143,28 +170,21 @@ the `base.html` template and modify it to look like the following.
 	
 We have introduced two new features into the template.
 
--   The first is a new Django template block, `title`. This will allow
+-   The first is a template block called `title_block`. This will allow
     us to specify a custom page title for each page inheriting from our
-    base template. If an inheriting page does not make use of this
-    feature, the title is defaulted to
+    base template. If an inheriting page does not override the block, then, the title defaults to
     `Rango - How to Tango with Django!`
--   We also bring across the list of links from our current `index.html`
-    template and place them into a HTML `<div>` tag underneath our
+-   We have also included the list of links from our current `index.html`
+    template and placed them into a HTML `<div>` tag underneath our
     `body_block` block. This will ensure the links are present across
     all pages inheriting from the base template. The links are preceded
     by a *horizontal rule* (`<hr />`) which provides a visual separation
     between the `body_block` content and the links.
 
-Also note that we enclose the `body_block` within a HTML `<div>` tag -
-we'll be explaining the meaning of the `<div>` tag in Chapter
-css-course-label. Our links are also converted to an unordered HTML list
-through use of the `<ul>` and `<li>` tags.
-
 ##Template Inheritance
-
-Now that we've created a base template with a block, we can now update
-the templates we have created to inherit from the base template. For
-example, let's refactor the template `rango/category.html`.
+Now that we've created a base template with blocks, we can now update
+all the templates we have created so that they inherit from the base template. 
+Let's start by refactoring the template `rango/category.html`.
 
 To do this, first remove all the repeated HTML code leaving only the
 HTML and Template Tags/Commands specific to the page. Then at the
@@ -174,28 +194,20 @@ beginning of the template add the following line of code:
 	{% extends 'base.html' %}
 
 The `extends` command takes one parameter, the template which is to be
-extended/inherited from (i.e. `rango/base.html`). We can then modify the
-`category.html` template so it looks like the following complete
-example.
-
-I> ### Extends Path
-I>
-I> The parameter you supply to the `extends` command should be relative
-I> from your project's `templates` directory. For example, all templates
-I> we use for Rango should extend from `rango/base.html`, not
-I> `base.html`.
-
+extended/inherited from (i.e. `rango/base.html`). The parameter you supply to the `extends` command should be relative from your project's `templates` directory. For example, all templates we use for Rango should extend from `rango/base.html`, not `base.html`. We can then modify the `category.html` template so it looks like the following complete example.
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
-	{% block title %}
-		{{ category_name }}
+	{% block title_block %}
+		{{ category.name }}
 	{% endblock %}
 	
 	{% block body_block %}
-	<h1>{{ category_name }}</h1>
-		{% if category %}
+	<div>
+	{% if category %}
+	<h1>{{ category.name }}</h1>
+		
 		{% if pages %}
 		<ul>
 			{% for page in pages %}
@@ -205,27 +217,28 @@ I> `base.html`.
 		{% else %}
 			<strong>No pages currently in category.</strong>
 		{% endif %}
-		{% if user.is_authenticated %}
-			<a href="/rango/category/{{category.slug}}/add_page/">Add a Page</a>
-		{% endif %}
+		<a href="{% url 'add_page' category.slug %}">Add a Page</a>
 	{% else %}
-		The specified category {{ category_name }} does not exist!
+		The specified category does not exist!
 	{% endif %}
+	</div>
 	{% endblock %}
 
 
-Now that we inherit from `base.html`, all that exists within the
-`category.html` template is the `extends` command, the `title` block and
+Notice how we used the `url` template tag to refer to `rango/<category-name>/add_page/` URL pattern. The `category.slug` is passed through as a parameter to the `url` template tag and Django's Template Engine will produce the correct URL for us.
+
+Now that we inherit from `rango/base.html`, the `category.html` template is much cleaner extending the the `title_block` block and
 the `body_block` block. You don't need a well-formatted HTML document
 because `base.html` provides all the groundwork for you. All you're
 doing is plugging in additional content to the base template to create
 the complete HTML document which is sent to the client's browser.
 
+
 I> ### More about Templates 
 I>
 I> Here we have shown how we can minimise the repetition of
 I> structure HTML in our templates. However, Django Templating Language is very 
-I> powerful and even  lets you create your own template tags.
+I> powerful and even lets you create your own template tags.
 I>
 I> Templates can also be used to minimise code within your
 I> application's views. For example, if you wanted to include the same
@@ -240,56 +253,6 @@ I> template language, check out the official [Django documentation on
 I> templates](https://docs.djangoproject.com/en/1.9/topics/templates/).
 
 
-##Referring to URLs in Templates
-So far we have been directly coding the URL of the page/view we want to
-show within the template, i.e. `<a href="/rango/about/"> About  </a>`. This kind of hard coding of URLs means that if we change our URL mappings we are going to have to change all of these URL references. So the preferred way is to use the template tag `url` to look up the URL in the `urls.py` files. To do this we can change the way we
-reference the URL as follows:
-
-{lang="html",linenos=off}
-	<li><a href="{% url 'about' %}">About</a></li>
-
-
-The Django template engine will look up the `urls.py` files for a url
-with the `name='about'` (and then reverse match the actual url). This
-means if we change the url mappings in `urls.py` then we do not have to
-go through all the templates and update them. If we had not given the 
-URL pattern a name, we could directly reference it as follows:
-
-{lang="html",linenos=off}
-	<li><a href="{% url 'rango.views.about' %}">About</a></li>
-
-
-Here we need to specify the application, and the view about.
-
-You can now update the base template with the `url` template tag so that
-links in base template are rendered using the following code:
-
-{lang="html",linenos=off}
-	<div>
-		<ul>
-		{% if user.is_authenticated %}
-		<li><a href="{% url 'restricted' %}">Restricted Page</a></li>
-		<li><a href="{% url 'logout' %}">Logout</a></li>
-		<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
-		{% else %}
-		<li><a href="{% url 'register' %}">Register Here</a></li>
-		<li><a href="{% url 'login' %}">Login</a></li>
-		{% endif %}
-		<li><a href="{% url 'about' %}">About</a></li>
-		</ul>
-	</div>
-
-In your `index.html` template you will notice that you have a
-parameterized url pattern, i.e. the `category` url/view takes the
-`category.slug` as a parameter. To handle this you can pass the url
-template tag the name of the url/view and the slug, i.e. {% url
-'category' category.slug %} within the template, as follows:
-
-{lang="html",linenos=off}
-	{% for category in categories %}
-		<li><a href="{% url 'category'  category.slug %}">
-			{{ category.name }}</a></li>
-	{% endfor %}
 
 <!-->
 	\#TODO(leifos): The official tutorial provides an overview of how to use
@@ -306,23 +269,29 @@ template tag the name of the url/view and the slug, i.e. {% url
 X> ###Exercises
 X> Now that you've worked through this chapter, we've got several exercises
 X> for you to work through. 
-X> After completing them, you'll be a Django templating pro.
+X> After completing them, you'll be a Django Templating Pro.
 X>
-X> -   Update all other existing templates within Rango's repertoire to
+X> -   Update all the other templates to
 X>    extend from the `base.html` template. Follow the same process as we
 X>    demonstrated above. Once completed, your templates should all
-X>    inherit from `base.html`, as demonstrated in Figure
-X>    fig-rango-template-inheritance. While you're at it, make sure you
+X>    inherit from `base.html`. 
+X> -  While you're at it, make sure you
 X>    remove the links from our `index.html` template. We don't need them
 X>    anymore! You can also remove the link to Rango's homepage within the
 X>    `about.html` template.
 X> -   Convert the restricted page to use a template. Call the template
 X>     `restricted.html`, and ensure that it too extends from our
 X>     `base.html` template.
-X> -   Change all the references to rango urls to use the url template tag.
-X> -   Add another link to our growing link collection that allows users to
-X>    navigate back to Rango's homepage from anywhere on the website.
+X> -   Remember to also change all the references to rango URLs to use the 'url' template tag.
 
+
+T> ### Hints
+T>
+T> - Start refactoring the  `about.html` template first.
+T> - Update the `title_block` then the `body_block` in each template.
+T> - Have the development server running and check the page as you work on it.
+T> -  To reference the links to category pages you can use the following template code
+T> `<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>`.
 
 
 W> Loading Staticfiles
@@ -330,8 +299,7 @@ W>
 W> Remember to add `{% load staticfiles %}` to the top of each template that
 W> makes use of static media. If you don't, you'll get an error! Django
 W> template modules must be imported individually for each template that
-W> requires them - *you can't make use of modules included in templates
-W> you extend from!*
+W> requires them.
 
 ![A class diagram demonstrating how your templates should inherit from
 `base.html`.](../images/rango-template-inheritance.svg)
@@ -379,6 +347,5 @@ I>
 I>
 I> Remember, the last parameter of `render()` is the context dictionary with which
 I> you can use to pass additional data to the Django template engine. As
-I> we have no additional data to pass through we pass through an empty
-I> dictionary. Have a look at Section adding-a-template-label to refresh
-I> your memory on `render()`.
+I> we have no additional data to give to the template, we pass through an empty
+I> dictionary, `{}`. 
