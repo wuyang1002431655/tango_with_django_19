@@ -329,7 +329,7 @@ To create a population script for Rango, start by creating a new Python module w
 	        for p in cat_data["pages"]:
 	            add_page(c, p["title"], p["url"])
 	    
-	    # Print out what we have added to the user.
+	    # Print out the categories we have added to the user.
 	    for c in Category.objects.all():
 	        for p in Page.objects.filter(category=c):
 	            print("- {0} - {1}".format(str(c), str(p)))
@@ -343,6 +343,7 @@ To create a population script for Rango, start by creating a new Python module w
 	
 	def add_cat(name):
 	    c = Category.objects.get_or_create(name=name)[0]
+		c.save()
 	    return c
 	
 	# Start execution here!

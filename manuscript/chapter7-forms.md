@@ -59,38 +59,37 @@ In `rango/forms.py` add the following code.
 	from rango.models import Page, Category
 
 	class CategoryForm(forms.ModelForm):
-	    name = forms.CharField(max_length=128, 
+		name = forms.CharField(max_length=128, 
 			help_text="Please enter the category name.")
-	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-	    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-	    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+		views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+		likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+		slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-	    # An inline class to provide additional information on the form.
-	    class Meta:
-	        # Provide an association between the ModelForm and a model
-	        model = Category
-	        fields = ('name',)
-
-
+		# An inline class to provide additional information on the form.
+		class Meta:
+			# Provide an association between the ModelForm and a model
+			model = Category
+			fields = ('name',)
+			
 	class PageForm(forms.ModelForm):
-	    title = forms.CharField(max_length=128, 
+		title = forms.CharField(max_length=128, 
 			help_text="Please enter the title of the page.")
-	    url = forms.URLField(max_length=200, 
+		url = forms.URLField(max_length=200, 
 			help_text="Please enter the URL of the page.")
-	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+		views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
-	    class Meta:
-	        # Provide an association between the ModelForm and a model
-	        model = Page
-
-	        # What fields do we want to include in our form?
-	        # This way we don't need every field in the model present.
-	        # Some fields may allow NULL values, so we may not want to include them.
-	        # Here, we are hiding the foreign key.
-	        # we can either exclude the category field from the form,
-	        exclude = ('category',)
-	        #or specify the fields to include (i.e. not include the category field)
-	        #fields = ('title', 'url', 'views')
+		class Meta:
+			# Provide an association between the ModelForm and a model
+			model = Page
+			
+			# What fields do we want to include in our form?
+			# This way we don't need every field in the model present.
+			# Some fields may allow NULL values, so we may not want to include them.
+			# Here, we are hiding the foreign key.
+			# we can either exclude the category field from the form,
+			exclude = ('category',)
+			#or specify the fields to include (i.e. not include the category field)
+			#fields = ('title', 'url', 'views')
 
 
 We need to specify which fields that are included on the form, via `fields`, or specify the fields that
@@ -172,37 +171,33 @@ this, add the following code to `rango/views.py`.
 	...
 
 	def add_category(request):
-	    # A HTTP POST?
-	    if request.method == 'POST':
-	        form = CategoryForm(request.POST)
-	        # Have we been provided with a valid form?
-	        if form.is_valid():
-	            # Save the new category to the database.
-	            form.save(commit=True)
-	            # Now that the category is saved
-	            # We could give a confirmation message
-	            # But since the most recent catergory added is on the index page
-	            # Then we can direct the user back to the index page.
-	            return index(request)
-	        else:
-	            # The supplied form contained errors -
+		
+		form = CategoryForm()
+		
+		# A HTTP POST?
+		if request.method == 'POST':
+			form = CategoryForm(request.POST)
+			# Have we been provided with a valid form?
+			if form.is_valid():
+				# Save the new category to the database.
+				form.save(commit=True)
+				# Now that the category is saved
+				# We could give a confirmation message
+				# But since the most recent catergory added is on the index page
+				# Then we can direct the user back to the index page.
+				return index(request)
+			else:
+				# The supplied form contained errors -
 				# just print them to the terminal.
-	            print(form.errors)
-	    else:
-	        # If the request was not a POST, 
-			# display the form to enter details.
-	        form = CategoryForm()
+				print(form.errors)
+					
 		# Will handle the bad form, new form, or 
 		# no form supplied cases.
 		# Render the form with error messages (if any).
 		return render(request, 'rango/add_category.html', {'form': form})
 
 The new `add_category()` view adds several key pieces of functionality
-for handling forms. First, we check the HTTP request method, to
-determine if it was a HTTP `GET` or `POST`. We can then handle different
-requests methods appropriately - i.e. whether we want to show a form (if
-it is a `GET`), or process form data (if it is a `POST`) - all from the
-same URL. The `add_category()` view function can handle three different
+for handling forms. First, we create a CategoryForm(), then we check if the HTTP request was a `POST` i.e. if the user submitted data via the form.  We can then handle the `POST` request through the same URL. The `add_category()` view function can handle three different
 scenarios:
 
 -   showing a new, blank form for adding a category;
@@ -483,12 +478,12 @@ To get you started, here is the code for the `add_page()` view function.
 	    if request.method == 'POST':
 	        form = PageForm(request.POST)
 	        if form.is_valid():
-	            if cat:
+	            if category:
 	                page = form.save(commit=False)
 	                page.category = category
 	                page.views = 0
 	                page.save()
-	                return category(request, category_name_slug)
+	                return show_category(request, category_name_slug)
 	        else:
 	            print form.errors
 	    else:

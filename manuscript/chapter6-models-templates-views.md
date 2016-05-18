@@ -240,13 +240,17 @@ or we can customize the admin interface so that it automatically pre-populates t
 	from django.contrib import admin
 	from rango.models import Category, Page
 
+	...
+
 	# Add in this class to customize the Admin Interface
 	class CategoryAdmin(admin.ModelAdmin):
 		prepopulated_fields = {'slug':('name',)}
 		
 	# Update the registeration to include this customised interface
 	admin.site.register(Category, CategoryAdmin)
-	admin.site.register(Page)
+	
+	...
+
 	
 Try out the admin interface and add in a new category. Pretty cool, hey!
 
@@ -271,7 +275,7 @@ W> A neat exercise is to write a script to output the data in the database so th
 To implement the category pages so that they can be accessed via `/rango/category/<category-name-slug>/` we need to make a number of changes and undertake the following steps:
 
 1. Import the `Page` model into `rango/views.py`.
-2. Create a new view in `rango/views.py` called `category`. The `category` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
+2. Create a new view in `rango/views.py` called `show_category()`. The `show_category()` view will take an additional parameter, `category_name_url` which will stored the encoded category name.
 	-   We will need helper functions to encode and decode the `category_name_url`.
 3.  Create a new template, `templates/rango/category.html`.
 4.  Update Rango's `urlpatterns` to map the new `category` view to a URL pattern in `rango/urls.py`.
@@ -484,7 +488,7 @@ page.
 
 
 What happens when you visit a category that does not exist? Try navigating a category which doesn't exist, like
-`/rango/category/computers/`. Do this by typing the adress manually into your browser's address bar. You should see a message telling you that no pages exist in the category.
+`/rango/category/computers/`. Do this by typing the adress manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
 
 {id="fig-ch6-rango-links"}
 ![The links to Django pages.](images/ch6-rango-links.png)
