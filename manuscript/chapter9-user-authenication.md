@@ -1,99 +1,93 @@
-User Authentication
-===================
+#User Authentication
 
 The aim of this next part of the tutorial is to get you familiar with
 the user authentication mechanisms provided by Django. We'll be using
 the `auth` application provided as part of a standard Django
 installation in package `django.contrib.auth`. According to [Django's
 official documentation on
-Authentication](https://docs.djangoproject.com/en/1.7/topics/auth/), the
+Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the
 application consists of the following aspects.
 
--   *Users.*
--   *Permissions:* a series of binary flags (e.g. yes/no) determining
-    what a user may or may not do.
--   *Groups:* a method of applying permissions to more than one user.
--   A configurable *password hashing system:* a must for ensuring data
-    security.
--   *Forms and view tools for logging in users,* or restricting content.
+- *Users.*
+- *Permissions:* a series of binary flags (e.g. yes/no) determining what a user may or may not do.
+- *Groups:* a method of applying permissions to more than one user.
+- A configurable *password hashing system:* a must for ensuring data security.
+- *Forms and view tools for logging in users,* or restricting content.
 
 There's lots that Django can do for you in the area of user
 authentication. We'll be covering the basics to get you started. This
 will help you build your confidence with the available tools and their
 underlying concepts.
 
-Setting up Authentication
--------------------------
+##Setting up Authentication
 
 Before you can begin to play around with Django's authentication
 offering, you'll need to make sure that the relevant settings are
 present in your Rango project's `settings.py` file.
 
-Within the `settings.py` file find the `INSTALLED_APPS` tuple and check
+Within the `settings.py` file find the `INSTALLED_APPS` list and check
 that `django.contrib.auth` and `django.contrib.contenttypes` are listed,
 so that it looks like the code below:
 
-``` {.sourceCode .python}
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rango',
-)
-```
+{lang="python",linenos=off}
+	INSTALLED_APPS =[
+		'django.contrib.admin',
+		'django.contrib.auth',
+		'django.contrib.contenttypes',
+		'django.contrib.sessions',
+		'django.contrib.messages',
+		'django.contrib.staticfiles',
+		'rango',
+	]
 
 While `django.contrib.auth` provides Django with access to the
 authentication system, `django.contrib.contenttypes` is used by the
 authentication application to track models installed in your database.
 
-> **note**
->
-> Remember, if you had to add the `auth` applications to your
-> `INSTALLED_APPS` tuple, you will need to update your database with the
-> `$ python manage.py migrate` command.
+I> ### Migrate, if necessary!
+I>
+I> Remember, if you had to add `django.contrib.auth` and `django.contrib.contenttypes` applications to your
+I> `INSTALLED_APPS` tuple, you will need to update your database with the
+I> `$ python manage.py migrate` command.
 
+
+## Password Hashing
 Passwords are stored by default in Django using the [PBKDF2
 algorithm](http://en.wikipedia.org/wiki/PBKDF2), providing a good level
-of security for your user's data. You can read more about this as part
-of the [official Django documentation on how django stores
-passwords](https://docs.djangoproject.com/en/1.7/topics/auth/passwords/#how-django-stores-passwords).
-The documentation also provides an explanation of how to use different
-password hashers if you require a greater level of security.
+of security for your user's data.  However, if you want more control over how the passwords are hashed, then in the `settings.py` add in tuple to specify the `PASSWORD_HASHERS`:
 
-If you want more control over how the passwords are hashed, then in the
-`settings.py` add in tuple to specify the `PASSWORD_HASHERS`:
-
-``` {.sourceCode .python}
-PASSWORD_HASHERS = (
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-)
-```
+{lang="python",linenos=off}
+	PASSWORD_HASHERS = (
+		'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+	)
 
 Django will use the first hasher in `PASSWORD_HASHERS` i.e.
-settings.PASSWORD\_HASHERS[0]. If you wanted to use a more secure
-hasher, you can install Bcrypt (see
-<https://pypi.python.org/pypi/bcrypt/> ) using `pip install bcrypt`, and
+`settings.PASSWORD\_HASHERS[0]`. If other password hashers are listed it will also support these if the a match is not obtained using the first one.
+
+
+If you want to use a more secure
+hasher, you can install [Bcrypt](https://pypi.python.org/pypi/bcrypt/) using `pip install bcrypt`, and
 then set the `PASSWORD_HASHERS` to be:
 
-``` {.sourceCode .python}
-PASSWORD_HASHERS = (
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-)
-```
+{lang="python",linenos=off}
+	PASSWORD_HASHERS = [
+		'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+		'django.contrib.auth.hashers.BCryptPasswordHasher',
+		'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+	]
 
-However, to get up and running you don't need to explicitly specify the
-`PASSWORD_HASHERS`, in which case Django defaults to,
-`django.contrib.auth.hashers.PBKDF2PasswordHasher`.
+If you don't explicitly specify 
+`PASSWORD_HASHERS`, Django will use
+`django.contrib.auth.hashers.PBKDF2PasswordHasher` by default.
 
-The `User` Model
-----------------
+You can read more about password hashing in the [official Django documentation on how Django stores
+passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
+
+
+##The `User` Model
+
 
 The core of Django's authentication system is the `User` object, located
 at `django.contrib.auth.models.User`. A `User` object represents each of
