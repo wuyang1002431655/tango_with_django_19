@@ -375,113 +375,117 @@ We also establish a link between the two model instances that we create.
 After creating a new `User` model instance, we reference it in the
 `UserProfile` instance with the line `profile.user = user`. This is
 where we populate the `user` attribute of the `UserProfileForm` form,
-which we hid from users in Section login-formclasses-label.
+which we hid from users.
 
 ### Creating the *Registration* Template
 
 Now create a new template file, `rango/register.html` and add the
 following code:
 
-``` {.sourceCode .html}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{lang="html",linenos=off}
+	{% extends 'rango/base.html' %}
+	{% load staticfiles %}
+	{% block title_block %}
+		Register
+	{% endblock %}
+	
+	{% block body_block %}
+		<div>
+		<h1>About Page</h1>			
+		{% if registered %}
+			Rango says: <strong>thank you for registering!</strong>
+			<a href="/rango/">Return to the homepage.</a><br />
+		{% else %}
+			Rango says: <strong>register here!</strong><br />
+			<form id="user_form" method="post" action="/rango/register/"
+				enctype="multipart/form-data">
 
-    <body>
-        <h1>Register with Rango</h1>
+			{% csrf_token %}
 
-        {% if registered %}
-        Rango says: <strong>thank you for registering!</strong>
-        <a href="/rango/">Return to the homepage.</a><br />
-        {% else %}
-        Rango says: <strong>register here!</strong><br />
+			<!-- Display each form  -->
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
 
-        <form id="user_form" method="post" action="/rango/register/"
-                enctype="multipart/form-data">
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Register" />
+		</form>
+		% endif %}
+		
+		</div>	
+	{% endblock %}
 
-            {% csrf_token %}
-
-            <!-- Display each form. The as_p method wraps each element in a paragraph
-                 (<p>) element. This ensures each element appears on a new line,
-                 making everything look neater. -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Register" />
-        </form>
-        {% endif %}
-    </body>
-</html>
-```
-
-This HTML template makes use of the `registered` variable we used in our
-view indicating whether registration was successful or not. Note that
-`registered` must be `False` in order for the template to display the
+The first thing to note here is that this template makes use of the `registered` variable we used in our view indicating whether registration was successful or not. Note that `registered` must be `False` in order for the template to display the
 registration form - otherwise, apart from the title, only a success
 message is displayed.
 
-> **warning**
->
-> You should be aware of the `enctype` attribute for the `<form>`
-> element. When you want users to upload files from a form, it's an
-> absolute *must* to set `enctype` to `multipart/form-data`. This
-> attribute and value combination instructs your browser to send form
-> data in a special way back to the server. Essentially, the data
-> representing your file is split into a series of chunks and sent. For
-> more information, check out [this great Stack Overflow
-> answer](http://stackoverflow.com/a/4526286). You should also should
-> remember to include the CSRF token, too. Ensure that you include
-> `{% csrf_token %}` within your `<form>` element.
+Next, we have used the `as_p` template function on the `user_form` and `profile_form`. This wraps each element in the form in a paragraph. This ensures that each element appears on a new line.
+
+Finally, in the `<form>` element we have included the attribute `enctype` - this is because if the user tries to upload a picture, then the message sent will be quite large and in a binary format, so the message has to be broken up and sent in multiple parts.  So we need to denote this with `enctype="multipart/form-data"`. This tells the HTTP client i.e. web browser to package and send the data accordingly, otherwise not all the data will be sent.
+
+W> Multipart Messages to handle binary files
+W>
+W> You should be aware of the `enctype` attribute for the `<form>`
+W> element. When you want users to upload files from a form, it's an
+W> absolute *must* to set `enctype` to `multipart/form-data`. This
+W> attribute and value combination instructs your browser to send form
+W> data in a special way back to the server. Essentially, the data
+W> representing your file is split into a series of chunks and sent. For
+W> more information, check out [this great Stack Overflow
+W> answer](http://stackoverflow.com/a/4526286). 
+W>
+W> Also, remember to include the CSRF token, i.e.
+W> `{% csrf_token %}` within your `<form>` element!
 
 ### The `register()` View URL Mapping
 
 Now we can add a URL mapping to our new view. In `rango/urls.py` modify
 the `urlpatterns` tuple as shown below:
-
-``` {.sourceCode .python}
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about'),
-    url(r'^category/(?P<category_name_slug>\w+)$', views.category, name='category'),
-    url(r'^add_category/$', views.add_category, name='add_category'),
-    url(r'^category/(?P<category_name_slug>\w+)/add_page/$', views.add_page, name='add_page'),
-    url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
-    )
-```
+ 
+{lang="python",linenos=off}
+	urlpatterns = [
+		url(r'^$', views.index, name='index'),
+		url(r'about/$', views.about, name='about'),
+		url(r'^add_category/$', views.add_category, name='add_category'),
+		url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.show_category, name='show_category'),
+		url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', views.add_page, name='add_page'),
+		url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
+	
+	]
 
 The newly added pattern points the URL `/rango/register/` to the
 `register()` view.
 
 ### Linking Together
 
-Finally, we can add a link pointing to that URL in our homepage
-`index.html` template. Underneath the link to the category addition
-page, add the following hyperlink.
+Finally, we can add a link pointing to our registration URL by modifying the `base.html` template. Update `base.html` so that the unordered list of links which will appear on each page contains a link to sign up to Rango.
 
-``` {.sourceCode .html}
-<a href="/rango/register/">Register Here</a>
-```
+{lang="html",linenos=off}
+	<ul>
+		<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+		<li><a href="{% url 'about' %}">About</a></li>	
+		<li><a href="{% url 'index' %}">Index</a></li>
+		<li><a href="{% url 'register' %}">Sign Up</a></li>				
+	</ul>
+
+
 
 ### Demo
 
-Easy! Now you'll have a new hyperlink with the text `Register Here`
-that'll take you to the registration page. Try it out now! Start your
-Django development server and try to register a new user account. Upload
+Sweet! Let's try it out. Start your
+Django development server and try to register as a new user. Upload
 a profile image if you wish. Your registration form should look like the
-one illustrated in Figure fig-rango-register-form.
+one illustrated in the [figure below](#fig-rango-register-form).
 
+
+{id="fig-ch9-user-register"}
 ![A screenshot illustrating the basic registration form you create as
 part of this tutorial.](../images/rango-register-form.png)
 
 Upon seeing the message indicating your details were successfully
-registered, the database should have two new entries in its tables
-corresponding to the `User` and `UserProfile` models.
+registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface.
 
-Adding Login Functionality
---------------------------
+
+##Adding Login Functionality
 
 With the ability to register accounts completed, we now need to add
 login in functionality. To achieve this we will need to undertake the
@@ -497,48 +501,46 @@ workflow below:
 In `rango/views.py` create a new function called `user_login()` and add
 the following code:
 
-``` {.sourceCode .python}
-def user_login(request):
+{lang="python",linenos=off}
+	def user_login(request):
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'POST':
+		# Gather the username and password provided by the user.
+		# This information is obtained from the login form.
+		# We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
+		# because the request.POST.get('<variable>') returns None, if the value does not exist,
+		# while the request.POST['<variable>'] will raise key error exception
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		
+		# Use Django's machinery to attempt to see if the username/password
+		# combination is valid - a User object is returned if it is.
+		user = authenticate(username=username, password=password)
 
-    # If the request is a HTTP POST, try to pull out the relevant information.
-    if request.method == 'POST':
-        # Gather the username and password provided by the user.
-        # This information is obtained from the login form.
-        # We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
-        # because the request.POST.get('<variable>') returns None, if the value does not exist,
-        # while the request.POST['<variable>'] will raise key error exception
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+		# If we have a User object, the details are correct.
+		# If None (Python's way of representing the absence of a value), no user
+		# with matching credentials was found.
+		if user:
+			# Is the account active? It could have been disabled.
+			if user.is_active:
+				# If the account is valid and active, we can log the user in.
+				# We'll send the user back to the homepage.
+				login(request, user)
+				return HttpResponseRedirect(reverse('index'))
+			else:
+				# An inactive account was used - no logging in!
+				return HttpResponse("Your Rango account is disabled.")
+		else:
+			# Bad login details were provided. So we can't log the user in.
+			print "Invalid login details: {0}, {1}".format(username, password)
+			return HttpResponse("Invalid login details supplied.")
 
-        # Use Django's machinery to attempt to see if the username/password
-        # combination is valid - a User object is returned if it is.
-        user = authenticate(username=username, password=password)
-
-        # If we have a User object, the details are correct.
-        # If None (Python's way of representing the absence of a value), no user
-        # with matching credentials was found.
-        if user:
-            # Is the account active? It could have been disabled.
-            if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
-                login(request, user)
-                return HttpResponseRedirect('/rango/')
-            else:
-                # An inactive account was used - no logging in!
-                return HttpResponse("Your Rango account is disabled.")
-        else:
-            # Bad login details were provided. So we can't log the user in.
-            print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
-
-    # The request is not a HTTP POST, so display the login form.
-    # This scenario would most likely be a HTTP GET.
-    else:
-        # No context variables to pass to the template system, hence the
-        # blank dictionary object...
-        return render(request, 'rango/login.html', {})
-```
+		# The request is not a HTTP POST, so display the login form.
+		# This scenario would most likely be a HTTP GET.
+	else:
+		# No context variables to pass to the template system, hence the
+		# blank dictionary object...
+		return render(request, 'rango/login.html', {})
 
 This view may seem rather complicated as it has to handle a variety of
 situations. Like in previous examples, the `user_login()` view handles
@@ -575,17 +577,21 @@ client's browser to redirect to the URL you provide as the argument.
 Note that this will return a HTTP status code of 302, which denotes a
 redirect, as opposed to an status code of 200 i.e. OK. See the [official
 Django documentation on
-Redirection](https://docs.djangoproject.com/en/1.7/ref/request-response/#django.http.HttpResponseRedirect),
+Redirection](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpResponseRedirect),
 to learn more.
+
+Finally, we use another Django  method called `reverse` to obtain the URL of the rango application. This looks up the URL patterns in `urls.py` to find the one called `'index'` and substitutes in the corresponding pattern. This means that if we change the URL mapping our code wont break.
+
 
 All of these functions and classes are provided by Django, and as such
 you'll need to import them, so add the following imports to
 `rango/views.py`:
 
-``` {.sourceCode .python}
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect, HttpResponse
-```
+{lang="python",linenos=off}
+	from django.contrib.auth import authenticate, login
+	from django.http import HttpResponseRedirect, HttpResponse
+	from django.core.urlresolvers import reverse
+
 
 ### Creating a *Login* Template
 
@@ -595,31 +601,26 @@ users to login. While we know that the template will live in the
 the file. Look at the code example above to work out the name. In your
 new template file, add the following code:
 
-``` {.sourceCode .html}
-<!DOCTYPE html>
-<html>
-    <head>
-        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <h1>Login to Rango</h1>
-
-        <form id="login_form" method="post" action="/rango/login/">
-            {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
-
-            <input type="submit" value="submit" />
-        </form>
-
-    </body>
-</html>
-```
-
+{lang="html",linenos=off}
+	{% extends 'rango/base.html' %}
+	{% load staticfiles %}
+	{% block title_block %}
+		Login
+	{% endblock %}
+	
+	{% block body_block %}
+	<div>
+	<h1>Login to Rango</h1>
+	<form id="login_form" method="post" action="/rango/login/">
+		{% csrf_token %}
+		Username: <input type="text" name="username" value="" size="50" />
+		<br />
+		Password: <input type="password" name="password" value="" size="50" />
+		<br />
+		<input type="submit" value="submit" />
+	</form>
+	{% endblock %}
+	
 Ensure that you match up the input `name` attributes to those that you
 specified in the `user_login()` view - i.e. `username` for the username,
 and `password` for password. Don't forget the `{% csrf_token %}`,
@@ -628,70 +629,53 @@ either!
 ### Mapping the Login View to a URL
 
 With your login template created, we can now match up the `user_login()`
-view to a URL. Modify Rango's `urls.py` file so that its `urlpatterns`
-tuple now looks like the code below:
+view to a URL. Modify Rango's `urls.py` file so that the `urlpatterns` list contains the following mapping.
 
-``` {.sourceCode .python}
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about'),
-    url(r'^category/(?P<category_name_slug>\w+)$', views.category, name='category'),
-    url(r'^add_category/$', views.add_category, name='add_category'),
-    url(r'^category/(?P<category_name_slug>\w+)/add_page/$', views.add_page, name='add_page'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.user_login, name='login'),
-    )
-```
+{lang="python",linenos=off}
+	url(r'^login/$', views.user_login, name='login'),
 
 ### Linking Together
 
 Our final step is to provide users of Rango with a handy link to access
-the login page. To do this, we'll edit the `index.html` template inside
-of the `templates/rango/` directory. Find the previously created
-category addition and registration links, and add the following
-hyperlink underneath. You may wish to include a line break (`<br />`)
-before the link.
-
-``` {.sourceCode .python}
-<a href="/rango/login/">Login</a>
-```
+the login page. To do this, we'll edit the `base.html` template inside
+of the `templates/rango/` directory. Add to the list of links, the following link.
+{lang="html",linenos=off}
+	<ul>
+	
+	...
+	
+	<li><a href="/rango/login/">Login</a><li>
+	</ul>
 
 If you like, you can also modify the header of the index page to provide
 a personalised message if a user is logged in, and a more generic
 message if the user isn't. Within the `index.html` template, find the
 header, as shown in the code snippet below.
 
-``` {.sourceCode .python}
-<h1>Rango says..hello world!</h1>
-```
+{lang="html",linenos=off}
+	hey there partner!
 
-Replace this header with the following markup and Django template code.
-Note that we make use of the `user` object, which is available to
-Django's template system via the context. We can tell from this object
-if the user is logged in (authenticated). If he or she is logged in, we
-can also obtain details about him or her.
+Replace this with this line with the markup shown below.
 
-``` {.sourceCode .python}
-{% if user.is_authenticated %}
-<h1>Rango says... hello {{ user.username }}!</h1>
-{% else %}
-<h1>Rango says... hello world!</h1>
-{% endif %}
-```
+
+{lang="html",linenos=off}
+	{% if user.is_authenticated %}
+		<h1>howdy {{ user.username }}!</h1>
+	{% else %}
+		<h1>hey there partner!</h1>
+	{% endif %}
+
 
 As you can see we have used Django's Template Language to check if the
-user is authenticated with `{% if user.is_authenticated %}`. The context
-variable which we pass through to the template will include a user
-variable if the user is logged in - so we can check whether they are
-authenticated or not. If so they will receive a personalised greeting in
-the header, i.e. `Rango says... hello leifos!`. Otherwise, the generic
-`Rango says... hello world!` header is displayed.
+user is authenticated with `{% if user.is_authenticated %}`. If a user is logged in then the Django machinery gives us access to the `user` object. We can tell from this object
+if the user is logged in (authenticated). If he or she is logged in, we
+can also obtain details about him or her. In the example above, if the user is logged in then they will receive a personalised message, if not they will receive the generic message.
+
 
 ### Demo
+Try logging into the application. The [figure below](fig-ch9-user-login) shows the screenshots of the login and index page.
 
-Check out Figure fig-rango-login-message for screenshots of what
-everything should look like.
-
+{id="fig-ch9-user-login"}
 ![Screenshots illustrating the header users receive when not logged in,
 and logged in with username
 `somebody`.](../images/rango-login-message.png)
@@ -701,8 +685,7 @@ everything out, try starting Django's development server and attempt to
 register a new account. After successful registration, you should then
 be able to login with the details you just provided.
 
-Restricting Access
-------------------
+##Restricting Access
 
 Now that users can login to Rango, we can now go about restricting
 access to particular parts of the application as per the specification,
@@ -719,13 +702,12 @@ The direct approach checks to see whether a user is logged in, via the
 `request` object passed into a view. The following example demonstrates
 this approach.
 
-``` {.sourceCode .python}
-def some_view(request):
-    if not request.user.is_authenticated():
-        return HttpResponse("You are logged in.")
-    else:
-        return HttpResponse("You are not logged in.")
-```
+{lang="python",linenos=off}
+	def some_view(request):
+	if not request.user.is_authenticated():
+		return HttpResponse("You are logged in.")
+	else:
+	return HttpResponse("You are not logged in.")
 
 The second approach uses [Python
 decorators](http://wiki.python.org/moin/PythonDecorators). Decorators
@@ -746,11 +728,10 @@ the login page.
 To try this out, create a view in Rango's `views.py` file, called
 `restricted()` and add the following code:
 
-``` {.sourceCode .python}
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
-```
+{lang="python",linenos=off}
+	@login_required
+	def restricted(request):
+		return HttpResponse("Since you're logged in, you can see this text!")
 
 Note that to use a decorator, you place it *directly above* the function
 signature, and put a `@` before naming the decorator. Python will
@@ -758,25 +739,14 @@ execute the decorator before executing the code of your function/method.
 To use the decorator you will have to import it, so also add the
 following import:
 
-``` {.sourceCode .python}
-from django.contrib.auth.decorators import login_required
-```
+{lang="python",linenos=off}
+	from django.contrib.auth.decorators import login_required
 
-We'll also add in another pattern to Rango's `urlpatterns` tuple in the
-`urls.py` file. Our tuple should then look something like the following
-example. Note the inclusion of mapping of the `views.restricted` view -
-this is the mapping you need to add.
+We'll also need to add in another pattern to Rango's `urlpatterns` list in the
+`urls.py` file. Add the following line of code.
 
-``` {.sourceCode .python}
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^add_category/$', views.add_category, name='add_category'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.user_login, name='login'),
-    url(r'^(?P<category_name_slug>\w+)', views.category, name='category'),
-    url(r'^restricted/', views.restricted, name='restricted'),
-    )
-```
+{lang="python",linenos=off}
+	url(r'^restricted/', views.restricted, name='restricted'),
 
 We'll also need to handle the scenario where a user attempts to access
 the `restricted()` view, but is not logged in. What do we do with the
@@ -786,15 +756,14 @@ in the project configuration directory. In `settings.py`, define the
 variable `LOGIN_URL` with the URL you'd like to redirect users to that
 aren't logged in, i.e. the login page located at `/rango/login/`:
 
-``` {.sourceCode .python}
-LOGIN_URL = '/rango/login/'
-```
+{lang="python",linenos=off}
+	LOGIN_URL = '/rango/login/'
+	
 
 This ensures that the `login_required()` decorator will redirect any
 user not logged in to the URL `/rango/login/`.
 
-Logging Out
------------
+##Logging Out
 
 To enable users to log out gracefully it would be nice to provide a
 logout option to users. Django comes with a handy `logout()` function
@@ -805,36 +774,26 @@ will deny them access.
 To provide log out functionality in `rango/views.py` add the a view
 called `user_logout()` with the following code:
 
-``` {.sourceCode .python}
-from django.contrib.auth import logout
+{lang="python",linenos=off}
+	from django.contrib.auth import logout
 
-# Use the login_required() decorator to ensure only those logged in can access the view.
-@login_required
-def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
-    logout(request)
+	# Use the login_required() decorator to ensure only those logged in can access the view.
 
-    # Take the user back to the homepage.
-    return HttpResponseRedirect('/rango/')
-```
+
+	@login_required
+	def user_logout(request):
+		# Since we know the user is logged in, we can now just log them out.
+		logout(request)
+		# Take the user back to the homepage.
+		return HttpResponseRedirect(reverse('index'))
+
 
 With the view created, map the URL `/rango/logout/` to the
-`user_logout()` view by modifying the `urlpatterns` tuple in Rango's
-`urls.py` module:
+`user_logout()` view by modifying the `urlpatterns` list in Rango's
+`urls.py`.
 
-``` {.sourceCode .python}
-urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about'),
-    url(r'^category/(?P<category_name_slug>\w+)$', views.category, name='category'),
-    url(r'^add_category/$', views.add_category, name='add_category'),
-    url(r'^category/(?P<category_name_slug>\w+)/add_page/$', views.add_page, name='add_page'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.user_login, name='login'),
-    url(r'^restricted/$', views.restricted, name='restricted'),
-    url(r'^logout/$', views.user_logout, name='logout'),
-    )
-```
+{lang="python",linenos=off}
+	url(r'^logout/$', views.user_logout, name='logout'),
 
 Now that all the machinery for logging a user out has been completed,
 it'd be handy to provide a link from the homepage to allow users to
@@ -850,18 +809,20 @@ at the bottom of the page and replace it with the following HTML markup
 and Django template code. Note we also add a link to our restricted page
 at `/rango/restricted/`.
 
-``` {.sourceCode .html}
-{% if user.is_authenticated %}
-<a href="/rango/restricted/">Restricted Page</a><br />
-<a href="/rango/logout/">Logout</a><br />
-{% else %}
-<a href="/rango/register/">Register Here</a><br />
-<a href="/rango/login/">Login</a><br />
-{% endif %}
+{lang="html",linenos=off}
+	<ul>
+	{% if user.is_authenticated %}
+		<li><a href="{% url 'restricted' %}">Retricted Page</a></li>
+		<li><a href="{% url 'logout' %}">Logout</a></li>	
+	{% else %}
+		<li><a href="{% url 'login' %}">Sign In</a></li>
+		<li><a href="{% url 'register' %}">Sign Up</a></li>			
+	{% endif %}
+		<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+		<li><a href="{% url 'about' %}">About</a></li>	
+		<li><a href="{% url 'index' %}">Index</a></li>
+	</ul>
 
-<a href="/rango/about/">About</a><br/>
-<a href="/rango/add_category/">Add a New Category</a><br />
-```
 
 Simple - when a user is authenticated and logged in, he or she can see
 the `Restricted Page` and `Logout` links. If he or she isn't logged in,
@@ -869,26 +830,25 @@ the `Restricted Page` and `Logout` links. If he or she isn't logged in,
 `Add a New Category` are not within the template conditional blocks,
 these links are available to both anonymous and logged in users.
 
-Exercises
----------
-
-This chapter has covered several important aspects of managing user
-authentication within Django. We've covered the basics of installing
-Django's `django.contrib.auth` application into our project.
-Additionally, we have also shown how to implement a user profile model
-that can provide additional fields to the base
-`django.contrib.auth.models.User` model. We have also detailed how to
-setup the functionality to allow user registrations, login, logout, and
-to control access. For more information about user authentication and
-registration consult [Django's official documentation on
-Authentication](https://docs.djangoproject.com/en/1.7/topics/auth/).
-
--   Customise the application so that only registered users can
-    add/edit, while non-registered can only view/use the
-    categories/pages. You'll also have ensure links to add/edit pages
-    appear only if the user browsing the website is logged in.
--   Provide informative error messages when users incorrectly enter
-    their username or password.
+X> ###Exercises
+X>
+X> This chapter has covered several important aspects of managing user
+X> authentication within Django. We've covered the basics of installing
+X> Django's `django.contrib.auth` application into our project.
+X> Additionally, we have also shown how to implement a user profile model
+X> that can provide additional fields to the base
+X> `django.contrib.auth.models.User` model. We have also detailed how to
+X> setup the functionality to allow user registrations, login, logout, and
+X> to control access. For more information about user authentication and
+X> registration consult [Django's official documentation on
+x> Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
+X>
+X> -   Customise the application so that only registered users can
+X>    add/edit, while non-registered can only view/use the
+X>    categories/pages. You'll also have ensure links to add/edit pages
+X>    appear only if the user browsing the website is logged in.
+X> -   Provide informative error messages when users incorrectly enter
+X>    their username or password.
 
 In most applications you are going to require different levels of
 security when registering and managing users - for example, making sure
