@@ -73,8 +73,7 @@ Research which one is right for you, and be aware that some may require
 you to purchase a licence. Ideally, you'll want to select an IDE that
 supports integration with Django.  
 
-We use PyCharm as it supports virtual environments and Django
-integration - though you will have to configure the IDE accordingly.
+We use PyCharm as it supports virtual environments and Django integration - though you will have to configure the IDE accordingly. [PyCharm is also available for students](https://www.jetbrains.com/student/) - and JetBrains provides a graduate discount, too.
 
 ##Code Repository
 

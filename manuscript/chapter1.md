@@ -175,11 +175,10 @@ These high level design and specifications will serve as a useful reference poin
 
 T> ### Cut and Paste Coding
 T>
-T> As you progress through the tutorial, you will be tempted to cut and paste the code from the book to your code editor.
-T> However, it is better to type in the code. We know this is a hassle, but
-T> it will help you to remember the process better and the commands that you will be using later on.
+T> As you progress through the tutorial, you'll most likely be tempted to cut and paste the code from the book to your code editor.
+T> **However, it is better to type in the code.** We know that this is a hassle, but it will help you to remember the process better and the commands that you will be using later on.
 T>
-T> Also, if you cut and paste Python code you are asking for trouble. The whitespace can get end up being interpreted as spaces, tabs or a mixture of spaces and tabs. This will lead to all sorts of weird errors, and not necessarily indent errors. If you do cut and paste the code be wary of this.
+T> Furthermore, cutting and pasting Python code is asking for trouble. Whitespace can end up being interpreted as spaces, tabs or a mixture of spaces and tabs. This will lead to all sorts of weird errors, and not necessarily indent errors. If you do cut and paste code be wary of this. Pay particular attention to this if you're using Python 3 - inconsistent use of tabs and spaces in your code's indentation will lead to a `TabError`.
 T> 
-T> Most code editors will show the whitespace and whether it is tabs or spaces - if so turn it on and save yourself a lot of confusion.
+T> Most code editors will show the whitespace and whether it is tabs or spaces. If so, turn it on and save yourself a lot of confusion.
 
