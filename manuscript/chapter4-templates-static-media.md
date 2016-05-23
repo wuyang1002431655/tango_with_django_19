@@ -1,9 +1,8 @@
 # Templates and Static Media {#chapter-templates-static}
-In this chapter, we'll be introducing you to the Django template engine, as well as showing you how to serve *static media* files which can be integrated within your app's webpages.
+In this chapter, we'll be introducing the Django template engine, as well as showing how to serve *static media* files which can be integrated within your app's webpages.
 
 ## Using Templates
-Up until this point, you have plugged a few things together to create a Django powered webpage. This is coupled to a view, which is in turn coupled with a series of URL mappings. Here we will delve into how to combine templates into the mix.
-
+Up until this point, you have plugged a few things together to create a Django powered webpage. This is coupled to a view, which is in turn coupled with a series of URL mappings. Here we will delve into how to combine *templates* into the mix.
 
 The layout from page to page within a website is often the same. Whether you see a common header or footer on a website's pages, the [repetition of page layouts](http://www.techrepublic.com/blog/web-designer/effective-design-principles-for-web-designers-repetition/) aids users with navigation, promotes organisation of the website and reinforces a sense of continuity. [Django provides templates](https://docs.djangoproject.com/en/1.9/ref/templates/) to make it easier for developers to achieve this design goal, as well as separating application logic from presentational concerns. In this chapter, you'll create a basic template which will be used to create a HTML page. This template will then be dispatched via a Django view. In the [chapter concerning databases and models](#chapter-models), we will take this a step further by using templates in conjunction with models to dispatch dynamically generated data.
 
