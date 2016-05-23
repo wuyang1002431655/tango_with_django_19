@@ -86,19 +86,39 @@ You can read more about password hashing in the [official Django documentation o
 passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
 
 
-##The `User` Model
 
+## Password Validators
+A new feature introduced to Django 1.9 is [password validation](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation). In `settings.py`, you will notice a list of dictionaries called, `AUTH_PASSWORD_VALIDATORS`. As you can see Django comes with a number of default password validators for common checks such as length. The different validators can be configured, for example, if you wanted to ensure passwords are at least 6 in length, you can set `min_length` parameter of the `MinimumLengthValidator` as follows:
+
+{lang="python",linenos=off}
+	AUTH_PASSWORD_VALIDATORS = [
+	
+	...
+	
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+			'OPTIONS': { 'min_length': 6, }
+	},
+	
+	...
+	
+	]
+	
+It is also possible to create your own password validators. For more information see the [official Django documentation on password validators](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation).
+
+
+##The `User` Model
 
 The core of Django's authentication system is the `User` object, located
 at `django.contrib.auth.models.User`. A `User` object represents each of
 the people interacting with a Django application. The [Django
 documentation on User
-objects](https://docs.djangoproject.com/en/1.7/topics/auth/default/#user-objects)
+objects](https://docs.djangoproject.com/en/1.9/topics/auth/default/#user-objects)
 states that they are used to allow aspects of the authentication system
 like access restriction, registration of new user profiles and the
 association of creators with site content.
 
-The `User` model comes complete with five primary attributes. They are:
+The `User` model has five main fields. They are:
 
 -   the username for the user account;
 -   the account's password;
@@ -106,50 +126,43 @@ The `User` model comes complete with five primary attributes. They are:
 -   the user's first name; and
 -   the user's surname.
 
-The model also comes with other attributes such as `is_active` (which
-determines whether a particular account is active or not). Check the
+The model also comes with other attributes such as `is_active`, `is_staff` , `is_superuser` which are Boolean fields to denoted whether the account is active, is owned by a staff member or has superuser privileges, respectively.  Check the
 [official Django documentation on the user
-model](https://docs.djangoproject.com/en/1.7/ref/contrib/auth/#django.contrib.auth.models.User)
+model](https://docs.djangoproject.com/en/1.9/ref/contrib/auth/#django.contrib.auth.models.User)
 for a full list of attributes provided by the base `User` model.
 
-Additional User Attributes
---------------------------
-
-If you would like to include other attributes than what is provided by
+##Additional User Attributes
+If you would like to include other user related attributes than what is provided by
 the `User` model, then you will needed to create a model that is
 associated with the the `User` model. For our Rango application, we want
 to include two more additional attributes for each user account.
 Specifically, we wish to include:
 
--   a `URLField`, allowing a user of Rango to specify their own website;
-    and
--   a `ImageField`, which allows users to specify a picture for their
-    user profile.
+- a `URLField`, allowing a user of Rango to specify their own website; and
+- a `ImageField`, which allows users to specify a picture for their user profile.
 
 This can be achieved by creating an additional model in Rango's
 `models.py` file. Let's add a new model called `UserProfile`:
 
-``` {.sourceCode .python}
-class UserProfile(models.Model):
-    # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User)
+{lang="python",linenos=off}
+	class UserProfile(models.Model):
+		# This line is required. Links UserProfile to a User model instance.
+		user = models.OneToOneField(User)
+		
+		# The additional attributes we wish to include.
+		website = models.URLField(blank=True)
+		picture = models.ImageField(upload_to='profile_images', blank=True)
+		
+		# Override the __unicode__() method to return out something meaningful!
+		def __unicode__(self):
+			return self.user.username
 
-    # The additional attributes we wish to include.
-    website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-
-    # Override the __unicode__() method to return out something meaningful!
-    def __unicode__(self):
-        return self.user.username
-```
-
-Note that we reference the `User` model using a One to One relationship.
+Note that we reference the `User` model using a one-to-one relationship.
 Since we reference the default `User` model, we need to import it within
 the `models.py` file:
 
-``` {.sourceCode .python}
-from django.contrib.auth.models import User
-```
+{lang="python",linenos=off}
+	from django.contrib.auth.models import User
 
 It may have been tempting to add these additional fields by inheriting
 from the `User` model directly. However, because other applications may
@@ -165,7 +178,7 @@ both. This allows each of the fields to be blank if necessary, meaning
 that users do not have to supply values for the attributes if they do
 not wish to.
 
-Note that the `ImageField` field has an `upload_to` attribute. The value
+Also note that the `ImageField` field has an `upload_to` attribute. The value
 of this attribute is conjoined with the project's `MEDIA_ROOT` setting
 to provide a path with which uploaded profile images will be stored. For
 example, a `MEDIA_ROOT` of
@@ -174,56 +187,53 @@ of `profile_images` will result in all profile images being stored in
 the directory
 `<workspace>/tango_with_django_project/media/profile_images/`.
 
-> **warning**
->
-> The Django `ImageField` field makes use of the *Python Imaging Library
-> (PIL).* Back in Chapter requirements-label, we discussed installing
-> PIL along with Django to your setup. If you haven't got PIL installed,
-> you'll need to install it now. If you don't, you'll be greeted with
-> exceptions stating that the module `pil` cannot be found!
+I> ###Take the Pil
+I>
+I> The Django `ImageField` field makes use of the *Python Imaging Library
+I> (PIL)*. If you have not done so already, install PIL via Pip, `pip install pillow` or `pip install pillow    --global-option="build_ext" --global-option="--disable-jpeg"` if you have `jpeg` support.
+I> You can check what packages are installed in your (virtual) environment by issuing  the command, `pip list`.
 
-With our `UserProfile` model defined, we now edit Rango's `admin.py`
-file to include the new `UserProfile` model in the Django administration
-web interface. In the `admin.py` file, add the following line.
+To make the `UserProfile` model data accessible via the Django admin web interface add the following lines to the `admin.py` file.
 
-``` {.sourceCode .python}
-from rango.models import UserProfile
+{lang="python",linenos=off}
+	from rango.models import UserProfile
+	
+	...
+	
+	admin.site.register(UserProfile)
 
-admin.site.register(UserProfile)
-```
 
-> **note**
->
-> Remember that your database must be updated with the creation of a new
-> model. Run `$ python manage.py makemigrations rango` from your
-> terminal to create the migration scripts for the new `UserProfile`
-> model. Then run `$ python manage.py migrate`
+I> ###Migrate
+I>
+I> Remember that your database must be updated with the creation of a new
+I> model. Run `$ python manage.py makemigrations rango` from your
+I> terminal to create the migration scripts for the new `UserProfile`
+I> model. Then run `$ python manage.py migrate`
 
-Creating a *User Registration* View and Template
-------------------------------------------------
+##Creating a *User Registration* View and Template
 
 With our authentication infrastructure laid out, we can now begin to
 build onto it by providing users of our application with the opportunity
-to create new user accounts. We will achieve this via the creation of a
-new view and template combination.
+to create user accounts. We can achieve this by creating a new view, template and URL mapping to handle user registration.
 
-> **note**
->
-> It is important to note that there are several off-the-shelf user
-> registration packages available which reduce a lot of the hassle of
-> building your own registration and log in forms. However, it is good
-> to get a feeling for the underlying mechanics, because using such
-> applications. It will also re-enforce your understanding of working
-> with forms, how to extend upon the user model, and how to upload
-> media.
+
+I> ###Django User Registration Applications
+I>
+I> It is important to note that there are several off-the-shelf user
+I> registration applications available which reduce a lot of the hassle of
+I> building your own registration and log in forms. 
+I> 
+I> However it is good idea to get a feeling for the underlying mechanics before using such
+I> applications so that you have some sense of what is going on under the hood.
+I> It will also re-enforce your understanding of working
+I> with forms, how to extend upon the user model, and how to upload media (which can cause a lot of grief).
 
 To provide the user registration functionality we will go through the
 following steps:
 
 1.  Create a `UserForm` and `UserProfileForm`.
 2.  Add a view to handle the creation of a new user.
-3.  Create a template that displays the `UserForm` and
-    `UserProfileForm`.
+3.  Create a template that displays the `UserForm` and `UserProfileForm`.
 4.  Map a URL to the view created.
 5.  Link the index page to the register page
 
@@ -239,19 +249,19 @@ a significant amount of work for us. Neat!
 In `rango/forms.py`, let's create our two classes which inherit from
 `forms.ModelForm`. Add the following code to the module.
 
-``` {.sourceCode .python}
-class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+{lang="python",linenos=off}
+	class UserForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput())
 
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'password')
+		
+	class UserProfileForm(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ('website', 'picture')
 
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture')
-```
 
 You'll notice that within both classes, we added a
 [nested](http://www.brpreiss.com/books/opus7/html/page598.html) `Meta`
@@ -282,11 +292,10 @@ through use of the `PasswordInput()` widget.
 Finally, remember to include the required classes at the top of the
 `forms.py` module!
 
-``` {.sourceCode .python}
-from django import forms
-from django.contrib.auth.models import User
-from rango.models import Category, Page, UserProfile
-```
+{lang="python",linenos=off}
+	from django import forms
+	from django.contrib.auth.models import User
+	from rango.models import Category, Page, UserProfile
 
 ### Creating the `register()` View
 
@@ -294,70 +303,71 @@ Next we need to handle both the rendering of the form, and the
 processing of form input data. Within Rango's `views.py` file, add the
 following view function:
 
-``` {.sourceCode .python}
-from rango.forms import UserForm, UserProfileForm
+{lang="python",linenos=off}
+	from rango.forms import UserForm, UserProfileForm
 
-def register(request):
+	...
 
-    # A boolean value for telling the template whether the registration was successful.
-    # Set to False initially. Code changes value to True when registration succeeds.
-    registered = False
+	def register(request):
+		# A boolean value for telling the template whether the registration was successful.
+		# Set to False initially. Code changes value to True when registration succeeds.
+		registered = False
 
-    # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
-        # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+		# If it's a HTTP POST, we're interested in processing form data.
+		if request.method == 'POST':
+			# Attempt to grab information from the raw form information.	
+			# Note that we make use of both UserForm and UserProfileForm.
+			 user_form = UserForm(data=request.POST)
+			 profile_form = UserProfileForm(data=request.POST)
 
-        # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
-            user = user_form.save()
+		# If the two forms are valid...
+		if user_form.is_valid() and profile_form.is_valid():
+			# Save the user's form data to the database.
+			user = user_form.save()
+			
+			# Now we hash the password with the set_password method.
+			# Once hashed, we can update the user object.
+			user.set_password(user.password)
+			user.save()
 
-            # Now we hash the password with the set_password method.
-            # Once hashed, we can update the user object.
-            user.set_password(user.password)
-            user.save()
+			# Now sort out the UserProfile instance.
+			# Since we need to set the user attribute ourselves, we set commit=False.
+			# This delays saving the model until we're ready to avoid integrity problems.
+			profile = profile_form.save(commit=False)
+			profile.user = user
+			
+			# Did the user provide a profile picture?
+			# If so, we need to get it from the input form and 
+			#put it in the UserProfile model.
+			if 'picture' in request.FILES:
+				profile.picture = request.FILES['picture']
+			
+			# Now we save the UserProfile model instance.
+			profile.save()
+			
+			# Update our variable to tell the template registration was successful.
+			registered = True
+		
+		# Invalid form or forms - mistakes or something else?
+		# Print problems to the terminal.
+		# They'll also be shown to the user.
+		else:
+			print user_form.errors, profile_form.errors
 
-            # Now sort out the UserProfile instance.
-            # Since we need to set the user attribute ourselves, we set commit=False.
-            # This delays saving the model until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
+	# Not a HTTP POST, so we render our form using two ModelForm instances.
+	# These forms will be blank, ready for user input.
+	else:
+		user_form = UserForm()
+		profile_form = UserProfileForm()
 
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+	# Render the template depending on the context.
+	return render(request,
+			'rango/register.html',
+			{'user_form': user_form, 'profile_form': profile_form, 
+				'registered': registered} )
 
-            # Now we save the UserProfile model instance.
-            profile.save()
 
-            # Update our variable to tell the template registration was successful.
-            registered = True
-
-        # Invalid form or forms - mistakes or something else?
-        # Print problems to the terminal.
-        # They'll also be shown to the user.
-        else:
-            print user_form.errors, profile_form.errors
-
-    # Not a HTTP POST, so we render our form using two ModelForm instances.
-    # These forms will be blank, ready for user input.
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    # Render the template depending on the context.
-    return render(request,
-            'rango/register.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
-```
-
-Is the view a lot more complex? It might look so at first, but it isn't
-really. The only added complexity from our previous `add_category()`
-view is the need to handle two distinct `ModelForm` instances - one for
+While the view looks pretty complicated it is very similar in nature to how we implemented the add category and add page views. However, we had to also handle two distinct `ModelForm` instances - one for
 the `User` model, and one for the `UserProfile` model. We also need to
 handle a user's profile image, if he or she chooses to upload one.
 
