@@ -17,7 +17,7 @@ class IndexPageTests(TestCase):
         # Check if there is the message 'Rango Says'
         # Chapter 4
         response = self.client.get(reverse('index'))
-        self.assertIn('Rango says', response.content)
+        self.assertIn(b'Rango says', response.content)
          
     def test_index_using_template(self):
         # Check the template used to render index page
@@ -29,14 +29,14 @@ class IndexPageTests(TestCase):
         # Check if is there an image called 'rango.jpg' on the index page
         # Chapter 4
         response = self.client.get(reverse('index'))
-        self.assertIn('img src="/static/images/rango.jpg', response.content)
+        self.assertIn(b'img src="/static/images/rango.jpg', response.content)
     
     def test_index_has_title(self):
         # Check to make sure that the title tag has been used
         # And that the template contains the HTML from Chapter 4 
         response = self.client.get(reverse('index'))
-        self.assertIn('<title>', response.content)
-        self.assertIn('</title>', response.content)
+        self.assertIn(b'<title>', response.content)
+        self.assertIn(b'</title>', response.content)
 
 
 class AboutPageTests(TestCase):
@@ -45,14 +45,14 @@ class AboutPageTests(TestCase):
         # Check if in the about page is there - and contains the specified message
         # Exercise from Chapter 4
         response = self.client.get(reverse('about'))
-        self.assertIn('This tutorial has been put together by', response.content)
+        self.assertIn(b'This tutorial has been put together by', response.content)
         
         
     def test_about_contain_image(self):
         # Check if is there an image on the about page
         # Chapter 4
         response = self.client.get(reverse('about'))
-        self.assertIn('img src="/static/images/', response.content)
+        self.assertIn(b'img src="/static/images/', response.content)
         
     def test_about_using_template(self):
         # Check the template used to render index page
