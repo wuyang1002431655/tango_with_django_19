@@ -32,9 +32,9 @@ def show_category(request, category_name_slug):
     
     try:
         # Can we find a category name slug with the given name?
-    	# If we can't, the .get() method raises a DoesNotExist exception.
-    	# So the .get() method returns one model instance or raises an exception.
-    	category = Category.objects.get(slug=category_name_slug)
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # So the .get() method returns one model instance or raises an exception.
+        category = Category.objects.get(slug=category_name_slug)
         # Retrieve all of the associated pages.
         # Note that filter() returns a list of page objects or an empty list
         pages = Page.objects.filter(category=category)
@@ -46,13 +46,13 @@ def show_category(request, category_name_slug):
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
 	
-    	# We get here if we didn't find the specified category.
-    	# Don't do anything -
-		# the template will display the "no category" message for us.        
+        # We get here if we didn't find the specified category.
+        # Don't do anything -
+        # the template will display the "no category" message for us.        
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
-	# Go render the response and return it to the client.
+    # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
     
     
