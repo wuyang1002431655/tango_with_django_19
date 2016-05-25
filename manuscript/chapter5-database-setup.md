@@ -72,9 +72,10 @@ T> At the top of the `models.py` module, you should see `from django.db import m
 
 I> ### `__str__()` or `__unicode__()`?
 I> The `__str__()` and `__unicode__()` methods in Python generate a string representation of the class (similar to the  `toString()` method in Java).
-I> In Python 2.x  strings are represented in ASCII format in the `__str__()` method so if you want [Unicode support](https://docs.python.org/2/howto/unicode.html) then you need to also implement the
+I> In Python 2.x, strings are represented in ASCII format in the `__str__()` method. If you want [Unicode support](https://docs.python.org/2/howto/unicode.html), then you need to also implement the
 `__unicode__()` method.
-I> In Python 3.x strings are Unicode by default, so you only need to implement the `__str__()` method.
+I>
+I> In Python 3.x, strings are Unicode by default - so you only need to implement the `__str__()` method.
 
 
 When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. By default, all models have an auto-increment integer x field called `id` which is automatically assigned and acts a primary key.
@@ -91,18 +92,17 @@ I> Check out the [Django documentation on model fields](https://docs.djangoproje
 
 For each field, you can specify the `unique` attribute. If set to `True`, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique - thus every category name must be unique. This means that you can use the field like a primary key.
 
-You can also specify additional attributes for each field such as specifying a default value (`default='value'`), and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
+You can also specify additional attributes for each field, such as stating a default value with the syntax `default='value'`, and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
 
-Django provides three  mechanisms to related models in the database, these are:.
+Django provides three  mechanisms to related models in the database, which are:
 
-* `ForeignKey`, a field type that allows us to create a [one-to-many relationship](https://en.wikipedia.org/wiki/One-to-many_(data_model)).
-* `OneToOneField`, a field type that allows us to define a strict [one-to-one relationship](https://en.wikipedia.org/wiki/One-to-one_(data_model)).
+* `ForeignKey`, a field type that allows us to create a [one-to-many relationship](https://en.wikipedia.org/wiki/One-to-many_(data_model));
+* `OneToOneField`, a field type that allows us to define a strict [one-to-one relationship](https://en.wikipedia.org/wiki/One-to-one_(data_model)); and
 * `ManyToManyField`, a field type which allows us to define a [many-to-many relationship](https://en.wikipedia.org/wiki/Many-to-many_(data_model)).
 
 From our model examples above, the field `category` in model `Page` is of type `ForeignKey`. This allows us to create a one-to-many relationship with model/table `Category`, which is specified as an argument to the field's constructor. 
 
-
-Finally, it is good practice to implement the `__str__()` and/or `__unicode__()` methods. Without this method implemented when you go to `print` the object it will show as `<Category: Category object>`. This isn't very useful when debugging or accessing the object - instead the code above will print, for example, `<Category: Python>` for the Python category. It is also helpful when we go to use the Admin Interface because Django will display the string representation of the object.
+Finally, it is good practice to implement the `__str__()` and/or `__unicode__()` methods. Without this method implemented when you go to `print` the object, it will show as `<Category: Category object>`. This isn't very useful when debugging or accessing the object - instead the code above will print, for example, `<Category: Python>` for the Python category. It is also helpful when we go to use the Admin Interface because Django will display the string representation of the object.
 
 
 ## Creating and Migrating the Database
@@ -175,7 +175,7 @@ After you have created migrations for your app, you need to commit them to the d
 
 This output confirms that the database tables have been created in your database, and you are good to go.
 
-However, you may have noticed that our `Category` model is currently lacking some fields that [were specified in Rango's requirements](#section-models-databases-requirements). **Don't worry we'll be adding these in later to go through the migration process again.**
+However, you may have noticed that our `Category` model is currently lacking some fields that [were specified in Rango's requirements](#section-models-databases-requirements). **Don't worry about this, as these will be added in later, allowing you to go through the migration process again.**
 
 ## Django Models and the Shell
 Before we turn our attention to demonstrating the Django admin interface, it's worth noting that you can interact with Django models directly from the Django shell - a very useful tool for debugging purposes. We'll demonstrate how to create a ``Category`` instance using this method.
@@ -284,46 +284,46 @@ To create a population script for Rango, start by creating a new Python module w
 	from rango.models import Category, Page
 	
 	def populate():
-	    # First we will create lists of dictionaries containing the pages
-	    # we want to add into each category
-	    # Then we will create a dictionary of dictionaries for our categories
-	    # This might seem a little bit confusing, but it allows us to iterate through
-	    # through each data structure and add the data to our models.
+	    # First, we will create lists of dictionaries containing the pages
+	    # we want to add into each category.
+	    # Then we will create a dictionary of dictionaries for our categories.
+	    # This might seem a little bit confusing, but it allows us to iterate
+        # through each data structure, and add the data to our models.
 	    
 	    python_pages = [
 	        {"title": "Official Python Tutorial",
-	        "url":"http://docs.python.org/2/tutorial/"},
+	         "url":"http://docs.python.org/2/tutorial/"},
 	        {"title":"How to Think like a Computer Scientist",
-	    "url":"http://www.greenteapress.com/thinkpython/"},
+	         "url":"http://www.greenteapress.com/thinkpython/"},
 	        {"title":"Learn Python in 10 Minutes",
-	        "url":"http://www.korokithakis.net/tutorials/python/"} ]
+	         "url":"http://www.korokithakis.net/tutorials/python/"} ]
 	    
 	    django_pages = [
 	        {"title":"Official Django Tutorial",
-	            "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+	         "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
 	        {"title":"Django Rocks",
-	            "url":"http://www.djangorocks.com/"},
+	         "url":"http://www.djangorocks.com/"},
 	        {"title":"How to Tango with Django",
-	            "url":"http://www.tangowithdjango.com/"} ]
+	         "url":"http://www.tangowithdjango.com/"} ]
 	    
 	    other_pages = [
 	        {"title":"Bottle",
-	        "url":"http://bottlepy.org/docs/dev/"},
+	         "url":"http://bottlepy.org/docs/dev/"},
 	        {"title":"Flask",
-	        "url":"http://flask.pocoo.org"} ]
+	         "url":"http://flask.pocoo.org"} ]
 	    
 	    cats = {"Python": {"pages": python_pages},
 	            "Django": {"pages": django_pages},
 	            "Other Frameworks": {"pages": other_pages} }
 	    
 	    # If you want to add more catergories or pages,
-	    # add them to the dictionaries above
+	    # add them to the dictionaries above.
 	    
 	    # The code below goes through the cats dictionary, then adds each category,
-	    # and then adds all the associated pages for that category
+	    # and then adds all the associated pages for that category.
 	    # if you are using Python 2.x then use cats.iteritems() see
 	    # http://docs.quantifiedcode.com/python-anti-patterns/readability/
-	    # for more information about how to iterate over a dictionary properly
+	    # for more information about how to iterate over a dictionary properly.
 	    
 	    for cat, cat_data in cats.items():
 	        c = add_cat(cat)
@@ -359,7 +359,9 @@ While this looks like a lot of code, what is going on is essentially a series of
 
 
 T> ### What does `__name__ == '__main__'` Represent?
-T> The `__name__ == '__main__'` trick is a useful one that allows a Python module to act as either a reusable module or a standalone Python script. Consider a reusable module as one that can be imported into other modules (e.g. through an `import` statement), while a standalone Python script would be executed from a terminal/Command Prompt by entering `python module.py`. Code within a conditional `if __name__ == '__main__'` statement will only be executed when the module is run as a standalone Python script. Importing the module will not run this code; any classes or functions will however be fully accessible to you.
+T> The `__name__ == '__main__'` trick is a useful one that allows a Python module to act as either a reusable module or a standalone Python script. Consider a reusable module as one that can be imported into other modules (e.g. through an `import` statement), while a standalone Python script would be executed from a terminal/Command Prompt by entering `python module.py`.
+T>
+T> Code within a conditional `if __name__ == '__main__'` statement will therefore only be executed when the module is run as a standalone Python script. Importing the module will not run this code; any classes or functions will however be fully accessible to you.
 
 
 E> ### Importing Models
@@ -367,7 +369,7 @@ E> When importing Django models, make sure you have imported your project's sett
 E>
 E> If you don't do this crucial step, **an exception will be raised when you attempt to import your models as the necessary infrastructure has not yet been initialised**. This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
 
-The `populate()` function is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to the `Python` category is stored in local variable `python_cat` - check line 11 above. This is done as a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
+The `for` loop occupying lines 51-54 is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to a new category is stored in local variable `c` - check line 52 above. This is done as a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
 
 I> ### Creating Model Instances
 I> We make use of the convenience `get_or_create()` method for creating model instances in the population script above. As we don't want to create duplicates of the same entry, we can use `get_or_create()` to check if the entry exists in the database for us. If it doesn't exist, the method creates it. It does, then a reference to the specific model instance is returned.
