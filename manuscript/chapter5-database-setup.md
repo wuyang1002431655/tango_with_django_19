@@ -425,14 +425,13 @@ Invariably, there will be times when you will have to delete your database. When
 2. Create a new administrative account with the `createsuperuser` command.
 
 X> ### Exercises
-X> Now that you've completed this chapter, try out these exercises to reinforce and practice what you have learnt. **Note that following chapters will have expected you to have completed these exercises!
+X> Now that you've completed this chapter, try out these exercises to reinforce and practice what you have learnt. **Once again, note that the following chapters will have expected you to have completed these exercises!**
 X>
 X> * Update the `Category` model to include the additional attributes `views` and `likes` where the `default` values for each are both zero (`0`).
 X> * Make the migrations for your app, then migrate your database to commit the changes.
 X> * Update your population script so that the `Python` category has `128` views and `64` likes, the `Django` category has `64` views and `32` likes, and the `Other Frameworks` category has `32` views and `16` likes.
 X> * Delete and recreate your database, populating it with your updated population script.
-X> * Undertake the [second part of the official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) if you have not already done so. This will help to reinforce what you've learnt about handling databases in Django - from setting everything up, to issuing ORM commands to extract the data you require.
-X> * You should also attempt the [seventh part of the official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) which focuses on manipulating the Django admin interface to suit your needs. There's also a short guide here that shows you how to customise the look and feel of the interface if you wish to change it.
+X> * Complete parts [two](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) and [seven](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) of the official Django tutorial. These sections will reinforce what you've learnt on handling databases in Django, and show you additional techniques to customising the Django admin interface.
 X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed).
 
 T> ### Exercise Hints
@@ -451,14 +450,14 @@ T> * Finally, register the `PageAdmin` class with Django's admin interface. You 
 
 I> ### Tests
 I>
-I> We have written a few tests to check if you have completed the exercises. To check your work so far 
-I> [download the `tests.py` script]( https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/rango/tests.py) from our GitHub account: https://github.com/leifos/tango_with_django_19/ and save it within your `rango` app directory.
+I> We have written a few tests to check if you have completed the exercises. To check your work so far, [download the `tests.py` script](https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/rango/tests.py) from our [GitHub repository](https://github.com/leifos/tango_with_django_19/), and save it within your `rango` app directory.
 I>
-I> To run the tests, issue the following command in the terminal:
+I> To run the tests, issue the following command in the terminal or Command Prompt.
+I>
 I> {lang="text",linenos=off}
 I>     $ python manage.py test rango
 I>
-I> If you are interested in learning about automated testing it is good time to check out the [chapter on testing](#chapter-testing) which will run through some of the basics on testing you can perform in Django.
+I> If you are interested in learning about automated testing, now is a good time to check out the [chapter on testing](#chapter-testing). The chapter runs through some of the basics on testing that can perform in Django.
 
 
 
