@@ -270,7 +270,7 @@ I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
 ## Creating a Population Script
-Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `wadhdafuccbrro`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
+Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `wTFzm8j3z7`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
 
 To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
 
@@ -303,13 +303,13 @@ To create a population script for Rango, start by creating a new Python module w
 	            "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
 	        {"title":"Django Rocks",
 	            "url":"http://www.djangorocks.com/"},
-	        { "title":"How to Tango with Django",
+	        {"title":"How to Tango with Django",
 	            "url":"http://www.tangowithdjango.com/"} ]
 	    
 	    other_pages = [
-	        { "title":"Bottle",
+	        {"title":"Bottle",
 	        "url":"http://bottlepy.org/docs/dev/"},
-	        { "title":"Flask",
+	        {"title":"Flask",
 	        "url":"http://flask.pocoo.org"} ]
 	    
 	    cats = {"Python": {"pages": python_pages},

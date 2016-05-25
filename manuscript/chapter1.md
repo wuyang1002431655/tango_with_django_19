@@ -36,7 +36,7 @@ X> In each chapter we have added a number of exercises to test your knowledge an
 X>
 X> *You will need to complete these exercises as the subsequent chapters are dependent on them.*
 X>
-X> But don't worry if you get stuck, you can look at our solutions in *GitHUb*  [https://github.com/leifos/tango_with_django_19](https://github.com/leifos/tango_with_django_19).
+X> Don't worry if you get stuck, though. If you want to, you can check out our solutions to all the exercises on our [*GitHub* repository](https://github.com/leifos/tango_with_django_19).
 
 
 {pagebreak}

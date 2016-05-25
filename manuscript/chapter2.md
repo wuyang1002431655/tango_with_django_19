@@ -45,14 +45,16 @@ I> When installing Pillow, you may receive an error stating that the installatio
 I> This error is shown as the following:
 I> 
 I> {lang="text",linenos=off}
-I> 	ValueError: jpeg is required unless explicitly disabled using --disable-jpeg, aborting
+I> 	ValueError: jpeg is required unless explicitly disabled using
+I>              --disable-jpeg, aborting
 I>
 I> If you receive this error, try installing Pillow *without* JPEG support enabled, with the following command.
 I>
 I> {lang="text",linenos=off}
-I> 	pip install pillow    --global-option="build_ext" --global-option="--disable-jpeg"
+I> 	pip install pillow --global-option="build_ext"
+I>                     --global-option="--disable-jpeg"
 I>
-I> While you obviously will have a lack of support for handling JPEG images, Pillow should then install without problem. For further information, check out the [http://pillow.readthedocs.io/en/3.2.x/installation.html](Pillow documentation).
+I> While you obviously will have a lack of support for handling JPEG images, Pillow should then install without problem. For further information, check out the [Pillow documentation](http://pillow.readthedocs.io/en/3.2.x/installation.html).
 
 
 ##Virtual Environments
