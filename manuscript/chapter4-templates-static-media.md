@@ -192,23 +192,29 @@ To demonstrate how to include static files, open up the `index.html` templates y
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+    
 	{% load staticfiles %} <!-- New line -->
+    
 	<html>
-		<head>
-			<title>Rango</title>
-		</head>
-		<body>
-			<h1>Rango says...</h1>
-			<div>
-				hey there partner! <br />
-				<strong>{{ boldmessage }}</strong><br />
-			</div>
-			<div>
-				<a href="/rango/about/">About</a><br />
-				<img src="{% static "images/rango.jpg" %}"
+	    <head>
+	        <title>Rango</title>
+	    </head>
+	    
+	    <body>
+	        <h1>Rango says...</h1>
+	        
+	        <div>
+	            hey there partner! <br />
+	            <strong>{{ boldmessage }}</strong><br />
+	        </div>
+	        
+	        <div>
+	            <a href="/rango/about/">About</a><br />
+	            <img src="{% static "images/rango.jpg" %}"
                      alt="Picture of Rango" /> <!-- New line -->
-			</div>
-		</body>
+	        </div>
+	    </body>
+	    
 	</html>
 
 The first new line added ( i.e. `{% load staticfiles %}`) informs Django's template engine that we will be using static files with the template. This then enables us to access the media in the static directories via the use of the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/). This indicates to Django that we wish to show the image located in the static media directory called `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{%  % }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`. The HTML generated as a result would be:
@@ -281,7 +287,7 @@ X> Give the following exercises a go to reinforce what you've learnt from this c
 X> 
 X> * Convert the about page to use a template as well, using a template called `about.html`.
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
-X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`
+X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
 
 
 

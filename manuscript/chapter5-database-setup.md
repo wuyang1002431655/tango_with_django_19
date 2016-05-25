@@ -1,5 +1,5 @@
 # Models and Databases {#chapter-models-databases}
-When you think of databases, you will usually think of the *Structured Query Language (SQL)*, the common means with which we query the database for the data we require. You may be relieved to know that with Django, querying an underlying database - which can store all sorts of data, such as your website's user details - is taken care of by the [*object relational mapper (ORM)*](https://en.wikipedia.org/wiki/Object-relational_mapping). In essence, data stored within a database table can be encapsulated within a *model*. A model is a Python object that describes your database table's data. Instead of directly working on the database via SQL, you only need to manipulate the corresponding Python model object.
+When you think of databases, you will usually think of the *Structured Query Language (SQL)*, the common means with which we query the database for the data we require. With Django, querying an underlying database - which can store all sorts of data, such as your website's user details - is taken care of by the [*object relational mapper (ORM)*](https://en.wikipedia.org/wiki/Object-relational_mapping). In essence, data stored within a database table can be encapsulated within a *model*. A model is a Python object that describes your database table's data. Instead of directly working on the database via SQL, you only need to manipulate the corresponding Python model object.
 
 This chapter walks you through the basics of data management with Django and its ORM. You'll find it's incredibly easy to add, modify and delete data within your app's underlying database, and how straightforward it is to get data from the database to the Web browsers of your users.
 
@@ -28,14 +28,10 @@ Before we can create any models, we need to set up our database with Django. In 
 We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
 
 
-H> ### Git Tip
-H> If you are using Git, you might be tempted to add and commit the database file. 
-H> This is not a good idea because if you are working on the app with other people
-H> they are likely to change the database and this will cause endless conflicts.
-H>
-H> Instead, add `db.sqlites3` to your `.gitignore` file so that it wont be added. 
-H> You can also do this for other files like `*.pyc` etc that are specific to your machine, 
-H> settings, etc but different on other machines
+T> ### Git Tip
+T> If you are using Git, you might be tempted to add and commit the database file. This is not a good idea because if you are working on your app with other people, they are likely to change the database and this will cause endless conflicts.
+T>
+T> Instead, add `db.sqlites3` to your `.gitignore` file so that it wont be added when you `git commit` and `git push`. You can also do this for other files like `*.pyc` and machine specific files.
 
 
 I> ### Using other Database Engines
@@ -238,7 +234,7 @@ To do this, open the file `rango/admin.py`. With an `include` statement already 
 
 Adding further classes which may be created in the future is as simple as adding another call to the `admin.site.register()` method.
 
-With these changes saved, restart the Django development server and revisit `http://127.0.0.1:8000/admin/`. You will now see the `Category` and `Page` models, [as shown below](#fig-ch5-admin-second).
+With these changes saved, restart the Django development server and revisit the admin interface at `http://127.0.0.1:8000/admin/`. You will now see the `Category` and `Page` models, [as shown below](#fig-ch5-admin-second).
 
 {id="fig-ch5-admin-second"}
 ![The Django admin interface, complete with Rango models.](images/ch5-admin-second.png)
