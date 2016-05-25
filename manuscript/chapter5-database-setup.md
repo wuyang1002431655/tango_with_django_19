@@ -204,7 +204,7 @@ This will start an instance of the Python interpreter and load in your project's
 In the example, we first import the model that we want to manipulate. We then print out all the existing categories. As our underlying `Category` table is empty, an empty list is returned. Then we create and save a `Category`, before printing out all the categories again. This second `print` then shows the new ``Category`` just added. Note the name, `Test` appears in the second `print` - this is your `__str__()` or `__unicode__()` method at work!
 
 X> ### Complete the Official Tutorial
-X> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete part one of the [official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
+X> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete [part two of the official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
 
 ## Configuring the Admin Interface
 One of the eye-catching features of Django is the built-in, Web-based administrative interface that allows you to browse and edit data represented as model instances (from the corresponding database tables).
@@ -430,6 +430,11 @@ X> * Delete and recreate your database, populating it with your updated populati
 X> * Complete parts [two](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) and [seven](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) of the official Django tutorial. These sections will reinforce what you've learnt on handling databases in Django, and show you additional techniques to customising the Django admin interface.
 X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed).
 
+
+{id="fig-admin-completed"}
+![The updated admin interface `Page` view, complete with columns for category and URL.](images/ch5-admin-completed.png)
+
+
 T> ### Exercise Hints
 T> If you require some help or inspiration to get these exercises done, these hints will hopefully help you out.
 T> 
@@ -438,10 +443,6 @@ T> * Modify the `add_cat` function in the `populate.py` script, to take the `vie
 T> * To customise the admin interface, you will need to edit `rango/admin.py` and create a `PageAdmin` class that inherits from `admin.ModelAdmin`. 
 T> * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
 T> * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
-
-{id="fig-admin-completed"}
-![The updated admin interface `Page` view, complete with columns for category and URL.](images/ch5-admin-completed.png)
-
 
 
 I> ### Tests
