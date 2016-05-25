@@ -46,8 +46,7 @@ Note that you are *required to use absolute paths* to locate the `templates` dir
 {lang="python",linenos=off}
     'DIRS': [ '/Users/leifos/templates',
 	          '/Users/maxwelld90/templates',
-	          '/Users/clueless_noob/templates',	
-	]
+	          '/Users/clueless_noob/templates', ]
 
 	
 However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the black slashes have to be constructed differently (see the warning below).

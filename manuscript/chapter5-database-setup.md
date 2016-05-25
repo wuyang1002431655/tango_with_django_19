@@ -276,60 +276,61 @@ To create a population script for Rango, start by creating a new Python module w
 
 {lang="python",linenos=on}
 	import os
-	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
+	os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'tango_with_django_project.settings')
 	
 	import django
 	django.setup()
 	from rango.models import Category, Page
 	
 	def populate():
-		# First we will create lists of dictionaries containing the pages
-		# we want to add into each category
-		# Then we will create a dictionary of dictionaries for our categories
-		# This might seem a little bit confusing, but it allows us to iterate through
-		# through each data structure and add the data to our models.
+	    # First we will create lists of dictionaries containing the pages
+	    # we want to add into each category
+	    # Then we will create a dictionary of dictionaries for our categories
+	    # This might seem a little bit confusing, but it allows us to iterate through
+	    # through each data structure and add the data to our models.
 	    
 	    python_pages = [
-			{"title": "Official Python Tutorial",
-			"url":"http://docs.python.org/2/tutorial/"},
-			{"title":"How to Think like a Computer Scientist",
-			"url":"http://www.greenteapress.com/thinkpython/"},
-		    {"title":"Learn Python in 10 Minutes",
-			"url":"http://www.korokithakis.net/tutorials/python/"} ]
+	        {"title": "Official Python Tutorial",
+	        "url":"http://docs.python.org/2/tutorial/"},
+	        {"title":"How to Think like a Computer Scientist",
+	    "url":"http://www.greenteapress.com/thinkpython/"},
+	        {"title":"Learn Python in 10 Minutes",
+	        "url":"http://www.korokithakis.net/tutorials/python/"} ]
 	    
 	    django_pages = [
-			{"title":"Official Django Tutorial",
-		        "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
-			{"title":"Django Rocks",
-		        "url":"http://www.djangorocks.com/"},
-			{ "title":"How to Tango with Django",
-		        "url":"http://www.tangowithdjango.com/"} ]
+	        {"title":"Official Django Tutorial",
+	            "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+	        {"title":"Django Rocks",
+	            "url":"http://www.djangorocks.com/"},
+	        { "title":"How to Tango with Django",
+	            "url":"http://www.tangowithdjango.com/"} ]
 	    
 	    other_pages = [
-			{ "title":"Bottle",
-			"url":"http://bottlepy.org/docs/dev/"},
-			{ "title":"Flask",
-			 "url":"http://flask.pocoo.org"} ]
+	        { "title":"Bottle",
+	        "url":"http://bottlepy.org/docs/dev/"},
+	        { "title":"Flask",
+	        "url":"http://flask.pocoo.org"} ]
 	    
 	    cats = {"Python": {"pages": python_pages},
-				"Django": {"pages": django_pages},
-	        	"Other Frameworks": {"pages": other_pages} }
+	            "Django": {"pages": django_pages},
+	            "Other Frameworks": {"pages": other_pages} }
 	    
-	    # if you want to add more catergories or pages,
-		# add them to the dictionaries above
-		
-		# The code below goes through the cats dictionary, then adds each category,
-		# and then adds all the associated pages for that category
-		# if you are using Python 2.x then use cats.iteritems() see
-		# http://docs.quantifiedcode.com/python-anti-patterns/readability/
-		# for more information about how to iterate over a dictionary properly
+	    # If you want to add more catergories or pages,
+	    # add them to the dictionaries above
+	    
+	    # The code below goes through the cats dictionary, then adds each category,
+	    # and then adds all the associated pages for that category
+	    # if you are using Python 2.x then use cats.iteritems() see
+	    # http://docs.quantifiedcode.com/python-anti-patterns/readability/
+	    # for more information about how to iterate over a dictionary properly
 	    
 	    for cat, cat_data in cats.items():
 	        c = add_cat(cat)
 	        for p in cat_data["pages"]:
 	            add_page(c, p["title"], p["url"])
 	    
-	    # Print out the categories we have added to the user.
+	    # Print out the categories we have added.
 	    for c in Category.objects.all():
 	        for p in Page.objects.filter(category=c):
 	            print("- {0} - {1}".format(str(c), str(p)))
@@ -343,7 +344,7 @@ To create a population script for Rango, start by creating a new Python module w
 	
 	def add_cat(name):
 	    c = Category.objects.get_or_create(name=name)[0]
-		c.save()
+	    c.save()
 	    return c
 	
 	# Start execution here!
@@ -354,7 +355,12 @@ To create a population script for Rango, start by creating a new Python module w
 T> ### Understand this Code!
 T> Don't copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. Below we have provided explanations - hopefully you'll learn something new!
 
-While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look for line 65. This is because above this point, we define functions - these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we hit the `populate()` function.
+While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look at lines 75 and 76. This is because above this point, we define functions, these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we call the `populate()` function.
+
+
+T> ### What does `__name__ == '__main__'` Represent?
+T> The `__name__ == '__main__'` trick is a useful one that allows a Python module to act as either a reusable module or a standalone Python script. Consider a reusable module as one that can be imported into other modules (e.g. through an `import` statement), while a standalone Python script would be executed from a terminal/Command Prompt by entering `python module.py`. Code within a conditional `if __name__ == '__main__'` statement will only be executed when the module is run as a standalone Python script. Importing the module will not run this code; any classes or functions will however be fully accessible to you.
+
 
 E> ### Importing Models
 E> When importing Django models, make sure you have imported your project's settings by importing `django` and setting the environment variable `DJANGO_SETTINGS_MODULE` to be your project's setting file, as demonstrated in lines 1 to 6 above. You then call ``django.setup()`` to import your Django project's settings.
