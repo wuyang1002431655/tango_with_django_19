@@ -1,7 +1,7 @@
 #Django Basics {#chapter-django-basics}
 
 
-Let's get started with Django! In this chapter, we'll be giving you an overview of the creation process. You'll be setting up a new project and a new web application. By the end of this chapter, you will have a simple Django-powered website up and running!
+Let's get started with Django! In this chapter, we'll be giving you an overview of the creation process. You'll be setting up a new project and a new web application. By the end of this chapter, you will have a simple Django powered website up and running!
 
 ##Testing your Setup
 

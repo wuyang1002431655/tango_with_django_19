@@ -125,7 +125,8 @@ You can then update the `index()` view function as follows. Check out the inline
 
 First, we construct a dictionary of key/value pairs that we want to use within the template. Then, we call the `render()` helper function. This function takes as input the user's `request`, the template filename, and the context dictionary. The `render()` function will take this data and mash it together with the template to produce a complete HTML page. This is then returned and dispatched to the user's web browser.
 
-I> ### What is the Template Context? {#section-templates-static-context}
+{#section-templates-static-context}
+I> ### What is the Template Context?
 I> When a template file is loaded with the Django templating system, a *template context* is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In the template we created earlier, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `Crunchy, creamy, cookie, candy, cupcake!` is mapped to template variable `boldmessage`. The string `Crunchy, creamy, cookie, candy, cupcake!` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
 
 Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the [example screenshot shown below](#fig-ch4-first-template).
@@ -135,7 +136,7 @@ If you don't, read the error message presented to see what the problem is, and t
 This example demonstrates how to use templates within your views. However, we have only touched upon a fraction of the functionality provided by the Django templating engine. We will use templates in more sophisticated ways as you progress through this book. In the meantime, you can find out more about [templates from the official Django documentation](https://docs.djangoproject.com/en/1.9/ref/templates/).
 
 {id="fig-ch4-first-template"}
-![What you should see when your first template is working correctly. Note the bold text, `Crunchy, creamy, cookie, candy, cupcake!`.](images/ch4-first-template.png)
+![What you should see when your first template is working correctly. Note the bold text - `Crunchy, creamy, cookie, candy, cupcake!` - which originates from the view, but is rendered in the template.](images/ch4-first-template.png)
 
 ## Serving Static Media
 While you've got templates working, your Rango app is admittedly looking a bit plain right now - there's no styling or imagery. We can add references to other files in our HTML template such as [*Cascading Style Sheets (CSS)*](http://en.wikipedia.org/wiki/Cascading_Style_Sheets), [*JavaScript*](https://en.wikipedia.org/wiki/JavaScript) and images to improve the show. These are called *static files*, because they are not generated dynamically by a Web server; they are simply sent as is to a client's Web browser. This section shows you how to set Django up to serve static files, and shows you how to include an image within your simple template.
@@ -204,7 +205,8 @@ To demonstrate how to include static files, open up the `index.html` templates y
 			</div>
 			<div>
 				<a href="/rango/about/">About</a><br />
-				<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+				<img src="{% static "images/rango.jpg" %}"
+                     alt="Picture of Rango" /> <!-- New line -->
 			</div>
 		</body>
 	</html>
@@ -229,22 +231,23 @@ T> ### Loading other Static Files
 T> The ``{% static %}`` template tag call can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
 T>
 T>	{lang="html",linenos=off}
-T> 		<!DOCTYPE html>
-T>		{% load staticfiles %}
-T>     
-T>		<html>
-T>			<head>
-T>				<title>Rango</title>
-T>				<!-- CSS -->
-T>             <link rel="stylesheet" href="{% static "css/base.css" %}" />
-T>             <!-- JavaScript -->
-T>             <script src="{% static "js/jquery.js" %}"></script>
-T>			</head>
-T>			<body>
-T>				<!-- Image -->
-T>				<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
-T>			</body>
-T>     </html>
+T>      <!DOCTYPE html>
+T>	    {% load staticfiles %}
+T>  
+T>	    <html>
+T>	        <head>
+T>	            <title>Rango</title>
+T>	            <!-- CSS -->
+T>              <link rel="stylesheet" href="{% static "css/base.css" %}" />
+T>              <!-- JavaScript -->
+T>              <script src="{% static "js/jquery.js" %}"></script>
+T>          </head>
+T>
+T>          <body>
+T>              <!-- Image -->
+T>              <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
+T>          </body>
+T>      </html>
 T>    
 T> Static files you reference will obviously need to be present within your `static` directory. If a requested file is not present or you have referenced it incorrectly, the console output provided by Django's development server will show a [`HTTP 404` error](https://en.wikipedia.org/wiki/HTTP_404). Try referencing a non-existent file and see what happens. Looking at the output snippet below, notice how the last entry's HTTP status code is `404`.
 T>

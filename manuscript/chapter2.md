@@ -113,12 +113,9 @@ X>  -   Install the Django and Pillow packages
 X>  -   Setup an account on a Git Repository site like: GitHub, BitBucket, etc if you haven't already done so.
 X>  -   Download and setup an Integrated Development Environment like [PyCharm](https://www.jetbrains.com/pycharm/)
 X> 
+X>  As previously stated, we've made the code for the book and application available on our [GitHub repository](https://github.com/leifos/tango_with_django_19/).
 X> 
-X>  We have made the code for the book and application available on GitHub, see [Tango With Django 
-X>  Book](https://github.com/leifos/tango_with_django_19/) .
-X> 
-X>  -   If you spot any errors or problem, please let us know by making a change request on GitHub!
+X>  -   If you spot any errors or problem, please let us know by making a change request on GitHub.
 X>  -   If you have any problems with the exercises, you can check out the repository to see how we completed them.
-X> 
 
 
