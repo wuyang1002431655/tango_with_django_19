@@ -294,17 +294,19 @@ T> -  To reference the links to category pages you can use the following templat
 T> `<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>`.
 
 
-W> Loading Staticfiles
+W> ###Loading Staticfiles
 W>
 W> Remember to add `{% load staticfiles %}` to the top of each template that
 W> makes use of static media. If you don't, you'll get an error! Django
 W> template modules must be imported individually for each template that
 W> requires them.
 
+<!-->
 ![A class diagram demonstrating how your templates should inherit from
 `base.html`.](../images/rango-template-inheritance.svg)
+-->
 
-I> Cleaner Code
+I> ###Cleaner Code
 I>
 I> Upon completion of these exercises, all of Rango's templates should
 I> inherit from `base.html`. Looking back at the contents of `base.html`,
