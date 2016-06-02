@@ -304,17 +304,16 @@ I> more information about this.
 
 Now we need to map the `add_category()` view to a URL. In the template
 we have used the URL `/rango/add_category/` in the form's action
-attribute. We now need to create a mapping from the URL to the View. In `rango/urls.py` modify
-the `urlpatterns` as follows.
+attribute. We now need to create a mapping from the URL to the View. In `rango/urls.py` modify the `urlpatterns` 
 
 {lang="python",linenos=off}
-	urlpatterns = patterns('',
-    	url(r'^$', views.index, name='index'),
-    	url(r'^about/$', views.about, name='about'),
-    	url(r'^add_category/$', views.add_category, name='add_category'),
-    	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
-			views.category, name='category'),)
-
+	urlpatterns = [
+		url(r'^$', views.index, name='index'),
+		url(r'about/$', views.about, name='about'),
+		url(r'^add_category/$', views.add_category, name='add_category'),
+		url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
+			views.show_category, name='show_category'),
+	]
 
 Ordering doesn't necessarily matter in this instance. However, take a
 look at the [official Django documentation on how Django process a
