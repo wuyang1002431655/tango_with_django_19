@@ -8,7 +8,8 @@ chapter7-forms.md
 chapter8-templates.md
 chapter-work-in-progress.md
 chapter9-user-authenication.md
-
+chapter10-cookies.md
+chapter11-redux.md
 chapter-testing.md
 chapter-deployment.md
 chapter-summary.md
