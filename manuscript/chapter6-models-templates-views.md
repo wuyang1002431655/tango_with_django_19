@@ -488,7 +488,7 @@ page.
 
 
 What happens when you visit a category that does not exist? Try navigating a category which doesn't exist, like
-`/rango/category/computers/`. Do this by typing the adress manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
+`/rango/category/computers/`. Do this by typing the address manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
 
 {id="fig-ch6-rango-links"}
 ![The links to Django pages.](images/ch6-rango-links.png)
