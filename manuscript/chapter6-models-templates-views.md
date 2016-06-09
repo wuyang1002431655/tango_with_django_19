@@ -13,7 +13,7 @@ driven webpage in Django.
 1.  In `views.py` file import the models you wish to use.
 2.  In the view function, query the model to get the data you want to present.
 3.  Then pass the results from your model into the template's context.
-4.  Create/modify the template so that if displays the data from the context.
+4.  Create/modify the template so that it displays the data from the context.
 5.  If you have not done so already, map a URL to your view.
 
 These steps highlight how we need to work within Django's framework to bind models, views and templates together.
@@ -65,7 +65,7 @@ W> where you need to add the field `likes` to the `Category` model.
 
 ### Modifying the Index Template
 
-With the view updated, we can complete the forth step and update the
+With the view updated, we can complete the fourth step and update the
 template `rango/index.html`, located within your project's `templates`
 directory. Change the HTML so that it looks like the
 example shown below.
@@ -163,7 +163,7 @@ provided by Django.
 -->
 ### Update Category Table with Slug Field
 
-To make readable URLs, need to include a slug field in the
+To make readable URLs, we need to include a slug field in the
 `Category` model. First we need to import the function `slugify` from
 Django that will replace whitespace with hyphens, i.e "how do i create
 a slug in django" turns into "how-do-i-create-a-slug-in-django".
@@ -213,7 +213,7 @@ To perform the migration issue the following commands:
 
 
 Since we did not provide a default value for the slug, and we already
-have existing data in the model, then the migrate command will give you
+have existing data in the model, the migrate command will give you
 two options. Select the option to provide a default, and enter `''`. 
 Then re-run the population script, which will update the slug field.
 
@@ -225,7 +225,7 @@ Now run the development server (`python manage.py runserver`), and inspect the d
 
 If you go to add in a new category via the admin interface you may encounter a problem, or two!
 
-1. Lets say we added in the category, `Python User Groups`. If you do so, and try to save the record Django will not let you save it unless you also fill in the slug field too. While we could type in `python-user-groups` this is error prone. It would be better to have the slug automatically generated.
+1. Let's say we added in the category, `Python User Groups`. If you do so, and try to save the record Django will not let you save it unless you also fill in the slug field too. While we could type in `python-user-groups` this is error prone. It would be better to have the slug automatically generated.
 
 2. The next problem arises if we have one category called `Django` and one called `django`. Since the `slugify()` makes the slugs lower case it will not be possible to identify which category corresponds to the `django` slug.
 
@@ -254,7 +254,7 @@ or we can customize the admin interface so that it automatically pre-populates t
 	
 Try out the admin interface and add in a new category. Pretty cool, hey!
 
-Now that we have addressed the first problem, we can ensure that the slug field is also unique, by adding the contraint to the slug field.
+Now that we have addressed the first problem, we can ensure that the slug field is also unique, by adding the constraint to the slug field.
 
 {lang="python",linenos=off}
 	slug = models.SlugField(unique=True)
@@ -488,7 +488,7 @@ page.
 
 
 What happens when you visit a category that does not exist? Try navigating a category which doesn't exist, like
-`/rango/category/computers/`. Do this by typing the adress manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
+`/rango/category/computers/`. Do this by typing the address manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
 
 {id="fig-ch6-rango-links"}
 ![The links to Django pages.](images/ch6-rango-links.png)
