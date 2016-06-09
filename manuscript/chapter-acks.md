@@ -1,10 +1,8 @@
 #Acknowledgements
 
-This book was written to help teach web application development to computing science students. In writing the book and the tutorial, we have had to rely upon the awesome Django community and the Django Documentation for the answers and solutions. This book is really the combination of that knowledge pieced together in the context of building Rango. We would also like to thank all the people who have helped to improve this resource by sending us comments, suggestions, git issues and pull requests. 
+This book was written to help teach web application development to computing science students. In writing the book and the tutorial, we have had to rely upon the awesome Django community and the Django Documentation for the answers and solutions. This book is really the combination of that knowledge pieced together in the context of building Rango. 
 
-Thank you all very much!
-
-
+We would also like to thank all the people who have helped to improve this resource by sending us comments, suggestions, git issues and pull requests. 
 
 [Mickey P.](https://github.com/mickeypash)
 [pdehaye](https://github.com/pdehaye)
@@ -17,3 +15,8 @@ Thank you all very much!
 [Zhou](https://github.com/AugustLONG)
 [Charlotte ](https://github.com/Charlotteis)
 [cspollar](https://github.com/cspollar)
+[mHulb](https://github.com/mHulb)
+
+
+Thank you all very much!
+

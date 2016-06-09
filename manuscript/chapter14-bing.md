@@ -59,67 +59,67 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 	BING_API_KEY = '<insert_bing_api_key>'
 
 	def run_query(search_terms):
-	    # Specify the base
-	    root_url = 'https://api.datamarket.azure.com/Bing/Search/'
-	    source = 'Web'
+		# Specify the base
+		root_url = 'https://api.datamarket.azure.com/Bing/Search/'
+		source = 'Web'
 
-	    # Specify how many results we wish to be returned per page.
-	    # Offset specifies where in the results list to start from.
-	    # With results_per_page = 10 and offset = 11, this would start from page 2.
-	    results_per_page = 10
-	    offset = 0
+		# Specify how many results we wish to be returned per page.
+		# Offset specifies where in the results list to start from.
+		# With results_per_page = 10 and offset = 11, this would start from page 2.
+		results_per_page = 10
+		offset = 0
 
-	    # Wrap quotes around our query terms as required by the Bing API.
-	    # The query we will then use is stored within variable query.
-	    query = "'{0}'".format(search_terms)
-	    query = urllib.quote(query)
+		# Wrap quotes around our query terms as required by the Bing API.
+		# The query we will then use is stored within variable query.
+		query = "'{0}'".format(search_terms)
+		query = urllib.quote(query)
 
-	    # Construct the latter part of our request's URL.
-	    # Sets the format of the response to JSON and sets other properties.
-	    search_url = "{0}{1}?$format=json&$top={2}&$skip={3}&Query={4}".format(
-	        root_url,
-	        source,
-	        results_per_page,
-	        offset,
-	        query)
+		# Construct the latter part of our request's URL.
+		# Sets the format of the response to JSON and sets other properties.
+		search_url = "{0}{1}?$format=json&$top={2}&$skip={3}&Query={4}".format(
+			root_url,
+			source,
+			results_per_page,
+			offset,
+			query)
 
-	    # Setup authentication with the Bing servers.
-	    # The username MUST be a blank string, and put in your API key!
-	    username = ''
+		# Setup authentication with the Bing servers.
+		# The username MUST be a blank string, and put in your API key!
+		username = ''
 
 
-	    # Create a 'password manager' which handles authentication for us.
-	    password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-	    password_mgr.add_password(None, search_url, username, BING_API_KEY)
+		# Create a 'password manager' which handles authentication for us.
+		password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+		password_mgr.add_password(None, search_url, username, BING_API_KEY)
 
-	    # Create our results list which we'll populate.
-	    results = []
+		# Create our results list which we'll populate.
+		results = []
 
-	    try:
-	        # Prepare for connecting to Bing's servers.
-	        handler = urllib2.HTTPBasicAuthHandler(password_mgr)
-	        opener = urllib2.build_opener(handler)
-	        urllib2.install_opener(opener)
+		try:
+			# Prepare for connecting to Bing's servers.
+			handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+			opener = urllib2.build_opener(handler)
+			urllib2.install_opener(opener)
 
-	        # Connect to the server and read the response generated.
-	        response = urllib2.urlopen(search_url).read()
+			# Connect to the server and read the response generated.
+			response = urllib2.urlopen(search_url).read()
 
-	        # Convert the string response to a Python dictionary object.
-	        json_response = json.loads(response)
+			# Convert the string response to a Python dictionary object.
+			json_response = json.loads(response)
 
-	        # Loop through each page returned, populating out results list.
-	        for result in json_response['d']['results']:
-	            results.append({
-	            'title': result['Title'],
-	            'link': result['Url'],
-	            'summary': result['Description']})
+			# Loop through each page returned, populating out results list.
+			for result in json_response['d']['results']:
+			results.append({
+				'title': result['Title'],
+				'link': result['Url'],
+				'summary': result['Description']})
 
-	    # Catch a URLError exception - something went wrong when connecting!
-	    except urllib2.URLError as e:
-	        print "Error when querying the Bing API: ", e
+				# Catch a URLError exception - something went wrong when connecting!		
+		except urllib2.URLError as e:
+			print "Error when querying the Bing API: ", e
 
-	    # Return the list of results to the calling function.
-	    return results
+		# Return the list of results to the calling function.
+		return results
 
 The logic of the function above can be broadly split into six main tasks:
 
@@ -135,7 +135,7 @@ Notice that results are passed from Bing's servers as JSON. This is because we e
 I> ###Bing it on!
 I>
 I> There are many different parameters that the Bing Search API can handle which we don't cover here. 
-I>If you're interested in seeing how to tailor your results, check out the `Bing Search API Migration Guide and FAQ <http://datamarket.azure.com/dataset/bing/search>`_.
+I>If you're interested in seeing how to tailor your results, check out the (Bing Search API Migration Guide and FAQ)[http://datamarket.azure.com/dataset/bing/search].
 
 
 ##Storing your API KEY safely
@@ -145,23 +145,31 @@ If you are putting your code into a public repository on GitHub or the like, the
 
 X> ###Exercises
 X>
-X>Taking the basic Bing Search API function we added above as a baseline, try out the following exercises.
-X> * If using a public repository, refactor the code so that your API key is not publicly accessible
-X> * Add a main() function to the `bing_search.py` to test out the BING Search API 
-X> * Hint: add the following code, so that when you `python bing_search.py` it calls the `main()` function:
-	
-{lang="python",linenos=off}
-	if __name__ == '__main__':
-		main()
-	
-	
-* The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
-* Print out the rank, title and URL for each result.
+X> Taking the basic Bing Search API function we added above as a baseline, try out the following exercises.
+X> - If using a public repository, refactor the code so that your API key is not publicly accessible
+X> - Add a main() function to the `bing_search.py` to test out the BING Search API 
+
+
+
+T> Hint: add the following code, so that when you run `python bing_search.py` it calls the `main()` function:
+T> 	
+T> {lang="python",linenos=off}
+T>	def main():
+T>	
+T>		#insert your code here
+T>
+T>	if __name__ == '__main__':
+T>		main()
+T>	
+T>
+T> - The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
+T> - Print out the rank, title and URL for each result.
 
 
 
 ##Putting Search into Rango
 To add external search functionality, we will need to perform the following steps.
+
 -  We must first create a ``search.html`` template which extends from our ``base.html`` template. The ``search.html`` template will include a HTML ``<form>`` to capture the user's query as well as template code to present any results.
 - We then create a view to handle the rendering of the ``search.html`` template for us, as well as calling the ``run_query()`` function we defined above.
 
@@ -171,42 +179,43 @@ Let's first create our ``search.html`` template. Add the following HTML markup a
 {lang="html",linenos=off}
 	{% extends "base.html" %}
 	{% load staticfiles %}
-	{% block title %}Search{% endblock %}
+	{% block title %} Search {% endblock %}
 	{% block body_block %}
-		<div class="page-header">
-			<h1>Search with Rango</h1>
-		</div>
-		<div class="row">
+	<div class="page-header">
+		<h1>Search with Rango</h1>
+	</div>
+	<div class="row">
 		<div class="panel panel-primary">
 			<br/>
-	            <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
-	                {% csrf_token %}
-	                <!-- Display the search form elements here -->
-	                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
-	                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
-	                <br />
-	            </form>
-
-	            <div class="panel">
-	                {% if result_list %}
-	                    <div class="panel-heading">
-	                    <h3 class="panel-title">Results</h3>
-	                    <!-- Display search results in an ordered list -->
-	                    <div class="panel-body">
-	                        <div class="list-group">
-	                            {% for result in result_list %}
-	                                <div class="list-group-item">
-	                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a></h4>
-	                                    <p class="list-group-item-text">{{ result.summary }}</p>
-	                                </div>
-	                            {% endfor %}
-	                        </div>
-	                    </div>
-	                {% endif %}
-	                </div>
-	            </div>
-	 </div>
-
+			<form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+				{% csrf_token %}
+				<!-- Display the search form elements here -->
+				<input class="form-control" type="text" size="50" name="query" value="" id="query" />
+				<input class="btn btn-primary" type="submit" name="submit" value="Search" />
+				<br />
+			</form>
+			<div class="panel">
+			{% if result_list %}
+				<div class="panel-heading">
+					<h3 class="panel-title">Results</h3>
+					<!-- Display search results in an ordered list -->
+					<div class="panel-body">
+					<div class="list-group">
+						{% for result in result_list %}
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading">
+							<a href="{{ result.link }}">{{ result.title }}</a>
+							</h4>
+							<p class="list-group-item-text">{{ result.summary }}</p>
+						</div>
+						{% endfor %}
+					</div>
+					</div>
+				</div>
+			{% endif %}
+			
+		</div>
+	</div>
 	{% endblock %}
 
 
@@ -246,8 +255,8 @@ You'll also need to ensure you do the following, too.
 
 I> Application Programming Interface
 I>
-I> According to the `relevant article on Wikipedia <http://en.wikipedia.org/wiki/Application_programming_interface>`_, an *Application Programming Interface (API)* specifies how software components should interact with one another.
+I> According to the (relevant article on Wikipedia)[ http://en.wikipedia.org/wiki/Application_programming_interface>], an *Application Programming Interface (API)* specifies how software components should interact with one another.
 I> In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. 
-I> Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, `Luis Rei provides an excellent tutorial on APIs <http://blog.luisrei.com/articles/rest.html>`_.
+I> Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, (Luis Rei provides an excellent tutorial on APIs)[ http://blog.luisrei.com/articles/rest.html].
 
 
