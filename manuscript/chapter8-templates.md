@@ -412,19 +412,20 @@ I> You will need to restart your server every time you modify the template tags.
 Now lets extend this so that when we visit a category page, it highlights which category we are in. To do this we need to paramterise the templatetag. So update the method in`rango\_extras.py`to be: 
 
 {lang="python",linenos=off}
-       def get_category_list(cat=None):
-	   return {'cats': Category.objects.all(), 'act_cat': cat}  
+	def get_category_list(cat=None):
+	return {'cats': Category.objects.all(), 'act_cat': cat}  
 
 
 This lets us pass through the category we are on. We can now update the`base.html`to pass through the category, if it exists.  
 
-{lang="html",linenos=off}
+<!--	<div class="col-sm-3 col-md-2 sidebar">   -->
 
-	<div class="col-sm-3 col-md-2 sidebar">          
-	{% block side_block %}         
-		{% get_category_list category %}         
-	{% endblock %}      
-	</div>   
+{lang="html",linenos=off}
+	<div class="col-sm-3 col-md-2 sidebar">
+	{% block side_block %}
+		{% get_category_list category %}
+	{% endblock %}
+	</div>
 	
 Now update the `cats.html` template:   
 
@@ -432,7 +433,7 @@ Now update the `cats.html` template:
 	{% for c in cats %}
 		{% if c == act_cat %} 
 			<li><b><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></b></li>
-		{% else  %} 
+		{% else  %}
 			 <li><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></li>
 		{% endif %}
 			
@@ -440,7 +441,6 @@ Now update the `cats.html` template:
 
 
 In the template we check to see if the category being displayed is the same as the category being passed through (i.e. `c == act_cat` ). If so, we make the category name bold. 
-
 
 ## Using Templates and Tags
 In this chapter, we showed how we can:
