@@ -150,7 +150,7 @@ Now that you have an understanding of blocks within Django templates, let's take
 	            {% endblock %}
 	        </title>
 	    </head>
-	
+	    
 	    <body>
 	        <div>
 	            {% block body_block %}
@@ -159,9 +159,9 @@ Now that you have an understanding of blocks within Django templates, let's take
             <hr />
 	        <div>
 	            <ul>
-	                <li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+	                <li><a href="{% url 'add_category' %}">Add New Category</a></li>
 	                <li><a href="{% url 'about' %}">About</a></li>
-	                <li><a href="{% url 'index' %}">Index</a></li>		
+	                <li><a href="{% url 'index' %}">Index</a></li>
 	            </ul>
 	        </div>
 	    </body>
@@ -234,8 +234,6 @@ X> - Update all references to Rango URLs with the `url` template tag.
 
 
 T> ### Hints
-T> These hints will get you started on the above exercises if you're struggling. Good luck!
-T> 
 T> - Start refactoring the `about.html` template first.
 T> - Update the `title_block` then the `body_block` in each template.
 T> - Have the development server running and check the page as you work on it. Don't change the whole page to find it doesn't work. Changing things incrementally and testing those changes as you go is a much safer solution.
@@ -254,15 +252,10 @@ W> Remember to add `{% load staticfiles %}` to the top of **each template** that
 `base.html`.](../images/rango-template-inheritance.svg)
 -->
 
-## Cleaner Template Code
- Upon completion of these exercises, all of Rango's templates should
-inherit from `base.html`. Looking back at the contents of `base.html`,
-the `user` object - found within the context of a given Django
-request - is used to determine if the current user of Rango is logged in (through use of `user.is_authenticated`). As all of Rango's templates should inherit from this base template, we can say that *all of Rango's templates now depend on having access to the context of a given request.*
+## Cleaner Template Code (REQ. REVISION)
+Upon completion of the exercises listed above, all of your Rango app's templates will now inherit from `base.html`. Looking back at the contents of `base.html`, the `user` object - found within the context of a given Django request - is used to determine if the current user of Rango is logged in (through use of `user.is_authenticated`). As all of Rango's templates should inherit from this base template, we can say that *all of Rango's templates now depend on having access to the context of a given request.*
 
- Due to this new dependency, you must check each of Rango's Django
-views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a
-parameter. If you don't ensure this happens, your views may be rendered incorrectly - users may appear to be not logged in, even though Django thinks that they are!
+Due to this new dependency, you must check each of Rango's Django views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. If you don't ensure this happens, your views may be rendered incorrectly - users may appear to be not logged in, even though Django thinks that they are!
 
 I> ### Render and Context
 I>
