@@ -34,34 +34,65 @@ This page allows you to try out the Bing Search API by filling out the boxes to 
 Assuming this all works take a copy of your API key. We will need this when we make requests as part of the authentication process. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be shown.   We'll be using it later, so take a note of it - and keep it safe!  The Bing API Service Explorer keeps a tab of how many queries you have left of your monthly quota. So if someone obtains your key, they'll be able to use your quota.  
 
 ##Adding Search Functionality
-To add search functionality to Rango, we need to write a couple of additional functions: (1) to read in your Bing API key, and (2) to query the Bing API. 
+Below we have provided the code which we can use to issued queries to the Bing search service. Create a file called `rango/bing_search.py` and import the code.
 
+As you can see we have written two functions. The first reads in your Bing API key, and the second issues they query.
 
 ###Read Bing Key
+The `read_bing_key()` function reads in your key from a file called, `bing.key` in the `rango` directory. We have created this function because if you are putting your code into a public repository on GitHub, for example, then you should take some pre-cautions to avoid sharing your API Key publicly. The solution here is that we store the  *Account Key* to access the Microsoft Azure Datamarket in a file called, `bing.key`, which we don't commit to the Git repo. To make sure that we don't accidentally add it, update your `.gitignore` file to exclude `key` files, by adding `*.key`. This way the key will only be stored locally and you wont have someone else using your quota.
 
 
+###Run Query
+The `run_query()` function takes a query as a string, and returns the top ten results from Bing in a list that contains dictionary of the result items (`title`, `link`, `summary`). If you are interested, the inline commentary describes how the request is created and then issued to the Bing API.
 
-###Issue Queries
+Briefly, though, the logic of the function above can be broadly split into six main tasks:
 
-This code should take in the request from a particular user and return to the calling function a list of results. Any errors that occur during the API querying phase should also be handled gracefully within the function. Spinning off search functionality into an additional function also provides a nice abstraction between Django-related code and search functionality code.
+* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
+* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
+* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
+* This string is then parsed into a Python dictionary object using the ``json`` Python package.
+* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
+* The dictionary is returned by the function.
 
-To start, let's create a new Python module called ``bing_search.py`` within our ``rango`` application directory. Add the following code into the file. Check out the inline commentary for a description of what's going on throughout the function.
+Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the ``search_url`` variable which we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the ``print`` statement within the ``except`` block.
 
 
-
-
-{lang="python",linenos=off}
+{lang="python",linenos=on}
 	import json
 	import urllib, urllib2
 
-	# Add your BING_API_KEY 
+	# Add your Microsoft Account Key to a file called bing.key
 
-	BING_API_KEY = '<insert_bing_api_key>'
+	def read_bing_key():
+		"""
+		reads the BING API key from a file called 'bing.key'
+		returns: a string which is either None, i.e. no key found, or with a key
+		remember to put bing.key in your .gitignore file to avoid committing it to the repo.
+		"""
+	
+		# See Python Anti-Patterns - it is an awesome resource to improve your python code
+		# Here we using "with" when opening documents
+		# http://docs.quantifiedcode.com/python-anti-patterns/maintainability/not_using_with_to_open_files.html
+	
+		bing_api_key = None
+		try:
+			with open('bing.key','r') as f:
+				bing_api_key = f.readline()
+		except:
+			raise IOError('bing.key file not found')
+		
+		return bing_api_key
+	
 
 	def run_query(search_terms):
-		# Specify the base
+	
+		bing_api_key = read_bing_key()
+		if not bing_api_key:
+			raise KeyError('Bing Key Not Found')
+	
+		# Specify the base url and the service (Bing Search API 2.0)
 		root_url = 'https://api.datamarket.azure.com/Bing/Search/'
-		source = 'Web'
+		service = 'Web'
 
 		# Specify how many results we wish to be returned per page.
 		# Offset specifies where in the results list to start from.
@@ -78,7 +109,7 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 		# Sets the format of the response to JSON and sets other properties.
 		search_url = "{0}{1}?$format=json&$top={2}&$skip={3}&Query={4}".format(
 			root_url,
-			source,
+			service,
 			results_per_page,
 			offset,
 			query)
@@ -87,10 +118,10 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 		# The username MUST be a blank string, and put in your API key!
 		username = ''
 
-
+		#headers = {'Authorization' : 'Basic {0}'.format( b64encode(bing_api_key) )}
 		# Create a 'password manager' which handles authentication for us.
 		password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-		password_mgr.add_password(None, search_url, username, BING_API_KEY)
+		password_mgr.add_password(None, search_url, username, bing_api_key)
 
 		# Create our results list which we'll populate.
 		results = []
@@ -109,10 +140,10 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 
 			# Loop through each page returned, populating out results list.
 			for result in json_response['d']['results']:
-			results.append({
-				'title': result['Title'],
-				'link': result['Url'],
-				'summary': result['Description']})
+				results.append({
+					'title': result['Title'],
+					'link': result['Url'],
+					'summary': result['Description']})
 
 				# Catch a URLError exception - something went wrong when connecting!		
 		except urllib2.URLError as e:
@@ -121,36 +152,21 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 		# Return the list of results to the calling function.
 		return results
 
-The logic of the function above can be broadly split into six main tasks:
-
-* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
-* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
-* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
-* This string is then parsed into a Python dictionary object using the ``json`` Python package.
-* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
-* The dictionary is returned by the function.
-
-Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the ``search_url`` variable which we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the ``print`` statement within the ``except`` block.
-
 I> ###Bing it on!
 I>
 I> There are many different parameters that the Bing Search API can handle which we don't cover here. 
-I>If you're interested in seeing how to tailor your results, check out the (Bing Search API Migration Guide and FAQ)[http://datamarket.azure.com/dataset/bing/search].
-
-
-##Storing your API KEY safely
-
-If you are putting your code into a public repository on GitHub or the like, then you should take some pre-cautions about sharing your API Key. One solution is to create a new file call, `keys.py` which has a variable  `BING_API_KEY`. Then import the `BING_API_KEY` into `bing_search.py`.  Update your `.gitignore` file to include `keys.py`, so that `keys.py` is not added to the repository. This way the key will only be stored locally.
+I> If you want to know more about the API  check out the [Bing Search API Migration Guide and FAQ](http://datamarket.azure.com/dataset/bing/search).
 
 
 X> ###Exercises
 X>
-X> Taking the basic Bing Search API function we added above as a baseline, try out the following exercises.
-X> - If using a public repository, refactor the code so that your API key is not publicly accessible
-X> - Add a main() function to the `bing_search.py` to test out the BING Search API 
+X> - Add a `main()` function to the `bing_search.py`, so that you can run the module independently i.e. `python bing_search.py`
+X> - Prompt the user to enter a query 
+X> - Issue the query via `run_query()` and print the results
 
 
-
+T> ### Run main()
+T>
 T> Hint: add the following code, so that when you run `python bing_search.py` it calls the `main()` function:
 T> 	
 T> {lang="python",linenos=off}
@@ -162,8 +178,9 @@ T>	if __name__ == '__main__':
 T>		main()
 T>	
 T>
-T> - The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
-T> - Print out the rank, title and URL for each result.
+T> When you run the module explicitly via `python bing_search.py` then the `bing_search` module is treated as the `__main__` module, and thus triggers `main()`.
+T> However, when the module is imported by another module, then `__name__` will not equal `__main__`, and so the `main()` function not be called. This way you can import it with your application without running `main()`.
+
 
 
 
