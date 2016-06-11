@@ -25,109 +25,88 @@ In your app's `index.html` template, you will notice that you have a parameteris
 
 {lang="html",linenos=off}
 	{% for category in categories %}
-	    <li><a href="{% url 'category' category.slug %}">
-	        {{ category.name }}</a></li>
+	    <li>
+	        <a href="{% url 'category' category.slug %}">
+	            {{ category.name }}
+	        </a>
+	    </li>
 	{% endfor %}
 
-Before you charge off to update all the URLs in all your templates with relative URLs, we need to re-structure and re-factor our templates by using inheritance to remove repetition.
+Before you run off to update all the URLs in all your templates with relative URLs, we need to re-structure and re-factor our templates by using inheritance to remove repetition.
 
 
 ## Dealing with Repetition
-While most sites will have lots of repeated structure (i.e. headers,
-sidebars, footers, etc) repeating the HTML in each template is a not
-good way to handle this. So instead of doing the same cut and paste hack
-job, we can minimize the amount of repetition in our code base by
-employing *template inheritance* provided by Django's Template Language.
+While pretty much every professionally made website that you use will have a series of repeated components (such as page headers, sidebars, and footers, for example), repeating the HTML for each of these repeating components is not a particularly wise way to handle this. What if you wanted to change part of your website's header? You'd need to go through *every* page and change each copy of the header to suit.
+
+Instead of spending (or wasting!) large amounts of time copying and pasting your HTML markup, we can minimise repetition in our codebase by emplying *template inheritence* provided by Django's template language.
 
 The basic approach to using inheritance in templates is as follows.
 
-1.  Identify the re-occurring parts of each page that are repeated
-    across your application (i.e. header bar, sidebar, footer, content
-    pane)
-2.  In a *base template*, provide the skeleton structure of a standard
-    page along with any common content (i.e. the copyright notice that
-    goes in the footer, the logo and title that appears in the section),
-    and then define a number of *blocks* which are subject to change
-    depending on which page the user is viewing.
-3.  Create specific templates - all of which inherit from the base
-    template - and specify the contents of each block.
+1.  Identify the reoccurring parts of each page that are repeated across your application (i.e. header bar, sidebar, footer, content pane). Sometimes, it can help to draw up on paper the basic structure of your different pages to help you spot what components are used in common.
+2.  In a *base template*, provide the skeleton structure of a basic page, along with any common content (i.e. the copyright notice that goes in the footer, the logo and title that appears in the section). Then, define a number of *blocks* which are subject to change depending on which page the user is viewing.
+3.  Create specific templates for your app's pages - all of which inherit from the base template - and specify the contents of each block.
+
 
 ###Reoccurring HTML and The Base Template
+Given the templates that we have created so far, it should be pretty obvious that we have been repeating a fair bit of HTML code. Below, we have abstracted away any page specific details to show the skeleton structure that we have been repeating within each template.
 
-
-Given the templates that we have created so far it should be pretty
-obvious that we have been repeating a fair bit of HTML code. Below we
-have abstracted away any page specific details to show the skeleton
-structure that we have been repeating within each template.
-
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	{% load staticfiles %}
+    
 	<html>
-	<head>
-		<title>Rango</title>
-	</head>
-	<body>
-		<!-- Page specific content goes here -->
-	</body>
+	    <head lang="en">
+	        <meta charset="UTF-8" />
+	        <title>Rango</title>
+	    </head>
+	    
+	    <body>
+	        <!-- Page specific content goes here -->
+	    </body>
 	</html>
 
-Let's make this our base template, for the time being, and save it as
-`base.html` in the `templates/rango/` directory (e.g. `templates/rango/base.html`).
+For the time being, let's make this simple HTML page our app's base template. Save this markup in `base.html` within the `templates/rango/` directory (e.g. `templates/rango/base.html`).
 
-W> ### DOCTYPE First
+W> ### `DOCTYPE` Goes First!
 W>
-W> Remember that the `<!DOCTYPE html>` declaration needs to
-W> be placed on the first line of your template.
-W> Not doing so will mean that the generated page will not comply with the [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
+W> Remember that the `<!DOCTYPE html>` declaration always needs to be placed on the *first line* of your template.
+W> Not having a [document type declaration](https://en.wikipedia.org/wiki/Document_type_declaration) on line one may mean that the resultant page generated from your template will not comply with [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
 
 ###Template Blocks
-Now that we've created our base template we can add template tags to denote what parts of the template can be overriden by templates that inherit from it. To do this we will be using the *block* tag.
-For example we can add a `body_block` to the base template as follows:
+Now that we've created our base template, we can add template tags to denote what parts of the template can be overriden by templates that inherit from it. To do this we will be using the `block` tag. For example, we can add a `body_block` to the base template in `base.html` as follows:
 
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	{% load staticfiles %}
+	
 	<html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title>Rango</title>
-	</head>
-	<body>
-		{% block body_block %}
-		{% endblock %}
-	</body>
+	    <head lang="en">
+	        <meta charset="UTF-8" />
+	        <title>Rango</title>
+	    </head>
+	    
+	    <body>
+	        {% block body_block %}
+	        {% endblock %}
+	    </body>
 	</html>
 
 
-Recall that standard Django template commands are denoted by `{%` and
-`%}` tags. To start a block, the command is `block <NAME>`, where
-`<NAME>` is the name of the block you wish to create. You must also
-ensure that you close the block with the `endblock` command, again
-enclosed within Django template tags.
+Recall that standard Django template commands are denoted by `{%` and `%}` tags. To start a block, the command is `{% block <NAME> %}`, where `<NAME>` is the name of the block you wish to create. You must also ensure that you close the block with the `{% endblock %}` command, again enclosed within Django template tags.
 
-You can also specify 'default content' for your blocks, for example:
+You can also specify *default content* for your blocks, which will be used if no inheriting template defines the given block (see [further down](#section-templates-inheritance)). Specifying default content can be easily achieved by adding HTML markup between the `{% block %}` and `{% endblock %}` template commands, just like in the example below.
 
 {lang="html",linenos=off}
-		{% block body_block %}
-			This is body_block's default content.
-		{% endblock %}
+	{% block body_block %}
+	    This is body_block's default content.
+	{% endblock %}
 
-When we create templates for each page we will inherit from `rango/base.html`
-and override the contents of the `body_block`. However, you can place as
-many blocks in your templates as you so desire. For example, you could
-create a block for the page title, a footer, a sidebar, etc. Blocks are
-a really powerful feature of Django's template system to learn more
-about them check out the [official Django documentation on
-templates](https://docs.djangoproject.com/en/1.9/topics/templates/#id1).
+When we create templates for each page, we will inherit from `rango/base.html` and override the contents of `body_block`. However, you can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, a block for the footer, a block for the sidebar, and more. Blocks are a really powerful feature of Django's templating system, and you can learn more about them check on [Django's official documentation on templates](https://docs.djangoproject.com/en/1.9/topics/templates/).
 
-I> ### Extract all common structure
+I> ### Extract the Common Structures
+I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future will far outweigh the initial overhead of doing this task.
 I>
-I> You should always aim to extract as much reoccurring content for your
-I> base templates. While it may be a bit more of a challenge for you to
-I> do initially, the time you will save in maintenance of your templates
-I> in the future far outweighs the initial overhead. Think about it:
-I> would you rather maintain one copy of your markup or multiple copies?
+I> Think about it: *would you rather maintain one copy of your markup, or multiple copies?*
 
 
 ### Abstracting Further
@@ -177,7 +156,7 @@ We have introduced two new features into the template.
     by a *horizontal rule* (`<hr />`) which provides a visual separation
     between the `body_block` content and the links.
 
-##Template Inheritance
+##Template Inheritance {#section-templates-inheritance}
 Now that we've created a base template with blocks, we can now update
 all the templates we have created so that they inherit from the base template. 
 Let's start by refactoring the template `rango/category.html`.
