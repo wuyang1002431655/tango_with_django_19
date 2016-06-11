@@ -119,11 +119,10 @@ For the two fields `website` and `picture`, we have set `blank=True` for both. T
 
 Furthermore, it should be noted that the `ImageField` field has an `upload_to` attribute. The value of this attribute is conjoined with the project's `MEDIA_ROOT` setting to provide a path with which uploaded profile images will be stored. For example, a `MEDIA_ROOT` of `<workspace>/tango_with_django_project/media/` and `upload_to` attribute of `profile_images` will result in all profile images being stored in the directory `<workspace>/tango_with_django_project/media/profile_images/`.
 
-I> Why about Inheriting to Extend?
+I> ### What about Inheriting to Extend?
 I> It may have been tempting to add the additional fields defined above by inheriting from the `User` model directly. However, because other applications may also want access to the `User` model, it not recommended to use inheritance - but instead use a one-to-one relationship within your database instead.
 
 I> ### Take the PIL
-I>
 I> The Django `ImageField` field makes use of the *Python Imaging Library (PIL)*. If you have not done so already, install PIL via Pip with the command `pip install pillow`. If you don't have `jpeg` support enabled, you can also install PIL with the command `pip install pillow --global-option="build_ext" --global-option="--disable-jpeg"`.
 I>
 I> You can check what packages are installed in your (virtual) environment by issuing the command `pip list`.
@@ -138,91 +137,56 @@ Now you can register the new model with the admin interface, with the following 
 {lang="python",linenos=off}
 	admin.site.register(UserProfile)
 
-
 I> ### Once again, Migrate!
 I> Remember that your database must be updated with the creation of a new model. Run `$ python manage.py makemigrations rango` from your terminal or Command Prompt to create the migration scripts for the new `UserProfile` model. Then run `$ python manage.py migrate` to execute the migration which creates the associated tables within the underlying database.
 
 ##Creating a *User Registration* View and Template
-
-With our authentication infrastructure laid out, we can now begin to
-build onto it by providing users of our application with the opportunity
-to create user accounts. We can achieve this by creating a new view, template and URL mapping to handle user registration.
+With our authentication infrastructure laid out, we can now begin to build on it by providing users of our application with the opportunity to create user accounts. We can achieve this by creating a new view, template and URL mapping to handle user registrations.
 
 
-I> ###Django User Registration Applications
+I> ### Django User Registration Applications
 I>
-I> It is important to note that there are several off-the-shelf user
-I> registration applications available which reduce a lot of the hassle of
-I> building your own registration and log in forms. 
+I> It is important to note that there are several off the shelf user registration applications available which reduce a lot of the hassle of building your own registration and login forms. 
 I> 
-I> However it is good idea to get a feeling for the underlying mechanics before using such
-I> applications so that you have some sense of what is going on under the hood.
-I> It will also re-enforce your understanding of working
-I> with forms, how to extend upon the user model, and how to upload media (which can cause a lot of grief).
+I> However, it's a good idea to get a feeling for the underlying mechanics before using such applications. This will ensure that you have some sense of what is going on under the hood. *No pain, no gain.* It will also reenforce your understanding of working with forms, how to extend upon the `User` model, and how to upload media files.
 
-To provide the user registration functionality we will go through the
-following steps:
+To provide user registration functionality, we will now work through the following steps:
 
-1.  Create a `UserForm` and `UserProfileForm`.
-2.  Add a view to handle the creation of a new user.
-3.  Create a template that displays the `UserForm` and `UserProfileForm`.
-4.  Map a URL to the view created.
-5.  Link the index page to the register page
+1.  create a `UserForm` and `UserProfileForm`;
+2.  add a view to handle the creation of a new user;
+3.  create a template that displays the `UserForm` and `UserProfileForm`; and
+4.  map a URL to the view created.
+
+As a final step to integrate our new registration functionality, we will also:
+
+5.  link the index page to the register page.
 
 ### Creating the `UserForm` and `UserProfileForm`
+In `rango/forms.py`, we now need to create two classes inheriting from `forms.ModelForm`. We'll be creating one for the base `User` class, as well as one for the new `UserProfile` model that we just created. The two `ModelForm`-inheriting classes allow us to display a HTML form displaying the necessary form fields for a particular model, taking away a significant amount of work for us.
 
-In `rango/forms.py`, we now need to create two classes inheriting from
-`forms.ModelForm`. We'll be creating one for the base `User` class, as
-well as one for the new `UserProfile` model that we just created. The
-two `ModelForm` inheriting classes allow us to display a HTML form
-displaying the necessary form fields for a particular model, taking away
-a significant amount of work for us. Neat!
-
-In `rango/forms.py`, let's create our two classes which inherit from
-`forms.ModelForm`. Add the following code to the module.
+In `rango/forms.py`, let's first create our two classes which inherit from `forms.ModelForm`. Add the following code to the module.
 
 {lang="python",linenos=off}
 	class UserForm(forms.ModelForm):
-	password = forms.CharField(widget=forms.PasswordInput())
-
-	class Meta:
-		model = User
-		fields = ('username', 'email', 'password')
-		
+	    password = forms.CharField(widget=forms.PasswordInput())
+	    
+	    class Meta:
+	        model = User
+	        fields = ('username', 'email', 'password')
+	
 	class UserProfileForm(forms.ModelForm):
-	class Meta:
-		model = UserProfile
-		fields = ('website', 'picture')
+	    class Meta:
+	        model = UserProfile
+	        fields = ('website', 'picture')
 
+You'll notice that within both classes, we added a [nested](http://www.brpreiss.com/books/opus7/html/page598.html) `Meta`
+class. As [the name of the nested class suggests](http://www.webopedia.com/TERM/M/meta.html), anything within a nested `Meta` class describes additional properties about the particular class to which it belongs. Each `Meta` class must at a bare minimum supply a `model` field, which references back to the model the `ModelForm` inheriting class should relate to. Our `UserForm` class is therefore associated with the `User` model, as an example. You'll also need to specify `fields` or `exclude` to indicate which fields associated with the model should be present (or not) on the rendered form.
 
-You'll notice that within both classes, we added a
-[nested](http://www.brpreiss.com/books/opus7/html/page598.html) `Meta`
-class. As [the name of the nested class
-suggests](http://www.webopedia.com/TERM/M/meta.html), anything within a
-nested `Meta` class describes additional properties about the particular
-`ModelForm` class it belongs to. Each `Meta` class must at a bare
-minimum supply a `model` field, which references back to the model the
-`ModelForm` inheriting class should relate to. Our `UserForm` class is
-therefore associated with the `User` model, for example. As of Django
-1.7, you also need to specify, `fields` or `exclude` to indicate which
-fields associated with the model should be present on the form.
+Here, we only want to show the fields `username`, `email` and `password` associated with the `User` model, and the `website` and `picture` fields associated with the `UserProfile` model. For the `user` field within `UserProfile` model, we will need to make this association when we register the user. This is because when we create a `UserProfile` instance, we won't yet have the `User` instance to refer to.
 
-Here we only want to show the fields, `username`, `email` and
-`password`, associated with the `User` model, and the `website` and
-`picture` associated with the `UserProfile` model. For the `user` field
-within `UserProfile` we will need to make this association when we
-register the user.
+You'll also notice that `UserForm` includes a definition of the `password` attribute. While a `User` model instance contains a `password` attribute by default, the rendered HTML form element will not hide the password. If a user types a password, the password will be visible. By updating the `password` attribute, we can specify that the `CharField` instance should hide a user's input from prying eyes through use of the `PasswordInput()` widget.
 
-You'll also notice that `UserForm` includes a definition of the
-`password` attribute. While a `User` model instance contains a
-`password` attribute by default, the rendered HTML form element will not
-hide the password. If a user types a password, the password will be
-visible. By updating the `password` attribute, we can then specify that
-the `CharField` instance should hide a user's input from prying eyes
-through use of the `PasswordInput()` widget.
-
-Finally, remember to include the required classes at the top of the
-`forms.py` module!
+Finally, remember to include the required classes at the top of the `forms.py` module! We've listed them below for your convenience.
 
 {lang="python",linenos=off}
 	from django import forms
@@ -230,84 +194,75 @@ Finally, remember to include the required classes at the top of the
 	from rango.models import Category, Page, UserProfile
 
 ### Creating the `register()` View
-
-Next we need to handle both the rendering of the form, and the
-processing of form input data. Within Rango's `views.py` file, add the
-following view function:
+Next, we need to handle both the rendering of the form and the processing of form input data. Within Rango's `views.py`, add `import` statements for the new `UserForm` and `UserProfileForm` classes.
 
 {lang="python",linenos=off}
 	from rango.forms import UserForm, UserProfileForm
 
-	...
+Once you've done that, add the following new view, `register()`.
 
+{lang="python",linenos=off}
 	def register(request):
-		# A boolean value for telling the template 
-		# whether the registration was successful.
-		# Set to False initially. Code changes value to 
-		# True when registration succeeds.
-		registered = False
+	    # A boolean value for telling the template 
+	    # whether the registration was successful.
+	    # Set to False initially. Code changes value to 
+	    # True when registration succeeds.
+	    registered = False
+	    
+	    # If it's a HTTP POST, we're interested in processing form data.
+	    if request.method == 'POST':
+	        # Attempt to grab information from the raw form information.	
+	        # Note that we make use of both UserForm and UserProfileForm.
+	        user_form = UserForm(data=request.POST)
+	        profile_form = UserProfileForm(data=request.POST)
+	        
+	        # If the two forms are valid...
+	        if user_form.is_valid() and profile_form.is_valid():
+	            # Save the user's form data to the database.
+	            user = user_form.save()
+	            
+	            # Now we hash the password with the set_password method.
+	            # Once hashed, we can update the user object.
+	            user.set_password(user.password)
+	            user.save()
+	            
+	            # Now sort out the UserProfile instance.
+	            # Since we need to set the user attribute ourselves, 
+	            # we set commit=False. This delays saving the model 
+	            # until we're ready to avoid integrity problems.
+	            profile = profile_form.save(commit=False)
+	            profile.user = user
+	            
+	            # Did the user provide a profile picture?
+	            # If so, we need to get it from the input form and 
+	            #put it in the UserProfile model.
+	            if 'picture' in request.FILES:
+	                profile.picture = request.FILES['picture']
+	            
+	            # Now we save the UserProfile model instance.
+	            profile.save()
+	            
+	            # Update our variable to tell the template registration was successful.
+	            registered = True
+	        else:
+	            # Invalid form or forms - mistakes or something else?
+	            # Print problems to the terminal.
+	            print user_form.errors, profile_form.errors
+	    else:
+	        # Not a HTTP POST, so we render our form using two ModelForm instances.
+	        # These forms will be blank, ready for user input.
+	        user_form = UserForm()
+	        profile_form = UserProfileForm()
+	    
+	    # Render the template depending on the context.
+	    return render(request,
+	                  'rango/register.html',
+	                  {'user_form': user_form, 'profile_form': profile_form, 
+	                   'registered': registered} )
 
-		# If it's a HTTP POST, we're interested in processing form data.
-		if request.method == 'POST':
-			# Attempt to grab information from the raw form information.	
-			# Note that we make use of both UserForm and UserProfileForm.
-			 user_form = UserForm(data=request.POST)
-			 profile_form = UserProfileForm(data=request.POST)
+While the view looks pretty complicated, it's actually very similar in nature to how we implemented the [add category]({#section-forms-addcategory}) and [add page](#section-forms-addpage) views. However, here we have to also handle two distinct `ModelForm` instances - one for the `User` model, and one for the `UserProfile` model. We also need to handle a user's profile image, if he or she chooses to upload one.
 
-			# If the two forms are valid...
-			if user_form.is_valid() and profile_form.is_valid():
-				# Save the user's form data to the database.
-				user = user_form.save()
-			
-				# Now we hash the password with the set_password method.
-				# Once hashed, we can update the user object.
-				user.set_password(user.password)
-				user.save()
-
-				# Now sort out the UserProfile instance.
-				# Since we need to set the user attribute ourselves, 
-				# we set commit=False. This delays saving the model 
-				# until we're ready to avoid integrity problems.
-				profile = profile_form.save(commit=False)
-				profile.user = user
-			
-				# Did the user provide a profile picture?
-				# If so, we need to get it from the input form and 
-				#put it in the UserProfile model.
-				if 'picture' in request.FILES:
-					profile.picture = request.FILES['picture']
-			
-				# Now we save the UserProfile model instance.
-				profile.save()
-			
-				# Update our variable to tell the template registration was successful.
-				registered = True
-			else:
-				# Invalid form or forms - mistakes or something else?
-				# Print problems to the terminal.
-				print user_form.errors, profile_form.errors
-		else:
-			# Not a HTTP POST, so we render our form using two ModelForm instances.
-			# These forms will be blank, ready for user input.
-			user_form = UserForm()
-			profile_form = UserProfileForm()
-
-		# Render the template depending on the context.
-		return render(request,
-			'rango/register.html',
-			{'user_form': user_form, 'profile_form': profile_form, 
-				'registered': registered} )
-
-
-While the view looks pretty complicated it is very similar in nature to how we implemented the add category and add page views. However, we had to also handle two distinct `ModelForm` instances - one for
-the `User` model, and one for the `UserProfile` model. We also need to
-handle a user's profile image, if he or she chooses to upload one.
-
-We also establish a link between the two model instances that we create.
-After creating a new `User` model instance, we reference it in the
-`UserProfile` instance with the line `profile.user = user`. This is
-where we populate the `user` attribute of the `UserProfileForm` form,
-which we hid from users.
+We also establish a link between the two model instances that we create. After creating a new `User` model instance, we reference it in the `UserProfile` instance with the line `profile.user = user`. This is where we populate the `user` attribute of the `UserProfileForm` form, which we hid from users.
 
 ### Creating the *Registration* Template
 

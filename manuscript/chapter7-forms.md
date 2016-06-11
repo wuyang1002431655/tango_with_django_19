@@ -158,7 +158,7 @@ I> Check out the [official Django documentation
 I> on forms](https://docs.djangoproject.com/en/1.9/ref/forms/) for
 I> further information about the different widgets and how to customise forms.
 
-### Creating an *Add Category* View
+### Creating an *Add Category* View {#section-forms-addcategory}
 
 With our `CategoryForm` class now defined, we're now ready to create a
 new view to display the form and handle the posting of form data. To do
@@ -454,7 +454,7 @@ X> Clearly there is a lot of other aspects we need to consider - but we will lea
 X> -   If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
 X>     to reinforce what you have learnt here.
 
-### Creating an *Add Pages* View, Template and URL Mapping
+### Creating an *Add Pages* View, Template and URL Mapping {#section-forms-addpage}
 
 A next logical step would be to allow users to add pages to a given
 category. To do this, repeat the same workflow above but for adding pages.
