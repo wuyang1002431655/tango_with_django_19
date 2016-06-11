@@ -1,60 +1,40 @@
 #User Authentication
+The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll be using the `auth` app provided as part of a standard Django installation, located in in package `django.contrib.auth`. According to [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the application provides the following concepts and functionality.
 
-The aim of this next part of the tutorial is to get you familiar with
-the user authentication mechanisms provided by Django. We'll be using
-the `auth` application provided as part of a standard Django
-installation in package `django.contrib.auth`. According to [Django's
-official documentation on
-Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the
-application consists of the following aspects.
+- The concept of a *User*.
+- *Permissions*, a series of binary flags (e.g. yes/no) that determine what a user may or may not do.
+- *Groups*, a method of applying permissions to more than one user.
+- A configurable *password hashing system*, a must for ensuring data security.
+- *Forms and view tools for logging in users*, or restricting content.
 
-- *Users.*
-- *Permissions:* a series of binary flags (e.g. yes/no) determining what a user may or may not do.
-- *Groups:* a method of applying permissions to more than one user.
-- A configurable *password hashing system:* a must for ensuring data security.
-- *Forms and view tools for logging in users,* or restricting content.
+There's lots that Django can do for you regarding user authentication. In this chapter, we'll be covering the basics to get you started. This will help you build your confidence with the available tools and their underlying concepts.
 
-There's lots that Django can do for you in the area of user
-authentication. We'll be covering the basics to get you started. This
-will help you build your confidence with the available tools and their
-underlying concepts.
+## Setting up Authentication
+Before you can begin to play around with Django's authentication offering, you'll need to make sure that the relevant settings are present in your Rango project's `settings.py` file.
 
-##Setting up Authentication
-
-Before you can begin to play around with Django's authentication
-offering, you'll need to make sure that the relevant settings are
-present in your Rango project's `settings.py` file.
-
-Within the `settings.py` file find the `INSTALLED_APPS` list and check
-that `django.contrib.auth` and `django.contrib.contenttypes` are listed,
-so that it looks like the code below:
+Within the `settings.py` file find the `INSTALLED_APPS` list and check that `django.contrib.auth` and `django.contrib.contenttypes` are listed, so that it looks similar to the code below:
 
 {lang="python",linenos=off}
 	INSTALLED_APPS =[
-		'django.contrib.admin',
-		'django.contrib.auth',
-		'django.contrib.contenttypes',
-		'django.contrib.sessions',
-		'django.contrib.messages',
-		'django.contrib.staticfiles',
-		'rango',
+	    'django.contrib.admin',
+	    'django.contrib.auth',
+	    'django.contrib.contenttypes',
+	    'django.contrib.sessions',
+	    'django.contrib.messages',
+	    'django.contrib.staticfiles',
+	    'rango',
 	]
 
-While `django.contrib.auth` provides Django with access to the
-authentication system, `django.contrib.contenttypes` is used by the
-authentication application to track models installed in your database.
+While `django.contrib.auth` provides Django with access to the provided authentication system, the package `django.contrib.contenttypes` is used by the authentication app to track models installed in your database.
 
 I> ### Migrate, if necessary!
+I> If you had to add `django.contrib.auth` and `django.contrib.contenttypes` applications to your `INSTALLED_APPS` tuple, you will need to update your database with the `$ python manage.py migrate` command. This will add underlying tables to your database for you. An example would be the table for the `User` model, providing Django with a location to store details about users.
 I>
-I> Remember, if you had to add `django.contrib.auth` and `django.contrib.contenttypes` applications to your
-I> `INSTALLED_APPS` tuple, you will need to update your database with the
-I> `$ python manage.py migrate` command.
+I> It's generally good practice to run the `migrate` command whenever you add a new app to your Django project - the app could contain models that'll need to be synchronised to your underlying database.
 
 
 ## Password Hashing
-Passwords are stored by default in Django using the [PBKDF2
-algorithm](http://en.wikipedia.org/wiki/PBKDF2), providing a good level
-of security for your user's data.  However, if you want more control over how the passwords are hashed, then in the `settings.py` add in tuple to specify the `PASSWORD_HASHERS`:
+Storing passwords as plaintext within a database is something which should absolutely be not done under any circumstances. If the wrong person acquired a database full of user accounts to your app, they could wreak havoc. Fortunately, Django's `auth` app by default stores a [hash of user passwords](https://en.wikipedia.org/wiki/Cryptographic_hash_function) using the [PBKDF2 algorithm](http://en.wikipedia.org/wiki/PBKDF2), providing a good level of security for your user's data.  However, if you want more control over how the passwords are hashed, you can change the approach used by Django in your project's `settings.py` module, by adding in a tuple to specify the `PASSWORD_HASHERS`. An example of this is shown below.
 
 {lang="python",linenos=off}
 	PASSWORD_HASHERS = (
@@ -62,13 +42,9 @@ of security for your user's data.  However, if you want more control over how th
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	)
 
-Django will use the first hasher in `PASSWORD_HASHERS` i.e.
-`settings.PASSWORD\_HASHERS[0]`. If other password hashers are listed it will also support these if the a match is not obtained using the first one.
+Django will pick and use the first password hasher in `PASSWORD_HASHERS` (e.g. `settings.PASSWORD_HASHERS[0]`). If other password hashers are specified in the tuple, Django will also use these if the first hasher doesn't work.
 
-
-If you want to use a more secure
-hasher, you can install [Bcrypt](https://pypi.python.org/pypi/bcrypt/) using `pip install bcrypt`, and
-then set the `PASSWORD_HASHERS` to be:
+If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.python.org/pypi/bcrypt/) using `pip install bcrypt`, and then set the `PASSWORD_HASHERS` to be:
 
 {lang="python",linenos=off}
 	PASSWORD_HASHERS = [
@@ -78,33 +54,23 @@ then set the `PASSWORD_HASHERS` to be:
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	]
 
-If you don't explicitly specify 
-`PASSWORD_HASHERS`, Django will use
-`django.contrib.auth.hashers.PBKDF2PasswordHasher` by default.
-
-You can read more about password hashing in the [official Django documentation on how Django stores
-passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
-
+As previously mentioned, Django uses the PBKDF2 algorithm to hash passwords by default. As such, if you do not specify a `PASSWORD_HASHERS` tuple, Django defaults to using `django.contrib.auth.hashers.PBKDF2PasswordHasher`. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
 
 
 ## Password Validators
-A new feature introduced to Django 1.9 is [password validation](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation). In `settings.py`, you will notice a list of dictionaries called, `AUTH_PASSWORD_VALIDATORS`. As you can see Django comes with a number of default password validators for common checks such as length. The different validators can be configured, for example, if you wanted to ensure passwords are at least 6 in length, you can set `min_length` parameter of the `MinimumLengthValidator` as follows:
+As people may be tempted to enter a password that is comparatively easy to guess, a welcome new feature introduced to Django 1.9 is that of [password validation](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation). In your Django project's `settings.py` module, you will notice a list of nested dictionaries with the name `AUTH_PASSWORD_VALIDATORS`. From the nested dictionaries, you can clearly see that Django 1.9 comes with a number of pre-built password validators for common password checks, such as length. These different validators can be easily configured by specifying `OPTIONS` for each. If, for example, you wanted to ensure accepted password are at least six characters long, you can set `min_length` of the `MinimumLengthValidator` password validator to `6`. This can be seen in the example shown below.
 
 {lang="python",linenos=off}
 	AUTH_PASSWORD_VALIDATORS = [
-	
-	...
-	
-	{
-		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-			'OPTIONS': { 'min_length': 6, }
-	},
-	
-	...
-	
+	    ...
+	    {
+	        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	        'OPTIONS': { 'min_length': 6, }
+	    },
+	    ...
 	]
 	
-It is also possible to create your own password validators. For more information see the [official Django documentation on password validators](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation).
+It is also possible to create your own password validators. Although we don't cover the creation of custom password validators in this tutorial, refer to the [official Django documentation on password validators](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation) for more information.
 
 
 ##The `User` Model
