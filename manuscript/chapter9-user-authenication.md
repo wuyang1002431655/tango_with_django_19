@@ -380,86 +380,58 @@ First, open up Rango's views module at `rango/views.py` and create a new view ca
 	        # will raise a KeyError exception.
 	        username = request.POST.get('username')
 	        password = request.POST.get('password')
-	    
-	    # Use Django's machinery to attempt to see if the username/password
-	    # combination is valid - a User object is returned if it is.
-	    user = authenticate(username=username, password=password)
-	    
-	    # If we have a User object, the details are correct.
-	    # If None (Python's way of representing the absence of a value), no user
-	    # with matching credentials was found.
-	    if user:
-	        # Is the account active? It could have been disabled.
-	        if user.is_active:
-	            # If the account is valid and active, we can log the user in.
-	            # We'll send the user back to the homepage.
-	            login(request, user)
-	            return HttpResponseRedirect(reverse('index'))
+	        
+	        # Use Django's machinery to attempt to see if the username/password
+	        # combination is valid - a User object is returned if it is.
+	        user = authenticate(username=username, password=password)
+	        
+	        # If we have a User object, the details are correct.
+	        # If None (Python's way of representing the absence of a value), no user
+	        # with matching credentials was found.
+	        if user:
+	            # Is the account active? It could have been disabled.
+	            if user.is_active:
+	                # If the account is valid and active, we can log the user in.
+	                # We'll send the user back to the homepage.
+	                login(request, user)
+	                return HttpResponseRedirect(reverse('index'))
+	            else:
+	                # An inactive account was used - no logging in!
+	                return HttpResponse("Your Rango account is disabled.")
 	        else:
-	            # An inactive account was used - no logging in!
-	            return HttpResponse("Your Rango account is disabled.")
-	    else:
-	        # Bad login details were provided. So we can't log the user in.
-	        print "Invalid login details: {0}, {1}".format(username, password)
-	        return HttpResponse("Invalid login details supplied.")
-
+	            # Bad login details were provided. So we can't log the user in.
+	            print "Invalid login details: {0}, {1}".format(username, password)
+	            return HttpResponse("Invalid login details supplied.")
+	        
 	    # The request is not a HTTP POST, so display the login form.
 	    # This scenario would most likely be a HTTP GET.
-	else:
-	    # No context variables to pass to the template system, hence the
-	    # blank dictionary object...
-	    return render(request, 'rango/login.html', {})
+	    else:
+	        # No context variables to pass to the template system, hence the
+	        # blank dictionary object...
+	        return render(request, 'rango/login.html', {})
 
-This view may seem rather complicated as it has to handle a variety of
-situations. Like in previous examples, the `user_login()` view handles
-form rendering and processing.
+Like before, this view may seem rather complex as it has to handle a variety of scenarios. Like in previous examples, the `user_login()` view handles form rendering and processing - where the form this time contains `username` and `password` fields.
 
-First, if the view is accessed via the HTTP GET method, then the login
-form is displayed. However, if the form has been posted via the HTTP
-POST method, then we can handle processing the form.
+First, if the view is accessed via the HTTP `GET` method, then the login form is displayed. However, if the form has been posted via the HTTP `POST` method, then we can handle processing the form.
 
-If a valid form is sent, the username and password are extracted from
-the form. These details are then used to attempt to authenticate the
-user (with Django's `authenticate()` function). `authenticate()` then
-returns a `User` object if the username/password combination exists
-within the database - or `None` if no match was found.
+If a valid form is sent via a `POST` request, the username and password are extracted from the form. These details are then used to attempt to authenticate the user (with Django's `authenticate()` function). `authenticate()` then returns a `User` object if the username/password combination exists within the database - or `None` if no match was found.
 
-If we retrieve a `User` object, we can then check if the account is
-active or inactive - and return the appropriate response to the client's
-browser.
+If we retrieve a `User` object, we can then check if the account is active or inactive - and return the appropriate response to the client's browser.
 
-However, if an invalid form is sent, because the user did not add both a
-username and password the login form is presented back to the user with
-form error messages (i.e. username/password is missing).
+However, if an invalid form is sent - due to the fact that the user did not add both a username and password - the login form is presented back to the user with error messages (i.e. an invalid username/password combination was provided).
 
-Of particular interest in the code sample above is the use of the
-built-in Django machinery to help with the authentication process. Note
-the use of the `authenticate()` function to check whether the username
-and password provided match to a valid user account, and the `login()`
-function to signify to Django that the user is to be logged in.
+Of particular interest in the code sample above is the use of the built-in Django machinery to help with the authentication process. Note the use of the `authenticate()` function to check whether the username and password provided actually match to a valid user account, and the `login()` function to signify to Django that the user is to be logged in.
 
-You'll also notice that we make use of a new class,
-`HttpResponseRedirect`. As the name may suggest to you, the response
-generated by an instance of the `HttpResponseRedirect` class tells the
-client's browser to redirect to the URL you provide as the argument.
-Note that this will return a HTTP status code of 302, which denotes a
-redirect, as opposed to an status code of 200 i.e. OK. See the [official
-Django documentation on
-Redirection](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpResponseRedirect),
-to learn more.
+You'll also notice that we make use of a new class, `HttpResponseRedirect`. As the name may suggest to you, the response generated by an instance of the `HttpResponseRedirect` class tells the client's Web browser to redirect to the URL you provide as the argument. Note that this will return a HTTP status code of `302`, which denotes a redirect, as opposed to an status code of `200` (success). See the [official Django documentation on Redirection](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpResponseRedirect) to learn more.
 
-Finally, we use another Django  method called `reverse` to obtain the URL of the rango application. This looks up the URL patterns in `urls.py` to find the one called `'index'` and substitutes in the corresponding pattern. This means that if we change the URL mapping our code won't break.
+Finally, we use another Django method called `reverse` to obtain the URL of the Rango application. This looks up the URL patterns in Rango's `urls.py` module to find a URL called `'index'`, and substitutes in the corresponding pattern. This means that if we subsequently change the URL mapping, our new view won't break.
 
-
-All of these functions and classes are provided by Django, and as such
-you'll need to import them, so add the following imports to
-`rango/views.py`:
+All of these functions and classes are provided by Django, and as such you'll need to import them. The following `import` statements must now be added to the top of `rango/views.py`.
 
 {lang="python",linenos=off}
 	from django.contrib.auth import authenticate, login
 	from django.http import HttpResponseRedirect, HttpResponse
 	from django.core.urlresolvers import reverse
-
 
 ### Creating a *Login* Template
 
