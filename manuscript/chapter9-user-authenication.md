@@ -54,7 +54,7 @@ If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.p
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	]
 
-As previously mentioned, Django uses the PBKDF2 algorithm to hash passwords by default. As such, if you do not specify a `PASSWORD_HASHERS` tuple, Django defaults to using the `django.contrib.auth.hashers.PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
+As previously mentioned, Django by default uses the PBKDF2 algorithm to hash passwords. If you do not specify a `PASSWORD_HASHERS` tuple, Django therefore defaults to the `django.contrib.auth.hashers.PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
 
 
 ## Password Validators
@@ -590,8 +590,7 @@ Like in the previous section, we'll be modifying Rango's `index.html` template a
 
 This code states that when a user is authenticated and logged in, he or she can see the `Restricted Page` and `Logout` links. If he or she isn't logged in, `Register Here` and `Login` are presented. As `About` and `Add a New Category` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
 
-In most applications, you will require different levels of security when registering and managing users. Ensuring the user enters an e-mail address that they have access to, or sending users passwords that they have forgotten are prime examples. While we could extend the current approach and build all the necessary infrastructure to support such functionality, a `django-registration-redux` application has been developed which greatly simplifies the process - visit <https://django-registration-redux.readthedocs.org> to find out more about using this package. Templates can be found at:
-<https://github.com/macdhuibh/django-registration-templates>. We cover how you can use this package in the [following chapter](#chapter-redux).
+In most applications, you will require different levels of security when registering and managing users. Ensuring the user enters an e-mail address that they have access to, or sending users passwords that they have forgotten are prime examples. While we could extend the current approach and build all the necessary infrastructure to support such functionality, a `django-registration-redux` application has been developed which greatly simplifies the process - [further information can be found online regarding this app](https://django-registration-redux.readthedocs.org). Templates can be found [online, too](https://github.com/macdhuibh/django-registration-templates). We cover how you can use this package in a [following chapter](#chapter-redux).
 
 To summarise *this* chapter, we've covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's `django.contrib.auth` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base `django.contrib.auth.models.User` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
 
