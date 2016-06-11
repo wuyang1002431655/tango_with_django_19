@@ -14,12 +14,12 @@ It's pretty simple to include relative URLs in your templates. To refer to the *
 
 The Django template engine will look up any `urls.py` module for a URL pattern with the attribute `name` set to `about` (`name='about'`), and then reverse match the actual URL. This means if we change the URL mappings in `urls.py`, we don't have to go through all our templates and update them. 
 
-One can also reference a URL pattern without a specified name, by referencing it directly as shown below.
+One can also reference a URL pattern without a specified name, by referencing the view directly as shown below.
 
 {lang="html",linenos=off}
 	<a href="{% url 'rango.views.about' %}">About</a>
 
-In this example, we must specify the app `rango`, and the view `about`, contained within the `views.py` module.
+In this example, we must ensure that the app `rango` has the view `about`, contained within its `views.py` module.
 
 In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this you, can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
 
@@ -36,9 +36,9 @@ Before you run off to update all the URLs in all your templates with relative UR
 
 
 ## Dealing with Repetition
-While pretty much every professionally made website that you use will have a series of repeated components (such as page headers, sidebars, and footers, for example), repeating the HTML for each of these repeating components is not a particularly wise way to handle this. What if you wanted to change part of your website's header? You'd need to go through *every* page and change each copy of the header to suit.
+While pretty much every professionally made website that you use will have a series of repeated components (such as page headers, sidebars, and footers, for example), repeating the HTML for each of these repeating components is not a particularly wise way to handle this. What if you wanted to change part of your website's header? You'd need to go through *every* page and change each copy of the header to suit. That could take a long time - and allow the possibility for human error to creep in.
 
-Instead of spending (or wasting!) large amounts of time copying and pasting your HTML markup, we can minimise repetition in our codebase by emplying *template inheritence* provided by Django's template language.
+Instead of spending (or wasting!) large amounts of time copying and pasting your HTML markup, we can minimise repetition in our codebase by employing *template inheritance* provided by Django's template language.
 
 The basic approach to using inheritance in templates is as follows.
 
@@ -67,12 +67,12 @@ Given the templates that we have created so far, it should be pretty obvious tha
 
 For the time being, let's make this simple HTML page our app's base template. Save this markup in `base.html` within the `templates/rango/` directory (e.g. `templates/rango/base.html`).
 
-W> ### `DOCTYPE` Goes First!
+W> ### `DOCTYPE` goes First!
 W>
 W> Remember that the `<!DOCTYPE html>` declaration always needs to be placed on the *first line* of your template.
 W> Not having a [document type declaration](https://en.wikipedia.org/wiki/Document_type_declaration) on line one may mean that the resultant page generated from your template will not comply with [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
 
-###Template Blocks
+### Template Blocks
 Now that we've created our base template, we can add template tags to denote what parts of the template can be overriden by templates that inherit from it. To do this we will be using the `block` tag. For example, we can add a `body_block` to the base template in `base.html` as follows:
 
 {lang="html",linenos=on}
@@ -103,60 +103,52 @@ You can also specify *default content* for your blocks, which will be used if no
 
 When we create templates for each page, we will inherit from `rango/base.html` and override the contents of `body_block`. However, you can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, a block for the footer, a block for the sidebar, and more. Blocks are a really powerful feature of Django's templating system, and you can learn more about them check on [Django's official documentation on templates](https://docs.djangoproject.com/en/1.9/topics/templates/).
 
-I> ### Extract the Common Structures
+I> ### Extract Common Structures
 I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future will far outweigh the initial overhead of doing this task.
 I>
 I> Think about it: *would you rather maintain one copy of your markup, or multiple copies?*
 
 
 ### Abstracting Further
-Now that you have an understanding of Django blocks, let's take the
-opportunity to abstract our base template a little bit further. Reopen
-the `rango/base.html` template and modify it to look like the following.
+Now that you have an understanding of blocks within Django templates, let's take the opportunity to abstract our base template a little bit further. Reopen the `rango/base.html` template and modify it to look like the following.
 
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	{% load staticfiles %}
+	
 	<html>
-	<head>
-		<title>
-			Rango - 
-			{% block title_block_ %} 
-			How to Tango with Django!
-			{% endblock %}
-		</title>
-	</head>
-	<body>
-		<div>
-			{% block body_block %}
-			{% endblock %}
-		</div>
-		<hr />
-		<div>
-			<ul>
-				<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
-				<li><a href="{% url 'about' %}">About</a></li>
-				<li><a href="{% url 'index' %}">Index</a></li>		
-			</ul>
-		</div>
-	</body>
+	    <head>
+	        <title>
+	            Rango - 
+	            {% block title_block %} 
+	            How to Tango with Django!
+	            {% endblock %}
+	        </title>
+	    </head>
+	
+	    <body>
+	        <div>
+	            {% block body_block %}
+	            {% endblock %}
+	        </div>
+            <hr />
+	        <div>
+	            <ul>
+	                <li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+	                <li><a href="{% url 'about' %}">About</a></li>
+	                <li><a href="{% url 'index' %}">Index</a></li>		
+	            </ul>
+	        </div>
+	    </body>
 	</html>
-	
-	
-We have introduced two new features into the template.
 
--   The first is a template block called `title_block`. This will allow
-    us to specify a custom page title for each page inheriting from our
-    base template. If an inheriting page does not override the block, then, the title defaults to
-    `Rango - How to Tango with Django!`
--   We have also included the list of links from our current `index.html`
-    template and placed them into a HTML `<div>` tag underneath our
-    `body_block` block. This will ensure the links are present across
-    all pages inheriting from the base template. The links are preceded
-    by a *horizontal rule* (`<hr />`) which provides a visual separation
-    between the `body_block` content and the links.
+From the example above, we have introduced two new features into the base template.
 
-##Template Inheritance {#section-templates-inheritance}
+-   The first is a template block called `title_block`. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not override the block, then the `title_block` defaults to `How to Tango with Django!`, resulting in a complete title of `Rango - How to Tango with Django!`. See the `<title>` tag in the above template to see how this works.
+-   We have also included the list of links from our current `index.html` template and placed them into a HTML `<div>` tag underneath our `body_block` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (`<hr />`) which provides a visual separation for the user between the `body_block` content and the links.
+
+
+## Template Inheritance {#section-templates-inheritance}
 Now that we've created a base template with blocks, we can now update
 all the templates we have created so that they inherit from the base template. 
 Let's start by refactoring the template `rango/category.html`.
