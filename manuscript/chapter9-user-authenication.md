@@ -357,58 +357,58 @@ Upon seeing the message indicating your details were successfully registered, th
 
 
 ## Implementing Login Functionality
-With the ability to register accounts completed, we now need to add login functionality. To achieve this, we'll need to undertake the workflow below:
+With the ability to register accounts completed, we now need to provide users of Rango with the ability to login. To achieve this, we'll need to undertake the workflow below:
 
--   Create a login in view to handle user credentials
+-   Create a login in view to handle the processing of user credentials
 -   Create a login template to display the login form
 -   Map the login view to a url
 -   Provide a link to login from the index page
 
 ### Creating the `login()` View
-
-In `rango/views.py` create a new function called `user_login()` and add
-the following code:
+First, open up Rango's views module at `rango/views.py` and create a new view called `user_login()`. This view will handle the processing of data from our subsequent login form, and attempt to log a user in with the given details.
 
 {lang="python",linenos=off}
 	def user_login(request):
-	# If the request is a HTTP POST, try to pull out the relevant information.
-	if request.method == 'POST':
-		# Gather the username and password provided by the user.
-		# This information is obtained from the login form.
-		# We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
-		# because the request.POST.get('<variable>') returns None, if the value does not exist,
-		# while the request.POST['<variable>'] will raise key error exception
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		
-		# Use Django's machinery to attempt to see if the username/password
-		# combination is valid - a User object is returned if it is.
-		user = authenticate(username=username, password=password)
+	    # If the request is a HTTP POST, try to pull out the relevant information.
+	    if request.method == 'POST':
+	        # Gather the username and password provided by the user.
+	        # This information is obtained from the login form.
+	        # We use request.POST.get('<variable>') as opposed
+	        # to request.POST['<variable>'], because the
+	        # request.POST.get('<variable>') returns None if the
+	        # value does not exist, while request.POST['<variable>']
+	        # will raise a KeyError exception.
+	        username = request.POST.get('username')
+	        password = request.POST.get('password')
+	    
+	    # Use Django's machinery to attempt to see if the username/password
+	    # combination is valid - a User object is returned if it is.
+	    user = authenticate(username=username, password=password)
+	    
+	    # If we have a User object, the details are correct.
+	    # If None (Python's way of representing the absence of a value), no user
+	    # with matching credentials was found.
+	    if user:
+	        # Is the account active? It could have been disabled.
+	        if user.is_active:
+	            # If the account is valid and active, we can log the user in.
+	            # We'll send the user back to the homepage.
+	            login(request, user)
+	            return HttpResponseRedirect(reverse('index'))
+	        else:
+	            # An inactive account was used - no logging in!
+	            return HttpResponse("Your Rango account is disabled.")
+	    else:
+	        # Bad login details were provided. So we can't log the user in.
+	        print "Invalid login details: {0}, {1}".format(username, password)
+	        return HttpResponse("Invalid login details supplied.")
 
-		# If we have a User object, the details are correct.
-		# If None (Python's way of representing the absence of a value), no user
-		# with matching credentials was found.
-		if user:
-			# Is the account active? It could have been disabled.
-			if user.is_active:
-				# If the account is valid and active, we can log the user in.
-				# We'll send the user back to the homepage.
-				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
-			else:
-				# An inactive account was used - no logging in!
-				return HttpResponse("Your Rango account is disabled.")
-		else:
-			# Bad login details were provided. So we can't log the user in.
-			print "Invalid login details: {0}, {1}".format(username, password)
-			return HttpResponse("Invalid login details supplied.")
-
-		# The request is not a HTTP POST, so display the login form.
-		# This scenario would most likely be a HTTP GET.
+	    # The request is not a HTTP POST, so display the login form.
+	    # This scenario would most likely be a HTTP GET.
 	else:
-		# No context variables to pass to the template system, hence the
-		# blank dictionary object...
-		return render(request, 'rango/login.html', {})
+	    # No context variables to pass to the template system, hence the
+	    # blank dictionary object...
+	    return render(request, 'rango/login.html', {})
 
 This view may seem rather complicated as it has to handle a variety of
 situations. Like in previous examples, the `user_login()` view handles
