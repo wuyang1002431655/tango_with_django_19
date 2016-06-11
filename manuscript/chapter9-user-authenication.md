@@ -351,7 +351,7 @@ Now everything is plugged together, try it out. Start your Django development se
 
 {id="fig-ch9-user-register"}
 ![A screenshot illustrating the basic registration form you create as
-part of this tutorial.](../images/ch9-rango-register-form.png)
+part of this tutorial.](images/ch9-rango-register-form.png)
 
 Upon seeing the message indicating your details were successfully registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface. If so, everything works as expected!
 
