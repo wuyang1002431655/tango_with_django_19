@@ -42,6 +42,14 @@ T>
 T> {lang="python",linenos=off}
 T> 	app_name = 'rango'
 T> 	urlpatterns = [...
+T> 	from django.conf.urls import url
+T> 	from rango import views
+T> 	
+T> 	app_name = 'rango'
+T> 	urlpatterns = [
+        url(r'^$', views.index, name='index'),
+T> 	    ...
+T> 	]
 T>
 T> Adding an `app_name` variable would then mean that any URL you reference from the `rango` app could be done so like:
 T>
@@ -216,19 +224,6 @@ I>
 I> If you haven't already done so, now would be a good time to read through the official [Django documentation on templates](https://docs.djangoproject.com/en/1.9/topics/templates/).
 
 
-
-<!-->
-	\#TODO(leifos): The official tutorial provides an overview of how to use
-	the url template tag,
-	<http://django.readthedocs.org/en/latest/intro/tutorial03.html> and the
-	answer at stackoverflow was helpful too:
-	<http://stackoverflow.com/questions/4599423/using-url-in-django-templates>
-
-	\#TODO(leifos): Also point out how the urls can be placed in a namespace
-	and referenced accordingly, see
-	<http://django.readthedocs.org/en/latest/intro/tutorial03.html>
--->
-
 X> ### Exercises
 X> Now that you've worked through this chapter, there are a number of exercises that you can work through to reinforce what you've learnt regarding Django and templating.
 X>
@@ -246,7 +241,8 @@ T> - Update the `title_block` then the `body_block` in each template.
 T> - Have the development server running and check the page as you work on it. Don't change the whole page to find it doesn't work. Changing things incrementally and testing those changes as you go is a much safer solution.
 T> - To reference the links to category pages, you can use the following template code, paying particular attention to the Django template `{% url %}` command.
 T>
-T> `<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>`
+T> {lang="html",linenos=off}
+T> 	<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
 
 
 W> ### Loading `staticfiles`
