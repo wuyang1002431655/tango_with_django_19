@@ -1,5 +1,5 @@
 #User Authentication
-The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll be using the `auth` app provided as part of a standard Django installation, located in in package `django.contrib.auth`. According to [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the application provides the following concepts and functionality.
+The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll be using the `auth` app provided as part of a standard Django installation, located in package `django.contrib.auth`. According to [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the application provides the following concepts and functionality.
 
 - The concept of a *User*.
 - *Permissions*, a series of binary flags (e.g. yes/no) that determine what a user may or may not do.
@@ -87,7 +87,7 @@ The `User` model has five key attributes. They are:
 The `User` model also comes with other attributes such as `is_active`, `is_staff` and `is_superuser` which are boolean fields to denote whether the account is active, is owned by a staff member, or has superuser privileges - respectively.  Check out the [official Django documentation on the user model](https://docs.djangoproject.com/en/1.9/ref/contrib/auth/#django.contrib.auth.models.User) for a full list of attributes provided by the base `User` model.
 
 ##Additional `User` Attributes
-If you would like to include other user related attributes than what is provided by the `User` model, you will needed to create a model that is *associated* with the the `User` model. For our Rango app, we want to include two more additional attributes for each user account. Specifically, we wish to include:
+If you would like to include other user related attributes than what is provided by the `User` model, you will needed to create a model that is *associated* with the `User` model. For our Rango app, we want to include two more additional attributes for each user account. Specifically, we wish to include:
 
 - a `URLField`, allowing a user of Rango to specify their own website; and
 - a `ImageField`, which allows users to specify a picture for their user profile.
@@ -242,7 +242,8 @@ Once you've done that, add the following new view, `register()`.
 	            # Now we save the UserProfile model instance.
 	            profile.save()
 	            
-	            # Update our variable to tell the template registration was successful.
+	            # Update our variable to indicate that the template
+                # registration was successful.
 	            registered = True
 	        else:
 	            # Invalid form or forms - mistakes or something else?
@@ -257,10 +258,11 @@ Once you've done that, add the following new view, `register()`.
 	    # Render the template depending on the context.
 	    return render(request,
 	                  'rango/register.html',
-	                  {'user_form': user_form, 'profile_form': profile_form, 
-	                   'registered': registered} )
+	                  {'user_form': user_form,
+                       'profile_form': profile_form, 
+	                   'registered': registered})
 
-While the view looks pretty complicated, it's actually very similar in nature to how we implemented the [add category]({#section-forms-addcategory}) and [add page](#section-forms-addpage) views. However, here we have to also handle two distinct `ModelForm` instances - one for the `User` model, and one for the `UserProfile` model. We also need to handle a user's profile image, if he or she chooses to upload one.
+While the view looks pretty complicated, it's actually very similar in nature to how we implemented the [add category](#section-forms-addcategory) and [add page](#section-forms-addpage) views. However, here we have to also handle two distinct `ModelForm` instances - one for the `User` model, and one for the `UserProfile` model. We also need to handle a user's profile image, if he or she chooses to upload one.
 
 We also establish a link between the two model instances that we create. After creating a new `User` model instance, we reference it in the `UserProfile` instance with the line `profile.user = user`. This is where we populate the `user` attribute of the `UserProfileForm` form, which we hid from users.
 
@@ -309,60 +311,54 @@ W> You should be aware of the `enctype` attribute for the `<form>` element. When
 W>
 W> Furthermore, remember to include the CSRF token, i.e. `{% csrf_token %}` within your `<form>` element! If you don't do this, Django's [cross-site forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery) protection middleware layer will refuse to accept the form's contents, returning an error.
 
-### The `register()` View URL Mapping
-
-Now we can add a URL mapping to our new view. In `rango/urls.py` modify
-the `urlpatterns` tuple as shown below:
+### The `register()` URL Mapping
+With our new view and associated template created, we can now add a URL mapping to said view. In Rango's URLs module `rango/urls.py`, modify the `urlpatterns` tuple as shown below.
  
 {lang="python",linenos=off}
 	urlpatterns = [
-		url(r'^$', views.index, name='index'),
-		url(r'about/$', views.about, name='about'),
-		url(r'^add_category/$', views.add_category, name='add_category'),
-		url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.show_category, name='show_category'),
-		url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', views.add_page, name='add_page'),
-		url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
-	
+	    url(r'^$', views.index, name='index'),
+	    url(r'about/$', views.about, name='about'),
+	    url(r'^add_category/$', views.add_category, name='add_category'),
+	    
+	    url(r'^category/(?P<category_name_slug>[\w\-]+)/$',
+	        views.show_category,
+	        name='show_category'),
+	    
+	    url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$',
+	        views.add_page,
+	        name='add_page'),
+	    
+	    url(r'^register/$',
+	        views.register,
+	        name='register'), # New pattern!
 	]
 
-The newly added pattern points the URL `/rango/register/` to the
-`register()` view.
+The newly added pattern (at the bottom of the list) points the URL `/rango/register/` to the `register()` view. Also note the inclusion of a `name` for our new URL, `register`. We'll be using this momentarily...
 
-### Linking Together
-
-Finally, we can add a link pointing to our registration URL by modifying the `base.html` template. Update `base.html` so that the unordered list of links which will appear on each page contains a link to sign up to Rango.
+### Linking Everything Together
+Finally, we can add a link pointing to our new registration URL by modifying the `base.html` template. Update `base.html` so that the unordered list of links which will appear on each page contains a link allowing users to register for Rango.
 
 {lang="html",linenos=off}
 	<ul>
 		<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
 		<li><a href="{% url 'about' %}">About</a></li>	
 		<li><a href="{% url 'index' %}">Index</a></li>
-		<li><a href="{% url 'register' %}">Sign Up</a></li>				
+		<li><a href="{% url 'register' %}">Sign Up</a></li>
 	</ul>
 
-
-
 ### Demo
-
-Sweet! Let's try it out. Start your
-Django development server and try to register as a new user. Upload
-a profile image if you wish. Your registration form should look like the
-one illustrated in the [figure below](#fig-rango-register-form).
+Now everything is plugged together, try it out. Start your Django development server and try to register as a new user. Upload a profile image if you wish. Your registration form should look like the one illustrated in the [figure below](#fig-rango-register-form).
 
 
 {id="fig-ch9-user-register"}
 ![A screenshot illustrating the basic registration form you create as
 part of this tutorial.](../images/rango-register-form.png)
 
-Upon seeing the message indicating your details were successfully
-registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface.
+Upon seeing the message indicating your details were successfully registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface.
 
 
-##Adding Login Functionality
-
-With the ability to register accounts completed, we now need to add
-login in functionality. To achieve this we will need to undertake the
-workflow below:
+## Implementing Login Functionality
+With the ability to register accounts completed, we now need to add login functionality. To achieve this, we'll need to undertake the workflow below:
 
 -   Create a login in view to handle user credentials
 -   Create a login template to display the login form
@@ -453,7 +449,7 @@ Django documentation on
 Redirection](https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpResponseRedirect),
 to learn more.
 
-Finally, we use another Django  method called `reverse` to obtain the URL of the rango application. This looks up the URL patterns in `urls.py` to find the one called `'index'` and substitutes in the corresponding pattern. This means that if we change the URL mapping our code wont break.
+Finally, we use another Django  method called `reverse` to obtain the URL of the rango application. This looks up the URL patterns in `urls.py` to find the one called `'index'` and substitutes in the corresponding pattern. This means that if we change the URL mapping our code won't break.
 
 
 All of these functions and classes are provided by Django, and as such
@@ -685,7 +681,7 @@ at `/rango/restricted/`.
 {lang="html",linenos=off}
 	<ul>
 	{% if user.is_authenticated %}
-		<li><a href="{% url 'restricted' %}">Retricted Page</a></li>
+		<li><a href="{% url 'restricted' %}">Restricted Page</a></li>
 		<li><a href="{% url 'logout' %}">Logout</a></li>	
 	{% else %}
 		<li><a href="{% url 'login' %}">Sign In</a></li>
