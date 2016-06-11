@@ -34,6 +34,23 @@ In your app's `index.html` template, you will notice that you have a parameteris
 
 Before you run off to update all the URLs in all your templates with relative URLs, we need to re-structure and re-factor our templates by using inheritance to remove repetition.
 
+T> ### URLs and Multiple Django Apps
+T> This book focuses on the development on a single Django app, Rango. However, you may find yourself working on a Django project with multiple apps being used at once. This means that you could literally have hundreds of potential URLs with which you may need to reference. This scenario begs the question *how can we organise these URLs?* Two apps may have a view of the same name, meaning a potential conflict would exist. 
+T>
+T> [Django provides the ability to *namespace* URL configuration modules](http://django.readthedocs.io/en/1.9.x/intro/tutorial03.html#namespacing-url-names) (e.g. `urls.py`) for each individual app that you employ in your project. Simply adding a `app_name` variable to your app's `urls.py` module is enough. The example below specifies the namespace for the Rango app to be `rango`.
+T>
+T> {lang="python",linenos=off}
+T> 	app_name = 'rango'
+T> 	urlpatterns = [...
+T>
+T> Adding an `app_name` variable would then mean that any URL you reference from the `rango` app could be done so like:
+T>
+T> {lang="html",linenos=off}
+T> 	<a href="{% url 'rango:about' %}">About</a>
+T> 
+T> Where the colon in the `url` command separates the namespace from the URL name.
+T> Of course, this is an advanced feature for when multiple apps are in presence - but it is a useful trick to know when things start to scale up.
+
 
 ## Dealing with Repetition
 While pretty much every professionally made website that you use will have a series of repeated components (such as page headers, sidebars, and footers, for example), repeating the HTML for each of these repeating components is not a particularly wise way to handle this. What if you wanted to change part of your website's header? You'd need to go through *every* page and change each copy of the header to suit. That could take a long time - and allow the possibility for human error to creep in.
