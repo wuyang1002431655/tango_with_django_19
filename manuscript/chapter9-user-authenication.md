@@ -128,11 +128,14 @@ I> The Django `ImageField` field makes use of the *Python Imaging Library (PIL)*
 I>
 I> You can check what packages are installed in your (virtual) environment by issuing the command `pip list`.
 
-To make the `UserProfile` model data accessible via the Django admin Web interface, add the following lines to the `admin.py` file.
+To make the `UserProfile` model data accessible via the Django admin Web interface, import the new `UserProfile` model into Rango's `admin.py` module.
 
 {lang="python",linenos=off}
 	from rango.models import UserProfile
-	...
+
+Now you can register the new model with the admin interface, with the following line.
+
+{lang="python",linenos=off}
 	admin.site.register(UserProfile)
 
 
