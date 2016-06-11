@@ -42,7 +42,7 @@ Storing passwords as plaintext within a database is something which should absol
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	)
 
-Django will pick and use the first password hasher in `PASSWORD_HASHERS` (e.g. `settings.PASSWORD_HASHERS[0]`). If other password hashers are specified in the tuple, Django will also use these if the first hasher doesn't work.
+Django considers the order of hashers specified as important, and will pick and use the first password hasher in `PASSWORD_HASHERS` (e.g. `settings.PASSWORD_HASHERS[0]`). If other password hashers are specified in the tuple, Django will also use these if the first hasher doesn't work.
 
 If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.python.org/pypi/bcrypt/) using `pip install bcrypt`, and then set the `PASSWORD_HASHERS` to be:
 
@@ -54,7 +54,7 @@ If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.p
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	]
 
-As previously mentioned, Django uses the PBKDF2 algorithm to hash passwords by default. As such, if you do not specify a `PASSWORD_HASHERS` tuple, Django defaults to using `django.contrib.auth.hashers.PBKDF2PasswordHasher`. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
+As previously mentioned, Django uses the PBKDF2 algorithm to hash passwords by default. As such, if you do not specify a `PASSWORD_HASHERS` tuple, Django defaults to using the `django.contrib.auth.hashers.PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
 
 
 ## Password Validators
@@ -74,112 +74,70 @@ It is also possible to create your own password validators. Although we don't co
 
 
 ##The `User` Model
+The `User` object (located at `django.contrib.auth.models.User`) is considered to be the core of Django's authentication system. A `User` object represents each of the individuals interacting with a Django application. The [Django documentation on User objects](https://docs.djangoproject.com/en/1.9/topics/auth/default/#user-objects) states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles, and the association of creators with site content.
 
-The core of Django's authentication system is the `User` object, located
-at `django.contrib.auth.models.User`. A `User` object represents each of
-the people interacting with a Django application. The [Django
-documentation on User
-objects](https://docs.djangoproject.com/en/1.9/topics/auth/default/#user-objects)
-states that they are used to allow aspects of the authentication system
-like access restriction, registration of new user profiles and the
-association of creators with site content.
+The `User` model has five key attributes. They are:
 
-The `User` model has five main fields. They are:
+-   the *username* for the user account;
+-   the account's *password*;
+-   the user's *email address*;
+-   the user's *first name*; and
+-   the user's *surname*.
 
--   the username for the user account;
--   the account's password;
--   the user's email address;
--   the user's first name; and
--   the user's surname.
+The `User` model also comes with other attributes such as `is_active`, `is_staff` and `is_superuser` which are boolean fields to denote whether the account is active, is owned by a staff member, or has superuser privileges - respectively.  Check out the [official Django documentation on the user model](https://docs.djangoproject.com/en/1.9/ref/contrib/auth/#django.contrib.auth.models.User) for a full list of attributes provided by the base `User` model.
 
-The model also comes with other attributes such as `is_active`, `is_staff` , `is_superuser` which are Boolean fields to denoted whether the account is active, is owned by a staff member or has superuser privileges, respectively.  Check the
-[official Django documentation on the user
-model](https://docs.djangoproject.com/en/1.9/ref/contrib/auth/#django.contrib.auth.models.User)
-for a full list of attributes provided by the base `User` model.
-
-##Additional User Attributes
-If you would like to include other user related attributes than what is provided by
-the `User` model, then you will needed to create a model that is
-associated with the the `User` model. For our Rango application, we want
-to include two more additional attributes for each user account.
-Specifically, we wish to include:
+##Additional `User` Attributes
+If you would like to include other user related attributes than what is provided by the `User` model, you will needed to create a model that is *associated* with the the `User` model. For our Rango app, we want to include two more additional attributes for each user account. Specifically, we wish to include:
 
 - a `URLField`, allowing a user of Rango to specify their own website; and
 - a `ImageField`, which allows users to specify a picture for their user profile.
 
-This can be achieved by creating an additional model in Rango's
-`models.py` file. Let's add a new model called `UserProfile`:
+This can be achieved by creating an additional model in Rango's `models.py` file. Let's add a new model called `UserProfile`:
 
 {lang="python",linenos=off}
 	class UserProfile(models.Model):
-		# This line is required. Links UserProfile to a User model instance.
-		user = models.OneToOneField(User)
-		
-		# The additional attributes we wish to include.
-		website = models.URLField(blank=True)
-		picture = models.ImageField(upload_to='profile_images', blank=True)
-		
-		# Override the __unicode__() method to return out something meaningful!
-		def __unicode__(self):
-			return self.user.username
+	    # This line is required. Links UserProfile to a User model instance.
+	    user = models.OneToOneField(User)
+	    
+	    # The additional attributes we wish to include.
+	    website = models.URLField(blank=True)
+	    picture = models.ImageField(upload_to='profile_images', blank=True)
+	    
+	    # Override the __unicode__() method to return out something meaningful!
+        # Remember if you use Python 2.7.x, define __unicode__ too!
+	    def __str__(self):
+	        return self.user.username
 
-Note that we reference the `User` model using a one-to-one relationship.
-Since we reference the default `User` model, we need to import it within
-the `models.py` file:
+Note that we reference the `User` model using a one-to-one relationship. Since we reference the default `User` model, we need to import it within the `models.py` file:
 
 {lang="python",linenos=off}
 	from django.contrib.auth.models import User
 
-It may have been tempting to add these additional fields by inheriting
-from the `User` model directly. However, because other applications may
-also want access to the `User` model, then it not recommended to use
-inheritance, but instead use the one-to-one relationship.
+For Rango, we've added two fields to complete our user profile, and provided a `__str__()` method to return a meaningful value when a unicode representation of a `UserProfile` model instance is requested. Remember, if you are using Python 2, you'll also need to provide a `__unicode__()` method to return a unicode variant of the user's username.
 
-For Rango, we've added two fields to complete our user profile, and
-provided a `__unicode__()` method to return a meaningful value when a
-unicode representation of a `UserProfile` model instance is requested.
+For the two fields `website` and `picture`, we have set `blank=True` for both. This allows each of the fields to be blank if necessary, meaning that users do not have to supply values for the attributes.
 
-For the two fields `website` and `picture`, we have set `blank=True` for
-both. This allows each of the fields to be blank if necessary, meaning
-that users do not have to supply values for the attributes if they do
-not wish to.
+Furthermore, it should be noted that the `ImageField` field has an `upload_to` attribute. The value of this attribute is conjoined with the project's `MEDIA_ROOT` setting to provide a path with which uploaded profile images will be stored. For example, a `MEDIA_ROOT` of `<workspace>/tango_with_django_project/media/` and `upload_to` attribute of `profile_images` will result in all profile images being stored in the directory `<workspace>/tango_with_django_project/media/profile_images/`.
 
-Also note that the `ImageField` field has an `upload_to` attribute. The value
-of this attribute is conjoined with the project's `MEDIA_ROOT` setting
-to provide a path with which uploaded profile images will be stored. For
-example, a `MEDIA_ROOT` of
-`<workspace>/tango_with_django_project/media/` and `upload_to` attribute
-of `profile_images` will result in all profile images being stored in
-the directory
-`<workspace>/tango_with_django_project/media/profile_images/`.
+I> Why about Inheriting to Extend?
+I> It may have been tempting to add the additional fields defined above by inheriting from the `User` model directly. However, because other applications may also want access to the `User` model, it not recommended to use inheritance - but instead use a one-to-one relationship within your database instead.
 
-I> ###Take the Pil
+I> ### Take the PIL
 I>
-I> The Django `ImageField` field makes use of the *Python Imaging Library
-I> (PIL)*. If you have not done so already, install PIL via Pip with:
-I> 		`pip install pillow` 
-I> or 
-I>		`pip install pillow --global-option="build_ext" --global-option="--disable-jpeg"`
-I> if you don't have `jpeg` support.
+I> The Django `ImageField` field makes use of the *Python Imaging Library (PIL)*. If you have not done so already, install PIL via Pip with the command `pip install pillow`. If you don't have `jpeg` support enabled, you can also install PIL with the command `pip install pillow --global-option="build_ext" --global-option="--disable-jpeg"`.
 I>
-I> You can check what packages are installed in your (virtual) environment by issuing  the command, `pip list`.
+I> You can check what packages are installed in your (virtual) environment by issuing the command `pip list`.
 
-To make the `UserProfile` model data accessible via the Django admin web interface add the following lines to the `admin.py` file.
+To make the `UserProfile` model data accessible via the Django admin Web interface, add the following lines to the `admin.py` file.
 
 {lang="python",linenos=off}
 	from rango.models import UserProfile
-	
 	...
-	
 	admin.site.register(UserProfile)
 
 
-I> ###Migrate
-I>
-I> Remember that your database must be updated with the creation of a new
-I> model. Run `$ python manage.py makemigrations rango` from your
-I> terminal to create the migration scripts for the new `UserProfile`
-I> model. Then run `$ python manage.py migrate`
+I> ### Once again, Migrate!
+I> Remember that your database must be updated with the creation of a new model. Run `$ python manage.py makemigrations rango` from your terminal or Command Prompt to create the migration scripts for the new `UserProfile` model. Then run `$ python manage.py migrate` to execute the migration which creates the associated tables within the underlying database.
 
 ##Creating a *User Registration* View and Template
 
