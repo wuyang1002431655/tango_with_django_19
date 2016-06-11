@@ -434,269 +434,169 @@ All of these functions and classes are provided by Django, and as such you'll ne
 	from django.core.urlresolvers import reverse
 
 ### Creating a *Login* Template
-
-With our new view created, we'll need to create a new template allowing
-users to login. While we know that the template will live in the
-`templates/rango/` directory, we'll leave you to figure out the name of
-the file. Look at the code example above to work out the name. In your
-new template file, add the following code:
+With our new view created, we'll need to create a new template allowing users to enter their credentials. While we know that the template will live in the `templates/rango/` directory, we'll leave you to figure out the name of the file. Look at the code example above to work out the name based upon the code for the new `user_login()` view. In your new template file, add the following code.
 
 {lang="html",linenos=off}
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
+	
 	{% block title_block %}
-		Login
+	    Login
 	{% endblock %}
 	
 	{% block body_block %}
-	<div>
 	<h1>Login to Rango</h1>
 	<form id="login_form" method="post" action="/rango/login/">
-		{% csrf_token %}
-		Username: <input type="text" name="username" value="" size="50" />
-		<br />
-		Password: <input type="password" name="password" value="" size="50" />
-		<br />
-		<input type="submit" value="submit" />
+	    {% csrf_token %}
+	    Username: <input type="text" name="username" value="" size="50" />
+	    <br />
+	    Password: <input type="password" name="password" value="" size="50" />
+	    <br />
+	    <input type="submit" value="submit" />
 	</form>
 	{% endblock %}
-	
-Ensure that you match up the input `name` attributes to those that you
-specified in the `user_login()` view - i.e. `username` for the username,
-and `password` for password. Don't forget the `{% csrf_token %}`,
-either!
+
+Ensure that you match up the input `name` attributes to those that you specified in the `user_login()` view. For example, `username` matches to the username, and `password` matches to the user's password. Don't forget the `{% csrf_token %}`, either!
 
 ### Mapping the Login View to a URL
-
-With your login template created, we can now match up the `user_login()`
-view to a URL. Modify Rango's `urls.py` file so that the `urlpatterns` list contains the following mapping.
+With your login template created, we can now match up the `user_login()` view to a URL. Modify Rango's `urls.py` module so that the `urlpatterns` list contains the following mapping.
 
 {lang="python",linenos=off}
 	url(r'^login/$', views.user_login, name='login'),
 
 ### Linking Together
+Our final step is to provide users of Rango with a handy link to access the login page. To do this, we'll edit the `base.html` template inside of the `templates/rango/` directory. Add the following link to your list.
 
-Our final step is to provide users of Rango with a handy link to access
-the login page. To do this, we'll edit the `base.html` template inside
-of the `templates/rango/` directory. Add to the list of links, the following link.
 {lang="html",linenos=off}
 	<ul>
-	
-	...
-	
-	<li><a href="/rango/login/">Login</a><li>
+	    ...
+	    <li><a href="/rango/login/">Login</a><li>
 	</ul>
 
-If you like, you can also modify the header of the index page to provide
-a personalised message if a user is logged in, and a more generic
-message if the user isn't. Within the `index.html` template, find the
-header, as shown in the code snippet below.
+If you like, you can also modify the header of the index page to provide a personalised message if a user is logged in, and a more generic message if the user isn't. Within the `index.html` template, find the message, as shown in the code snippet below.
 
 {lang="html",linenos=off}
 	hey there partner!
 
-Replace this with this line with the markup shown below.
-
+This line can then be replaced with the following code.
 
 {lang="html",linenos=off}
 	{% if user.is_authenticated %}
-		<h1>howdy {{ user.username }}!</h1>
+	    howdy {{ user.username }}!
 	{% else %}
-		<h1>hey there partner!</h1>
+	    hey there partner!
 	{% endif %}
 
-
-As you can see we have used Django's Template Language to check if the
-user is authenticated with `{% if user.is_authenticated %}`. If a user is logged in then the Django machinery gives us access to the `user` object. We can tell from this object
-if the user is logged in (authenticated). If he or she is logged in, we
-can also obtain details about him or her. In the example above, if the user is logged in then they will receive a personalised message, if not they will receive the generic message.
+As you can see, we have used Django's templating language to check if the user is authenticated with `{% if user.is_authenticated %}`. If a user is logged in, then Django's machinery gives us access to the `user` object. We can tell from this object if the user is logged in (authenticated). If he or she is logged in, we can also obtain details about him or her. In the example about, the user's username will be presented to them if logged in - otherwise the generic `hey there partner!` message will be shown.
 
 
 ### Demo
-Try logging into the application. The [figure below](fig-ch9-user-login) shows the screenshots of the login and index page.
+Start the Django development server and attempt to login to the application. The [figure below](#fig-ch9-user-login) shows the screenshots of the login and index page.
 
 {id="fig-ch9-user-login"}
 ![Screenshots illustrating the header users receive when not logged in,
 and logged in with username
-`somebody`.](../images/rango-login-message.png)
+`somebody`.](images/ch9-rango-login-message.png)
 
-With this completed, user logins should now be completed! To test
-everything out, try starting Django's development server and attempt to
-register a new account. After successful registration, you should then
-be able to login with the details you just provided.
+With this completed, user logins should now be working. To test everything out, try starting Django's development server and attempt to register a new account. After successful registration, you should then be able to login with the details you just provided.
 
 ##Restricting Access
+Now that users can login to Rango, we can now go about restricting access to particular parts of the application as per the specification, i.e. that only registered users can add categories and pages. With Django, there are two ways in which we can achieve this goal.
 
-Now that users can login to Rango, we can now go about restricting
-access to particular parts of the application as per the specification,
-i.e. that only registered users can add categories and pages. With
-Django, there are two ways in which we can achieve this goal:
+- One, by directly examining the `request` object within the view and check if the user is authenticated.
+- We could also use a convenience *decorator* function that check if the user is authenticated.
 
--   directly, by examining the `request` object and check if the user is
-    authenticated, or,
--   using a convenience *decorator* function that check if the user is
-    authenticated.
-
-The direct approach checks to see whether a user is logged in, via the
-`user.is_authenticated()` method. The `user` object is available via the
-`request` object passed into a view. The following example demonstrates
-this approach.
+The direct approach checks to see whether a user is logged in, via the `user.is_authenticated()` method. The `user` object is available via the `request` object passed into a view. The following example demonstrates this approach.
 
 {lang="python",linenos=off}
 	def some_view(request):
-	if not request.user.is_authenticated():
-		return HttpResponse("You are logged in.")
-	else:
-	return HttpResponse("You are not logged in.")
+	    if not request.user.is_authenticated():
+	        return HttpResponse("You are logged in.")
+	    else:
+	        return HttpResponse("You are not logged in.")
 
-The second approach uses [Python
-decorators](http://wiki.python.org/moin/PythonDecorators). Decorators
-are named after a [software design pattern by the same
-name](http://en.wikipedia.org/wiki/Decorator_pattern). They can
-dynamically alter the functionality of a function, method or class
-without having to directly edit the source code of the given function,
-method or class.
+The second approach uses [Python decorators](http://wiki.python.org/moin/PythonDecorators). Decorators
+are named after a [software design pattern by the same name](http://en.wikipedia.org/wiki/Decorator_pattern). They can dynamically alter the functionality of a function, method or class without having to directly edit the source code of the given function, method or class.
 
-Django provides a decorator called `login_required()`, which we can
-attach to any view where we require the user to be logged in. If a user
-is not logged in and they try to access a page which calls that view,
-then the user is redirected to another page which you can set, typically
-the login page.
+Django provides a decorator called `login_required()`, which we can attach to any view where we require the user to be logged in. If a user is not logged in and they try to access a page which calls that view, then the user is redirected to another page which you can set - typically the login page.
 
 ### Restricting Access with a Decorator
 
-To try this out, create a view in Rango's `views.py` file, called
-`restricted()` and add the following code:
+To try this out, create a view in Rango's `views.py` module called `restricted()`, and add the following code
 
 {lang="python",linenos=off}
 	@login_required
 	def restricted(request):
-		return HttpResponse("Since you're logged in, you can see this text!")
+	    return HttpResponse("Since you're logged in, you can see this text!")
 
-Note that to use a decorator, you place it *directly above* the function
-signature, and put a `@` before naming the decorator. Python will
-execute the decorator before executing the code of your function/method.
-To use the decorator you will have to import it, so also add the
-following import:
+Note that to use a decorator, you place it *directly above* the function signature, and put a `@` before naming the decorator. Python will execute the decorator before executing the code of your function/method. As a decorator is still a function, you'll still have to import it if it resides within an external module. As `login_required()` exists elsewhere, the following `import` statement is required at the top of `views.py`.
 
 {lang="python",linenos=off}
 	from django.contrib.auth.decorators import login_required
 
-We'll also need to add in another pattern to Rango's `urlpatterns` list in the
-`urls.py` file. Add the following line of code.
+We'll also need to add in another pattern to Rango's `urlpatterns` list in the `urls.py` file. Add the following line of code.
 
 {lang="python",linenos=off}
 	url(r'^restricted/', views.restricted, name='restricted'),
 
-We'll also need to handle the scenario where a user attempts to access
-the `restricted()` view, but is not logged in. What do we do with the
-user? The simplest approach is to redirect his or her browser. Django
-allows us to specify this in our project's `settings.py` file, located
-in the project configuration directory. In `settings.py`, define the
-variable `LOGIN_URL` with the URL you'd like to redirect users to that
-aren't logged in, i.e. the login page located at `/rango/login/`:
+We'll also need to handle the scenario where a user attempts to access the `restricted()` view, but is not logged in. What do we do with the user? The simplest approach is to redirect his or her Web browser. Django allows us to specify this in our project's `settings.py` module, located in the project configuration directory. In `settings.py`, define the variable `LOGIN_URL` with the URL you'd like to redirect users to that aren't logged in, i.e. the login page located at `/rango/login/`:
 
 {lang="python",linenos=off}
 	LOGIN_URL = '/rango/login/'
-	
 
-This ensures that the `login_required()` decorator will redirect any
-user not logged in to the URL `/rango/login/`.
+This ensures that the `login_required()` decorator will redirect any user not logged in to the URL `/rango/login/`.
 
 ##Logging Out
+To enable users to log out gracefully, it'd be nice to provide a logout option to users. Django comes with a handy `logout()` function that takes care of ensuring that the user is logged out, that their session is ended, and that if they subsequently try to access a view requiring them to be logged in, it will deny them access.
 
-To enable users to log out gracefully it would be nice to provide a
-logout option to users. Django comes with a handy `logout()` function
-that takes care of ensuring that the user is logged out, that their
-session is ended, and that if they subsequently try to access a view, it
-will deny them access.
+To provide logout functionality in `rango/views.py`, add the view called `user_logout()` with the following code.
 
-To provide log out functionality in `rango/views.py` add the a view
-called `user_logout()` with the following code:
+{lang="python",linenos=off}
+	# Use the login_required() decorator to ensure only those logged in can access the view.
+	@login_required
+	def user_logout(request):
+	    # Since we know the user is logged in, we can now just log them out.
+	    logout(request)
+	    # Take the user back to the homepage.
+	    return HttpResponseRedirect(reverse('index'))
+
+You'll also need to import the `logout` function at the top of `views.py`.
 
 {lang="python",linenos=off}
 	from django.contrib.auth import logout
 
-	# Use the login_required() decorator to ensure only those logged in can access the view.
-
-
-	@login_required
-	def user_logout(request):
-		# Since we know the user is logged in, we can now just log them out.
-		logout(request)
-		# Take the user back to the homepage.
-		return HttpResponseRedirect(reverse('index'))
-
-
-With the view created, map the URL `/rango/logout/` to the
-`user_logout()` view by modifying the `urlpatterns` list in Rango's
-`urls.py`.
+With the view created, map the URL `/rango/logout/` to the `user_logout()` view by modifying the `urlpatterns` list in Rango's `urls.py`.
 
 {lang="python",linenos=off}
 	url(r'^logout/$', views.user_logout, name='logout'),
 
-Now that all the machinery for logging a user out has been completed,
-it'd be handy to provide a link from the homepage to allow users to
-simply click a link to logout. However, let's be smart about this: is
-there any point providing the logout link to a user who isn't logged in?
-Perhaps not - it may be more beneficial for a user who isn't logged in
-to be given the chance to register, for example.
+Now that all the machinery for logging a user out has been completed, we can add some finishing touches. It'd be handy to provide a link from the homepage to allow users to simply click a link to logout. However, let's be smart about this: is there any point providing the logout link to a user who isn't logged in? Perhaps not - it may be more beneficial for a user who isn't logged in to be given the chance to register, for example.
 
-Like in the previous section, we'll be modifying Rango's `index.html`
-template, and making use of the `user` object in the template's context
-to determine what links we want to show. Find your growing list of links
-at the bottom of the page and replace it with the following HTML markup
-and Django template code. Note we also add a link to our restricted page
-at `/rango/restricted/`.
+Like in the previous section, we'll be modifying Rango's `index.html` template and making use of the `user` object in the template's context to determine what links we want to show. Find your growing list of links at the bottom of the page, and replace it with the following code. Note we also add a link to our restricted page at `/rango/restricted/`.
 
 {lang="html",linenos=off}
 	<ul>
 	{% if user.is_authenticated %}
-		<li><a href="{% url 'restricted' %}">Restricted Page</a></li>
-		<li><a href="{% url 'logout' %}">Logout</a></li>	
+	    <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+	    <li><a href="{% url 'logout' %}">Logout</a></li>	
 	{% else %}
-		<li><a href="{% url 'login' %}">Sign In</a></li>
-		<li><a href="{% url 'register' %}">Sign Up</a></li>			
+	    <li><a href="{% url 'login' %}">Sign In</a></li>
+	    <li><a href="{% url 'register' %}">Sign Up</a></li>			
 	{% endif %}
-		<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
-		<li><a href="{% url 'about' %}">About</a></li>	
-		<li><a href="{% url 'index' %}">Index</a></li>
+	    <li><a href="{% url 'add_category' %}">Add a New Category</a></li>
+	    <li><a href="{% url 'about' %}">About</a></li>	
+	    <li><a href="{% url 'index' %}">Index</a></li>
 	</ul>
 
+This code states that when a user is authenticated and logged in, he or she can see the `Restricted Page` and `Logout` links. If he or she isn't logged in, `Register Here` and `Login` are presented. As `About` and `Add a New Category` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
 
-Simple - when a user is authenticated and logged in, he or she can see
-the `Restricted Page` and `Logout` links. If he or she isn't logged in,
-`Register Here` and `Login` are presented. As `About` and
-`Add a New Category` are not within the template conditional blocks,
-these links are available to both anonymous and logged in users.
+In most applications, you will require different levels of security when registering and managing users. Ensuring the user enters an e-mail address that they have access to, or sending users passwords that they have forgotten are prime examples. While we could extend the current approach and build all the necessary infrastructure to support such functionality, a `django-registration-redux` application has been developed which greatly simplifies the process - visit <https://django-registration-redux.readthedocs.org> to find out more about using this package. Templates can be found at:
+<https://github.com/macdhuibh/django-registration-templates>. We cover how you can use this package in the [following chapter](#chapter-redux).
 
-X> ###Exercises
+To summarise *this* chapter, we've covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's `django.contrib.auth` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base `django.contrib.auth.models.User` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
+
+X> ### Exercises
+X> Work on the following two exercises to reinforce what you've learnt in this chapter.
 X>
-X> This chapter has covered several important aspects of managing user
-X> authentication within Django. We've covered the basics of installing
-X> Django's `django.contrib.auth` application into our project.
-X> Additionally, we have also shown how to implement a user profile model
-X> that can provide additional fields to the base
-X> `django.contrib.auth.models.User` model. We have also detailed how to
-X> setup the functionality to allow user registrations, login, logout, and
-X> to control access. For more information about user authentication and
-X> registration consult [Django's official documentation on
-x> Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
-X>
-X> -   Customise the application so that only registered users can
-X>    add/edit, while non-registered can only view/use the
-X>    categories/pages. You'll also have ensure links to add/edit pages
-X>    appear only if the user browsing the website is logged in.
-X> -   Provide informative error messages when users incorrectly enter
-X>    their username or password.
-
-In most applications you are going to require different levels of
-security when registering and managing users - for example, making sure
-the user enters an email address that they have access to, or sending
-users passwords that they have forgotten. While we could extend the
-current approach and build all the necessary infrastructure to support
-such functionality a `django-registration-redux` application has been
-developed which greatly simplifies the process - visit
-<https://django-registration-redux.readthedocs.org> to find out more
-about using this package. Templates can be found at:
-<https://github.com/macdhuibh/django-registration-templates>
+X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have ensure links to add or edit pages appear only if the user browsing the website is logged in.
+X> - Provide informative error messages when users incorrectly enter their username or password.

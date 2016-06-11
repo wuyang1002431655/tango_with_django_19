@@ -1,4 +1,4 @@
-#User Authentication with Django-Registration-Redux
+#User Authentication with Django-Registration-Redux {#chapter-redux}
 
 There are numerous add-on applications that have been developed that
 provide login, registration and authentication mechanisms. Since most
