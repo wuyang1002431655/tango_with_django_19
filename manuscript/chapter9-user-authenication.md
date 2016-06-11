@@ -265,63 +265,49 @@ While the view looks pretty complicated, it's actually very similar in nature to
 We also establish a link between the two model instances that we create. After creating a new `User` model instance, we reference it in the `UserProfile` instance with the line `profile.user = user`. This is where we populate the `user` attribute of the `UserProfileForm` form, which we hid from users.
 
 ### Creating the *Registration* Template
-
-Now create a new template file, `rango/register.html` and add the
-following code:
+Now we need to make the template that will be used by the new `register()` view. Create a new template file, `rango/register.html`, and add the following code.
 
 {lang="html",linenos=off}
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
+	
 	{% block title_block %}
-		Register
+	    Register
 	{% endblock %}
 	
 	{% block body_block %}
-		<div>
-		<h1>About Page</h1>			
-		{% if registered %}
-			Rango says: <strong>thank you for registering!</strong>
-			<a href="/rango/">Return to the homepage.</a><br />
-		{% else %}
-			Rango says: <strong>register here!</strong><br />
-			<form id="user_form" method="post" action="/rango/register/"
-				enctype="multipart/form-data">
-
-			{% csrf_token %}
-
-			<!-- Display each form  -->
-			{{ user_form.as_p }}
-			{{ profile_form.as_p }}
-
-			<!-- Provide a button to click to submit the form. -->
-			<input type="submit" name="submit" value="Register" />
-		</form>
-		% endif %}
-		
-		</div>	
+	    <h1>About Page</h1>
+	    {% if registered %}
+	        Rango says: <strong>thank you for registering!</strong>
+	        <a href="/rango/">Return to the homepage.</a><br />
+	    {% else %}
+	        Rango says: <strong>register here!</strong><br />
+	        <form id="user_form" method="post" action="/rango/register/"
+	              enctype="multipart/form-data">
+	        
+	        {% csrf_token %}
+	        
+	        <!-- Display each form  -->
+	        {{ user_form.as_p }}
+	        {{ profile_form.as_p }}
+	        
+	        <!-- Provide a button to click to submit the form. -->
+	        <input type="submit" name="submit" value="Register" />
+	    </form>
+	    {% endif %}
 	{% endblock %}
 
 The first thing to note here is that this template makes use of the `registered` variable we used in our view indicating whether registration was successful or not. Note that `registered` must be `False` in order for the template to display the
-registration form - otherwise, apart from the title, only a success
-message is displayed.
+registration form - otherwise, apart from the title, only a success message is displayed.
 
-Next, we have used the `as_p` template function on the `user_form` and `profile_form`. This wraps each element in the form in a paragraph. This ensures that each element appears on a new line.
+Next, we have used the `as_p` template function on the `user_form` and `profile_form`. This wraps each element in the form in a paragraph (denoted by the `<p>` HTML tag). This ensures that each element appears on a new line.
 
-Finally, in the `<form>` element we have included the attribute `enctype` - this is because if the user tries to upload a picture, then the message sent will be quite large and in a binary format, so the message has to be broken up and sent in multiple parts.  So we need to denote this with `enctype="multipart/form-data"`. This tells the HTTP client i.e. web browser to package and send the data accordingly, otherwise not all the data will be sent.
+Finally, in the `<form>` element, we have included the attribute `enctype`. This is because if the user tries to upload a picture, the response from the form may contain binary data - and may be quite large. The response therefore will have to be broken into multiple parts to be transmitted back to the server. As such, we need to denote this with `enctype="multipart/form-data"`. This tells the HTTP client (the Web browser) to package and send the data accordingly. Otherwise, not all the data will be received by the server.
 
-W> Multipart Messages to handle binary files
+W> ### Multipart Messages and Binary Files
+W> You should be aware of the `enctype` attribute for the `<form>` element. When you want users to upload files from a form, it's an absolute *must* to set `enctype` to `multipart/form-data`. This attribute and value combination instructs your browser to send form data in a special way back to the server. Essentially, the data representing your file is split into a series of chunks and sent. For more information, check out [this great Stack Overflow answer](http://stackoverflow.com/a/4526286). 
 W>
-W> You should be aware of the `enctype` attribute for the `<form>`
-W> element. When you want users to upload files from a form, it's an
-W> absolute *must* to set `enctype` to `multipart/form-data`. This
-W> attribute and value combination instructs your browser to send form
-W> data in a special way back to the server. Essentially, the data
-W> representing your file is split into a series of chunks and sent. For
-W> more information, check out [this great Stack Overflow
-W> answer](http://stackoverflow.com/a/4526286). 
-W>
-W> Also, remember to include the CSRF token, i.e.
-W> `{% csrf_token %}` within your `<form>` element!
+W> Furthermore, remember to include the CSRF token, i.e. `{% csrf_token %}` within your `<form>` element! If you don't do this, Django's [cross-site forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery) protection middleware layer will refuse to accept the form's contents, returning an error.
 
 ### The `register()` View URL Mapping
 
