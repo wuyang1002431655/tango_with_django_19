@@ -349,12 +349,11 @@ Finally, we can add a link pointing to our new registration URL by modifying the
 ### Demo
 Now everything is plugged together, try it out. Start your Django development server and try to register as a new user. Upload a profile image if you wish. Your registration form should look like the one illustrated in the [figure below](#fig-rango-register-form).
 
-
 {id="fig-ch9-user-register"}
 ![A screenshot illustrating the basic registration form you create as
-part of this tutorial.](../images/rango-register-form.png)
+part of this tutorial.](../images/ch9-rango-register-form.png)
 
-Upon seeing the message indicating your details were successfully registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface.
+Upon seeing the message indicating your details were successfully registered, the database should have a new entry in the `User` and `UserProfile` models. Check that this is the case by going into the Django Admin interface. If so, everything works as expected!
 
 
 ## Implementing Login Functionality
