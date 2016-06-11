@@ -1,39 +1,35 @@
 #Working with Templates {#chapter-templates-extra}
-So far we've created several HTML templates for different pages
-in the application. You've probably noticed that there is a lot of repeated HTML code in the templates - and we are starting to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Also, you might have noticed that the way we have been referring to different pages using hard coded URL paths. In this chapter, we will use *template inheritance* to overcome the first problem and the *url template tag* to solve the second problem. We will start with addressing the later problem first.
+So far, we've created several HTML templates for different pages within our Rango application. As you've created more and more templates, you may have noticed that a lot of the HTML code is actually repeated. As such, you could argue that we are therefore beginning to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Furthermore, you might have noticed that the way we have been referring to different pages using *hard coded* URL paths. These are two issues we could definitely do without.
+
+In this chapter, we will use *template inheritance* to overcome the first problem, and the *URL template tag* to solve the second problem. We will start with addressing the latter problem first.
 
 ##Using Relative URLs in Templates
-So far we have been directly coding the URL of the page/view we want to
-show within the template, i.e. `<a href="/rango/about/"> About  </a>`. This kind of hard coding of URLs means that if we change our URL mappings in `urls.py` then we are going to have to change all of these URL references. So the preferred way is to use the template tag `url` to look up the URL in the `urls.py` files and dynamic insert the URL path. 
+So far, we have been directly coding the URL of the page/view we want to
+show within the template, i.e. `<a href="/rango/about/">About</a>`. This kind of hard coding of URLs means that if we change our URL mappings in `urls.py`, then we will have to also change all of these URL references. The preferred way is to use the template tag `url` to look up the URL in the `urls.py` files and dynamically insert the URL path. 
 
-It is pretty simple to include relative URLs in your templates. To refer to the *About* page, we would insert the following line into our templates:
+It's pretty simple to include relative URLs in your templates. To refer to the *About* page, we would insert the following line into our templates:
 
 {lang="html",linenos=off}
 	<a href="{% url 'about' %}">About</a>
 
-The Django template engine will look up the `urls.py` files for a URL
-with the `name='about'` (and then reverse match the actual URL). This
-means if we change the URL mappings in `urls.py` then we do not have to
-go through all the templates and update them. If we had not given the 
-URL pattern a name, we could directly reference it as follows:
+The Django template engine will look up any `urls.py` module for a URL pattern with the attribute `name` set to `about` (`name='about'`), and then reverse match the actual URL. This means if we change the URL mappings in `urls.py`, we don't have to go through all our templates and update them. 
+
+One can also reference a URL pattern without a specified name, by referencing it directly as shown below.
 
 {lang="html",linenos=off}
 	<a href="{% url 'rango.views.about' %}">About</a>
 
-In which case, we need to specify the application, 'rango' and the view, 'about'.
+In this example, we must specify the app `rango`, and the view `about`, contained within the `views.py` module.
 
-In your `index.html` template you will notice that you have a
-parameterized URL pattern, i.e. the `category` URL/view takes the
-`category.slug` as a parameter. To handle this you can pass the 'url'
-template tag the name of the URL/view and the slug within the template, as follows:
+In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this you, can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
 
 {lang="html",linenos=off}
 	{% for category in categories %}
-		<li><a href="{% url 'category'  category.slug %}">
-			{{ category.name }}</a></li>
+	    <li><a href="{% url 'category' category.slug %}">
+	        {{ category.name }}</a></li>
 	{% endfor %}
 
-Before you charge off to update all the URLs in all your templates with relative URLs, we need to re-structured and re-factor our templates by using inheritance to remove repetition.
+Before you charge off to update all the URLs in all your templates with relative URLs, we need to re-structure and re-factor our templates by using inheritance to remove repetition.
 
 
 ## Dealing with Repetition
