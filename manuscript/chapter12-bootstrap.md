@@ -39,7 +39,7 @@ The changes that we performed are listed below along with the updated HTML (so t
     nav bar.
 -   Added in a side block, i.e., `{% block side_block %}{% endblock %}`
 - Added in `{% load staticfiles %}` after the `DOCTYPE` tag.
-- Downloaded the [Rango Favicon]() and saved it to `static/images/` and then updated the `<link>` tag to be `<link rel="icon" href="{% static 'images/favicon.ico' %}">`.
+- Downloaded the [Rango Favicon](https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/static/images/favicon.ico) and saved it to `static/images/` and then updated the `<link>` tag to be `<link rel="icon" href="{% static 'images/favicon.ico' %}">`.
 
 ##The New Base Template
 
@@ -60,7 +60,6 @@ Also of note is that the HTML template makes references to external websites to 
 ##Quick Style Change
 To give Rango a much needed facelift, we can replace the content of the existing `base.html` with the HTML template code in `base_bootstrap.html`. You might want to first comment out the existing code in `base.html` and then cut-and-paste in the `base_bootstrap.html` code.
 
-
 Now reload your application. Pretty nice, hey!
 
 You should notice that your application looks about a hundred times better already. Flip through the different pages. Since they all inherit from base, they will all be looking pretty good, but not perfect! In the remainder of this chapter, we will go through a number of changes to the templates and use various Bootstrap classes to improve the look and feel of Rango.
@@ -74,35 +73,30 @@ I> static folder. If you do this, simply update the base template to
 I> reference the static files stored locally. 
 
 
-
-
-## About Template
+## Page Headers
 Now that we have the `base.html` all set up and ready to go, we can do a
 really quick face lift to Rango by going through the Bootstrap
 components and selecting the ones that suit the pages.
 
-Lets update the `about.html` template, by putting a page header on the
-page (<http://getbootstrap.com/components/#page-header>). From the
-example, all we need to do is provide an encapsulating `<div>` with the
-`class="page-header"`:
+Let's start by updating all our templates by adding in the class `page-header` to the `<h1>` title tag at the top of each page. For example the `about.html` would be updated as follows.
+
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
-
+	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
-
-	{% block title %}About{% endblock %}
-
+	{% block title_block %}
+		About
+	{% endblock %}
+	
 	{% block body_block %}
-	<div class="page-header">
-        <h1>About</h1>
-            </div>
-        <div>
-        <p></strong>.</p>
+		<div>
+		<h1 class="page-header">About Page</h1>			
+			This tutorial has been put together by: leifos and maxwelld90 
+		</div>	
+		<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+	{% endblock %}
 
-        <img  width="90" height="100" src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
-        </div>
-{% endblock %}
+This doesn't visually appear to change the look and feel, but it informs the toolkit what is the title text, and if we change the theme then it will be styled appropriately.
 
 
 ![A screenshot of the About page without
@@ -115,7 +109,6 @@ applied.](../images/ch11-bootstrap-about.png)
 
 \#TODO(leifos):update this screen shot.
 
-To each template, add in a page-header. Remember to update all the templates in both `rango` and `registration`. While the application looks much better, some things look out of place. For example on the registration page, the fields are not lined up, and the button looks like  they are from the 20th century.
 
 ![A screenshot of the Registration page with Bootstrap Styling applied
 but not customised.](../images/ch11-bootstrap-register-initial.png)
@@ -125,7 +118,6 @@ but not customised.](../images/ch11-bootstrap-register-initial.png)
 
 
 ### The Index Page
-
 Since we have only encapsulated the title with a page header i.e.
 `<div class="page-header">`, we haven't really capitalised on the
 classes and styling that Bootstrap gives us. So here we have taken the
