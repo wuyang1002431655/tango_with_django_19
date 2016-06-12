@@ -17,7 +17,7 @@ These steps highlight how we need to work within Django's framework to bind mode
 
 ##Showing Categories on Rango's Homepage
 One of the requirements regarding the main page was to show the top
-five rango'ed categories. To fulfil this requirement, we will go through each of the above steps.
+five rango'ed categories. To fulfill this requirement, we will go through each of the above steps.
 
 ### Importing Required Models
 First, we need to complete step one. Open `rango/views.py` and at the top of the file, after the other imports, import the `Category` model from Rango's `models.py` file.
@@ -45,7 +45,7 @@ Remember that the `index()` function is responsible for the main page view.  Mod
 	    return render(request, 'rango/index.html', context_dict)
 
 Here, the expression `Category.objects.order_by('-likes')`  queries the `Category` model to retrieve the top five categories. You can see that it uses
-the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list i.e  `[:5]` and thus return a sub-list of `Category` objects.
+the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list (`[:5]`) and thus return a sublist of `Category` objects.
 
 With the query complete, we passed a reference to the list (stored as variable `category_list`) to the dictionary, `context_dict`. This dictionary is then passed as part of the context for the template engine in the `render()` call.
 
@@ -179,7 +179,7 @@ If you go to add in a new category via the admin interface you may encounter a p
 
 2. The next problem arises if we have one category called `Django` and one called `django`. Since the `slugify()` makes the slugs lower case it will not be possible to identify which category corresponds to the `django` slug.
 
-To solve the first problem, we can either update our model so that the slug field allows blank entries, i.e 
+To solve the first problem, we can either update our model so that the slug field allows blank entries, i.e.: 
 
 {lang="python",linenos=off}
 	slug = models.SlugField(blank=True) 
@@ -190,15 +190,15 @@ or we can customize the admin interface so that it automatically pre-populates t
 	from django.contrib import admin
 	from rango.models import Category, Page
 	...
-	# Add in this class to customize the Admin Interface
+	# Add in this class to customise the Admin Interface
 	class CategoryAdmin(admin.ModelAdmin):
 	    prepopulated_fields = {'slug':('name',)}
 	
-	# Update the registeration to include this customised interface
+	# Update the registration to include this customised interface
 	admin.site.register(Category, CategoryAdmin)
 	...
 
-Try out the admin interface and add in a new category. Pretty cool, hey!
+Try out the admin interface and add in a new category.
 
 Now that we have addressed the first problem, we can ensure that the slug field is also unique, by adding the constraint to the slug field.
 
@@ -207,7 +207,7 @@ Now that we have addressed the first problem, we can ensure that the slug field 
 
 Now that we have added in the slug field we can now use the slugs to uniquely identify each category. We could have added the unique constraint earlier, but if we performed the migration and set everything to be an empty string by default it would have raised an error. This is because the unique constraint would have been violated. We could have deleted the database and then recreated everything - but that is not always desirable. 
 
-W> ###Migration Woes
+W> ### Migration Woes
 W>
 W> It is always best to plan out your database in advance and avoid changing them. 
 W> Making a population script means that you easily recreate your database if you need to delete it.
@@ -270,7 +270,7 @@ Our new view follows the same basic steps as our `index()` view. We first define
 ### Category Template
 Now let's create our template for the new view. In `<workspace>/tango_with_django_project/templates/rango/` directory, create `category.html`. In the new file, add the following code.
 
-{lang="hml",linenos=off}
+{lang="html",linenos=on}
 	<!DOCTYPE html>
 	<html>
 	<head>
