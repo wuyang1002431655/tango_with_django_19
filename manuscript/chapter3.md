@@ -11,7 +11,7 @@ command, which tells you what Python version you have:
 	$ python --version
 
 
-The response should be something like: `2.7.10` or `3.5.1`, but any 2.7.5+ or 3.4+ versions of Python should work fine. If you need to upgrade or install Python go to the chapter on [setting up your system](#chapter-system-setup). 
+The response should be something like `2.7.11` or `3.5.1`, but any 2.7.5+ or 3.4+ versions of Python should work fine. If you need to upgrade or install Python go to the chapter on [setting up your system](#chapter-system-setup). 
 
 If you are using a virtual environment, then ensure that you have activated it - if you don't remember how go back to our chapter on [virtual environments](#chapter-virtual-environments).
 
@@ -58,13 +58,13 @@ If you don't have a `workspace` directory, then create one, so that you can hous
 
 
 I> ### Running Windows?
-I>
 I> On Windows, you may have to use the full path to the `django-admin.py` script, for example:
 I>
-I> `python c:\python27\scripts\django-admin.py startproject tango_with_django_project`
+I> {lang="text",linenos=off}
+I> 	python c:\python27\scripts\django-admin.py 
+I> 	       startproject tango_with_django_project
 I>
-I> as suggested on
-I> [StackOverflow](http://stackoverflow.com/questions/8112630/cant-create-django-project-using-command-prompt).
+I> as suggested on [StackOverflow](http://stackoverflow.com/questions/8112630/cant-create-django-project-using-command-prompt).
 
 This command will invoke the `django-admin.py` script, which will set up a new Django project called `tango_with_django_project` for you. Typically, we append `_project` to the end of our Django project directories so we know exactly what they contain - but the naming convention is entirely up to you.
 
@@ -132,7 +132,6 @@ I>
 I> If you use `0.0.0.0`, Django figures out what your IP address is. Go ahead and try:
 I>
 I> `python manage.py runserver 0.0.0.0:5555`
-I>
 
 When setting ports, it is unlikely that you will be able to use TCP port 80 or 8080 as these are traditionally reserved for HTTP traffic. Also, any port below 1024 is considered to be [privileged](http://www.w3.org/Daemon/User/Installation/PrivilegedPorts.html) by your operating system. 
 

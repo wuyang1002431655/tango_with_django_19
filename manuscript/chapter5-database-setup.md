@@ -18,17 +18,17 @@ Before we get started, let's go over the data requirements for the Rango app tha
 Before we can create any models, we need to set up our database with Django. In Django 1.9, a `DATABASES` variable is automatically created in your `settings.py` module when you set up a new project. It'll look similar to the following example.
 
 {lang="python",linenos=off}
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.sqlite3',
+	        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	    }
+	}
 
 We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
 
 
-T> ### Git Tip
+T> ### Top Git Tip
 T> If you are using Git, you might be tempted to add and commit the database file. This is not a good idea because if you are working on your app with other people, they are likely to change the database and this will cause endless conflicts.
 T>
 T> Instead, add `db.sqlites3` to your `.gitignore` file so that it won't be added when you `git commit` and `git push`. You can also do this for other files like `*.pyc` and machine specific files.
@@ -47,21 +47,21 @@ With your database configured in `settings.py`, let's create the two initial dat
 For the models themselves, we will create two classes - one class representing each model. Both must [inherit](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)) from the `Model` base class, `django.db.models.Model`. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the `Category` and `Page` model as follows.
 
 {lang="python",linenos=off}
-    class Category(models.Model):
-        name = models.CharField(max_length=128, unique=True)
-        
-        def __str__(self):  # For Python 2, use __unicode__ too
-			return self.name
-            
-    
-    class Page(models.Model):
-        category = models.ForeignKey(Category)
-        title = models.CharField(max_length=128)
-        url = models.URLField()
-        views = models.IntegerField(default=0)
-        
-        def __str__(self):  # For Python 2, use __unicode__ too
-            return self.title
+	class Category(models.Model):
+	    name = models.CharField(max_length=128, unique=True)
+	    
+	    def __str__(self):  # For Python 2, use __unicode__ too
+	        return self.name
+	
+	
+	class Page(models.Model):
+	    category = models.ForeignKey(Category)
+	    title = models.CharField(max_length=128)
+	    url = models.URLField()
+	    views = models.IntegerField(default=0)
+	
+	    def __str__(self):  # For Python 2, use __unicode__ too
+	        return self.title
 
 T> ### Check `import` Statements
 T> At the top of the `models.py` module, you should see `from django.db import models`. If you don't see it, add it in.
@@ -100,7 +100,6 @@ From our model examples above, the field `category` in model `Page` is of type `
 
 Finally, it is good practice to implement the `__str__()` and/or `__unicode__()` methods. Without this method implemented when you go to `print` the object, it will show as `<Category: Category object>`. This isn't very useful when debugging or accessing the object - instead the code above will print, for example, `<Category: Python>` for the Python category. It is also helpful when we go to use the Admin Interface because Django will display the string representation of the object.
 
-
 ## Creating and Migrating the Database
 With our models defined in `models.py`, we can now let Django work its magic and create the tables in the underlying database. Django provides what is called a [*migration tool*](https://en.wikipedia.org/wiki/Data_migration) to help us set up and update the database to reflect any changes to your models. For example, if you were to add a new field then you can use the migration tools to update the database.
 
@@ -108,31 +107,31 @@ With our models defined in `models.py`, we can now let Django work its magic and
 First of all, the database must be *initialised*. This means creating it and all the associated tables within it so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command.
 
 {lang="text",linenos=off}
-    $ python manage.py migrate
-    
-    Operations to perform:
-      Apply all migrations: admin, contenttypes, auth, sessions
-    Running migrations:
-      Rendering model states... DONE
-      Applying contenttypes.0001_initial... OK
-      Applying auth.0001_initial... OK
-      Applying admin.0001_initial... OK
-      Applying admin.0002_logentry_remove_auto_add... OK
-      Applying contenttypes.0002_remove_content_type_name... OK
-      Applying auth.0002_alter_permission_name_max_length... OK
-      Applying auth.0003_alter_user_email_max_length... OK
-      Applying auth.0004_alter_user_username_opts... OK
-      Applying auth.0005_alter_user_last_login_null... OK
-      Applying auth.0006_require_contenttypes_0002... OK
-      Applying auth.0007_alter_validators_add_error_messages... OK
-      Applying sessions.0001_initial... OK
+	$ python manage.py migrate
+	
+	Operations to perform:
+	  Apply all migrations: admin, contenttypes, auth, sessions
+	Running migrations:
+	  Rendering model states... DONE
+	  Applying contenttypes.0001_initial... OK
+	  Applying auth.0001_initial... OK
+	  Applying admin.0001_initial... OK
+	  Applying admin.0002_logentry_remove_auto_add... OK
+	  Applying contenttypes.0002_remove_content_type_name... OK
+	  Applying auth.0002_alter_permission_name_max_length... OK
+	  Applying auth.0003_alter_user_email_max_length... OK
+	  Applying auth.0004_alter_user_username_opts... OK
+	  Applying auth.0005_alter_user_last_login_null... OK
+	  Applying auth.0006_require_contenttypes_0002... OK
+	  Applying auth.0007_alter_validators_add_error_messages... OK
+	  Applying sessions.0001_initial... OK
 
 All apps that are installed in your Django project (check `INSTALLED_APPS` in `settings.py`) will update their database representations with this command. After this command is issued, you should then see a `db.sqlite3` file in your Django project's root.
 
 Next, create a superuser to manage the database. Run the following command.
 
 {lang="text",linenos=off}
-    $ python manage.py createsuperuser
+	$ python manage.py createsuperuser
 
 The superuser account will be used to access the Django admin interface, used later on in this chapter. Enter a username for the account, e-mail address and provide a password when prompted. Once completed, the script should finish successfully. Make sure you take a note of the username and password for your superuser account.
 
@@ -140,15 +139,14 @@ The superuser account will be used to access the Django admin interface, used la
 Whenever you make changes to your app's models, you need to *register* the changes via the `makemigrations` command in `manage.py`. Specifying the `rango` app as our target, we then issue the following command from our Django project's root directory.
 
 {lang="text",linenos=off}
-    $ python manage.py makemigrations rango
-    
-    Migrations for 'rango':
-      0001_initial.py:
-        - Create model Category
-        - Create model Page
+	$ python manage.py makemigrations rango
+	
+	Migrations for 'rango':
+	  0001_initial.py:
+	    - Create model Category
+	    - Create model Page
 
 Upon the completion of this command, check the `rango/migrations` directory to see that a Python script has been created. It's called `0001_initial.py`, which contains all the necessary details to create your database schema at that particular migration. 
-
 
 I> ### Checking the Underlying SQL
 I> If you want to check out the underlying SQL that the Django ORM issues to the database engine for a given migration, you can issue the following command.
@@ -161,13 +159,13 @@ I> In this example, `rango` is the name of your app, and `0001` is the migration
 After you have created migrations for your app, you need to commit them to the database. Do so by once again issuing the `migrate` command.
 
 {lang="text",linenos=off}
-    $ python manage.py migrate
-    
-    Operations to perform:
-      Apply all migrations: admin, rango, contenttypes, auth, sessions
-    Running migrations:
-      Rendering model states... DONE
-      Applying rango.0001_initial... OK
+	$ python manage.py migrate
+	
+	Operations to perform:
+	  Apply all migrations: admin, rango, contenttypes, auth, sessions
+	Running migrations:
+	  Rendering model states... DONE
+	  Applying rango.0001_initial... OK
 
 This output confirms that the database tables have been created in your database, and you are good to go.
 
@@ -214,7 +212,7 @@ Setting everything up is relatively straightforward. In your project's `settings
 By default, things are pretty much ready to go. Start the Django development server in the usual way with the following command.
 
 {lang="text",linenos=off}
-    $ python manage.py runserver
+	$ python manage.py runserver
 
 Navigate your Web browser to `http://127.0.0.1:8000/admin/`. You are then presented with a login prompt. Using the username and password you created previously with the `python manage.py createsuperuser` command, login. You are then presented with an interface looking [similar to the one shown below](#fig-ch5-admin-first).
 
@@ -226,11 +224,11 @@ While this looks good, we are missing the `Category` and `Page` models that were
 To do this, open the file `rango/admin.py`. With an `include` statement already present, modify the module so that you `register` each class you want to include. The example below registers both the `Category` and `Page` class to the admin interface.
 
 {lang="python",linenos=off}
-    from django.contrib import admin
-    from rango.models import Category, Page
-    
-    admin.site.register(Category)
-    admin.site.register(Page)
+	from django.contrib import admin
+	from rango.models import Category, Page
+	
+	admin.site.register(Category)
+	admin.site.register(Page)
 
 Adding further classes which may be created in the future is as simple as adding another call to the `admin.site.register()` method.
 
@@ -253,14 +251,14 @@ T> ### Plural vs. Singular Spellings
 T>  Note the typo within the admin interface (`Categorys`, not `Categories`). This typo can be fixed by adding a nested `Meta` class into your model definitions with the `verbose_name_plural` attribute. Check out a modified version of the `Category` model below for an example, and [Django's official documentation on models](https://docs.djangoproject.com/en/1.9/topics/db/models/#meta-options) for more information about what can be stored within the `Meta` class.
 T>
 T> {lang="python",linenos=off}
-T>     class Category(models.Model):
-T>         name = models.CharField(max_length=128, unique=True)
-T>     
-T>         class Meta:
-T>             verbose_name_plural = 'categories'
-T>     
-T>         def __str__(self):
-T>             return self.name
+T> 	class Category(models.Model):
+T> 	    name = models.CharField(max_length=128, unique=True)
+T> 	
+T> 	    class Meta:
+T> 	        verbose_name_plural = 'categories'
+T> 	        
+T> 	        def __str__(self):
+T> 	            return self.name
 
 I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
@@ -273,7 +271,7 @@ To create a population script for Rango, start by creating a new Python module w
 {lang="python",linenos=on}
 	import os
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                          'tango_with_django_project.settings')
+	                      'tango_with_django_project.settings')
 	
 	import django
 	django.setup()
@@ -284,7 +282,7 @@ To create a population script for Rango, start by creating a new Python module w
 	    # we want to add into each category.
 	    # Then we will create a dictionary of dictionaries for our categories.
 	    # This might seem a little bit confusing, but it allows us to iterate
-        # through each data structure, and add the data to our models.
+	    # through each data structure, and add the data to our models.
 	    
 	    python_pages = [
 	        {"title": "Official Python Tutorial",
@@ -434,7 +432,6 @@ X> * Customise the admin interface. Change it in such a way so that when you vie
 {id="fig-admin-completed"}
 ![The updated admin interface `Page` view, complete with columns for category and URL.](images/ch5-admin-completed.png)
 
-
 T> ### Exercise Hints
 T> If you require some help or inspiration to get these exercises done, these hints will hopefully help you out.
 T> 
@@ -443,7 +440,6 @@ T> * Modify the `add_cat` function in the `populate.py` script, to take the `vie
 T> * To customise the admin interface, you will need to edit `rango/admin.py` and create a `PageAdmin` class that inherits from `admin.ModelAdmin`. 
 T> * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
 T> * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
-
 
 I> ### Tests
 I>
@@ -455,7 +451,3 @@ I> {lang="text",linenos=off}
 I>     $ python manage.py test rango
 I>
 I> If you are interested in learning about automated testing, now is a good time to check out the [chapter on testing](#chapter-testing). The chapter runs through some of the basics on testing that can perform in Django.
-
-
-
-
