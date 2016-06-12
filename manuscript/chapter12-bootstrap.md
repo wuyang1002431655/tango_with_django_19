@@ -1,29 +1,32 @@
 #Bootstrapping Rango
-
 In this chapter, we will be styling Rango using the *Twitter Bootstrap
-3.2* toolkit. We won't go into the details about how Bootstrap works,
-and we will be assuming you have some familiarity with CSS. If you
-don't, check out the CSS chapter so that you understand the basics and
-then check out some Bootstrap tutorials. However, you should be able to
-go through this section and piece things together.
+4 Alpha* toolkit. Bootstrap is the most popular HTML, CSS, JS Framework, which we can use to style our application. The toolkit lets you design and style responsive web applications, and is pretty easy to use once you get familiar with it.
 
-To get started take a look at the [Bootstrap 3.2.0
-website](http://getbootstrap.com/) - it provides you with sample code
+
+I> ### Cascading Style Sheets
+I>
+I> If you are not familiar with CSS then you should check out the CSS Chapter where we provide a quick guide on the basics of Cascading Style Sheets.
+
+Now take a look at the [Bootstrap 4.0
+website](http://v4-alpha.getbootstrap.com/) - it provides you with sample code
 and examples of the different components and how to style them by added
 in the appropriate style tags, etc. On the Bootstrap website they
 provide a number of [example
-layouts](http://getbootstrap.com/getting-started/#examples) which we can
+layouts](http://v4-alpha.getbootstrap.com/examples/) which we can
 base our design on.
 
 To style Rango we have identified that the [dashboard
-style](http://getbootstrap.com/examples/dashboard/) more or less meets
+style](http://v4-alpha.getbootstrap.com/examples/dashboard/) more or less meets
 our needs in terms of the layout of Rango, i.e. it has a menu bar at the
 top, a side bar (which we will use to show categories) and a main
-content pane. Given the html from the bootstrap website we need to do a
-bit of work on it before we can use it. This is what we did, the
-resulting html, which you can copy is below:
+content pane. 
 
--   Replaced all references of `../../` to be `http://getbootstrap.com`
+Download and save the HTML source for the Dashboard layout to a file called, `base_bootstrap.html` and save it to your `templates/rango` folder.
+
+Before we can use the template we need to modify the HTML so that we can use it in our application.
+The changes that we performed are listed below along with the updated HTML (so that you don't have to go to the trouble).
+
+-   Replaced all references of `../../` to be `http://v4-alpha.getbootstrap.com/`
 -   Replaced `dashboard.css` with the absolute reference,
     `http://getbootstrap.com/examples/dashboard/dashboard.css`
 -   Removed the search form from the top nav bar
@@ -31,116 +34,49 @@ resulting html, which you can copy is below:
     replaced it with `{% block body_block %}{% endblock %}`
 -   Set the title element to be,
     `<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>`
--   Changed the project name to be `Rango`.
+-   Changed `project name` to be `Rango`.
 -   Added the links to the index page, login, register, etc to the top
     nav bar.
 -   Added in a side block, i.e., `{% block side_block %}{% endblock %}`
+- Added in `{% load staticfiles %}` after the `DOCTYPE` tag.
+- Downloaded the [Rango Favicon]() and saved it to `static/images/` and then updated the `<link>` tag to be `<link rel="icon" href="{% static 'images/favicon.ico' %}">`.
 
 ##The New Base Template
 
 {lang="html",linenos=off}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
-	<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
-
-	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-</head>
-
-<body>
-
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container-fluid">
-	<div class="navbar-header">
-	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	</button>
-	<a class="navbar-brand" href="/rango/">Rango</a>
-	</div>
-	<div class="navbar-collapse collapse">
-	<ul class="nav navbar-nav navbar-right">
-	<li><a href="{% url 'index' %}">Home</a></li>
-	{% if user.is_authenticated %}
-	<li><a href="{% url 'restricted' %}">Restricted Page</a></li>
-	<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
-	<li><a href="{% url 'add_category' %}">Add a New Category</a></li>
-	{% else %}
-	<li><a href="{% url 'registration_register' %}">Register Here</a></li>
-	<li><a href="{% url 'auth_login' %}">Login</a></li>
-	{% endif %}
-	<li><a href="{% url 'about' %}">About</a></li>
-
-	</ul>
-	</div>
-	</div>
-	</div>
-
-	<div class="container-fluid">
-	<div class="row">
-	<div class="col-sm-3 col-md-2 sidebar">
-	{% block side_block %}{% endblock %}
-
-	</div>
-	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<div>
-	{% block body_block %}{% endblock %}
-	</div>
-	</div>
-	</div>
-	</div>
-
-	<!-- Bootstrap core JavaScript
-	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-</html>
+	<!DOCTYPE html>
 
 
-If you take a close look at the dashboard html source, you'll notice it
+
+If you take a close look at the Dashboard HTML source, you'll notice it
 has a lot of structure in it created by a series of `<div>` tags.
-Essentially the page is broken into two parts - the top navigation bar
-and the main pane which are denoted by the two
-`<div class="container-fluid">`s. In the nav bar section, we have
-injected all the links to the different parts of our website. Inside the
-main pane, there are two columns, one for the `side_block`, and the
-other for the `body_block`.
-
+Essentially the page is broken into two parts - the top navigation bar which is contained by `<nav>` tags, and the main content pane denoted by the `<div class="container-fluid">` tag.
+Within the main content pane, there are two `<div>`s, one for the sidebar and the other for the main content, where we have placed the code for the `side_block` and `body_block`, respectively.	
+	
+In this new template, we have assumed that you have completed the chapters on User Authentication and used the Django Regisration Redux Package. If not you will need to update the template and remove/modify the references to those links in the navigation bar i.e. in the `<nav>` tags. 
+	
+Also of note is that the HTML template makes references to external websites to request the required `css` and `js` files. So you will need to be connected to the internet for the style to be loaded when you run the application.
+	
 ##Quick Style Change
-Update your `base.html` with the html code above (assumes you are using
-the django-registration-redux package, if not you will need to update
-those url template tags). Reload your application. Obviously you will
-need a connection to the internet in order to download the css, js, and
-other related files. You should notice that your application looks heaps
-better with this one changes. Flip through the different pages. Since
-they all inherit from base, they will all be looking pretty good. Not
-perfect, but pretty good.
+To give Rango a much needed facelift, we can replace the content of the existing `base.html` with the HTML template code in `base_bootstrap.html`. You might want to first comment out the existing code in `base.html` and then cut-and-paste in the `base_bootstrap.html` code.
+
+
+Now reload your application. Pretty nice, hey!
+
+You should notice that your application looks about a hundred times better already. Flip through the different pages. Since they all inherit from base, they will all be looking pretty good, but not perfect! In the remainder of this chapter, we will go through a number of changes to the templates and use various Bootstrap classes to improve the look and feel of Rango.
+
 
 I> Static Files
 I>
+I> Rather than including external references to `css` and `js` files. 
 I> You could download all the associated files and stored them in your
 I> static folder. If you do this, simply update the base template to
-I> reference the static files stored locally.
+I> reference the static files stored locally. 
 
+
+
+
+## About Template
 Now that we have the `base.html` all set up and ready to go, we can do a
 really quick face lift to Rango by going through the Bootstrap
 components and selecting the ones that suit the pages.
