@@ -4,7 +4,7 @@ So far, we've created several HTML templates for different pages within our Rang
 In this chapter, we will use *template inheritance* to overcome the first problem, and the *URL template tag* to solve the second problem. We will start with addressing the latter problem first.
 
 ##Using Relative URLs in Templates
-So far, we have been directly coding the URL of the page/view we want to
+So far, we have been directly coding the URL of the page or view we want to
 show within the template, i.e. `<a href="/rango/about/">About</a>`. This kind of hard coding of URLs means that if we change our URL mappings in `urls.py`, then we will have to also change all of these URL references. The preferred way is to use the template tag `url` to look up the URL in the `urls.py` files and dynamically insert the URL path. 
 
 It's pretty simple to include relative URLs in your templates. To refer to the *About* page, we would insert the following line into our templates:
@@ -169,7 +169,7 @@ Now that you have an understanding of blocks within Django templates, let's take
 
 From the example above, we have introduced two new features into the base template.
 
--   The first is a template block called `title_block`. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not override the block, then the `title_block` defaults to `How to Tango with Django!`, resulting in a complete title of `Rango - How to Tango with Django!`. See the `<title>` tag in the above template to see how this works.
+-   The first is a template block called `title_block`. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not override the block, then the `title_block` defaults to `How to Tango with Django!`, resulting in a complete title of `Rango - How to Tango with Django!`. Look at the contents of the `<title>` tag in the above template to see how this works.
 -   We have also included the list of links from our current `index.html` template and placed them into a HTML `<div>` tag underneath our `body_block` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (`<hr />`) which provides a visual separation for the user between the `body_block` content and the links.
 
 
@@ -252,146 +252,114 @@ W> Remember to add `{% load staticfiles %}` to the top of **each template** that
 `base.html`.](../images/rango-template-inheritance.svg)
 -->
 
-## Cleaner Template Code (REQ. REVISION)
+## Cleaner Template Code (NEW EXAMPLE REQUIRED)
 Upon completion of the exercises listed above, all of your Rango app's templates will now inherit from `base.html`. Looking back at the contents of `base.html`, the `user` object - found within the context of a given Django request - is used to determine if the current user of Rango is logged in (through use of `user.is_authenticated`). As all of Rango's templates should inherit from this base template, we can say that *all of Rango's templates now depend on having access to the context of a given request.*
 
-Due to this new dependency, you must check each of Rango's Django views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. If you don't ensure this happens, your views may be rendered incorrectly - users may appear to be not logged in, even though Django thinks that they are!
+Due to this new dependency, you must check each of Rango's views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. If you don't ensure this happens, your views may be rendered incorrectly - users may appear to be not logged in, even though Django thinks that they are!
 
 I> ### Render and Context
+I> As a quick example of the checks you must carry out, have a look at the `about()` view. Initially, this was implemented with a hard-coded string response, as shown below. Note that we only send the string - we don't make use of the request passed as the `request` parameter.
 I>
-I> As a quick example of the checks you must carry out, have a look at
-I> the `about` view. Initially, this was implemented with a hard-coded
-I> string response, as shown below. Note that we only send the string -
-I> we don't make use of the request passed as the `request` parameter.
+I> {lang="python",linenos=off}
+I> 	def about(request):
+I> 	    return HttpResponse('
+I> 	        Rango says: Here is the about page.
+I> 	        <a href="/rango/">Index</a>')
 I>
-I> {lang="html",linenos=off}
-I> 		def about(request):
-I> 			return HttpResponse('
-I>				Rango says: Here is the about page.
-I>			 	<a href="/rango/">Index</a>')
-I> 
+I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine access to objects such as `user`, which will allow the template engine to determine if the user is logged in (authenticated).
 I>
-I> To employ the use of a template, we call the `render()` function and
-I> pass through the `request` object. This will allow the template engine
-I> access to objects such as `user`, which will allow the template engine
-I> to determine if the user is logged in (ie. authenticated).
+I> {lang="python",linenos=off}
+I> 	def about(request):
+I> 	    return render(request, 'rango/about.html', {})
 I>
-I> {lang="html",linenos=off}
-I> 		def about(request):
-I>			return render(request, 'rango/about.html', {})
-I> 
-I>
-I> Remember, the last parameter of `render()` is the context dictionary with which
-I> you can use to pass additional data to the Django template engine. As
-I> we have no additional data to give to the template, we pass through an empty
-I> dictionary, `{}`. 
-
+I> Remember, the last parameter of `render()` is the context dictionary with which you can use to pass additional data to the Django template engine. As we have no additional data to give to the template, we pass through an empty dictionary, `{}`. 
 
 
 ## Custom Template Tags
-It would be nice to show the different categories that users can browse
-through in the sidebar on each page. Given what we have learnt so far we
-could do the following:
+It would be nice to show the different categories that users can browse through in the sidebar on each page. Given what we have learnt so far we could do the following:
 
--   In the `base.html` template we could add some code to display an
-    item list of categories
--   Then in each view, we could access the Category object, get all the
-    categories, and return that in the context dictionary.
+- in the `base.html` template, we could add some code to display an item list of categories; and
+- within each view, we could access the `Category` object, get all the categories, and return that in the context dictionary.
 
-However, this is a pretty nasty solution because we will be repeatedly including the same code in all views.  
-The solution is to create custom template tags that are included in the template and which can request their own data.
+However, this is a pretty nasty solution because we will be repeatedly including the same code in all views. Remember - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)! A potential solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
 ###Using Template Tags
-Create a directory `rango/templatetags`, and create two files, one
-called `__init__.py`, which will be empty, and another called,
-`rango_template_tags.py`, where you can add the following code:
+Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called called, `rango_template_tags.py`, in which you can add the following code.
 
-{lang="python",linenos=off}
+{lang="python",linenos=on}
 	from django import template
 	from rango.models import Category
-
+	
 	register = template.Library()
-
+	
 	@register.inclusion_tag('rango/cats.html')
 	def get_category_list():
-    	return {'cats': Category.objects.all()}
+	    return {'cats': Category.objects.all()}
 
-As you can see we have made a method called, `get_category_list()` which
-returns the list of categories, and that is associated with a template
-called `rango/cats.html`. Now create a template called
-''rango/cats.html`in the templates directory with the following code:  
+From this code snippet, you can see a new method called `get_category_list()`. This method returns a list of categories - but is mashed up with the template `rango/cats.html` (as can be seen from the `register.inclusion_tag()` decorator). You can now create this template file, and add the following HTML markup:
 
 {lang="html",linenos=off}
 	<ul class="nav nav-sidebar">
 	{% if cats %}
-		{% for c in cats %}             
-			<li><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></li>
-		{% endfor %}      
+	    {% for c in cats %}
+	        <li><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></li>
+	    {% endfor %}
 	{% else %}
-		<li> <strong >There are no category present.</strong></li>	
-	{% endif %}  
-	</ul> 
-	
+	    <li> <strong>There are no category present.</strong></li>
+	{% endif %}
+	</ul>
 
-To use the template tag, in 'base.html' you need to first load the custom template tag with '% load rango_template_tags %}'. Then create a new block to represent the side bar, and call the template tag as follows.
+To use the template tag in your `base.html` template, first load the custom template tag by including the command `{% load rango_template_tags %}` at the top of the `base.html` template. You can then create a new block to represent the sidebar - and we can call our new template tag with the following code.
 
 {lang="html",linenos=off}
 	<div>
-		{% block side_bar_block %}
-			{% get_category_list %}
-		{% endblock %}
+	    {% block sidebar_block %}
+	        {% get_category_list %}
+	    {% endblock %}
 	</div>
 
-Try it out. Now all pages that inherit from 'base.html' will now also include the list of categories (which we will move to the side later on). 
+Try it out. Now all pages that inherit from `base.html` will also include the list of categories (which we will move to the side later on). 
 
-I> Restart Server to Register Tags
-I>
-I> You will need to restart your server every time you modify the template tags. Otherwise they will not be registered, and you will be really confused why your code is not working.
+T> Remember to Restart the Server!
+T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, they won't be registered by Django, and you'll get confused and irritated.
 
 ###Parameterised Template Tags 
-
-Now lets extend this so that when we visit a category page, it highlights which category we are in. To do this we need to paramterise the templatetag. So update the method in`rango\_extras.py`to be: 
+We can also *paramaterise* the template tags we create, allowing for greater flexibility. As an example, we'll use parameterisation to highlight which category we are looking at when visiting its page. Adding in a parameter is easy - we can update the `get_category_list()` method as follows.
 
 {lang="python",linenos=off}
 	def get_category_list(cat=None):
-	return {'cats': Category.objects.all(), 'act_cat': cat}  
+	    return {'cats': Category.objects.all(),
+	            'act_cat': cat}
 
+Note the inclusion of the `cat` parameter to `get_category_list()`, which is optional - and if you don't pass in a category, `None` is used as the subsequent value.
 
-This lets us pass through the category we are on. We can now update the`base.html`to pass through the category, if it exists.  
-
-<!--	<div class="col-sm-3 col-md-2 sidebar">   -->
+We can then update our `base.html` template which makes use of the custom template tag to pass in the current category - but only if it exists.
 
 {lang="html",linenos=off}
-	<div class="col-sm-3 col-md-2 sidebar">
-	{% block side_block %}
-		{% get_category_list category %}
-	{% endblock %}
+	<div>
+	    {% block sidebar_block %}
+	        {% get_category_list category %}
+	    {% endblock %}
 	</div>
-	
-Now update the `cats.html` template:   
+
+We can also now update the `cats.html` template, too.
 
 {lang="html",linenos=off}
 	{% for c in cats %}
-		{% if c == act_cat %} 
-			<li><b><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></b></li>
-		{% else  %}
-			 <li><a href="{% url 'category'  c.slug %}">{{ c.name }}</a></li>
-		{% endif %}
-			
+	    {% if c == act_cat %}
+	        <li><strong><a href="{% url 'category' c.slug %}">{{ c.name }}</a></strong></li>
+	    {% else  %}
+	         <li><a href="{% url 'category' c.slug %}">{{ c.name }}</a></li>
+	    {% endif %}
 	{% endfor %}
 
-
-In the template we check to see if the category being displayed is the same as the category being passed through (i.e. `c == act_cat` ). If so, we make the category name bold. 
+In the template, we check to see if the category being displayed is the same as the category being passed through during the `for` loop (i.e. `c == act_cat`). If so, we highlight the category name by making it **bold**, through use of the `<strong>` tag.
 
 ## Using Templates and Tags
 In this chapter, we showed how we can:
 
-- reduce coupling between URLS and Templates by using the 'url' template tag to point to relative URLs,
-- reduced the amount of boiler plater code by using template inheritance, and,
+- reduce coupling between URLs and templates by using the `url` template tag to point to relative URLs;
+- reduced the amount of boilerplate code by using template inheritance; and
 - avoid repetitive code appearing in views by creating custom templates.
 
-Taken together your template code should be much cleaner and easier to maintain. Of course, Django Templates offer a lot more functionality - find out more by visiting the (Official Django Documentation on Templates)[https://docs.djangoproject.com/en/1.9/ref/templates/].
-
-<!--if so, we assign the `active` class to it from Bootstrap (http://getbootstrap.com/components/#nav).   Restart the development web server, and now visit the pages. We have passed through the `category` variable. When you view a category page, the template has access to the`category `variable, and so provides a value to the template tag `get\_category\_list()`. This is then used in the`cats.html` template to select which category to highlight as active.
-
--->
+Taken together, your template code should be much cleaner and easier to maintain. Of course, Django templates offer a lot more functionality - find out more by visiting the [Official Django Documentation on Templates](https://docs.djangoproject.com/en/1.9/ref/templates/).
