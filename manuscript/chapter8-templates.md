@@ -32,7 +32,7 @@ In your app's `index.html` template, you will notice that you have a parameteris
 	    </li>
 	{% endfor %}
 
-Before you run off to update all the URLs in all your templates with relative URLs, we need to re-structure and re-factor our templates by using inheritance to remove repetition.
+Before you run off to update all the URLs in all your templates with relative URLs, we need to re-structure and refactor our templates by using inheritance to remove repetition.
 
 T> ### URLs and Multiple Django Apps
 T> This book focuses on the development on a single Django app, Rango. However, you may find yourself working on a Django project with multiple apps being used at once. This means that you could literally have hundreds of potential URLs with which you may need to reference. This scenario begs the question *how can we organise these URLs?* Two apps may have a view of the same name, meaning a potential conflict would exist. 
@@ -98,7 +98,7 @@ W> Remember that the `<!DOCTYPE html>` declaration always needs to be placed on 
 W> Not having a [document type declaration](https://en.wikipedia.org/wiki/Document_type_declaration) on line one may mean that the resultant page generated from your template will not comply with [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
 
 ### Template Blocks
-Now that we've created our base template, we can add template tags to denote what parts of the template can be overriden by templates that inherit from it. To do this we will be using the `block` tag. For example, we can add a `body_block` to the base template in `base.html` as follows:
+Now that we've created our base template, we can add template tags to denote what parts of the template can be overridden by templates that inherit from it. To do this we will be using the `block` tag. For example, we can add a `body_block` to the base template in `base.html` as follows:
 
 {lang="html",linenos=on}
 	<!DOCTYPE html>
@@ -284,7 +284,7 @@ It would be nice to show the different categories that users can browse through 
 However, this is a pretty nasty solution because we will be repeatedly including the same code in all views. Remember - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)! A potential solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
 ###Using Template Tags
-Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called called, `rango_template_tags.py`, in which you can add the following code.
+Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called, `rango_template_tags.py`, in which you can add the following code.
 
 {lang="python",linenos=on}
 	from django import template
