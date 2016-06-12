@@ -31,7 +31,7 @@ We can pretty much leave this as is for our Rango app. You can see a `default` d
 T> ### Git Tip
 T> If you are using Git, you might be tempted to add and commit the database file. This is not a good idea because if you are working on your app with other people, they are likely to change the database and this will cause endless conflicts.
 T>
-T> Instead, add `db.sqlites3` to your `.gitignore` file so that it wont be added when you `git commit` and `git push`. You can also do this for other files like `*.pyc` and machine specific files.
+T> Instead, add `db.sqlites3` to your `.gitignore` file so that it won't be added when you `git commit` and `git push`. You can also do this for other files like `*.pyc` and machine specific files.
 
 
 I> ### Using other Database Engines

@@ -60,7 +60,7 @@ We're almost all set to go! However, before we continue, it's worth pointing out
 
 The solution to this is to use [virtual environments](http://simononsoftware.com/virtualenv-tutorial/). Virtual environments allow multiple installations of Python and their relevant packages to exist in harmony. This is the generally accepted approach to configuring a Python setup nowadays.
 
-Setting up a virtual environment is not necessarily but it is highly recommended. The [Virtual Environment Chapter](#chapter-virtual-environments) details how to setup, create and use virtual environments.
+Setting up a virtual environment is not necessarily but it is highly recommended. The [virtual environment chapter](#chapter-virtual-environments) details how to setup, create and use virtual environments.
 
 
 ## Integrated Development Environment
