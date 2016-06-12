@@ -263,21 +263,21 @@ Check out the available settings you can use on the [official Django documentati
 Sessions accumulate easily, and the data store that contains session information does too. If you are using the database backend for Django sessions, you will have to periodically clear the database that stores the cookies. This can be done using `$ python manage.py clearsessions`. The [official Django documentation](https://docs.djangoproject.com/en/1.9/topics/http/sessions/#clearing-the-session-store) suggests running this daily as a [cron job](https://en.wikipedia.org/wiki/Cron). If you don't, you could find your app's performance begin to degrade when it begins to experience more and more users.
 
 ## Basic Considerations and Workflow
-When using cookies within your Django application, there's a few things you should consider:
+When using cookies within your Django application, there's a few things you should consider.
 
 -   First, consider what type of cookies your Web application requires. Does the information you wish to store need to persist over a series of user browser sessions, or can it be safely disregarded upon the end of one session?
 -   Think carefully about the information you wish to store using cookies. Remember, storing information in cookies by their definition means that the information will be stored on client's computers, too. This is a potentially huge security risk: you simply don't know how compromised a user's computer will be. Consider server-side alternatives if potentially sensitive information is involved.
 -   As a follow-up to the previous bullet point, remember that users may set their browser's security settings to a high level which could potentially block your cookies. As your cookies could be blocked, your site may function incorrectly. You *must* cater for this scenario - *you have no control over the client browser's setup*.
 
-If client-side cookies are the right approach for you, then work through the following steps:
+If client-side cookies are the right approach for you, then work through the following steps.
 
 1. You must first perform a check to see if the cookie you want exists. This can be done by checking the `request` parameter. The `request.COOKIES.has_key('<cookie_name>')` function returns a boolean value indicating whether a cookie `<cookie_name>` exists on the client's computer or not.
 2. If the cookie exists, you can then retrieve its value - again via the `request` parameter - with `request.COOKIES[]`. The `COOKIES` attribute is exposed as a dictionary, so pass the name of the cookie you wish to retrieve as a string between the square brackets. Remember, cookies are all returned as strings, regardless of what they contain. You must therefore be prepared to cast to the correct type (with `int()` or `float()`, for example).
 3. If the cookie doesn't exist, or you wish to update the cookie, pass the value you wish to save to the response you generate. `response.set_cookie('<cookie_name>', value)` is the function you call, where two parameters are supplied: the name of the cookie, and the `value` you wish to set it to.
 
-If you need more secure cookies, then use session based cookies:
+If you need more secure cookies, then use session based cookies.
 
-1.  Make sure that `MIDDLEWARE_CLASSES` in `settings.py` contains `django.contrib.sessions.middleware.SessionMiddleware`.
+1.  Firstly, ensure that the `MIDDLEWARE_CLASSES` list in your Django project's `settings.py` module contains `django.contrib.sessions.middleware.SessionMiddleware`. If it doesn't, add it to the list.
 2.  Configure your session backend `SESSION_ENGINE`. See the [official Django Documentation on Sessions](https://docs.djangoproject.com/en/1.9/topics/http/sessions/) for the various backend configurations.
 3.  Check to see if the cookie exists via `requests.sessions.get()`.
 4.  Update or set the cookie via the session dictionary, `requests.session['<cookie_name>']`.
