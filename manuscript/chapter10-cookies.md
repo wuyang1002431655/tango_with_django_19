@@ -41,7 +41,7 @@ I> An alternative way of persisting state information *without cookies* is to en
 ## Setting up Sessions in Django
 Although this should already be setup and working correctly, it's nevertheless good practice to learn which Django modules provide which functionality. In the case of sessions, Django provides [middleware](https://docs.djangoproject.com/en/1.9/topics/http/middleware/) that implements session functionality.
 
-To check that everything is in order, open your Django project's `settings.py` file. Within the file, locate the `MIDDLEWARE_CLASSES` tuple. You should find the `django.contrib.sessions.middleware.SessionMiddleware` module listed as a string in the tuple - if you don't, add it to the tuple now. It is the `SessionMiddleware` middleware which enables the creation of unique `sessionid` cookies.
+To check that everything is in order, open your Django project's `settings.py` file. Within the file, locate the `MIDDLEWARE_CLASSES` list. You should find within this list a module represented by the string `django.contrib.sessions.middleware.SessionMiddleware`. If you can't see it, add it to the list now. It is the `SessionMiddleware` middleware which enables the creation of unique `sessionid` cookies.
 
 The `SessionMiddleware` is designed to work flexibly with different ways to store session information. There are many approaches that can be taken - you could store everything in a file, in a database, or even in a in-memory cache. The most straightforward approach is to use the `django.contrib.sessions` application to store session information in a Django model/database (specifically, the model `django.contrib.sessions.models.Session`). To use this approach, you'll also need to make sure that `django.contrib.sessions` is in the `INSTALLED_APPS` tuple of your Django project's `settings.py` file. Remember, if you add the application now, you'll need to update your database with the usual migration commands.
 
@@ -90,8 +90,9 @@ Let's first make a function to handle the cookies given the request and response
 	    # If the cookie doesn't exist, then the default value of 1 is used.
 	    visits_cookie = int(request.COOKIES.get('visits', '1'))
 	
-	    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()) )
-	    last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
+	    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+	    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+	                                        '%Y-%m-%d %H:%M:%S')
 	
 	    # If it's been more than a day since the last visit...
 	    if (datetime.now() - last_visit_time).days > 0:
@@ -179,7 +180,7 @@ The previous example shows how we can store and manipulate client side cookies -
 
 To use session based cookies you need to perform the following steps.
 
-1.  Make sure that `MIDDLEWARE_CLASSES` in `settings.py` contains `django.contrib.sessions.middleware.SessionMiddleware`.
+1.  Make sure that the `MIDDLEWARE_CLASSES` list found in the `settings.py` module contains `django.contrib.sessions.middleware.SessionMiddleware`.
 2.  Configure your session backend. Make sure that `django.contrib.sessions` is in your `INSTALLED_APPS` in `settings.py`. If not, add it, and run the database migration command, `python manage.py migrate`.
 3.  By default a database backend is assumed, but you might want to another setup (i.e. a cache). See the [official Django Documentation on Sessions for other backend configurations](https://docs.djangoproject.com/en/1.9/topics/http/sessions/).
 
@@ -200,8 +201,11 @@ Since all the cookies are stored server side, we won't be changing the response 
 	# Updated the function definition
 	def visitor_cookie_handler(request):
 	    visits = int(get_server_side_cookie(request, 'visits', '1'))
-	    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()) )
-	    last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
+	    last_visit_cookie = get_server_side_cookie(request,
+	                                               'last_visit',
+	                                               str(datetime.now()))
+	    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+	                                        '%Y-%m-%d %H:%M:%S')
 	
 	    # If it's been more than a day since the last visit...
 	    if (datetime.now() - last_visit_time).days > 0:
@@ -273,7 +277,7 @@ If client-side cookies are the right approach for you, then work through the fol
 
 If you need more secure cookies, then use session based cookies:
 
-1.  Make sure that `MIDDLEWARE_CLASSES` in `settings.py` contains 'django.contrib.sessions.middleware.SessionMiddleware'.
+1.  Make sure that `MIDDLEWARE_CLASSES` in `settings.py` contains `django.contrib.sessions.middleware.SessionMiddleware`.
 2.  Configure your session backend `SESSION_ENGINE`. See the [official Django Documentation on Sessions](https://docs.djangoproject.com/en/1.9/topics/http/sessions/) for the various backend configurations.
 3.  Check to see if the cookie exists via `requests.sessions.get()`.
 4.  Update or set the cookie via the session dictionary, `requests.session['<cookie_name>']`.
@@ -285,10 +289,4 @@ X>
 X> - Check that your cookies are server side. Clear the browser's cache and cookies, then check to make sure you can't see the `last_visit` and `visits` variables in the browser. Note you will still see the `sessionid` cookie. Django uses this cookie to look up the session in the database where it stores all the server side cookies about that session.
 X> - Update the *About* page view and template telling the visitors how many times they have visited the site.
 
-[^1]: The latest version of the HTTP standard HTTP 1.1 actually supports
-    the ability for multiple requests to be sent in one TCP network
-    connection. This provides huge improvements in performance,
-    especially over high-latency network connections (such as via a
-    traditional dial-up modem and satellite). This is referred to as
-    *HTTP pipelining*, and you can read more about this technique on
-    [Wikipedia](http://en.wikipedia.org/wiki/HTTP_pipelining).
+[^1]: The latest version of the HTTP standard HTTP 1.1 actually supports the ability for multiple requests to be sent in one TCP network connection. This provides huge improvements in performance, especially over high-latency network connections (such as via a traditional dial-up modem and satellite). This is referred to as *HTTP pipelining*, and you can read more about this technique on [Wikipedia](http://en.wikipedia.org/wiki/HTTP_pipelining).
