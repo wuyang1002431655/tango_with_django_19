@@ -51,7 +51,7 @@ Through the course of this book, we will used various technologies and external 
 * [GitHub](https://github.com)
 * [HTML](http://www.w3.org/html/)
 * [CSS](http://www.w3.org/Style/CSS/)
-* [Javascript](https://www.javascript.com/)
+* [JavaScript](https://www.javascript.com/)
 * [JQuery](http://jquery.com)
 * [Twitter Bootstrap](http://getbootstrap.com/)
 * [Bing Search API](http://datamarket.azure.com) via Azure Datamarket
@@ -105,8 +105,8 @@ The high-level architecture for most web applications is a *3-Tier architecture.
 
 Since we are building a web application with Django, we will use the following technologies for the following tiers.
 
-* The **client** will be a web browser (i.e *Chrome*, *Firefox*, *Safari*, etc.) which will render HTML/CSS pages.
-* The **middleware** will be a *Django* application, and will be dispatched through Django's built-in development web server while we develop.
+* The **client** will be a Web browser (such as *Chrome*, *Firefox*, and *Safari*) which will render HTML/CSS pages.
+* The **middleware** will be a *Django* application, and will be dispatched through Django's built-in development Web server while we develop.
 * The **database** will be the Python-based *SQLite3* Database engine.
 * The **search API** will be the *Bing Search API.*
 
@@ -133,7 +133,7 @@ From the specification, we have already identified two pages that our applicatio
 
 As we build our application, we will probably need to create other URL mappings. However, the ones listed above will get us started and give us an idea of the different pages. 
 
-As we progress through the book, we will flesh out how to construct these pages using the Django framework and use its [Model-View-Template](https://docs.djangoproject.com/en/1.9/) design pattern. However, now that we have a gist of the URL mappings and what the pages are going to look like, we need to define the data model that will house the data for our web application.
+As we progress through the book, we will flesh out how to construct these pages using the Django framework and use its [Model-View-Template](https://docs.djangoproject.com/en/1.9/) design pattern. However, now that we have a gist of the URL mappings and what the pages are going to look like, we need to define the data model that will house the data for our Web application.
 
 ###Entity-Relationship Diagram {#overview-er}
 Given the specification, it should be clear that we have at least two entities: a *category* and a *page*. It should also be clear that a *category* can house many *pages*. We can formulate the following ER Diagram to describe this simple data model.
@@ -169,7 +169,7 @@ With this assumption, we then produce a series of tables that describe each enti
 We will also have model for the `User` so that they can register and login. We have not shown it here, but shall introduce it later in the book when we discuss User Authentication. In the following chapters will we see how to instantiate these models in Django and how to use Django's ORM to connect to the database.
 
 ##Summary
-These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar with reading and producing such specifications and designs, which warrants another book on the topic. Here we will be focusing on using Django and the related technologies to implement this specification.
+These high level design and specifications will serve as a useful reference point when building our Web application. While we will be focusing on using specific technologies, these steps are common to most database driven websites. It's a good idea to become familiar with reading and producing such specifications and designs, which warrants another book on the topic. Here we will be focusing on using Django and the related technologies to implement this specification.
 
 
 

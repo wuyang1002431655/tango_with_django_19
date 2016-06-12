@@ -298,7 +298,7 @@ Create a directory `rango/templatetags`, and create two new modules. One must be
 
 From this code snippet, you can see a new method called `get_category_list()`. This method returns a list of categories - but is mashed up with the template `rango/cats.html` (as can be seen from the `register.inclusion_tag()` decorator). You can now create this template file, and add the following HTML markup:
 
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	<ul class="nav nav-sidebar">
 	{% if cats %}
 	    {% for c in cats %}
@@ -355,7 +355,7 @@ We can also now update the `cats.html` template, too.
 
 In the template, we check to see if the category being displayed is the same as the category being passed through during the `for` loop (i.e. `c == act_cat`). If so, we highlight the category name by making it **bold**, through use of the `<strong>` tag.
 
-## Using Templates and Tags
+## Summary
 In this chapter, we showed how we can:
 
 - reduce coupling between URLs and templates by using the `url` template tag to point to relative URLs;

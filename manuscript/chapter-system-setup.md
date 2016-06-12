@@ -5,7 +5,7 @@ Now that you have a decent understanding of how to interact with the
 terminal, you can begin to install the software required for this
 tutorial.
 
-### Installing Python
+### Installing Python {#section-system-setup-python}
 
 So, how do you go about installing Python 2.7/3.0 on your computer? You
 may already have Python installed on your computer - and if you are
