@@ -62,7 +62,9 @@ To give Rango a much needed facelift, we can replace the content of the existing
 
 Now reload your application. Pretty nice, hey!
 
-You should notice that your application looks about a hundred times better already. Flip through the different pages. Since they all inherit from base, they will all be looking pretty good, but not perfect! In the remainder of this chapter, we will go through a number of changes to the templates and use various Bootstrap classes to improve the look and feel of Rango.
+You should notice that your application looks about a hundred times better already. Below we have some screen shots of the about page showing the before and after.
+
+Flip through the different pages. Since they all inherit from base, they will all be looking pretty good, but not perfect! In the remainder of this chapter, we will go through a number of changes to the templates and use various Bootstrap classes to improve the look and feel of Rango.
 
 
 I> Static Files
@@ -72,7 +74,7 @@ I> You could download all the associated files and stored them in your
 I> static folder. If you do this, simply update the base template to
 I> reference the static files stored locally. 
 
-
+<!--
 ## Page Headers
 Now that we have the `base.html` all set up and ready to go, we can do a
 really quick face lift to Rango by going through the Bootstrap
@@ -98,6 +100,7 @@ Let's start by updating all our templates by adding in the class `page-header` t
 
 This doesn't visually appear to change the look and feel, but it informs the toolkit what is the title text, and if we change the theme then it will be styled appropriately.
 
+-->
 
 ![A screenshot of the About page without
 style.](../images/ch4-rango-about.png)
@@ -118,112 +121,118 @@ but not customised.](../images/ch11-bootstrap-register-initial.png)
 
 
 ### The Index Page
-Since we have only encapsulated the title with a page header i.e.
-`<div class="page-header">`, we haven't really capitalised on the
-classes and styling that Bootstrap gives us. So here we have taken the
-columns from the fluid page and used them to house the top categories
-and top pages. Since the original page had four columns, we have taken
-two and made them bigger by adjusting the column sizes. Updatet the
-`index.html` template to look like the following:
+For the index page it would be nice to show the top categories and top pages in two separate columns. Looking at the Bootstrap examples, we can see that in the [Narrow Jumbotron](http://v4-alpha.getbootstrap.com/examples/narrow-jumbotron/) they have an example with two columns. If you inspect the source, you can see the following HTML which is responsible for the columns.
+
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+	<div class="row marketing">
+		<div class="col-lg-6">
+			<h4>Subheading</h4>
+			<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+			<h4>Subheading</h4>
+		</div>
+		<div class="col-lg-6">
+			<h4>Subheading</h4>
+			<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+		</div>
+	</div>
+
+Inside the `<div class="row marketing">`, we can see that it contains two `<div>`'s with classes `col-lg-6`. Bootstrap is based on a [grid layout](http://v4-alpha.getbootstrap.com/layout/grid/), where each container is conceptually broken up into 12 units. The `col-lg-6` class denotes a column that is of size 6, i.e. half the size of its container, `<div class="row marketing">`.
 	
-	{% load staticfiles %}
-
-	{% block title %}Index{% endblock %}
-
-	{% block body_block %}
-	<div class="page-header">
-	{% if user.is_authenticated %}
-		
-		<h1>Rango says... hello {{ user.username }}!</h1>
-	{% else %}
-		<h1>Rango says... hello world!</h1>
-	{% endif %}
-	</div>
-
-         <div class="row placeholders">
-            <div class="col-xs-12 col-sm-6 placeholder">
-               <h4>Categories</h4>
-
-              {% if categories %}
-                <ul>
-                    {% for category in categories %}
-                     <li><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>There are no categories present.</strong>
-            {% endif %}
-
-            </div>
-            <div class="col-xs-12 col-sm-6 placeholder">
-              <h4>Pages</h4>
-
-                {% if pages %}
-                <ul>
-                    {% for page in pages %}
-                     <li><a href="{{page.url}}">{{ page.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>There are no categories present.</strong>
-            {% endif %}
-            </div>
-
-          </div>
-
-
-       <p> visits: {{ visits }}</p>
-    {% endblock %}
-
-
-The page should look a lot better now. But the way the list items are
-presented is pretty horrible. Lets use the list-group style provided by
-Bootstrap, <http://getbootstrap.com/components/#list-group>. Change the
-`<ul>` elements to `<ul class="list-group">` and the `<li>` elements to
-`<li class="list-group-item">` then update the headings using a panel
-style:
+Given this example, we can create columns in `index.html`  by updating the template as follows.
+	
 
 {lang="html",linenos=off}
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title">Categories</h3>
-		</div>
-	</div>
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title">Pages</h3>
-		</div>
-	</div>
+	{% extends 'rango/base.html' %}
+	{% load staticfiles %}
+	{% block title_block %}
+		Index
+	{% endblock %}
+	
+	{% block body_block %}
+	
+	<div class="jumbotron">
+		<h1 class="display-3">Rango says...</h1>
+		{% if user.is_authenticated %}
+		
+			<h1>hey there {{ user.username }}!</h1>
+		{% else %}
+			<h1>hey there partner! </h1>
+		{% endif %}
+			
+ 	</div>
+		
+	
+	<div class="row marketing">
+			<div class="col-lg-6">
+				<h4>Most Liked Categories</h4>
+				<p>
+				{% if categories %}
+				<ul>
+				{% for category in categories %}
+				<li><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<strong>There are no categories present.</strong>
+				{% endif %}
+				</p>
+			</div>
+			<div class="col-lg-6">
+				<h4>Most Viewed Pages</h4>
+				<p>
+				{% if pages %}
+				<ul>
+				{% for page in pages %}
+				 <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+				 {% endfor %}
+				 </ul>
+				{% else %}
+				<strong>There are no categories present.</strong>
+			 {% endif %}
+				</p>
+			</div>
+		</div>	
+						
+		<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
+		
+	{% endblock %}
+	
+	
+We have also used the `jumbotron` class to make the heading in the page more evident by wrapping the title in a `<div class="jumbotron">`. Reload the page - it should look a lot better now, but the way the list items are
+presented is pretty horrible. 
 
-Replacing `<h4>Categories</h4>` and `<h4>Pages</h4>` respectively. Now
-the page should look pretty neat.
+Let's use the [list group styles provided by
+Bootstrap] (http://v4-alpha.getbootstrap.com/components/list-group/) to improve how they look. We can do this quite easily by changing the
+`<ul>` elements to `<ul class="list-group">` and the `<li>` elements to
+`<li class="list-group-item">`.
 
-![A screenshot of the Index page with a Hero
-Unit.](../images/ch11-bootstrap-index-initial.png)
-
-![A screenshot of the Index page with customised Bootstrap
-Styling.](../images/ch11-bootstrap-index-rows.png)
+![A screenshot of the Index page with a Jumbotron
+and Columns.](../images/ch11-bootstrap-index-initial.png)
 
 ###The Login Page
 Now let's turn our attention to the login page. On the Bootstrap website
 you can see they have already made a [nice login
-form](http://getbootstrap.com/examples/signin/), see
-<http://getbootstrap.com/examples/signin/>. If you take a look at the
+form](http://v4-alpha.getbootstrap.com/examples/signin/). If you take a look at the
 source, you'll notice that there are a number of classes that we need to
-include to pimp out the basic login form. Update the `login.html`
+include to pimp out the basic login form. Update the `body_block` in the `login.html`
 template as follows:
 
 {lang="html",linenos=off}
 	{% block body_block %}
-	<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+	<div class="jumbotron">
+		<h1 class="display-3">Login</h1>
+ 	</div>
+
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
 		<h2 class="form-signin-heading">Please sign in</h2>
-		<input class="form-control" placeholder="Username" id="id_username" maxlength="254" name="username" type="text" required autofocus=""/>
-		<input type="password" class="form-control" placeholder="Password" id="id_password" name="password" type="password" required />
+		<label for="inputUsername" class="sr-only">Username</label>
+		<input type="text" id="id_username" class="form-control" placeholder="Username" required autofocus>
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" id="id_password" class="form-control" placeholder="Password" required>
 		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />Sign in</button>
 	</form>
 	{% endblock %}
@@ -238,9 +247,8 @@ form.
 
 In the button, we have set the class to `btn` and `btn-primary`. If you
 check out the [Bootstrap section on
-buttons](http://getbootstrap.com/css/#buttons) you can see there are
-lots of different colours that can be assigned to buttons, see
-<http://getbootstrap.com/css/#buttons>.
+buttons](http://v4-alpha.getbootstrap.com/components/buttons/) you can see there are
+lots of different colours that can be assigned to buttons.
 
 ![A screenshot of the login page with customised Bootstrap
 Styling.](../images/ch11-bootstrap-login-custom.png)
