@@ -221,7 +221,8 @@ First, open the project's `urls.py` file which is located inside your project co
 {lang="python",linenos=off}
 	from django.conf.urls import url
 	from django.contrib import admin
-	from django.conf.urls import include  # New import added
+	from django.conf.urls import include 
+	from rango import views
 	
 	urlpatterns = [
 	    url(r'^$', views.index, name='index'),
