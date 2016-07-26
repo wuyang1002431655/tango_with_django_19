@@ -1,4 +1,4 @@
-#Bing Search 
+#Bing Search {#chapter-bing}
 Now that our Rango application is looking good and most of the core functionality has been implemented, we can move on some of the more advanced functionality. In this chapter, we will connect Rango up to Bing's Search API so that users can also search for pages, rather than just use the categories. Before we can do so, we need to set up an account to use Bing's Search API and write a wrapper to call Bing's web search functionality.
 
 ##The Bing Search API

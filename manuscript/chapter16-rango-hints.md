@@ -1,4 +1,4 @@
-#Making Rango Tango! Code and Hints
+#Making Rango Tango! Code and Hints {#chapter-hints}
 
 Hopefully, you will have been able to complete the exercises given the
 workflows we provided, if not, or if you need a little help checkout

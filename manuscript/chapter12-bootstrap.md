@@ -1,4 +1,4 @@
-#Bootstrapping Rango
+#Bootstrapping Rango {#chapter-bootstrap}
 In this chapter, we will be styling Rango using the *Twitter Bootstrap
 4 Alpha* toolkit. Bootstrap is the most popular HTML, CSS, JS Framework, which we can use to style our application. The toolkit lets you design and style responsive web applications, and is pretty easy to use once you get familiar with it.
 

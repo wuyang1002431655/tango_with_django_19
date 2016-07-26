@@ -1,4 +1,4 @@
-#AJAX in Django with JQuery
+#AJAX in Django with JQuery {#chapter-ajax}
 
 AJAX essentially is a combination of technologies that are integrated
 together to reduce the number of page loads. Instead of reloading the
