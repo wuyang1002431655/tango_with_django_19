@@ -1,21 +1,12 @@
 #User Authentication with Django-Registration-Redux {#chapter-redux}
 
-There are numerous add-on applications that have been developed that
-provide login, registration and authentication mechanisms. Since most
-applications will provide such facilitaties there is little point
-re-writing / re-inventing the urls, views, and templates. In this
-chapter, we are going to use the package `django-registration-redux` to
-provide these facilities. This will mean we will need re-factor our
-code - however, it will provide with some experience of using external
-applications, how easily they can be plugged into your Django project,
-along with login facilities with all the bells and whistles. It will
-also make our application much cleaner.
+In a previous chapter, we added in login and registration functionality by manually coding up the urls, views and templates. However, such functionality is common to many web application so developers have crated numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
+provide these facilities. 
 
-I> ###Note
-I>
-I> This chapter is not necessary. You can skip it, but we will be
-I> assuming that you have upgraded the authentication mechanisms, in
-I> subsequent chapters.
+This will mean we will need re-factor our
+code to remove the login and registration functionality we previously created, and then setup and configure our project to include the `django-registration-redux` application.
+This chapter also will provide  you with some experience of using external
+applications and show you how easily they can be plugged into your Django project.
 
 ##Setting up Django Registration Redux
 
@@ -76,7 +67,7 @@ numerous functions. In the `registration.backend.simple.urls`, it
 provides:
 
 -   registration -\> `/accounts/register/`
--   registration complete -\> `/accounts/register/complete`
+-   registration complete -\> `/accounts/register/complete/`
 -   login -\> `/accounts/login/`
 -   logout -\> `/accounts/logout/`
 -   password change -\> `/password/change/`
@@ -98,19 +89,15 @@ functions for activating the account in a two stage process:
     >     subject line of the activation email)
 
 Now the catch. While Django Registration Redux provides all this
-functionality, it does not provide the templates. So we need to provide
+functionality, it does not provide the templates. So we need to create
 the templates associated with each view.
 
 ##Setting up the Templates
-In the quick start guide, see
-<https://django-registration-redux.readthedocs.org/en/latest/quickstart.html>,
+In the  [Django Registration Redux Quick Start Guide](https://django-registration-redux.readthedocs.org/en/latest/quickstart.html),
 it provides an overview of what templates are required, but it is not
-immediately clear what goes within each template.
-
-However, it is possible to download a set of templates from Anders
-Hofstee's GitHub account, see
-<https://github.com/macdhuibh/django-registration-templates>, and from
-here you can see what goes into the templates. We will use these
+immediately clear what goes within each template. Rather than try and work it out from the code, we can take a look at a set of [templates written by Anders
+Hofstee](https://github.com/macdhuibh/django-registration-templates) to work with this application, see
+<https://github.com/macdhuibh/django-registration-templates>. We will use these
 templates as our guide here.
 
 First, create a new directory in the `templates` directory, called
@@ -125,7 +112,6 @@ following code:
 
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
-	
 	{% block body_block %}
 		<h1>Login</h1>
 		<form method="post" action=".">
@@ -134,13 +120,16 @@ following code:
 			<input type="submit" value="Log in" />
 			<input type="hidden" name="next" value="{{ next }}" />
 		</form>
-		<p>Not  a member? <a href="{% url 'registration_register' %}">Register</a>!</p>
+		<p>
+			Not  a member? 
+			<a href="{% url 'registration_register' %}">Register</a>
+		</p>
 	{% endblock %}
 
 Notice that whenever a URL is referenced, the `url` template tag is used
 to reference it. If you visit, <http://127.0.0.1:8000/accounts/> then
 you will see the list of URL mappings, and the names associated with
-each URL.
+each URL (assuming that `DEBUG=True` in `settings.py`).
 
 ### Registration Template
 
@@ -149,7 +138,6 @@ with the following code:
 
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
-	
 	{% block body_block %}
 		<h1>Register Here</h1>
 		<form method="post" action=".">
@@ -227,21 +215,26 @@ do this update the `tango_with_django_project/urls.py` by importing
 {lang="python",linenos=off}
 	from registration.backends.simple.views import RegistrationView
 
-	# Create a new class that redirects the user to the index page, if successful at logging
+	# Create a new class that redirects the user to the index page, 
+	#if successful at logging
 	class MyRegistrationView(RegistrationView):
 		def get_success_url(self,request, user):
 			return '/rango/'
 
-Then update the `urlpatterns` as by adding the following line before the pattern for `accounts`
+Then update the `urlpatterns` by adding the following line before the pattern for `accounts`.
+
 {lang="python",linenos=off}
-	url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
+	url(r'^accounts/register/$', 
+		MyRegistrationView.as_view(), 
+			name='registration_register'),
 	
 
 By doing so, when `accounts/register/` is visited this pattern is matched first, and then re-directed to our customised registration view.
 	
 
-
-X> ###Exercises
+X> ###Exercise and Hints
 X>
-X> - Provide users with password change functionality
+X> - Provide users with password change functionality. 
+X> - Hint: see [Anders Hofstee's Templates](https://github.com/macdhuibh/django-registration-templates/tree/master/registration) to get started.
+X> - Hint: the URL to change passwords is `accounts/password/change/` and the URL to denote the password has been changed is: `accounts/password/change/done/`
 
