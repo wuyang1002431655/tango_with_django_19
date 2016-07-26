@@ -337,7 +337,6 @@ the *name* that must match anything defined within the URL pattern.
 I> ###Regex Hell
 I>
 I> "Some people, when confronted with a problem, think *'I know, I'll use regular expressions.'* Now they have two problems."
-I>
 I> [Jamie Zawinski](http://blog.codinghorror.com/regular-expressions-now-you-have-two-problems/)
 I>
 I> Regular expressions may seem horrible and confusing at first, but there are tons of resources online to help you. [This cheat sheet](http://cheatography.com/davechild/cheat-sheets/regular-expressions/) is an excellent resource for fixing regular expression problems.
@@ -347,6 +346,7 @@ Our new view is set up and ready to go - but we need to do one more thing. Our i
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -365,7 +365,7 @@ Our new view is set up and ready to go - but we need to do one more thing. Our i
 	            {% for category in categories %}
 	            <!-- Following line changed to add an HTML hyperlink -->
 	            <li>
-	                <a href="/rango/category/{{ category.slug }}">{{ category.name }}</a>
+	            <a href="/rango/category/{{ category.slug }}">{{ category.name }}</a>
 	            </li>
 	            {% endfor %}
 	        </ul>
@@ -421,4 +421,4 @@ T> For more tips on working with models you can take a look through the followin
 T> 
 T> 1. [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko. In this post you will find a series of tips and tricks when working with models.
 T>
-T> 2. [How to make you Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
+T> 2. [How to make your Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
