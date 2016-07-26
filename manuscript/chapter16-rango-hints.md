@@ -124,7 +124,7 @@ Take the search form from `search.html` and put it into the
 		<input class="form-control" type="text" size="50" 
 			name="query" value="{{query}}" id="query" />
 			<input class="btn btn-primary" type="submit" name="submit" value="Search" />
-	</form\>
+	<form\>
 
 Also include a `<div>` to house the results underneath.
 

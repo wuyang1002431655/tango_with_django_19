@@ -16,7 +16,9 @@ In your *base* template include a reference to:
 
 {lang="html",linenos=off}
 	{% load staticfiles %}
-	<script src="{% static "js/jquery-1.11.1.js" %}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+	<!-- OR if working from local -->
+	<script src="{% static "js/jquery-2.1.4.js" %}"></script>
 	<script src="{% static "js/rango-jquery.js" %}"></script>
 
 
