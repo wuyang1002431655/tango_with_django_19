@@ -85,7 +85,6 @@ def run_query(search_terms):
 				'link': result['Url'],
 				'summary': result['Description']})
 
-			# Catch a URLError exception - something went wrong when connecting!		
 	except urllib2.URLError as e:
 		print "Error when querying the Bing API: ", e
 
