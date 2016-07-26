@@ -91,26 +91,21 @@ add it to the category that they are in. Let's focus on the first
 problem, of putting search on the category page. To do this, perform the
 following steps:
 
--   Remove the generic *Search* link from the menu bar, i.e. we are
-    decommissioning the global search function.
--   Take the search form and results template markup from `search.html`
-    and place it into `category.html`.
--   Update the search form so that that action refers back to the
-    category page, i.e.:
+- Remove the generic *Search* link from the menu bar, i.e. we are decommissioning the global search function.
+- Take the search form and results template markup from `search.html` and place it into `category.html`.
+- Update the search form so that that action refers back to the category page, i.e.:
 	{lang="python",linenos=on}
 		<form class="form-inline" id="user_form" 
 			method="post" action="{% url 'category'  category.slug %}">
 
--   Update the category view to handle a HTTP `POST` request. The view
-    must then include any search results in the context dictionary for
-    the template to render.
--   Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
- 	{lang="python",linenos=off}
+- Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
+- Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
+	{lang="python",linenos=off}
 		{% if user.authenticated %} 
 			<!-- Insert search code here -->
 		{% endif %}
 		
- 
+
 ##Create and View Profiles
 
 If you have swapped over to the `django-registration-redux` package,
@@ -135,3 +130,5 @@ Undertake the following steps to add this functionality.
 To let users browse through user profiles, you can create a users page,
 that lists all the users. If you click on a user page, then you can see
 their profile (but make sure that a user can only edit their own page).
+
+In the next chapter, we provide a series of hints and tips to help you complete the aforementioned features.
