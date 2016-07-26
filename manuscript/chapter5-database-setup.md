@@ -28,7 +28,7 @@ Before we can create any models, we need to set up our database with Django. In 
 We can pretty much leave this as is for our Rango app. You can see a `default` database that is powered by a lightweight database engine, [SQLite](https://www.sqlite.org/) (see the `ENGINE` option). The `NAME` entry for this database is the path to the database file, which is by default `db.sqlite3` in the root of your Django project.
 
 
-T> ### Top Git Tip
+T> ### Git Top Tip
 T> If you are using Git, you might be tempted to add and commit the database file. This is not a good idea because if you are working on your app with other people, they are likely to change the database and this will cause endless conflicts.
 T>
 T> Instead, add `db.sqlites3` to your `.gitignore` file so that it won't be added when you `git commit` and `git push`. You can also do this for other files like `*.pyc` and machine specific files.
@@ -347,7 +347,9 @@ To create a population script for Rango, start by creating a new Python module w
 	    populate()
 
 T> ### Understand this Code!
-T> Don't copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. Below we have provided explanations - hopefully you'll learn something new!
+T> Don't copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on.
+T> 
+T> Below we have provided explanations - hopefully you'll learn something new!
 
 While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look at lines 75 and 76. This is because above this point, we define functions, these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we call the `populate()` function.
 

@@ -52,7 +52,7 @@ Note that you are *required to use absolute paths* to locate the `templates` dir
 However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the black slashes have to be constructed differently (see the warning below).
 
 W> ### Don't hard code Paths!
-W> The road to hell is paved with hard coded paths. [Hard-coding paths](http://en.wikipedia.org/wiki/Hard_coding) is considered to be a [software engineering anti-pattern](http://sourcemaking.com/antipatterns), and will make your project [less portable](http://en.wikipedia.org/wiki/Software_portability) (which is a bad thing).
+W> The road to Hell is paved with hard coded paths. [Hard-coding paths](http://en.wikipedia.org/wiki/Hard_coding) is a [software engineering anti-pattern](http://sourcemaking.com/antipatterns), and will make your project [less portable](http://en.wikipedia.org/wiki/Software_portability) - meaning that when you run it on another computer, it probably won't work!
 
 ### Dynamic Paths
 A better solution is to make use of built-in Python functions to work out the path of your `templates` directory automatically. This way, an absolute path can be obtained regardless of where you place your Django project's code. This in turn means that your project becomes more *portable.* 
@@ -182,7 +182,7 @@ X> If your `STATIC_URL` is set to `/static/` and `rango.jpg` can be found at `im
 X>
 X> **Don't proceed until you are sure your configuration is working!**
 
-W> ### Don't forget the Slashes!
+W> ### Don't Forget the Slashes!
 W> When setting `STATIC_URL`, please ensure that you end the URL you specify with a forward slash (e.g. `/static/`, not `/static`). As per the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-STATIC_URL), not doing so can open you up to a world of pain. The extra slash at the end ensures that the root of the URL (e.g. `/static/`) is separated from the static content you want to serve (e.g. `images/rango.jpg`).
 
 I> ### Serving Static Content
