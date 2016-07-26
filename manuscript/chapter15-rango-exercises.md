@@ -1,5 +1,4 @@
-Making Rango Tango! Exercises
-=============================
+#Making Rango Tango! Exercises
 
 So far we have been adding in different pieces of functionality to
 Rango. We've been building up the application in this manner to get you

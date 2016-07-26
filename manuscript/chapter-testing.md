@@ -63,7 +63,7 @@ do this by issuing the following command:
 This will run through the tests associated with the rango application.
 At the moment, nothing much happens. That is because you may have
 noticed the file `rango/tests.py` only contains an import statement.
-Everytime you create an application, Django automatically creates such a
+Every time you create an application, Django automatically creates such a
 file to encourage you to write tests.
 
 From this output, you might also notice that a database called `default`
@@ -100,12 +100,12 @@ The first thing you should notice, if you have not written tests before,
 is that we have to inherit from TestCase. The naming over the method in
 the class also follows a convention, all tests start with `test_` and
 they also contain some type of assertion, which is the test. Here we are
-check if the values are equal, with the `assertEqual` method, but other
+checking if the values are equal, with the `assertEqual` method, but other
 types of assertions are also possible. See the Python Documentation on
 unit tests, <https://docs.python.org/2/library/unittest.html> for other
 commands (i.e. `assertItemsEqual`, `assertListEqual`, `assertDictEqual`,
 etc). Django's testing machinery is derived from Python's but also
-provides an number of other asserts and specific test cases.
+provides a number of other asserts and specific test cases.
 
 Now lets run test:
 
@@ -134,7 +134,7 @@ As we can see this test fails. This is because the model does not check
 whether the value is less than zero or not. Since we really want to
 ensure that the values are non-zero, we will need to update the model,
 to ensure that this requirement is fulfilled. Do this now by adding some
-code to the Catgegory models, `save()` method, that checks the value of
+code to the `Category` models, `save()` method, that checks the value of
 views, and updates it accordingly.
 
 Once you have updated your model, you can now re-run the test, and see

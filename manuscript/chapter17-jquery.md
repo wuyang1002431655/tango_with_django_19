@@ -1,5 +1,4 @@
-JQuery and Django
-=================
+#JQuery and Django
 
 JQuery rocks! JQuery is a library written in Javascript that seriously
 pimps its power and utility. A few lines of JQuery often encapsulates

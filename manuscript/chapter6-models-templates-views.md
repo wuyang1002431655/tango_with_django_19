@@ -17,7 +17,7 @@ These steps highlight how we need to work within Django's framework to bind mode
 
 ##Showing Categories on Rango's Homepage
 One of the requirements regarding the main page was to show the top
-five rango'ed categories. To fulfill this requirement, we will go through each of the above steps.
+five rango'ed categories. To fulfil this requirement, we will go through each of the above steps.
 
 ### Importing Required Models
 First, we need to complete step one. Open `rango/views.py` and at the top of the file, after the other imports, import the `Category` model from Rango's `models.py` file.

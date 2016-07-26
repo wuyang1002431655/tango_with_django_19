@@ -16,7 +16,11 @@ We would also like to thank all the people who have helped to improve this resou
 [Charlotte ](https://github.com/Charlotteis)
 [cspollar](https://github.com/cspollar)
 [mHulb](https://github.com/mHulb)
+Duncan Drizy
 
+[Burak K.](https://github.com/McMutton)
+[koviusesGitHub](https://github.com/koviusesGitHub)
+Nitin Tulswani
 
 Thank you all very much!
 

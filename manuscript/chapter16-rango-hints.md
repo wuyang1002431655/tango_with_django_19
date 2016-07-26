@@ -1,12 +1,10 @@
-Making Rango Tango! Code and Hints
-==================================
+#Making Rango Tango! Code and Hints
 
 Hopefully, you will have been able to complete the exercises given the
 workflows we provided, if not, or if you need a little help checkout
 snippets of code and use them within your version of Rango.
 
-Track Page Click Throughs
--------------------------
+##Track Page Click Throughs
 
 Currently, Rango provides a direct link to external pages. This is not
 very good if you want to track the number of times each page is clicked
