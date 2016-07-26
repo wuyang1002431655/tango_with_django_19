@@ -268,6 +268,7 @@ You'll also need to ensure you do the following, too.
 
 - Add a mapping between your ``search()`` view and the ``/rango/search/`` URL calling it ``name='search'`` by adding in ``url(r'search/$', views.search, name='search'),`` to `rango/urls.py`.
 - Also, update the ``base.html`` navigation bar to include a link to the search page. Remember to use the ``url`` template tag to reference the link.
+- You will need a copy of the `bing.key` in your project directory, i.e. along with `manage.py`.
 
 
 Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango Application (as shown in the figure below).
