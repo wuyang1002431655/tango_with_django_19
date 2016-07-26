@@ -1,4 +1,4 @@
-###Final Thoughts
+#Final Thoughts
 In this book, we have gone through the process of web development from
 specification to deployment. Along the way we have shown how to use the
 Django framework to construct the models, views and templates associated

@@ -325,9 +325,7 @@ With these changes saved, reload your web application by clicking the
 
 ### Bing API Key
 
-Update `bing_search.py` or `keys.py` with your own BING API Key to use
-the search functionality in Rango. Again, you will have to hit the
-*Reload* button for the changes to take effect.
+Add your Bing API key to `bing.key` to enable the search functionality in Rango.
 
 ### Turning off `DEBUG` Mode
 
