@@ -249,10 +249,10 @@ W> Remember to add `{% load staticfiles %}` to the top of **each template** that
 `base.html`.](../images/rango-template-inheritance.svg)
 -->
 
-## Cleaner Template Code (NEW EXAMPLE REQUIRED)
-Upon completion of the exercises listed above, all of your Rango app's templates will now inherit from `base.html`. Looking back at the contents of `base.html`, the `user` object - found within the context of a given Django request - is used to determine if the current user of Rango is logged in (through use of `user.is_authenticated`). As all of Rango's templates should inherit from this base template, we can say that *all of Rango's templates now depend on having access to the context of a given request.*
+## `render()` and the `request` Context
+Upon completion of the exercises listed above, all of your Rango app's templates will now inherit from `base.html`. In the following chapter, we'll be looking at user authentication, and determing whether a user is logged into the app or not. To do this, we'll need to make sure that our templates have access to the Django [*request* object](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). We could then say that *all of Rango's templates will depend on having access to the context of a given request.*
 
-Due to this new dependency, you must check each of Rango's views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. If you don't ensure this happens, your views may be rendered incorrectly - users may appear to be not logged in, even though Django thinks that they are!
+Due to this new dependency, you must check each of Rango's views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. Ensuring that this is available to your templates now will lay the foundations for the next chapter of the book.
 
 I> ### Render and Context
 I> As a quick example of the checks you must carry out, have a look at the `about()` view. Initially, this was implemented with a hard-coded string response, as shown below. Note that we only send the string - we don't make use of the request passed as the `request` parameter.
@@ -263,7 +263,7 @@ I> 	    return HttpResponse('
 I> 	        Rango says: Here is the about page.
 I> 	        <a href="/rango/">Index</a>')
 I>
-I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine access to objects such as `user`, which will allow the template engine to determine if the user is logged in (authenticated).
+I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine access information such as the request type (e.g. `GET`/`POST`), and information relating to the user's status (have a look at [Chapter 9](#chapter-user)).
 I>
 I> {lang="python",linenos=off}
 I> 	def about(request):
@@ -278,7 +278,7 @@ It would be nice to show the different categories that users can browse through 
 - in the `base.html` template, we could add some code to display an item list of categories; and
 - within each view, we could access the `Category` object, get all the categories, and return that in the context dictionary.
 
-However, this is a pretty nasty solution because we will be repeatedly including the same code in all views. Remember - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)! A potential solution would be to create custom template tags that are included in the template, and which can request *their own* data.
+However, this is a pretty nasty solution because we will need to be repeatedly including the same code in all views. A [DRYer](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
 ###Using Template Tags
 Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called, `rango_template_tags.py`, in which you can add the following code.
@@ -317,7 +317,7 @@ To use the template tag in your `base.html` template, first load the custom temp
 
 Try it out. Now all pages that inherit from `base.html` will also include the list of categories (which we will move to the side later on). 
 
-T> Remember to Restart the Server!
+T> ### Remember to Restart the Server!
 T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, they won't be registered by Django, and you'll get confused and irritated.
 
 ###Parameterised Template Tags 
