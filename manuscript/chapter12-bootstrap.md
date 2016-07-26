@@ -5,7 +5,7 @@ In this chapter, we will be styling Rango using the *Twitter Bootstrap
 
 I> ### Cascading Style Sheets
 I>
-I> If you are not familiar with CSS then you should check out the CSS Chapter where we provide a quick guide on the basics of Cascading Style Sheets.
+I> If you are not familiar with CSS then you should check out the [CSS Chapter](#chapter-css) where we provide a quick guide on the basics of Cascading Style Sheets.
 
 Now take a look at the [Bootstrap 4.0
 website](http://v4-alpha.getbootstrap.com/) - it provides you with sample code
@@ -45,17 +45,96 @@ The changes that we performed are listed below along with the updated HTML (so t
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
+	{% load staticfiles %}
+	{% load rango_template_tags %}
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="{% static 'images/favicon.ico' %}">
+		<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+		<!-- Bootstrap core CSS -->
+		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+	</head>
+	<body>
+	<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+		<button type="button" class="navbar-toggler hidden-sm-up"
+			data-toggle="collapse" data-target="#navbar" 
+			aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">Rango</a>
+		<div id="navbar">
+			<nav class="nav navbar-nav pull-xs-left">
+			<a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
+			<a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
+			{% if user.is_authenticated %}
+				<a class="nav-item nav-link" 
+					href="{% url 'add_category' %}">
+					Add a New Category</a>
+				<a class="nav-item nav-link" 
+						href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
+			{% else %}
+				<a class="nav-item nav-link" 
+					href="{% url 'registration_register' %}">Register Here</a>
+				<a class="nav-item nav-link" 
+					href="{% url 'auth_login' %}">Login</a>
+			{% endif %}
+			</nav>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				{% block sidebar_block %}
+					{% get_category_list category %}
+				{% endblock %}
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				{% block body_block %}{% endblock %}
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+		</script>
+		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+		</script>
+		<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+		<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+		</script>
+	</body>
+	</html>
 
 
-
-If you take a close look at the Dashboard HTML source, you'll notice it
+If you take a close look at the modified Dashboard HTML source, you'll notice it
 has a lot of structure in it created by a series of `<div>` tags.
-Essentially the page is broken into two parts - the top navigation bar which is contained by `<nav>` tags, and the main content pane denoted by the `<div class="container-fluid">` tag.
-Within the main content pane, there are two `<div>`s, one for the sidebar and the other for the main content, where we have placed the code for the `side_block` and `body_block`, respectively.	
+Essentially the page is broken into two parts - the top navigation bar which is contained by `<nav>` tags, and the main content pane denoted by the `<div class="container-fluid">` tag. Within the main content pane, there are two `<div>`s, one for the sidebar and the other for the main content, where we have placed the code for the `sidebar_block` and `body_block`, respectively.	
 	
 In this new template, we have assumed that you have completed the chapters on User Authentication and used the Django Regisration Redux Package. If not you will need to update the template and remove/modify the references to those links in the navigation bar i.e. in the `<nav>` tags. 
 	
 Also of note is that the HTML template makes references to external websites to request the required `css` and `js` files. So you will need to be connected to the internet for the style to be loaded when you run the application.
+
+I> ###Working Offline?
+I>
+I> Rather than including external references to the `css` and `js` files, 
+I> you could download all the associated files and store them in your
+I> static folder. If you do this, simply update the base template to
+I> reference the static files stored locally. 
+
 	
 ##Quick Style Change
 To give Rango a much needed facelift, we can replace the content of the existing `base.html` with the HTML template code in `base_bootstrap.html`. You might want to first comment out the existing code in `base.html` and then cut-and-paste in the `base_bootstrap.html` code.
@@ -67,12 +146,6 @@ You should notice that your application looks about a hundred times better alrea
 Flip through the different pages. Since they all inherit from base, they will all be looking pretty good, but not perfect! In the remainder of this chapter, we will go through a number of changes to the templates and use various Bootstrap classes to improve the look and feel of Rango.
 
 
-I> Static Files
-I>
-I> Rather than including external references to `css` and `js` files. 
-I> You could download all the associated files and stored them in your
-I> static folder. If you do this, simply update the base template to
-I> reference the static files stored locally. 
 
 <!--
 ## Page Headers
@@ -128,12 +201,14 @@ For the index page it would be nice to show the top categories and top pages in 
 	<div class="row marketing">
 		<div class="col-lg-6">
 			<h4>Subheading</h4>
-			<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+			<p>Donec id elit non mi porta gravida at eget metus. 
+				Maecenas faucibus mollis interdum.</p>
 			<h4>Subheading</h4>
 		</div>
 		<div class="col-lg-6">
 			<h4>Subheading</h4>
-			<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+			<p>Donec id elit non mi porta gravida at eget metus. 
+				Maecenas faucibus mollis interdum.</p>
 		</div>
 	</div>
 
@@ -148,62 +223,54 @@ Given this example, we can create columns in `index.html`  by updating the templ
 	{% block title_block %}
 		Index
 	{% endblock %}
-	
 	{% block body_block %}
-	
 	<div class="jumbotron">
 		<h1 class="display-3">Rango says...</h1>
-		{% if user.is_authenticated %}
-		
+		{% if user.is_authenticated %}		
 			<h1>hey there {{ user.username }}!</h1>
 		{% else %}
 			<h1>hey there partner! </h1>
 		{% endif %}
-			
  	</div>
-		
-	
 	<div class="row marketing">
-			<div class="col-lg-6">
-				<h4>Most Liked Categories</h4>
-				<p>
-				{% if categories %}
-				<ul>
-				{% for category in categories %}
-				<li><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
+		<div class="col-lg-6">
+		<h4>Most Liked Categories</h4>
+		<p>
+		{% if categories %}
+		<ul>
+			{% for category in categories %}
+			<li><a href="{% url 'show_category' category.slug %}">
+				{{ category.name }}</a></li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
+		</p>
+		</div>
+		<div class="col-lg-6">
+			<h4>Most Viewed Pages</h4>
+			<p>
+			{% if pages %}
+			<ul>
+				{% for page in pages %}
+				<li><a href="{{ page.url }}">{{ page.title }}</a></li>
 				{% endfor %}
 				</ul>
-				{% else %}
-				<strong>There are no categories present.</strong>
-				{% endif %}
-				</p>
-			</div>
-			<div class="col-lg-6">
-				<h4>Most Viewed Pages</h4>
-				<p>
-				{% if pages %}
-				<ul>
-				{% for page in pages %}
-				 <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-				 {% endfor %}
-				 </ul>
-				{% else %}
+			{% else %}
 				<strong>There are no categories present.</strong>
 			 {% endif %}
-				</p>
-			</div>
-		</div>	
-						
-		<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 
-		
+			</p>
+		</div>
+	</div>	
+	<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 	
 	{% endblock %}
-	
 	
 We have also used the `jumbotron` class to make the heading in the page more evident by wrapping the title in a `<div class="jumbotron">`. Reload the page - it should look a lot better now, but the way the list items are
 presented is pretty horrible. 
 
 Let's use the [list group styles provided by
-Bootstrap] (http://v4-alpha.getbootstrap.com/components/list-group/) to improve how they look. We can do this quite easily by changing the
+Bootstrap](http://v4-alpha.getbootstrap.com/components/list-group/) to improve how they look. We can do this quite easily by changing the
 `<ul>` elements to `<ul class="list-group">` and the `<li>` elements to
 `<li class="list-group-item">`.
 
@@ -220,20 +287,22 @@ template as follows:
 
 {lang="html",linenos=off}
 	{% block body_block %}
-	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
-
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css"
+		rel="stylesheet">
 	<div class="jumbotron">
 		<h1 class="display-3">Login</h1>
- 	</div>
-
+	</div>
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<label for="inputUsername" class="sr-only">Username</label>
-		<input type="text" id="id_username" class="form-control" placeholder="Username" required autofocus>
+		<input type="text" id="id_username" class="form-control" 
+			placeholder="Username" required autofocus>
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="id_password" class="form-control" placeholder="Password" required>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />Sign in</button>
+		<input type="password" id="id_password" class="form-control"
+			placeholder="Password" required>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" 
+			value="Submit" />Sign in</button>
 	</form>
 	{% endblock %}
 
@@ -286,7 +355,10 @@ follows.
 		{%  endif %}
 	{% endblock %}
 
-And similarly for the `add_category.html` template (not shown).
+X> ###Exercise 
+X>
+X> - Create a similar template for the Add Category page i.e. `add_category.html`.
+
 
 ###The Registration Template
 For the `registration_form.html`, we can update the form as follows:
@@ -299,19 +371,25 @@ For the `registration_form.html`, we can update the form as follows:
 		<h2 class="form-signin-heading">Sign Up Here</h2>
 		<div class="form-group" >
 			<p class="required"> <label for="id_username">Username:</label>
-			<input class="form-control"  id="id_username" maxlength="30" name="username" type="text"  placeholder="Enter username"/></p>
+			<input class="form-control"  id="id_username" maxlength="30" 
+				name="username" type="text"  placeholder="Enter username"/></p>
 	</div>
 	<div class="form-group">
 		<p class="required"><label for="id_email">E-mail:</label>
-			<input class="form-control" id="id_email" name="email" type="email" placeholder="Enter email" /></p>
+			<input class="form-control" id="id_email" name="email" type="email"
+				placeholder="Enter email" /></p>
 		</div>
 		<div class="form-group">
 			<p class="required"><label for="id_password1">Password:</label>
-				<input class="form-control" id="id_password1" name="password1" type="password" placeholder="Enter password" /></p>
+				<input class="form-control" id="id_password1" 
+					name="password1" type="password" 
+						placeholder="Enter password" /></p>
 			</div>
 			<div class="form-group">
 				<p class="required"><label for="id_password2">Password (again):</label>
-					<input class="form-control" id="id_password2" name="password2" type="password" placeholder="Enter password again" /></p>
+					<input class="form-control" id="id_password2" 
+						name="password2" type="password" 
+							placeholder="Enter password again" /></p>
 				</div>
 
 		<button type="submit" class="btn btn-default">Submit</button>
@@ -322,32 +400,17 @@ For the `registration_form.html`, we can update the form as follows:
 Again we have manually transformed the form created by the
 `{{ form.as_p }}` template tag, and added the various bootstrap classes.
 
-I> Bootstrap, HTML and Django Kludge
+I> ###Bootstrap, HTML and Django Kludge
 I>
-I> This is not the best solution here - we have kludged it together. 
-I> It would be much nicer and cleaner if we could use Django to add the correct classes to the HTML as it is generated. 
-I> This example is to show you which classes from Bootstrap are needed to augment the HTML templates.
+I> This is not the best solution - we have kind of kludged it together. 
+I> It would be much nicer and cleaner if we could instruct Django when building the HTML for the form to insert the appropriate classes.
 
 ##Using Django-Bootstrap-Toolkit
-A simple alternative would be to use `django-bootstrap-toolkit` see
-<https://github.com/dyve/django-bootstrap-toolkit>. Note that there are
-other packages like this. To install the `django-bootstrap-toolkit` run,
-`pip install django-bootstrap-toolkit`. Add, `bootstrap_toolkit` to the
-`INSTALLED_APPS` tuple in `settings.py`. Then modify the template like
-that shown below:
+An alternative solution would be to use something like the `django-bootstrap-toolkit` see
+<https://github.com/dyve/django-bootstrap-toolkit>. To install the `django-bootstrap-toolkit` run, `pip install django-bootstrap-toolkit`. Add, `bootstrap_toolkit` to the `INSTALLED_APPS` tuple in `settings.py`. 
 
-{lang="html",linenos=off}
-	{% load bootstrap_toolkit %}
-
-	<form action="/url/to/submit/" method="post">
-		{% csrf_token %}
-		{{ form|as_bootstrap }}
-		<div class="actions">
-			<button type="submit" class="btn primary">Submit</button>
-		</div>
-	</form>
-
-Applying this soluton to the `category.html` template, we arrive at the following.
+To use the toolkit within our templates, we need to first load the toolkit `{% load bootstrap_toolkit %}` and then call the function that updates the generated HTML, i.e. 
+`{{ form|as_bootstrap }}`. Applying this solution to the `category.html` template, we arrive at the following.
 
 {lang="html",linenos=off}
 	{% extends 'base.html' %}
@@ -355,24 +418,24 @@ Applying this soluton to the `category.html` template, we arrive at the followin
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
 	{% block body\_block %}
-		<form id="category_form" method="post" action="{% url 'add_category' %}"\>
+		<form id="category_form" method="post" 
+			action="{% url 'add_category' %}"\>
 		<h2 class="form-signin-heading"\>Add a Category</a></h2>
-		
 		{% csrf_token %}
 		{{ form|as_bootstrap }}
 		<br/>
-
-<button class="btn btn-primary" type="submit"
-	         name="submit"\>Create Category\</button\>
-</form>
-
-{% endblock %}
+		<button class="btn btn-primary" type="submit"
+			name="submit"\>Create Category\</button\>
+		</form>
+	{% endblock %}
 
 This solution is much cleaner, and automated. However, it does not
-render as nicely :-(. Probably requires some tweaking to improve how it
-renders.
+render as nicely as the first solution. So it needs some tweaking to customise it as required, but we will let you figure it out :-).
 
-###The End Result
+
+###Next Steps
+In this chapter we have described how to quickly style your Django application using the Bootstrap toolkit. Bootstrap is highly extensible and it is relatively easy to change themes - check out the [StartBootstrap Website](http://startbootstrap.com/) for a whole series of free themes. Alternatively, you might want to use a different CSS toolkit like [Zurb](http://zurb.com). Now that you have an idea of how to hack these templates and integrate them into your Django applications to make them look slick and modern.
+
 Now that Rango is starting to look better we can go back and add in the
 extra functionality that will really pull the application together.
 
