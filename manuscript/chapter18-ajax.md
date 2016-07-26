@@ -12,18 +12,14 @@ that if you are using the Twitter CSS Bootstrap toolkit then JQuery will
 already be added in. Otherwise, download the latest version of JQuery
 and include it within your application (see Chapter ..).
 
-AJAX based Functionality
-------------------------
+##AJAX based Functionality
 
 To make the interaction with the Rango application more seamless let's
 add in a number of features that use AJAX, such as:
 
--   Add a "Like Button" to let registered users "like" a particular
-    category
--   Add inline category suggestions - so that when a user types they can
-    quickly find a category
--   Add an "Add Button" to let registered users quickly and easily add a
-    Page to the Category
+- Add a "Like Button" to let registered users "like" a particular category
+- Add inline category suggestions - so that when a user types they can quickly find a category
+- Add an "Add Button" to let registered users quickly and easily add a Page to the Category
 
 Create a new file, called `rango-ajax.js` and add it to your `js`
 directory. Then in your *base* template include:
