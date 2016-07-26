@@ -1,5 +1,6 @@
 import json
-import urllib, urllib2
+
+import sys
 
 # Add your Microsoft Account Key to a file called bing.key
 
@@ -43,8 +44,18 @@ def run_query(search_terms):
 	# Wrap quotes around our query terms as required by the Bing API.
 	# The query we will then use is stored within variable query.
 	query = "'{0}'".format(search_terms)
-	query = urllib.quote(query)
-
+	
+	# Turn the query into an HTML encoded string.
+	# We use urllib for this - differences exist between Python 2 and 3.
+	# The try/except blocks are used to determine which function call works.
+	# Replace this try/except block with the relevant import and query assignment.
+	try:
+		from urllib import parse  # Python 3 import.
+		query = parse.quote(query)
+	except ImportError:  # If the import above fails, you are running Python 2.7.x.
+		from urllib import quote
+		query = quote(query)
+	
 	# Construct the latter part of our request's URL.
 	# Sets the format of the response to JSON and sets other properties.
 	search_url = "{0}{1}?$format=json&$top={2}&$skip={3}&Query={4}".format(
@@ -60,7 +71,14 @@ def run_query(search_terms):
 
 	#headers = {'Authorization' : 'Basic {0}'.format( b64encode(bing_api_key) )}
 	# Create a 'password manager' which handles authentication for us.
-	password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+	
+	try:
+		from urllib import request  # Python 3 import.
+		password_mgr = request.HTTPPasswordMgrWithDefaultRealm()
+	except ImportError:  # Running Python 2.7.x - import urllib2 instead.
+		import urllib2
+		password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+	
 	password_mgr.add_password(None, search_url, username, bing_api_key)
 
 	# Create our results list which we'll populate.
@@ -68,40 +86,48 @@ def run_query(search_terms):
 
 	try:
 		# Prepare for connecting to Bing's servers.
-		handler = urllib2.HTTPBasicAuthHandler(password_mgr)
-		opener = urllib2.build_opener(handler)
-		urllib2.install_opener(opener)
-
+		try:  # Python 3.5 and 3.6
+			handler = request.HTTPBasicAuthHandler(password_mgr)
+			opener = request.build_opener(handler)
+			request.install_opener(opener)
+		except UnboundLocalError:  # Python 2.7.x
+			handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+			opener = urllib2.build_opener(handler)
+			urllib2.install_opener(opener)
+	
 		# Connect to the server and read the response generated.
-		response = urllib2.urlopen(search_url).read()
-
+		try:  # Python 3.5 or 3.6
+			response = request.urlopen(search_url).read()
+			response = response.decode('utf-8')
+		except UnboundLocalError:  # Python 2.7.x
+			response = urllib2.urlopen(search_url).read()
+	
 		# Convert the string response to a Python dictionary object.
 		json_response = json.loads(response)
-
+	
 		# Loop through each page returned, populating out results list.
 		for result in json_response['d']['results']:
 			results.append({
 				'title': result['Title'],
 				'link': result['Url'],
 				'summary': result['Description']})
-
-	except urllib2.URLError as e:
-		print "Error when querying the Bing API: ", e
-
+	except:
+		print("Error when querying the Bing API", sys.exc_info()[0])
+	
 	# Return the list of results to the calling function.
 	return results
 	
 
 def main():
-	print "Enter a query "
+	print("Enter a query ")
 	query = raw_input()
 	results = run_query(query)
 	for result in results:
-		print result['title']
-		print '-'*len(result['title'])
-		print result['summary']
-		print result['link']
-		print
+		print(result['title'])
+		print('-'*len(result['title']))
+		print(result['summary'])
+		print(result['link'])
+		print()
 		
 	
 if __name__ == '__main__':

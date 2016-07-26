@@ -52,7 +52,7 @@ def index(request):
     
     context_dict['visits'] = request.session['visits']
     
-    print request.session['visits']
+    print(request.session['visits'])
     
     response = render(request, 'rango/index.html', context=context_dict)
     
@@ -62,7 +62,7 @@ def index(request):
 def about(request):
 
     if request.session.test_cookie_worked():
-        print "TEST COOKIE WORKED!"
+        print("TEST COOKIE WORKED!")
         request.session.delete_test_cookie()
     # To complete the exercise in chapter 4, we need to remove the following line
     # return HttpResponse("Rango says here is the about page. <a href='/rango/'>View index page</a>")
