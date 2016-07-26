@@ -347,7 +347,7 @@ To create a population script for Rango, start by creating a new Python module w
 	    populate()
 
 T> ### Understand this Code!
-T> Don't copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on.
+T> To reiterate what we wrote earlier, don't simply copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. It'll help with your understanding.
 T> 
 T> Below we have provided explanations - hopefully you'll learn something new!
 
