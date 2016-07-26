@@ -1,4 +1,4 @@
-#User Authentication
+#User Authentication {#chapter-user}
 The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll be using the `auth` app provided as part of a standard Django installation, located in package `django.contrib.auth`. According to [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/), the application provides the following concepts and functionality.
 
 - The concept of a *User*.
@@ -591,12 +591,12 @@ Like in the previous section, we'll be modifying Rango's `index.html` template a
 This code states that when a user is authenticated and logged in, he or she can see the `Restricted Page` and `Logout` links. If he or she isn't logged in, `Register Here` and `Login` are presented. As `About` and `Add a New Category` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
 
 ## Taking it Further
-In most applications, you will require different levels of security when registering and managing users. Ensuring the user enters an e-mail address that they have access to, or sending users passwords that they have forgotten are prime examples. While we could extend the current approach and build all the necessary infrastructure to support such functionality, a `django-registration-redux` application has been developed which greatly simplifies the process - [further information can be found online regarding this app](https://django-registration-redux.readthedocs.org). Templates can be found [online, too](https://github.com/macdhuibh/django-registration-templates). We cover how you can use this package in a [following chapter](#chapter-redux).
+In this chapter, we've covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's `django.contrib.auth` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base `django.contrib.auth.models.User` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
 
-To summarise *this* chapter, we've covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's `django.contrib.auth` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base `django.contrib.auth.models.User` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult [Django's official documentation on Authentication](https://docs.djangoproject.com/en/1.9/topics/auth/).
+Many Web applications however take the concepts of user authentication further. For example, you may require different levels of security when registering users, by ensuring a valid e-mail address is supplied. While this functionality could be implemented by us, why reinvent the wheel when such functionality already exists? The `django-registration-redux` app has been developed to greatly simplify the process of adding extra functionality related to user authentication. We cover how you can use this package in a [following chapter](#chapter-redux).
 
 X> ### Exercises
-X> Work on the following two exercises to reinforce what you've learnt in this chapter.
+X> For now, work on the following two exercises to reinforce what you've learnt in this chapter.
 X>
 X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have ensure links to add or edit pages appear only if the user browsing the website is logged in.
 X> - Provide informative error messages when users incorrectly enter their username or password.
