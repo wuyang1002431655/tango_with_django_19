@@ -196,48 +196,43 @@ To add external search functionality, we will need to perform the following step
 - We then create a view to handle the rendering of the ``search.html`` template for us, as well as calling the ``run_query()`` function we defined above.
 
 ###Adding a Search Template
-Let's first create our ``search.html`` template. Add the following HTML markup and Django template code.
+Let's first create a template called, ``rango/search.html``. Add the following HTML markup, Django template code, and Bootstrap classes.
 
 {lang="html",linenos=off}
-	{% extends "base.html" %}
+	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
 	{% block title %} Search {% endblock %}
 	{% block body_block %}
-	<div class="page-header">
+	<div>
 		<h1>Search with Rango</h1>
-	</div>
-	<div class="row">
-		<div class="panel panel-primary">
-			<br/>
-			<form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
-				{% csrf_token %}
-				<!-- Display the search form elements here -->
-				<input class="form-control" type="text" size="50" name="query" value="" id="query" />
-				<input class="btn btn-primary" type="submit" name="submit" value="Search" />
-				<br />
-			</form>
-			<div class="panel">
-			{% if result_list %}
-				<div class="panel-heading">
-					<h3 class="panel-title">Results</h3>
-					<!-- Display search results in an ordered list -->
-					<div class="panel-body">
-					<div class="list-group">
-						{% for result in result_list %}
-						<div class="list-group-item">
-							<h4 class="list-group-item-heading">
-							<a href="{{ result.link }}">{{ result.title }}</a>
-							</h4>
-							<p class="list-group-item-text">{{ result.summary }}</p>
-						</div>
-						{% endfor %}
-					</div>
-					</div>
+		<br/>
+		<form class="form-inline" id="user_form" 
+				method="post" action="{% url 'search' %}">
+			{% csrf_token %}
+			<div class="input-group">
+			<input class="form-control" type="text" size="50" 
+				name="query" value="" id="query" />
+			</div>
+			<button class="btn btn-primary" type="submit" name="submit"
+				value="Search">Search</button>
+		</form>	
+		<div>
+		{% if result_list %}
+		<h3>Results</h3>
+		<!-- Display search results in an ordered list -->
+			<div class="list-group">
+			{% for result in result_list %}
+				<div class="list-group-item">
+				<h4 class="list-group-item-heading">
+					<a href="{{ result.link }}">{{ result.title }}</a>
+				</h4>
+				<p class="list-group-item-text">{{ result.summary }}</p>
 				</div>
-			{% endif %}
-			
+			{% endfor %}
+			</div>
+		{% endif %}
 		</div>
-	</div>
+	</div>	
 	{% endblock %}
 
 
@@ -246,7 +241,7 @@ The template code above performs two key tasks:
 - In all scenarios, the template presents a search box and a search buttons within a HTML ``<form>`` for users to enter and submit their search queries.
 - If a ``results_list`` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
 	
-To style the html we have made use of Bootstrap: panels, http://getbootstrap.com/components/#panels, list groups, http://getbootstrap.com/components/#list-group, and inline forms, http://getbootstrap.com/css/#forms-inline.
+To style the HTMK we have made use of Bootstrap: panels, http://getbootstrap.com/components/#panels, list groups, http://getbootstrap.com/components/#list-group, and inline forms, http://getbootstrap.com/css/#forms-inline.
 
 As you will see from our corresponding view code shortly, a ``results_list`` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
 
@@ -271,14 +266,26 @@ By now, the code should be pretty self explanatory to you. The only major additi
 
 You'll also need to ensure you do the following, too.
 
-- Add a mapping between your ``search()`` view and the ``/rango/search/`` URL calling it ``name='search'``
-- Update the ``base.html`` navigation bar to include a link to the search page. Remember to use the ``url`` template tag to reference the link.
+- Add a mapping between your ``search()`` view and the ``/rango/search/`` URL calling it ``name='search'`` by adding in ``url(r'search/$', views.search, name='search'),`` to `rango/urls.py`.
+- Also, update the ``base.html`` navigation bar to include a link to the search page. Remember to use the ``url`` template tag to reference the link.
 
 
+Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango Application (as shown in the figure below).
+
+{id="fig-bing-python-search"}
+![Searching for "Python for Noobs".
+](images/images/ch14-bing-python-search.png)
+
+
+
+
+
+
+<!--
 I> Application Programming Interface
 I>
 I> According to the (relevant article on Wikipedia)[ http://en.wikipedia.org/wiki/Application_programming_interface>], an *Application Programming Interface (API)* specifies how software components should interact with one another.
 I> In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. 
 I> Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, (Luis Rei provides an excellent tutorial on APIs)[ http://blog.luisrei.com/articles/rest.html].
-
+-->
 
