@@ -22,19 +22,19 @@ to the actual URL.
 	from django.shortcuts import redirect
 	
 	def track_url(request):
-	page_id = None
-	url = '/rango/'
-	if request.method == 'GET':
-		if 'page_id' in request.GET:
-			page_id = request.GET['page_id']
-			try:
-				page = Page.objects.get(id=page_id)
-				page.views = page.views + 1
-				page.save()
-				url = page.url
-			except:
-				pass
-	return redirect(url)
+		page_id = None
+		url = '/rango/'
+		if request.method == 'GET':
+			if 'page_id' in request.GET:
+				page_id = request.GET['page_id']
+				try:
+					page = Page.objects.get(id=page_id)
+					page.views = page.views + 1
+					page.save()
+					url = page.url
+					except:
+					pass
+		return redirect(url)
 
 
 Be sure that you import the `redirect()` function to `views.py` if it

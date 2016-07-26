@@ -48,15 +48,15 @@ very good if you want to track the number of times each page is clicked
 and viewed. To count the number of times a page is viewed via Rango you
 will need to perform the following steps.
 
-	- Create a new view called `track_url()`, and map it to URL `/rango/goto/` and name it `'name=goto'`.
-	- The `track_url()` view will examine the HTTP `GET` request parameters and pull out the `page_id`. The HTTP `GET` requests will look something like `/rango/goto/?page_id=1`.
-		- In the view, select/get the `page` with `page_id` and then increment the associated `views` field, and `save()` it.
-		- Have the view redirect the user to the specified URL using Django's `redirect` method.
-		- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage.
-	- Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
-		- Remember to use  the `url` templatetag instead of using the direct URL i.e. 
-		{lang="python",linenos=on}
-			<a href="{% url 'goto' %}?pageid={{page.id}}"\>
+- Create a new view called `track_url()`, and map it to URL `/rango/goto/` and name it `'name=goto'`.
+- The `track_url()` view will examine the HTTP `GET` request parameters and pull out the `page_id`. The HTTP `GET` requests will look something like `/rango/goto/?page_id=1`.
+	- In the view, select/get the `page` with `page_id` and then increment the associated `views` field, and `save()` it.
+	- Have the view redirect the user to the specified URL using Django's `redirect` method.
+	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage.
+- Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
+	- Remember to use  the `url` templatetag instead of using the direct URL i.e. 
+	{lang="python",linenos=on}
+		<a href="{% url 'goto' %}?pageid={{page.id}}"\>
 
 
 I> ### `GET` Parameters Hint
@@ -66,8 +66,8 @@ I> HTTP `GET` request, the following code sample should help you.
 I>
 I> {lang="python",linenos=off}
 I> 		if request.method == 'GET':
-I> 			if 'page_id' in request.GET:
-I> 				page_id = request.GET['page_id']
+I> 				if 'page_id' in request.GET:
+I> 					page_id = request.GET['page_id']
 I>
 I> Always check the request method is of type `GET` first, then you can
 I> access the dictionary `request.GET` which contains values passed as part
