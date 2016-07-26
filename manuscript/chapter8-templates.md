@@ -80,13 +80,13 @@ Given the templates that we have created so far, it should be pretty obvious tha
 	{% load staticfiles %}
 	
 	<html>
-		<head lang="en">
-			<meta charset="UTF-8" />
-			<title>Rango</title>
-		</head>
-		<body>
-			<!-- Page specific content goes here -->
-		</body>
+	    <head lang="en">
+	        <meta charset="UTF-8" />
+	        <title>Rango</title>
+	    </head>
+	    <body>
+	        <!-- Page specific content goes here -->
+	    </body>
 	</html>
 
 For the time being, let's make this simple HTML page our app's base template. Save this markup in `base.html` within the `templates/rango/` directory (e.g. `templates/rango/base.html`).
@@ -104,14 +104,14 @@ Now that we've created our base template, we can add template tags to denote wha
 	{% load staticfiles %}
 	
 	<html>
-		<head lang="en">
-			<meta charset="UTF-8" />
-			<title>Rango</title>
-		</head>
-		<body>
-			{% block body_block %}
-			{% endblock %}
-		</body>
+	    <head lang="en">
+	        <meta charset="UTF-8" />
+	        <title>Rango</title>
+	    </head>
+	    <body>
+	        {% block body_block %}
+	        {% endblock %}
+	    </body>
 	</html>
 
 
@@ -140,28 +140,28 @@ Now that you have an understanding of blocks within Django templates, let's take
 	{% load staticfiles %}
 	
 	<html>
-		<head>
-			<title>
-				Rango - 
-				{% block title_block %} 
-					How to Tango with Django!
-				{% endblock %}
-			</title>
-		</head>
-		<body>
-			<div>
-				{% block body_block %}
-				{% endblock %}
-			</div>
-			<hr />
-			<div>
-				<ul>
-				<li><a href="{% url 'add_category' %}">Add New Category</a></li>
-				<li><a href="{% url 'about' %}">About</a></li>
-				<li><a href="{% url 'index' %}">Index</a></li>
-				</ul>
-			</div>
-			</body>
+	    <head>
+	        <title>
+	            Rango - 
+	            {% block title_block %} 
+	                How to Tango with Django!
+	            {% endblock %}
+	        </title>
+	    </head>
+	    <body>
+	        <div>
+	            {% block body_block %}
+	            {% endblock %}
+	        </div>
+	        <hr />
+	        <div>
+	            <ul>
+	                <li><a href="{% url 'add_category' %}">Add New Category</a></li>
+	                <li><a href="{% url 'about' %}">About</a></li>
+	                <li><a href="{% url 'index' %}">Index</a></li>
+	            </ul>
+	        </div>
+	    </body>
 	</html>
 
 From the example above, we have introduced two new features into the base template.
