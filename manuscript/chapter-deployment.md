@@ -12,7 +12,7 @@ PythonAnywhere are offering a free account which sets you up with an
 adequate amount of storage space and CPU time to get a Django
 application up and running.
 
-I> Note: Go Git It
+I> ###Go Git It
 I>
 I> You can do this chapter independently (assuming you have some
 I> knowledge of git, if not refer to the chapter on using git).
@@ -70,9 +70,8 @@ clicking the *Bash* link. When the terminal is ready for you to
 interact, enter the following commands.
 
 {lang="text",linenos=off}    
-
-    $ source virtualenvwrapper.sh
-    $ mkvirtualenv rango
+	$ source virtualenvwrapper.sh
+	$ mkvirtualenv rango
 
 The first command imports the virtual environment wrapper. The wrapper
 provides a series of extensions by [Doug
@@ -83,8 +82,7 @@ This process should take a short while to create, after which you will
 be presented with a slightly different prompt.
 
 {lang="text",linenos=off}    
-
-    (rango)16:38 ~ $
+	(rango)16:38 ~ $
 
 Note the inclusion of `(rango)` compared to your previous command
 prompt. This signifies that we have activated the `rango` virtual
@@ -98,8 +96,7 @@ which the active `pip` binary is located - hopefully within
 `.virtualenvs` and `rango`, as shown in the example below.
 
 {lang="text",linenos=off}    
-
-    /home/<username>/.virtualenvs/test/bin/pip
+	/home/<username>/.virtualenvs/test/bin/pip
 
 Now we can customise our virtual environment by installing the required
 packages for our Rango application. Installing may take a considerable
@@ -107,13 +104,12 @@ amount of time to install as your CPU time is limited - so have some
 patience. Install all the required packages:
 
 {lang="text",linenos=off}    
+	$ pip install -U django==1.9.5
+	$ pip install pillow
+	$ pip install django-registration-redux
+	$ pip install django-bootstrap-toolkit
 
-    $ pip install -U django==1.7
-    $ pip install pillow
-    $ pip install django-registration-redux
-    $ pip install django-bootstrap-toolkit
-
-Aternatively, you could use `pip freeze > requirements.txt` to save your
+Alternatively, you could use `pip freeze > requirements.txt` to save your
 current development environment, and then on PythonAnywhere, run
 `pip install -r requirements.txt` to install all the packages in a job
 lot.
@@ -123,10 +119,9 @@ Once installed, check if Django has been installed with the command
 following example.
 
 {lang="text",linenos=off}    
+	/home/<username>/.virtualenvs/rango/bin/django-admin.py
 
-    /home/<username>/.virtualenvs/rango/bin/django-admin.py
-
-I> Note: Virtual Environments on PythonAnywhere
+I> ###Virtual Environments on PythonAnywhere
 I>
 I> PythonAnywhere also provides instructions on how to setup virtual
 I> environments, see
@@ -149,37 +144,31 @@ environment with the `workon` command. To load up the rango environment,
 enter:
 
 {lang="text",linenos=off}    
-
-    16:48 ~ $ workon rango
+	16:48 ~ $ workon rango
 
 where `rango` can be replaced with the name of the virtual environment
 you wish to use. Your prompt should then change to indicate you are
 working within a virtual environment.
 
 {lang="text",linenos=off}    
-
-    (rango) 16:49 ~ $
+	(rango) 16:49 ~ $
 
 You can then leave the virtual environment using the `deactivate`
 command. Your prompt should then be missing the `(rango)` prefix, with
 an example shown below.
 
 {lang="text",linenos=off}    
-
-    (rango) 16:49 ~ $ deactivate 
-    16:51 ~ $
+	(rango) 16:49 ~ $ deactivate 
+	16:51 ~ $
 
 ###Cloning your Git Repository
----------------------------
-
 Now that your virtual environment for Rango is all setup, you can now
 clone your Git repository to obtain a copy of your project's files.
 Clone your repository by issuing the following command from your home
 directory:
 
 {lang="text",linenos=off}    
-
-    $ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git
+	$ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git
 
 where you replace - `<USERNAME>` with your GitHub username; -
 `<PASSWORD>` with your GitHub password; - `<OWNER>` with the username of
@@ -190,8 +179,7 @@ If you haven't put your code in a Git repository, you can clone the
 version we have made, by issuing the following command:
 
 {lang="text",linenos=off}    
-
-    16:54 ~ $ git clone https://github.com/leifos/tango_with_django_19.git
+	16:54 ~ $ git clone https://github.com/leifos/tango_with_django_19.git
 
 
 ### Setting Up the Database
@@ -204,11 +192,10 @@ directory, move into the `tango_with_django` directory, and issue the
 following commands
 
 {lang="text",linenos=off}    
-
-    (rango) 16:55 ~/tango_with_django $ python manage.py makemigrations rango
-    (rango) 16:55 ~/tango_with_django $ python manage.py migrate
-    (rango) 16:56 ~/tango_with_django $ python populate_rango.py
-    (rango) 16:57 ~/tango_with_django $ python manage.py createsuperuser
+	(rango) 16:55 ~/tango_with_django $ python manage.py makemigrations rango
+	(rango) 16:55 ~/tango_with_django $ python manage.py migrate
+	(rango) 16:56 ~/tango_with_django $ python populate_rango.py
+	(rango) 16:57 ~/tango_with_django $ python manage.py createsuperuser
 
 As discussed earlier in the book, the first command creates the
 migrations for the rango application, then the migrate command creates
@@ -263,7 +250,7 @@ demonstrates a possible configuration for you application.
 	# ADD YOUR PROJECT TO THE PYTHONPATH FOR THE PYTHON INSTANCE
 	path = '/home/<username>/tango_with_django_17/'
 	if path not in sys.path:
-    	sys.path.append(path)
+		sys.path.append(path)
 	
 	# IMPORTANTLY GO TO THE PROJECT DIR
 	os.chdir(path)
@@ -301,7 +288,7 @@ of the page. When the application is reloaded, visiting
 `http://<username>.pythonanywhere.com` should present you with your
 Django application, all ready to go!
 
-I> Bad Gateway
+I> ###Bad Gateway
 I>
 I> During testing, we noted that you can sometimes receive
 I> `HTTP 502 - Bad Gateway` errors instead of your application. Try
@@ -348,7 +335,7 @@ When you application is ready to go, it's a good idea to instruct Django
 that your application is now hosted on a production server. To do this,
 open your project's `settings.py` file and change `DEBUG = True` to
 `DEBUG = False`. This disables [Django's debug
-mode](https://docs.djangoproject.com/en/1.7/ref/settings/#debug), and
+mode](https://docs.djangoproject.com/en/1.9/ref/settings/#debug), and
 removes explicit error messages.
 
 Changing the value of `DEBUG` also means you should set the
@@ -357,9 +344,7 @@ return `HTTP 400 Bad Request` errors. Alter `ALLOWED_HOSTS` so that it
 includes your PythonAnywhere subdomain like in the example below.
 
 {lang="python",linenos=off}    
-
 	ALLOWED_HOSTS = ['<username>.pythonanywhere.com']
-
 
 Again, ensure `<username>` is changed to your PythonAnywhere username.
 Once complete, save the file and reload the application via the
@@ -367,10 +352,9 @@ PythonAnywhere web interface.
 
 ##Log Files
 
-
 Deploying your web application to an online environment introduces
 another layer of complexity. It is likely that you will encounter new
-and bizzare errors due to unsuspecting problems. When facing such
+and bizarre errors due to unsuspecting problems. When facing such
 errors, vital clues may be found in one of the three log files that the
 web server on PythonAnywhere creates.
 

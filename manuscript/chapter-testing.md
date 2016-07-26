@@ -21,8 +21,8 @@ there are numerous reasons why you should include tests:
 -   Tests help teams work together: they make sure your team doesn't
     inadvertently break your code.
 
-According to the Python Guide
-[](http://docs.python-guide.org/en/latest/writing/tests/), there are a
+According to the [Python Guide]
+(http://docs.python-guide.org/en/latest/writing/tests/), there are a
 number of general rules you should try to follow when writing tests.
 Below are some main rules:
 
@@ -34,11 +34,11 @@ Below are some main rules:
 -   Even better create a hook that tests code on push.
 -   Use long and descriptive names for tests.
 
-I> **note**
+I> ###Testing in Django
 I>
 I> Currently this chapter provides the very basics of testing and follows
 I> a similar format to the [Django
-I> Tutorial](https://docs.djangoproject.com/en/1.7/intro/tutorial05/),
+I> Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial05/),
 I> with some additional notes. We hope to expand this further in the
 I> future.
 
@@ -49,14 +49,13 @@ do this by issuing the following command:
 
 
 {lang="text",linenos=off}
-
 	$ python manage.py test rango
-
+	
 	Creating test database for alias 'default'...
-
+	
 	----------------------------------------------------------------------
 	Ran 0 tests in 0.000s
-
+	
 	OK
 	Destroying test database for alias 'default'...
 
@@ -79,22 +78,18 @@ say, can never be less than zero. To create a test for this we can put
 the following code into `rango/tests.py`:
 
 {lang="python", linenos=off}
-
 	from django.test import TestCase
 	from rango.models import Category
 	
 	class CategoryMethodTests(TestCase):
-
-    	def test_ensure_views_are_positive(self):
-
-        	"""
-        	ensure_views_are_positive should results True for categories 
+		def test_ensure_views_are_positive(self):
+			"""
+			ensure_views_are_positive should results True for categories 
 			where views are zero or positive
-        	"""
-        	cat = Category(name='test',views=-1, likes=0)
-        	cat.save()
-        	self.assertEqual((cat.views >= 0), True)
-
+			"""
+			cat = Category(name='test',views=-1, likes=0)
+			cat.save()
+			self.assertEqual((cat.views >= 0), True)
 
 The first thing you should notice, if you have not written tests before,
 is that we have to inherit from TestCase. The naming over the method in
@@ -120,14 +115,15 @@ Now lets run test:
 	FAIL: test_ensure_views_are_positive (rango.tests.CategoryMethodTests)
 	----------------------------------------------------------------------
 	Traceback (most recent call last):
-  		File "/Users/leif/Code/tango_with_django_project_19/rango/tests.py", line 12, in test_ensure_views_are_positive
-  	  self.assertEqual((cat.views>=0), True)
-	  AssertionError: False != True
-	  
-	  ----------------------------------------------------------------------
-	  Ran 1 test in 0.001s
-	  
-	  FAILED (failures=1)
+		File "/Users/leif/Code/tango_with_django_project_19/rango/tests.py", 
+		line 12, in test_ensure_views_are_positive
+		self.assertEqual((cat.views>=0), True)
+		AssertionError: False != True
+		
+	----------------------------------------------------------------------
+	Ran 1 test in 0.001s
+	
+	FAILED (failures=1)
 
 
 As we can see this test fails. This is because the model does not check
@@ -147,24 +143,21 @@ to `rango/tests.py`:
 {lang="python", linenos=off}
 	
 	def test_slug_line_creation(self):
-    	 """
-     	slug_line_creation checks to make sure that when we add a category an appropriate slug line is created
-     	i.e. "Random Category String" -> "random-category-string"
-     	"""
-
-		 cat = cat('Random Category String')
-     	cat.save()
-     	self.assertEqual(cat.slug, 'random-category-string')
+		"""
+		slug_line_creation checks to make sure that when we add a category an appropriate slug line is created
+		i.e. "Random Category String" -> "random-category-string"
+		"""
+		cat = cat('Random Category String')
+		cat.save()
+		self.assertEqual(cat.slug, 'random-category-string')
 
 Does your code still work?
 
 ###Testing Views
-
-
-So far we have writtent tests that focus on ensuring the integrity of
+So far we have written tests that focus on ensuring the integrity of
 the data housed in the models. Django also provides testing mechanisms
 to test views. It does this with a mock client, that internally makes a
-calls a django view via the url. In the test you have access to the
+calls a Django view via the url. In the test you have access to the
 response (including the html) and the context dictionary.
 
 Let's create a test that checks that when the index page loads, it
@@ -172,20 +165,18 @@ displays the message that `There are no categories present`, when the
 Category model is empty.
 
 {lang="python",linenos=off}
-	
 	from django.core.urlresolvers import reverse
-	
 	
 	class IndexViewTests(TestCase):
 	
-    	def test_index_view_with_no_categories(self):
-        	"""
-        	If no questions exist, an appropriate message should be displayed.
-        	"""
-        	response = self.client.get(reverse('index'))
-        	self.assertEqual(response.status_code, 200)
-        	self.assertContains(response, "There are no categories present.")
-        	self.assertQuerysetEqual(response.context['categories'], [])
+		def test_index_view_with_no_categories(self):
+			"""
+			If no questions exist, an appropriate message should be displayed.
+			"""
+			response = self.client.get(reverse('index'))
+			self.assertEqual(response.status_code, 200)
+			self.assertContains(response, "There are no categories present.")
+			self.assertQuerysetEqual(response.context['categories'], [])
 
 
 First of all, the django `TestCase` has access to a `client` object,
@@ -201,37 +192,34 @@ Let's now check the resulting view when categories are present. First
 add a helper method.
 
 {lang="python",linenos=off}
-	
 	from rango.models import Category
 	
 	def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name)[0]
-    c.views = views
-    c.likes = likes
-    c.save()
-    return c
-
+		c = Category.objects.get_or_create(name=name)[0]
+		c.views = views
+		c.likes = likes
+		c.save()
+		return c
 
 Then add another method to the `class IndexViewTests(TestCase)`:
 
 {lang="python",linenos=off}
-	
 	def test_index_view_with_categories(self):
-    	"""
-    	If no questions exist, an appropriate message should be displayed.
-    	"""
+		"""
+		If no questions exist, an appropriate message should be displayed.
+		"""
 		
 		add_cat('test',1,1)
-    	add_cat('temp',1,1)
-    	add_cat('tmp',1,1)
-    	add_cat('tmp test temp',1,1)
+		add_cat('temp',1,1)
+		add_cat('tmp',1,1)
+		add_cat('tmp test temp',1,1)
 		
 		response = self.client.get(reverse('index'))
-    	self.assertEqual(response.status_code, 200)
-    	self.assertContains(response, "tmp test temp")
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "tmp test temp")
 		
 		num_cats =len(response.context['categories'])
-    	self.assertEqual(num_cats , 4)
+		self.assertEqual(num_cats , 4)
 
 In this test, we populate the database with four categories, and then
 check if the page loads, if it contains the text `tmp test temp` and if
@@ -244,8 +232,6 @@ Selenium, which is are "in-browser" frameworks to test the way the HTML
 is rendered in a browser.
 
 ##Coverage Testing
-
-
 Code coverage measures how much of your code base has been tested, and
 how much of your code has been put through its paces via tests. You can
 install a package called `coverage` via with `pip install coverage`
@@ -253,9 +239,7 @@ which automatically analyses how much code coverage you have. Once you
 have `coverage` installed, run the following command:
 
 {lang="text",linenos=off}
-
 	$ coverage run --source='.' manage.py test rango
-
 
 This will run through all the tests and collect the coverage data for
 the rango application. To see the coverage report you need to then type:
@@ -297,11 +281,10 @@ X>
 X> Lets say that we want to extend the `Page` to include two additional fields, `last_visit` and 
 X> `first_visit` which will be of type `timedate`.
 X>
-X>	 -   Update the model to include these two fields
-X>   -   Update the add page functionality, and the goto functionality.
-X>   -   Add in a test to ensure the last visit or first visit is not in the future
-X>   -   Add in a test to ensure that the last visit equal to or after the first visit.
-X>   -   Run through [Part Five of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial05/) to learn more about testing.
-X>   -   Check out the [tutorial on test driven development by Harry
-    Percival](http://www.tdd-django-tutorial.com).
+X>	- Update the model to include these two fields
+X>	- Update the add page functionality, and the goto functionality.
+X>	- Add in a test to ensure the last visit or first visit is not in the future
+X>	- Add in a test to ensure that the last visit equal to or after the first visit.
+X>	- Run through [Part Five of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial05/) to learn more about testing.
+X>	- Check out the [tutorial on test driven development by Harry Percival](http://www.tdd-django-tutorial.com).
 
