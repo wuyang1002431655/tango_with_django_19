@@ -1,4 +1,4 @@
-#User Authentication with Django-Registration-Redux {#chapter-redux}
+#User Authentication with `Django-Registration-Redux` {#chapter-redux}
 
 In a previous chapter, we added in login and registration functionality by manually coding up the urls, views and templates. However, such functionality is common to many web application so developers have crated numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
 provide these facilities. 
@@ -96,9 +96,7 @@ the templates associated with each view.
 In the  [Django Registration Redux Quick Start Guide](https://django-registration-redux.readthedocs.org/en/latest/quickstart.html),
 it provides an overview of what templates are required, but it is not
 immediately clear what goes within each template. Rather than try and work it out from the code, we can take a look at a set of [templates written by Anders
-Hofstee](https://github.com/macdhuibh/django-registration-templates) to work with this application, see
-<https://github.com/macdhuibh/django-registration-templates>. We will use these
-templates as our guide here.
+Hofstee](https://github.com/macdhuibh/django-registration-templates) to quickly get the gist of what we need to code up. 
 
 First, create a new directory in the `templates` directory, called
 `registration`. This is where we will house all the pages associated
@@ -127,7 +125,7 @@ following code:
 	{% endblock %}
 
 Notice that whenever a URL is referenced, the `url` template tag is used
-to reference it. If you visit, <http://127.0.0.1:8000/accounts/> then
+to reference it. If you visit, `http://127.0.0.1:8000/accounts/` then
 you will see the list of URL mappings, and the names associated with
 each URL (assuming that `DEBUG=True` in `settings.py`).
 
@@ -183,16 +181,13 @@ that it can be checked. Try registering, but enter different passwords.
 
 While this works, not everything is hooked up.
 
-### Refactoring your project
+###Refactoring your project
+Now you will need to update the `base.html` so that the new registration URL/views are used:
 
-Now you will need to update the `base.html` so that the new registration
-url/views are used:
-
--   Update register to point to
-    `<a href="{% url 'registration_register' %}">`
--   login to point to `<a href="{% url 'auth_login' %}">`, and
--   logout to point to `<a href="{% url 'auth_logout' %}?next=/rango/">`
--   In `settings.py`, update `LOGIN_URL` to be `'/accounts/login/'`.
+- Update register to point to `<a href="{% url 'registration_register' %}">`
+- Update login to point to `<a href="{% url 'auth_login' %}">`, and
+- Update logout to point to `<a href="{% url 'auth_logout' %}?next=/rango/">`
+- In `settings.py`, update `LOGIN_URL` to be `'/accounts/login/'`.
 
 Notice that for the logout, we have included a `?next=/rango/`. This is
 so when the user logs out, it will redirect them to the index page of

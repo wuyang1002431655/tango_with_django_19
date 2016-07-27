@@ -1,5 +1,5 @@
-Work In Progress
-================
+#Work In Progress
+
 
 We are part way through updating the book to Django 1.9 - the rest will be coming soon!
 

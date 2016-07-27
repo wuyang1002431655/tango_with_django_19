@@ -448,8 +448,8 @@ X>     to reinforce what you have learnt here.
 A next logical step would be to allow users to add pages to a given
 category. To do this, repeat the same workflow above but for adding pages.
 
-- create a new view (`add_page()`), 
-- create a new template (`rango/add_page.html`), 
+- create a new view, `add_page()`, 
+- create a new template, `rango/add_page.html`, 
 - add a URL mapping, and
 - update the category page/view to provide a link from the category add page functionality.
 

@@ -7,7 +7,7 @@ The Bing Search API provides you with the ability to embed search results from t
 Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, you will need to sign up for an *API key*. The key currently provides subscribers with access to 5000 queries per month, which should be more than enough for our purposes.
 
 ### Registering for a Bing API Key
-To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already have one! Otherwise, you can create a free account at [https://account.windowsazure.com](https://account.windowsazure.com).
+To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already have one! Otherwise, you can create a free account at [`https://account.windowsazure.com`](https://account.windowsazure.com).
 
 When your account has been created, go to the [Windows Azure Marketplace Bing Search API page](https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44) and login.
 
@@ -17,7 +17,7 @@ On the right hand side of the page you should see a list of transactions per mon
 
 {id="fig-bing-search"}
 ![The Bing Search API services - sign up for the 5000 transactions/month for free.
-](images/images/ch14-bing-search-api.png)
+](images/ch14-bing-search-api.png)
 
 <!--> Once you've read the *Publisher Offer Terms*, agreed and click *Sign Up* to continue. You will  then be presented with a page confirming that you have successfully signed up.-->
 
@@ -26,10 +26,10 @@ Once you've signed up, click the *Data* link at the top of the page. From there,
 
 {id="fig-bing-explore"}
 ![The Account Information Page. In this screenshot, the *Primary Account Key* is deliberately obscured. You should make sure you keep your key secret, too!
-](images/images/ch14-bing-account.png)
+](images/ch14-bing-account.png)
 
 	
-This page allows you to try out the Bing Search API by filling out the boxes to the left. For example, the *Query* box allows you to specify a query to send to the API. Ensure that at the bottom of the screen you select *Web* for web search results only. Note the URL provided in the blue box at the top of the page changes as you alter the settings within the webpage. Take a note of the Web search URL. We'll be using part of this URL within our code later on. The following example is a URL to perform a web search using the query *rango*.
+This page allows you to try out the Bing Search API by filling out the boxes to the left. For example, the *Query* box allows you to specify a query to send to the API. Ensure that at the bottom of the screen you select *Web* for web search results only. Note the URL provided in the blue box at the top of the page changes as you alter the settings within the webpage. Take a note of the Web search URL. We'll be using part of this URL within our code later on. The following example is a URL that we'd need to construct in order to perform a web search using the query *rango*.
 
 {lang="text",linenos=off}
 	https://api.datamarket.azure.com/Bing/Search/v1/Web?Query=%27rango%27
@@ -54,8 +54,8 @@ Below we have provided the code which we can use to issued queries to the Bing s
 	    """
 	    
 	    # See Python Anti-Patterns - it is an awesome resource to improve your python code
-	    # Here we using "with" when opening documents
-	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/not_using_with_to_open_files.html
+	    # Here we are using "with" when opening documents
+	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    
 	    bing_api_key = None
 	    try:
@@ -200,11 +200,11 @@ T>
 T> Add the following code, so that when you run `python bing_search.py` it calls the `main()` function:
 T> 	
 T> {lang="python",linenos=off}
-T>	def main():
-T>	
+T>		def main():
 T>			#insert your code here
 T>
-T>	if __name__ == '__main__':
+T> {lang="python",linenos=off}
+T>		if __name__ == '__main__':
 T>			main()
 T>	
 T>

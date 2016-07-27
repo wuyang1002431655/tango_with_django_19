@@ -51,15 +51,18 @@ The changes that we performed are listed below along with the updated HTML (so t
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport" content="width=device-width, 
+				initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="icon" href="{% static 'images/favicon.ico' %}">
 		<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
 		<!-- Bootstrap core CSS -->
-		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" 
+			rel="stylesheet">
 		<!-- Custom styles for this template -->
-		<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+		<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" 
+			rel="stylesheet">
 	</head>
 	<body>
 	<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
@@ -77,30 +80,30 @@ The changes that we performed are listed below along with the updated HTML (so t
 			<a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
 			<a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
 			{% if user.is_authenticated %}
-				<a class="nav-item nav-link" 
-					href="{% url 'add_category' %}">
+			<a class="nav-item nav-link" 
+				href="{% url 'add_category' %}">
 					Add a New Category</a>
-				<a class="nav-item nav-link" 
-						href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
+			<a class="nav-item nav-link" 
+				href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
 			{% else %}
-				<a class="nav-item nav-link" 
-					href="{% url 'registration_register' %}">Register Here</a>
-				<a class="nav-item nav-link" 
-					href="{% url 'auth_login' %}">Login</a>
+			<a class="nav-item nav-link" 
+				href="{% url 'registration_register' %}">Register Here</a>
+			<a class="nav-item nav-link" 
+				href="{% url 'auth_login' %}">Login</a>
 			{% endif %}
 			</nav>
 		</div>
 	</nav>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				{% block sidebar_block %}
-					{% get_category_list category %}
-				{% endblock %}
-			</div>
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				{% block body_block %}{% endblock %}
-			</div>
+		<div class="col-sm-3 col-md-2 sidebar">
+			{% block sidebar_block %}
+				{% get_category_list category %}
+			{% endblock %}
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			{% block body_block %}{% endblock %}
+		</div>
 		</div>
 	</div>
 	<!-- Bootstrap core JavaScript
@@ -108,11 +111,15 @@ The changes that we performed are listed below along with the updated HTML (so t
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
 		</script>
-		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script>
+		window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+		</script>
 		<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
 		</script>
-		<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-		<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js"></script>
+		<!-- Just to make our placeholder images work.
+			 Don't actually copy the next line! -->
+		<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
+		</script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
 		</script>
@@ -231,7 +238,7 @@ Given this example, we can create columns in `index.html`  by updating the templ
 		{% else %}
 			<h1>hey there partner! </h1>
 		{% endif %}
- 	</div>
+	</div>
 	<div class="row marketing">
 		<div class="col-lg-6">
 		<h4>Most Liked Categories</h4>
@@ -336,8 +343,11 @@ follows.
 	
 	{% block body_block %}
 		{% if category %}
-			<form role="form"  id="page_form" method="post" action="/rango/category/{{category.slug}}/add_page/">
-			<h2 class="form-signin-heading">Add a Page to <a href="/rango/category/{{category.slug}}/"> {{ category.name }}</a></h2>
+			<form role="form" id="page_form" method="post" 
+				action="/rango/category/{{category.slug}}/add_page/">
+			<h2 class="form-signin-heading"> Add a Page to 
+				<a href="/rango/category/{{category.slug}}/"> 
+					{{ category.name }}</a></h2>
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
@@ -348,7 +358,9 @@ follows.
 				{{ field }}<br/>
 			{% endfor %}
 			<br/>
-			<button class="btn btn-primary" type="submit" name="submit">Add Page</button>
+			<button class="btn btn-primary"
+				type="submit" name="submit">
+					Add Page</button>
 			</form>
 		{%  else %}
 			<p>This is category does not exist.</p>
@@ -357,7 +369,7 @@ follows.
 
 X> ###Exercise 
 X>
-X> - Create a similar template for the Add Category page i.e. `add_category.html`.
+X> - Create a similar template for the Add Category page called `add_category.html`.
 
 
 ###The Registration Template
@@ -370,30 +382,34 @@ For the `registration_form.html`, we can update the form as follows:
 		{% csrf_token %}
 		<h2 class="form-signin-heading">Sign Up Here</h2>
 		<div class="form-group" >
-			<p class="required"> <label for="id_username">Username:</label>
-			<input class="form-control"  id="id_username" maxlength="30" 
-				name="username" type="text"  placeholder="Enter username"/></p>
+			<p class="required"> 
+				<label for="id_username">Username:</label>
+				<input class="form-control"  id="id_username" maxlength="30" 
+					name="username" type="text"
+						placeholder="Enter username"/></p>
 	</div>
 	<div class="form-group">
-		<p class="required"><label for="id_email">E-mail:</label>
-			<input class="form-control" id="id_email" name="email" type="email"
-				placeholder="Enter email" /></p>
+		<p class="required">
+			<label for="id_email">E-mail:</label>
+			<input class="form-control" id="id_email" 
+				name="email" type="email"
+					placeholder="Enter email" /></p>
 		</div>
 		<div class="form-group">
-			<p class="required"><label for="id_password1">Password:</label>
+			<p class="required">
+				<label for="id_password1">Password:</label>
 				<input class="form-control" id="id_password1" 
 					name="password1" type="password" 
 						placeholder="Enter password" /></p>
 			</div>
 			<div class="form-group">
-				<p class="required"><label for="id_password2">Password (again):</label>
+				<p class="required">
+					<label for="id_password2">Password (again):</label>
 					<input class="form-control" id="id_password2" 
 						name="password2" type="password" 
 							placeholder="Enter password again" /></p>
 				</div>
-
 		<button type="submit" class="btn btn-default">Submit</button>
-
 	</form>
 	{% endblock %}
 
@@ -405,7 +421,7 @@ I>
 I> This is not the best solution - we have kind of kludged it together. 
 I> It would be much nicer and cleaner if we could instruct Django when building the HTML for the form to insert the appropriate classes.
 
-##Using Django-Bootstrap-Toolkit
+##Using `Django-Bootstrap-Toolkit`
 An alternative solution would be to use something like the `django-bootstrap-toolkit` see
 <https://github.com/dyve/django-bootstrap-toolkit>. To install the `django-bootstrap-toolkit` run, `pip install django-bootstrap-toolkit`. Add, `bootstrap_toolkit` to the `INSTALLED_APPS` tuple in `settings.py`. 
 

@@ -249,10 +249,8 @@ W> Remember to add `{% load staticfiles %}` to the top of **each template** that
 `base.html`.](../images/rango-template-inheritance.svg)
 -->
 
-## `render()` and the `request` Context
-Upon completion of the exercises listed above, all of your Rango app's templates will now inherit from `base.html`. In the following chapter, we'll be looking at user authentication, and determing whether a user is logged into the app or not. To do this, we'll need to make sure that our templates have access to the Django [*request* object](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). We could then say that *all of Rango's templates will depend on having access to the context of a given request.*
-
-Due to this new dependency, you must check each of Rango's views. For each view, ensure that the context for each request is made available to the Django template engine. Throughout this tutorial, we've been using `render()` to achieve this, passing the request as a parameter. Ensuring that this is available to your templates now will lay the foundations for the next chapter of the book.
+## The `render()` method and the `request` Context
+When writing views we have used a number of different methods, the preferred way is to use the Django shortcut method `render()`. The `render()` method requires that you pass through the `request` as the first argument. The `request` context houses a lot of information regarding the session, the user, etc, see the [Official Django Documentation on Request objects](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). By passing the `request` through to the template mean that you will also have access to such information when creating templates. In the next chapter we will access information about the `user` - but for now check through all of your views and make sure that they have been implemented using the `render()` method. Otherwise, your templates wont have the information we need later on.
 
 I> ### Render and Context
 I> As a quick example of the checks you must carry out, have a look at the `about()` view. Initially, this was implemented with a hard-coded string response, as shown below. Note that we only send the string - we don't make use of the request passed as the `request` parameter.
@@ -267,7 +265,11 @@ I> To employ the use of a template, we call the `render()` function and pass thr
 I>
 I> {lang="python",linenos=off}
 I> 	def about(request):
-I> 	    return render(request, 'rango/about.html', {})
+I>		# prints out whether the method is a GET or a POST
+I>		print(request.method)
+I>		# prints out the user name, if no one is logged in it prints `AnonymousUser`
+I>		print(request.user)
+I>		return render(request, 'rango/about.html', {})
 I>
 I> Remember, the last parameter of `render()` is the context dictionary with which you can use to pass additional data to the Django template engine. As we have no additional data to give to the template, we pass through an empty dictionary, `{}`. 
 
@@ -344,9 +346,15 @@ We can also now update the `cats.html` template, too.
 {lang="html",linenos=off}
 	{% for c in cats %}
 	    {% if c == act_cat %}
-	        <li><strong><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></strong></li>
+	        <li>
+	        <strong>
+	              <a href="{% url 'show_category' c.slug %}">{{ c.name }}</a>
+	        </strong>
+	        </li>
 	    {% else  %}
-	        <li><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></li>
+	        <li>
+	              <a href="{% url 'show_category' c.slug %}">{{ c.name }}</a>
+	        </li>
 	    {% endif %}
 	{% endfor %}
 
