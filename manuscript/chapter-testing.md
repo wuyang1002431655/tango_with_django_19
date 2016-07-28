@@ -281,10 +281,10 @@ X>
 X> Lets say that we want to extend the `Page` to include two additional fields, `last_visit` and 
 X> `first_visit` which will be of type `timedate`.
 X>
-X>	- Update the model to include these two fields
-X>	- Update the add page functionality, and the goto functionality.
-X>	- Add in a test to ensure the last visit or first visit is not in the future
-X>	- Add in a test to ensure that the last visit equal to or after the first visit.
-X>	- Run through [Part Five of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial05/) to learn more about testing.
-X>	- Check out the [tutorial on test driven development by Harry Percival](http://www.tdd-django-tutorial.com).
+X> - Update the model to include these two fields
+X> - Update the add page functionality, and the goto functionality.
+X> - Add in a test to ensure the last visit or first visit is not in the future
+X> - Add in a test to ensure that the last visit equal to or after the first visit.
+X> - Run through [Part Five of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial05/) to learn more about testing.
+X> - Check out the [tutorial on test driven development by Harry Percival](http://www.tdd-django-tutorial.com).
 
