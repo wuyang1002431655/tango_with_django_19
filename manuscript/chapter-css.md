@@ -92,113 +92,66 @@ W> Take great care when picking colours to use on your webpages. Don't select co
 
 Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
-![Illustration of some basic colours with their corresponding hexadecimal and RGB values. Illustration adapted from [W3Schools](http://www.w3schools.com/cssref/css_colors.asp).](images/css-colours.png)
+![Illustration of some basic colours with their corresponding hexadecimal and RGB values.](images/css-colours.png)
 
 There are many different websites which you can use to aid you in picking the right hexadecimal codes to enter into your stylesheets. You aren't simply limited to the nine examples above! Try out [html-color-codes.com](http://html-color-codes.com/) for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as [color-hex.com](http://www.color-hex.com/color-wheel/) which gives you fine grained control over the colours you can choose.
 
-I> Hexadecimal Colour Codes
+I> ### Hexadecimal Colour Codes
 I>
 I> For more information on how colours are coded with hexadecimal, check out [this thorough tutorial](http://www.quackit.com/css/css_color_codes.cfm).
 
-W> Watch Your English!
+W> ### Watch Your English!
 W>
 W> As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like `color` and `center`. If you have grown up in the United Kingdom, double check your spelling and be prepared to spell it the *wrong way!*
 
 ### Text Colours
+To change the colour of text within an element, you must apply the `color` property to the element containing the text you wish to change. The following CSS for example changes all the text within an element using class `red` to...red!
 
-To change the colour of text within an element, you must apply the
-`color` property to the element containing the text you wish to change.
-The following CSS for example changes all the text within an element
-using class `red` to...red!
+{lang="css",linenos=off}
+	.red {
+	    color: #FF0000;
+	}
 
-``` {.sourceCode .css}
-.red {
-    color: #FF0000;
-}
-```
-
-You can alter the presentation of a small portion of text within your
-webpage by wrapping the text within `<span>` tags. Assign a class or
-unique identifier to the element, and from there you can simply
-reference the `<span>` tag in your stylesheet while applying the `color`
-property.
+You can alter the presentation of a small portion of text within your webpage by wrapping the text within `<span>` tags. Assign a class or unique identifier to the element, and from there you can simply reference the `<span>` tag in your stylesheet while applying the `color` property.
 
 ### Borders
+You can change the colour of an element's *borders*, too. We'll discuss what borders are discussed as part of the [CSS box model](#section-css-box) - but for now, we'll show you how to apply colours to them to make everything look pretty.
 
-You can change the colour of an element's *borders*, too. We'll discuss
-what borders are in Section css-course-box-model-label - but for now,
-we'll show you how to apply colours to them to make everything look
-pretty.
+Border colours can be specified with the `border-color` property. You can supply one colour for all four sides of your border, or specify a different colour for each side. To achieve this, you'll need to supply different colours, each separated by a space.
 
-Border colours can be specified with the `border-color` property. You
-can supply one colour for all four sides of your border, or specify a
-different colour for each side. To achieve this, you'll need to supply
-different colours, each separated by a space.
+{lang="css",linenos=off}
+	.some-element {
+	    border-color: #000000 #FF0000 #00FF00
+	}
 
-``` {.sourceCode .css}
-.some-element {
-    border-color: #000000 #FF0000 #00FF00
-}
-```
+In the example above, we use multiple colours to specify a different colour for three sides. Starting at the top, we rotate clockwise. Thus, the order of colours for each side would be `top right bottom left`.
 
-In the example above, we use multiple colours to specify a different
-colour for three sides. Starting at the top, we rotate clockwise. Thus,
-the order of colours for each side would be `top right bottom left`.
-
-Our example applies any element with class `some-element` with a black
-top border, a red right border and a green bottom border. No left border
-value is supplied, meaning that the left-hand border is left
-transparent. To specify a color for only one side of an element's
-border, consider using the `border-top-color`, `border-right-color`,
-`border-bottom-color` and `border-left-color` properties where
-appropriate.
+Our example applies any element with class `some-element` with a black top border, a red right border and a green bottom border. No left border value is supplied, meaning that the left-hand border is left transparent. To specify a colour for only one side of an element's border, consider using the `border-top-color`, `border-right-color`, `border-bottom-color` and `border-left-color` properties where appropriate.
 
 ### Background Colours
 
-You can also change the colour of an element's background through use of
-the CSS `background-color` property. Like the `color` property described
-above, the `background-color` property can be easily applied by
-specifying a single colour as its value. Check out the example below
-which applies a bright green background to the entire webpage. Yuck!
+You can also change the colour of an element's background through use of the CSS `background-color` property. Like the `color` property described above, the `background-color` property can be easily applied by specifying a single colour as its value. Check out the example below which applies a bright green background to the entire webpage. Not very pretty!
 
-``` {.sourceCode .css}
-body {
-    background-color: #00FF00;
-}
-```
+{lang="css",linenos=off}
+	body {
+	    background-color: #00FF00;
+	}
 
 ### Background Images
 
-Of course, a colour isn't the only way to change your backgrounds. You
-can also apply background images to your elements, too. We can achieve
-this through the `background-image` property.
+Of course, a colour isn't the only way to change your backgrounds. You can also apply background images to your elements, too. We can achieve this through the `background-image` property.
 
-``` {.sourceCode .css}
-#some-unique-element {
-    background-image: url('../images/filename.png');
-    background-color: #000000;
-}
-```
+{lang="css",linenos=off}
+	#some-unique-element {
+	    background-image: url('../images/filename.png');
+	    background-color: #000000;
+	}
 
-The example above makes use of `filename.png` as the background image
-for the element with identifier `some-unique-element`. The path to your
-image is specified *relative to the path of your CSS stylesheet*. Our
-example above uses the [double dot notation to specify the relative
-path](http://programmers.stackexchange.com/a/186719) to the image.
-*Don't provide an absolute path here; it won't work as you expect!* We
-also apply a black background colour to fill the gaps left by our
-background image - it may not fill the entire size of the element.
+The example above makes use of `filename.png` as the background image for the element with identifier `some-unique-element`. The path to your image is specified *relative to the path of your CSS stylesheet*. Our example above uses the [double dot notation to specify the relative path](http://programmers.stackexchange.com/a/186719) to the image. *Don't provide an absolute path here; it won't work as you expect!* We also apply a black background colour to fill the gaps left by our background image - it may not fill the entire size of the element.
 
-> **note**
->
-> By default, background images default to the top-left corner of the
-> relevant element and are repeated on both the horizontal and vertical
-> axes. You can customise this functionality by altering [how the image
-> is repeated](http://www.w3schools.com/cssref/pr_background-repeat.asp)
-> with the `background-image` property. You can also specify [where the
-> image is
-> placed](http://www.w3schools.com/cssref/pr_background-position.asp) by
-> default with the `background-position` property.
+I> ### Background Image Positioning
+I>
+I> By default, background images default to the top-left corner of the relevant element and are repeated on both the horizontal and vertical axes. You can customise this functionality by altering [how the image is repeated](http://www.w3schools.com/cssref/pr_background-repeat.asp) with the `background-image` property. You can also specify [where the image is placed](http://www.w3schools.com/cssref/pr_background-position.asp) by default with the `background-position` property.
 
 ## Containers, Block-Level and Inline Elements
 
@@ -1002,7 +955,7 @@ to demonstrate that unlike relative positioning, absolute positioning
 pixels down from its parent (set with `position: relative;`), regardless
 of whether the element has been floated or not.
 
-## The Box Model
+## The Box Model {#section-css-box}
 
 When using CSS, you're never too far away from using *padding*,
 *borders* and *margins*. These properties are some of the most
