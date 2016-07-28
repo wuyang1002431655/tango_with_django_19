@@ -183,7 +183,7 @@ This doesn't visually appear to change the look and feel, but it informs the too
 -->
 
 ![A screenshot of the About page without
-style.](../images/ch4-rango-about.png)
+style.](images/ch12-about-nostyling.png)
 
 \#TODO(leifos):update this screen shot.
 
