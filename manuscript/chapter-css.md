@@ -16,74 +16,45 @@ CSS works by following a *select and apply pattern* - for a specified element, a
 
 With all of these properties applied, the resultant page render can be seen in the browser as shown in the figure below.
 
-![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png)
+![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png){#image-css-render}
 
-W> What you see is what you *(may)* get
+W> ### What you see is what you *(may or may not)* get
 W>
-W> Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting [web standards](http://en.wikipedia.org/wiki/Web_standards) and so the pages may be rendered differently. This quirk can unfortunately lead to plenty of frustration.
+W> Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting [web standards](http://en.wikipedia.org/wiki/Web_standards) and so the pages may be rendered differently. This quirk can unfortunately lead to plenty of frustration, but today's modern browsers (or developers) are much more in agreement as to how different components of a page should be rendered.
 
 ## Including Stylesheets
+Including stylesheets in your webpages is a relatively straightforward process, and involves including a `<link>` tag within your HTML's `<head>`. Check out the minimal HTML markup sample below for the attributes required within a `<link>` tag.
 
-Including stylesheets in your webpages is a relatively straightforward
-process, and involves including a `<link>` tag within your HTML's
-`<head>`. Check out the minimal HTML markup sample below for the
-attributes required within a `<link>` tag.
+{lang="html",linenos=off}
+	<!DOCTYPE html>
+	<html>
+	    <head>
+	        <link rel="stylesheet" type="text/css" href="URL/TO/stylesheet.css" />
+	        <title>Sample Title</title>
+	    </head>
+	
+	    <body>
+	        <h1>Hello world!</h1>
+	    </body>
+	</html>
 
-``` {.sourceCode .html}
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="URL/TO/stylesheet.css" />
-        <title>Sample Title</title>
-    </head>
+As can be seen from above, there are at minimum three attributes which you must supply to the `<link>` tag:
 
-    <body>
-        <h1>Hello world!</h1>
-    </body>
-</html>
-```
+-   `rel`, which allows you to specify the relationship between the HTML document and the resource you're linking to (i.e., a stylesheet);
+-   `type`, in which you should specify the [MIME type](http://en.wikipedia.org/wiki/Internet_media_type) for CSS; and
+-   `href`, the attribute which you should point to the URL of the stylesheet you wish to include.
 
-As can be seen from above, there are at minimum three attributes which
-you must supply to the `<link>` tag:
+With this tag added, your stylesheet should in included with your HTML page, and the styles within the stylesheet applied. It should be noted that CSS stylesheets are considered as a form of [static media](#section-templates-static-static), meaning you should place them within your project's `static` directory.
 
--   `rel`, which allows you to specify the relationship between the HTML
-    document and the resource you're linking to (i.e., a stylesheet);
--   `type`, in which you should specify the [MIME
-    type](http://en.wikipedia.org/wiki/Internet_media_type) for CSS; and
--   `href`, the attribute which you should point to the URL of the
-    stylesheet you wish to include.
-
-With this tag added, your stylesheet should in included with your HTML
-page, and the styles within the stylesheet applied. It should be noted
-that CSS stylesheets are considered by Django as static media, meaning
-you should place them within your project's `static` directory.
-
-> **note**
->
-> You can also add CSS to your HTML documents *inline*, meaning that the
-> CSS is included as part of your HTML page. However, this isn't
-> generally advised because it removes the nice abstraction between
-> presentational semantics (CSS) and content (HTML).
+I> ### Inline CSS
+I>
+I> You can also add CSS to your HTML documents *inline*, meaning that the CSS is included as part of your HTML page. However, this isn't generally advised because it removes the abstraction between presentational semantics (CSS) and content (HTML).
 
 ## Basic CSS Selectors {#section-css-selectors}
-
-CSS selectors are used to map particular styles to particular HTML
-elements. In essence, a CSS selector is a *pattern*. Here, we cover
-three basic forms of CSS selector: *element selectors*, *id selectors*
-and *class selectors*. In Section css-course-links-label, we also touch
-on what are known as *pseudo-selectors*.
+CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Here, we cover three basic forms of CSS selector: *element selectors*, *id selectors* and *class selectors*. [Later on in this chapter](#section-css-links), we also touch on what are known as *pseudo-selectors*.
 
 ## Element Selectors
-
-Taking the CSS example from Figure fig-css-render, we can see that the
-selector `h1` matches to any `<h1>` tag. Any selector referencing a tag
-like this can be called an *element selector*. We can apply element
-selectors to any HTML element such as `<body>`, `<h1>`, `<h2>`, `<h3>`,
-`<p>` and `<div>`. These can be all styled in a similar manner. However,
-using element selectors is pretty crude - styles are applied to *all*
-instances of a particular tag. We usually want a more fine-grained
-approach to selecting what elements we style, and this is where *id
-selectors* and *class selectors* come into play.
+Taking the CSS example from the [rendering example shown above](#image-css-render), we can see that the selector `h1` matches to any `<h1>` tag. Any selector referencing a tag like this can be called an *element selector*. We can apply element selectors to any HTML element such as `<body>`, `<h1>`, `<h2>`, `<h3>`, `<p>` and `<div>`. These can be all styled in a similar manner. However, using element selectors is pretty crude - styles are applied to *all* instances of a particular tag. We usually want a more fine-grained approach to selecting what elements we style, and this is where *id selectors* and *class selectors* come into play.
 
 ### ID Selectors
 
@@ -1314,7 +1285,7 @@ some of the selected links below.
 The possibilities of styling lists is endless! You could say it's a
 never-ending list...
 
-## Styling Links
+## Styling Links {#section-css-links}
 
 CSS provides you with the ability to easily style hyperlinks in any way
 you wish. You can change their colour, their font or any other aspect
