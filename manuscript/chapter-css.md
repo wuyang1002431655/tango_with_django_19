@@ -16,7 +16,8 @@ CSS works by following a *select and apply pattern* - for a specified element, a
 
 With all of these properties applied, the resultant page render can be seen in the browser as shown in the figure below.
 
-![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png){#image-css-render}
+{#image-css-render}
+![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png)
 
 W> ### What you see is what you *(may or may not)* get
 W>
@@ -57,17 +58,9 @@ CSS selectors are used to map particular styles to particular HTML elements. In 
 Taking the CSS example from the [rendering example shown above](#image-css-render), we can see that the selector `h1` matches to any `<h1>` tag. Any selector referencing a tag like this can be called an *element selector*. We can apply element selectors to any HTML element such as `<body>`, `<h1>`, `<h2>`, `<h3>`, `<p>` and `<div>`. These can be all styled in a similar manner. However, using element selectors is pretty crude - styles are applied to *all* instances of a particular tag. We usually want a more fine-grained approach to selecting what elements we style, and this is where *id selectors* and *class selectors* come into play.
 
 ### ID Selectors
+The *id selector* is used to map to a unique element on your webpage. Each element on your webpage can be assigned a unique id via the `id` attribute, and it is this identifier that CSS uses to latch styles onto your element. This type of selector begins with a hash symbol (`#`), followed directly by the identifier of the element you wish to match to. Check out the figure below for an example 
 
-The *id selector* is used to map to a unique element on your webpage.
-Each element on your webpage can be assigned a unique id via the `id`
-attribute, and it is this identifier that CSS uses to latch styles onto
-your element. This type of selector begins with a hash symbol (`#`),
-followed directly by the identifier of the element you wish to match to.
-Check out Figure fig-css-id for an example.
-
-![An illustration demonstrating the use of an *id selector* in CSS. Note
-the blue header has an identifier which matches the CSS attribute
-`#blue_header`.](../images/css-id.png)
+![An illustration demonstrating the use of an *id selector* in CSS. Note the blue header has an identifier which matches the CSS attribute `#blue_header`.](images/css-id.png)
 
 ### Class Selectors
 
