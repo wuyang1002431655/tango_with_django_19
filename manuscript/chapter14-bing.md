@@ -42,14 +42,14 @@ Below we have provided the code which we can use to issued queries to the Bing s
 
 I> ### Python 2 and 3 `import` Differences
 I> 
-I> Be careful: differences exist between how you parse URLs and obtain responses from remote servers. Python 3 [tided up the `urllib` package which we use](http://stackoverflow.com/a/2792652). As you work through the code below, ensure you only use the code for the particular version of Python you are using - look for the comments at the end of lines where differences may exist.
+I> Be careful: differences exist between how you parse URLs and obtain responses from remote servers. Python 3 [tided up the `urllib` package which we use](http://stackoverflow.com/a/2792652). As you work through the code below, ensure you only use the code for the particular version of Python you are using - look for the comments at the end of lines where differences may exist (`Py2.7.x` for Python 2.7.x, and `py3` for Python 3).
 I>
-I> So, another friendly reminder: don't simply copy and paste code!
+I> So, another friendly reminder: *don't simply copy and paste code!*
 
 {lang="python",linenos=off}
 	import json
-	import urllib, urllib2  # Python 2.7.x import
-	import urllib  # Python 3 import
+	import urllib, urllib2  # Py2.7.x
+	import urllib  # Py3
 	
 	# Add your Microsoft Account Key to a file called bing.key
 	
@@ -98,16 +98,10 @@ I> So, another friendly reminder: don't simply copy and paste code!
 	    # The query we will then use is stored within variable query.
 	    query = "'{0}'".format(search_terms)
 	    
-	    # Turn the query into an HTML encoded string.
-	    # We use urllib for this - differences exist between Python 2 and 3.
-	    # The try/except blocks are used to determine which function call works.
-	    # Replace this try/except block with the relevant import and query assignment.
-	    try:
-	        from urllib import parse  # Python 3 import.
-	        query = parse.quote(query)
-	    except ImportError:  # If the import above fails, you are running Python 2.7.x.
-	        from urllib import quote
-	        query = quote(query)
+	    # Turn the query into an HTML encoded string, using urllib.
+	    # Use the line line relevant to your version of Python.
+	    query = urllib.quote(query)  # Py2.7.x
+	    query = urllib.parse.quote(query)  # Py3
 	    
 	    # Construct the latter part of our request's URL.
 	    # Sets the format of the response to JSON and sets other properties.
@@ -122,16 +116,12 @@ I> So, another friendly reminder: don't simply copy and paste code!
 	    # The username MUST be a blank string, and put in your API key!
 	    username = ''
 	    
-	    #headers = {'Authorization' : 'Basic {0}'.format( b64encode(bing_api_key) )}
-	    # Create a 'password manager' which handles authentication for us.
-	        
-	    try:
-	        from urllib import request  # Python 3 import.
-	        password_mgr = request.HTTPPasswordMgrWithDefaultRealm()
-	    except ImportError:  # Running Python 2.7.x - import urllib2 instead.
-	        import urllib2
-	        password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+	    # Setup a password manager to help authenticate our request.
+	    # Watch out for the differences between Python 2 and 3!
+	    password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()  # Py2.7.x
+	    password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()  # Py3
 	    
+	    # The below line will work for both Python versions.
 	    password_mgr.add_password(None, search_url, username, bing_api_key)
 	    
 	    # Create our results list which we'll populate.
@@ -139,21 +129,22 @@ I> So, another friendly reminder: don't simply copy and paste code!
 	    
 	    try:
 	        # Prepare for connecting to Bing's servers.
-	        try:  # Python 3.5 and 3.6
-	            handler = request.HTTPBasicAuthHandler(password_mgr)
-	            opener = request.build_opener(handler)
-	            request.install_opener(opener)
-	        except UnboundLocalError:  # Python 2.7.x
-	            handler = urllib2.HTTPBasicAuthHandler(password_mgr)
-	            opener = urllib2.build_opener(handler)
-	            urllib2.install_opener(opener)
+	        # Python 2.7.x import (three lines)
+	        handler = urllib2.HTTPBasicAuthHandler(password_mgr)  # Py2.7.x
+	        opener = urllib2.build_opener(handler)  # Py2.7.x
+	        urllib2.install_opener(opener)  # Py2.7.x
+	        
+	        # Python 3 import (three lines)
+	        handler = urllib.request.HTTPBasicAuthHandler(password_mgr)  # Py3
+	        opener = urllib.request.build_opener(handler)  # Py3
+	        urllib.request.install_opener(opener)  # Py3
 	        
 	        # Connect to the server and read the response generated.
-	        try:  # Python 3.5 or 3.6
-	            response = request.urlopen(search_url).read()
-	            response = response.decode('utf-8')
-	        except UnboundLocalError:  # Python 2.7.x
-	            response = urllib2.urlopen(search_url).read()
+            # Once again, watch for differences between Python 2 (1 line) and 3 (2 lines).
+	        response = urllib.request.urlopen(search_url).read()  # Py3
+	        response = response.decode('utf-8')  # Py3
+	        
+	        response = urllib2.urlopen(search_url).read()  # Py2.7.x
 	        
 	        # Convert the string response to a Python dictionary object.
 	        json_response = json.loads(response)
