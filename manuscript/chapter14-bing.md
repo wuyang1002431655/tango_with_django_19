@@ -40,9 +40,16 @@ Assuming this all works take a copy of your API key. We will need this when we m
 ## Adding Search Functionality
 Below we have provided the code which we can use to issued queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code.
 
-{lang="python",linenos=on}
+I> ### Python 2 and 3 `import` Differences
+I> 
+I> Be careful: differences exist between how you parse URLs and obtain responses from remote servers. Python 3 [tided up the `urllib` package which we use](http://stackoverflow.com/a/2792652). As you work through the code below, ensure you only use the code for the particular version of Python you are using - look for the comments at the end of lines where differences may exist.
+I>
+I> So, another friendly reminder: don't simply copy and paste code!
+
 {lang="python",linenos=off}
 	import json
+	import urllib, urllib2  # Python 2.7.x import
+	import urllib  # Python 3 import
 	
 	# Add your Microsoft Account Key to a file called bing.key
 	
@@ -50,14 +57,14 @@ Below we have provided the code which we can use to issued queries to the Bing s
 	    """
 	    Reads the BING API key from a file called 'bing.key'.
 	    returns: a string which is either None, i.e. no key found, or with a key.
-	    Remember: put bing.key in your .gitignore file to avoid committing it to the repo!
+	    Remember: put bing.key in your .gitignore file to avoid committing it!
 	    """
 	    
 	    # See Python Anti-Patterns - it's an awesome resource!
-	    # Here we using "with" when opening documents
+	    # Here we using "with" when opening documents.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
-	    
 	    bing_api_key = None
+	    
 	    try:
 	        with open('bing.key','r') as f:
 	            bing_api_key = f.readline()
@@ -68,9 +75,14 @@ Below we have provided the code which we can use to issued queries to the Bing s
 	    
 	
 	def run_query(search_terms):
+	    """
+	    Given a string containing search terms (query),
+	    returns a list of results from the Bing search engine.
+	    """
 	    bing_api_key = read_bing_key()
+	    
 	    if not bing_api_key:
-	        raise KeyError('Bing Key Not Found')
+	        raise KeyError("Bing Key Not Found")
 	    
 	    # Specify the base url and the service (Bing Search API 2.0)
 	    root_url = 'https://api.datamarket.azure.com/Bing/Search/'
@@ -100,11 +112,11 @@ Below we have provided the code which we can use to issued queries to the Bing s
 	    # Construct the latter part of our request's URL.
 	    # Sets the format of the response to JSON and sets other properties.
 	    search_url = "{0}{1}?$format=json&$top={2}&$skip={3}&Query={4}".format(
-	        root_url,
-	        service,
-	        results_per_page,
-	        offset,
-	        query)
+	                     root_url,
+	                     service,
+	                     results_per_page,
+	                     offset,
+	                     query)
 	    
 	    # Setup authentication with the Bing servers.
 	    # The username MUST be a blank string, and put in your API key!
@@ -161,13 +173,13 @@ Below we have provided the code which we can use to issued queries to the Bing s
 
 As you can see we have written two functions. The first reads in your Bing API key, and the second issues the query.
 
-###Read Bing Key
+### Reading the Bing Key
 The `read_bing_key()` function reads in your key from a file called, `bing.key` in the `rango` directory. We have created this function because if you are putting your code into a public repository on GitHub, for example, then you should take some pre-cautions to avoid sharing your API Key publicly. 
 
 One  solution is to store the  *Account Key* in a file called, `rango/bing.key`, which we don't commit to the Git repo. To make sure that we don't accidentally add it, update your `.gitignore` file to exclude `key` files, by adding `*.key`. This way the key will only be stored locally and you wont have someone else using your quota.
 
 
-###Run Query
+### Executing the Query
 The `run_query()` function takes a query as a string, and returns the top ten results from Bing in a list that contains dictionary of the result items (`title`, `link`, `summary`). If you are interested, the inline commentary describes how the request is created and then issued to the Bing API.
 
 Briefly, though, the logic of the function above can be broadly split into six main tasks:
