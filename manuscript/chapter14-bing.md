@@ -40,21 +40,21 @@ Assuming this all works take a copy of your API key. We will need this when we m
 ## Adding Search Functionality
 Below we have provided the code which we can use to issued queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code.
 
-
 {lang="python",linenos=on}
+{lang="python",linenos=off}
 	import json
 	
 	# Add your Microsoft Account Key to a file called bing.key
 	
 	def read_bing_key():
 	    """
-	    reads the BING API key from a file called 'bing.key'
-	    returns: a string which is either None, i.e. no key found, or with a key
-	    remember to put bing.key in your .gitignore file to avoid committing it to the repo.
+	    Reads the BING API key from a file called 'bing.key'.
+	    returns: a string which is either None, i.e. no key found, or with a key.
+	    Remember: put bing.key in your .gitignore file to avoid committing it to the repo!
 	    """
 	    
-	    # See Python Anti-Patterns - it is an awesome resource to improve your python code
-	    # Here we are using "with" when opening documents
+	    # See Python Anti-Patterns - it's an awesome resource!
+	    # Here we using "with" when opening documents
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    
 	    bing_api_key = None
@@ -157,6 +157,7 @@ Below we have provided the code which we can use to issued queries to the Bing s
 	    
 	    # Return the list of results to the calling function.
 	    return results
+
 
 As you can see we have written two functions. The first reads in your Bing API key, and the second issues the query.
 
