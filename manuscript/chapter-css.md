@@ -331,7 +331,7 @@ appear on the same line beside each other. You can also nest block-level
 and inline elements within each other, but block-level elements cannot
 be nested within an inline element.](../images/css-nesting-blocks.svg)
 
-## Block-Level Elements
+### Block-Level Elements
 
 In simple terms, a *block-level element* are by default rectangular in
 shape and spread across the entire width of the containing element.
@@ -346,7 +346,7 @@ create a hierarchy of elements. You can also nest *inline elements*
 within block-level elements, but not vice-versa! Read on to find out
 why.
 
-## Inline Elements
+### Inline Elements
 
 An *inline element* does exactly what it says on the tin. These elements
 appear *inline* to block-level elements on your webpage, and are
