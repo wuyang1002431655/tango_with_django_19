@@ -268,41 +268,36 @@ To style the HTML, we have made use of [Bootstrap panels](http://getbootstrap.co
 As you will see from our corresponding view code shortly, a `results_list` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
 
 ### Adding the View
-With our search template added, we can then add the view which prompts the rendering of our template. Add the following ``search()`` view to Rango's ``views.py`` module.
+With our search template added, we can then add the view which prompts the rendering of our template. Add the following `search()` view to Rango's `views.py` module.
 
 {lang="python",linenos=off}	
 	def search(request):
-		result_list = []
-		if request.method == 'POST':
-			query = request.POST['query'].strip()
-			if query:
-				# Run our Bing function to get the results list!
-				result_list = run_query(query)
-		return render(request, 'rango/search.html', {'result_list': result_list})
-		
-		
-By now, the code should be pretty self explanatory to you. The only major addition is the calling of the ``run_query()`` function we defined earlier in this chapter. To call it, we are required to also import the ``bing_search.py`` module, too. Ensure that before you run the script that you add the following import statement at the top of the ``views.py`` module.
+	    result_list = []
+	    
+	    if request.method == 'POST':
+	        query = request.POST['query'].strip()
+	        if query:
+	            # Run our Bing function to get the results list!
+	            result_list = run_query(query)
+	    
+	    return render(request, 'rango/search.html', {'result_list': result_list})
+	
+By now, the code should be pretty self explanatory to you. The only major addition is the calling of the `run_query()` function we defined earlier in this chapter. To call it, we are required to also import the `bing_search.py` module, too. Ensure that before you run the script that you add the following `import` statement at the top of the `views.py` module.
 
 {lang="python",linenos=off}
 	from rango.bing_search import run_query
 
 You'll also need to ensure you do the following, too.
 
-- Add a mapping between your ``search()`` view and the ``/rango/search/`` URL calling it ``name='search'`` by adding in ``url(r'search/$', views.search, name='search'),`` to `rango/urls.py`.
-- Also, update the ``base.html`` navigation bar to include a link to the search page. Remember to use the ``url`` template tag to reference the link.
-- You will need a copy of the `bing.key` in your project directory, i.e. along with `manage.py`.
+- Add a mapping between your `search()` view and the `/rango/search/` URL calling it `name='search'` by adding in `url(r'search/$', views.search, name='search'),` to `rango/urls.py`.
+- Also, update the `base.html` navigation bar to include a link to the search page. Remember to use the `url` template tag to reference the link.
+- You will need a copy of the `bing.key` in your project's root directory (`<workspace>/tango_with_django_project`, alongside `manage.py`).
 
-
-Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango Application (as shown in the figure below).
+Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango app (as shown in the figure below).
 
 {id="fig-bing-python-search"}
 ![Searching for "Python for Noobs".
 ](images/images/ch14-bing-python-search.png)
-
-
-
-
-
 
 <!--
 I> Application Programming Interface
