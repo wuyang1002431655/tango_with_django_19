@@ -54,7 +54,8 @@ will need to perform the following steps.
 	- Have the view redirect the user to the specified URL using Django's `redirect` method.
 	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage.
 - Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
-	- Remember to use  the `url` templatetag instead of using the direct URL i.e. 
+	- Remember to use  the `url` *templatetag* instead of using the direct URL i.e. 
+	
 	{lang="python",linenos=on}
 		<a href="{% url 'goto' %}?pageid={{page.id}}"\>
 
@@ -66,8 +67,8 @@ I> HTTP `GET` request, the following code sample should help you.
 I>
 I> {lang="python",linenos=off}
 I> 		if request.method == 'GET':
-I> 				if 'page_id' in request.GET:
-I> 					page_id = request.GET['page_id']
+I> 					if 'page_id' in request.GET:
+I> 						page_id = request.GET['page_id']
 I>
 I> Always check the request method is of type `GET` first, then you can
 I> access the dictionary `request.GET` which contains values passed as part
@@ -76,7 +77,7 @@ I> the required value out with `request.GET['page_id']`.
 I>
 I> You could also do this without using a *querystring*, but through the
 I> URL instead, i.e. `/rango/goto/<page_id>/`. In which case you would
-I> need to create a `urlpattern` that pulls out the `page\_id`.
+I> need to create a `urlpattern` that pulls out the `page_id`.
 
 
 ##Searching Within a Category Page
@@ -94,12 +95,14 @@ following steps:
 - Remove the generic *Search* link from the menu bar, i.e. we are decommissioning the global search function.
 - Take the search form and results template markup from `search.html` and place it into `category.html`.
 - Update the search form so that that action refers back to the category page, i.e.:
+
 	{lang="python",linenos=on}
 		<form class="form-inline" id="user_form" 
 			method="post" action="{% url 'category'  category.slug %}">
 
 - Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
 - Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
+
 	{lang="python",linenos=off}
 		{% if user.authenticated %} 
 			<!-- Insert search code here -->
