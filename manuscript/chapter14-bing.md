@@ -140,11 +140,11 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 	        urllib.request.install_opener(opener)  # Py3
 	        
 	        # Connect to the server and read the response generated.
-            # Once again, watch for differences between Python 2.7.x and 3.
+	        # Once again, watch for differences between Python 2.7.x and 3.
+	        response = urllib2.urlopen(search_url).read()  # Py2.7.x
+	        
 	        response = urllib.request.urlopen(search_url).read()  # Py3
 	        response = response.decode('utf-8')  # Py3
-	        
-	        response = urllib2.urlopen(search_url).read()  # Py2.7.x
 	        
 	        # Convert the string response to a Python dictionary object.
 	        json_response = json.loads(response)

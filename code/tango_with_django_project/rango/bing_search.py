@@ -1,7 +1,5 @@
 import json
 
-import sys
-
 # Add your Microsoft Account Key to a file called bing.key
 
 def read_bing_key():
@@ -112,7 +110,7 @@ def run_query(search_terms):
 				'link': result['Url'],
 				'summary': result['Description']})
 	except:
-		print("Error when querying the Bing API", sys.exc_info()[0])
+		print("Error when querying the Bing API")
 	
 	# Return the list of results to the calling function.
 	return results
