@@ -440,5 +440,4 @@ In this chapter we have described how to quickly style your Django application u
 Now that Rango is starting to look better we can go back and add in the
 extra functionality that will really pull the application together.
 
-![A screenshot of the Registration page with customised Bootstrap
-Styling.](../images/ch11-bootstrap-register-custom.png)
+![A screenshot of the Registration page with customised Bootstrap Styling.](../images/ch12-styled-register.png)
