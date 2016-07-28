@@ -1,63 +1,26 @@
 #A CSS Crash Course {#chapter-css}
+In Web development, we use *Cascading Style Sheets (CSS)* to describe the presentation of a HTML document (i.e. its look and feel).
 
-In web development, we use *Cascading Style Sheets (CSS)* to describe
-the presentation of a HTML document (i.e. its look and feel).
+Each element within a HTML document can be *styled*. The CSS for a given HTML element describes how it is to be rendered on screen. This is done by ascribing *values* to the different *properties* associated with an element. For example, the `font-size` property could be set to `24pt` to make any text contained within the specified HTML element to appear at 24pt. We could also set the `text-align` property to a value of `right` to make text appear within the HTML element on the right-hand side.
 
-Each element within a HTML document can be *styled*. The CSS for a given
-HTML element describes how it is to be rendered on screen. This is done
-by ascribing *values* to the different *properties* associated with an
-element. For example, the `font-size` property could be set to `24pt` to
-make any text contained within the specified HTML element to appear at
-24pt. We could also set the `text-align` property to a value of `right`
-to make text appear within the HTML element on the right-hand side.
+I> ### CSS Properties
+I>
+I> There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the [W3C website](http://www.w3.org/TR/CSS2/propidx.html) and [HTML Dog](http://www.htmldog.com/reference/cssproperties/) for lists of available properties. [pageresource.com](http://www.pageresource.com/dhtml/cssprops.htm) also has a neat list of properties, with descriptions of what each one does. Check out Section css-course-reading-label for a more comprehensive set of links.
 
-> **note**
->
-> There are many, many different CSS properties that you can use in your
-> stylesheets. Each provides a different functionality. Check out the
-> [W3C website](http://www.w3.org/TR/CSS2/propidx.html) and [HTML
-> Dog](http://www.htmldog.com/reference/cssproperties/) for lists of
-> available properties.
-> [pageresource.com](http://www.pageresource.com/dhtml/cssprops.htm)
-> also has a neat list of properties, with descriptions of what each one
-> does. Check out Section css-course-reading-label for a more
-> comprehensive set of links.
+CSS works by following a *select and apply pattern* - for a specified element, a set of styling properties are applied. Take a look at the following example in Figure fig-css-render where we have some HTML containing `<h1>` tags. In the CSS code example, we specify that all `h1` are styled. We'll come back to [selectors](http://www.w3schools.com/cssref/css_selectors.asp) later on in [this chapter](#section-css-selectors). For now though, you can assume the CSS style defined will be applied to our `<h1>` tags. The style contains four properties:
 
-CSS works by following a *select and apply pattern* - for a specified
-element, a set of styling properties are applied. Take a look at the
-following example in Figure fig-css-render where we have some HTML
-containing `<h1>` tags. In the CSS code example, we specify that all
-`h1` are styled. We'll come back to
-[selectors](http://www.w3schools.com/cssref/css_selectors.asp) in
-Section css-course-basic-selectors-label. For now though, you can assume
-the CSS style defined will be applied to our `<h1>` tags. The style
-contains four properties:
+-   `font-size`, setting the size of the font to 16pt;
+-   `font-style`, which when set to `italic` italicises the contents of all `<h1>` tags within the document;
+-   `text-align` centres the text of the `<h1>` tags (when set to `center`); and
+-   `color`, which sets the colour of the text to red via [hexadecimal code](http://html-color-codes.com/) `#FF0000`.
 
--   the first property (`font-size`) sets the size of the font to 16pt;
--   the second property (`font-style`) italicises the contents of all
-    `<h1>` tags within the document;
--   the third property (`text-align`) centres the text of the `<h1>`
-    tags; and
--   the final property (`color`) sets the colour of the text to red via
-    [hexadecimal code](http://html-color-codes.com/) `#FF0000`.
+With all of these properties applied, the resultant page render can be seen in the browser in Figure fig-css-render.
 
-With all of these properties applied, the resultant page render can be
-seen in the browser in Figure fig-css-render.
+![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png)
 
-![Illustration demonstrating the rendered output of the sample HTML
-markup and CSS stylesheet shown. Pay particular attention to the CSS
-example - the colours are used to demonstrate the syntax used to define
-styles and the property/value pairings associated with
-them.](../images/css-render.png)
-
-> **note**
->
-> Due to the nature of web development, *what you see isn't necessarily
-> what you'll get*. This is because different browsers have their own
-> way of interpreting [web
-> standards](http://en.wikipedia.org/wiki/Web_standards) and so the
-> pages may be rendered differently. This quirk can unfortunately lead
-> to plenty of frustration.
+W> What you see is what you *(may)* get
+W>
+W> Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting [web standards](http://en.wikipedia.org/wiki/Web_standards) and so the pages may be rendered differently. This quirk can unfortunately lead to plenty of frustration.
 
 Including Stylesheets
 ---------------------
@@ -103,7 +66,7 @@ you should place them within your project's `static` directory.
 > generally advised because it removes the nice abstraction between
 > presentational semantics (CSS) and content (HTML).
 
-Basic CSS Selectors
+Basic CSS Selectors {#section-css-selectors}
 -------------------
 
 CSS selectors are used to map particular styles to particular HTML
