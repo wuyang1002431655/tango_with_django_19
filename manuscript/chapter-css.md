@@ -14,7 +14,7 @@ CSS works by following a *select and apply pattern* - for a specified element, a
 -   `text-align` centres the text of the `<h1>` tags (when set to `center`); and
 -   `color`, which sets the colour of the text to red via [hexadecimal code](http://html-color-codes.com/) `#FF0000`.
 
-With all of these properties applied, the resultant page render can be seen in the browser in Figure fig-css-render.
+With all of these properties applied, the resultant page render can be seen in the browser as shown in the figure below.
 
 ![Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.](images/css-render.png)
 
@@ -22,8 +22,7 @@ W> What you see is what you *(may)* get
 W>
 W> Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting [web standards](http://en.wikipedia.org/wiki/Web_standards) and so the pages may be rendered differently. This quirk can unfortunately lead to plenty of frustration.
 
-Including Stylesheets
----------------------
+## Including Stylesheets
 
 Including stylesheets in your webpages is a relatively straightforward
 process, and involves including a `<link>` tag within your HTML's
@@ -66,8 +65,7 @@ you should place them within your project's `static` directory.
 > generally advised because it removes the nice abstraction between
 > presentational semantics (CSS) and content (HTML).
 
-Basic CSS Selectors {#section-css-selectors}
--------------------
+## Basic CSS Selectors {#section-css-selectors}
 
 CSS selectors are used to map particular styles to particular HTML
 elements. In essence, a CSS selector is a *pattern*. Here, we cover
@@ -75,8 +73,7 @@ three basic forms of CSS selector: *element selectors*, *id selectors*
 and *class selectors*. In Section css-course-links-label, we also touch
 on what are known as *pseudo-selectors*.
 
-Element Selectors
------------------
+## Element Selectors
 
 Taking the CSS example from Figure fig-css-render, we can see that the
 selector `h1` matches to any `<h1>` tag. Any selector referencing a tag
@@ -125,8 +122,7 @@ red text of the `h1` style.](../images/css-class.png)
 > answer will always be **no**. In cases like this, you should use a
 > class or element selector.
 
-Fonts
------
+## Fonts
 
 Due to the huge number available, using fonts has historically been a
 pitfall when it comes to web development. Picture this scenario: a web
@@ -160,8 +156,7 @@ examples of the typesets you can use and [this Web Designer Depot
 article](http://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/)
 on how to use such fonts.
 
-Colours and Backgrounds
------------------------
+## Colours and Backgrounds
 
 Colours are important in defining the look and feel of your website. You
 can change the colour of any element within your webpage, ranging from
@@ -309,8 +304,7 @@ background image - it may not fill the entire size of the element.
 > placed](http://www.w3schools.com/cssref/pr_background-position.asp) by
 > default with the `background-position` property.
 
-Containers, Block-Level and Inline Elements
--------------------------------------------
+## Containers, Block-Level and Inline Elements
 
 Throughout the crash course thus far, we've introduced you to the
 `<span>` element but have neglected to tell you what it is. All will
@@ -337,7 +331,7 @@ appear on the same line beside each other. You can also nest block-level
 and inline elements within each other, but block-level elements cannot
 be nested within an inline element.](../images/css-nesting-blocks.svg)
 
-### Block-Level Elements
+## Block-Level Elements
 
 In simple terms, a *block-level element* are by default rectangular in
 shape and spread across the entire width of the containing element.
@@ -352,7 +346,7 @@ create a hierarchy of elements. You can also nest *inline elements*
 within block-level elements, but not vice-versa! Read on to find out
 why.
 
-### Inline Elements
+## Inline Elements
 
 An *inline element* does exactly what it says on the tin. These elements
 appear *inline* to block-level elements on your webpage, and are
@@ -373,8 +367,7 @@ would look similar to the example below.
 Refer back to Figure fig-css-nesting-blocks to refresh your mind about
 what you can and cannot nest before you move on.
 
-Basic Positioning
------------------
+## Basic Positioning
 
 An important concept that we have not yet covered in this CSS crash
 course regards the positioning of elements within your webpage. Most of
@@ -1113,8 +1106,7 @@ to demonstrate that unlike relative positioning, absolute positioning
 pixels down from its parent (set with `position: relative;`), regardless
 of whether the element has been floated or not.
 
-The Box Model
--------------
+## The Box Model
 
 When using CSS, you're never too far away from using *padding*,
 *borders* and *margins*. These properties are some of the most
@@ -1163,8 +1155,7 @@ it](http://cssboxmodel.com/)?
 >
 > Don't forget this. You'll save yourself a lot of trouble if you don't!
 
-Styling Lists
--------------
+## Styling Lists
 
 Lists are everywhere. Whether you're reading a list of learning outcomes
 for a course or a reading a list of times for the train, you know what a
@@ -1323,8 +1314,7 @@ some of the selected links below.
 The possibilities of styling lists is endless! You could say it's a
 never-ending list...
 
-Styling Links
--------------
+## Styling Links
 
 CSS provides you with the ability to easily style hyperlinks in any way
 you wish. You can change their colour, their font or any other aspect
@@ -1489,8 +1479,7 @@ hover over the links to see them change!
 With a small amount of CSS, you can make some big changes in the way
 your webpages appear to end users.
 
-The Cascade
------------
+## The Cascade
 
 It's worth pointing out where the *Cascading* in *Cascading Style
 Sheets* comes into play. You may have noticed in the example rendered
@@ -1517,8 +1506,7 @@ overridden from the default value. The cascading styles produce the
 resultant style, shown on the right of the
 illustration.](../images/css-cascading.png)
 
-Additional Reading
-------------------
+## Additional Reading
 
 What we've discussed in this section is by no means a definitive guide
 to CSS. There are [300-page
