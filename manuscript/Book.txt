@@ -15,6 +15,7 @@ chapter12-bootstrap.md
 chapter14-bing.md
 chapter-work-in-progress.md
 
+chapter-css.md
 
 chapter-testing.md
 chapter-deployment.md
