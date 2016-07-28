@@ -98,7 +98,7 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 	    query = "'{0}'".format(search_terms)
 	    
 	    # Turn the query into an HTML encoded string, using urllib.
-	    # Use the line line relevant to your version of Python.
+	    # Use the line relevant to your version of Python.
 	    query = urllib.quote(query)  # Py2.7.x
 	    query = urllib.parse.quote(query)  # Py3
 	    
@@ -186,14 +186,12 @@ I>
 I> There are many different parameters that the Bing Search API can handle which we don't cover here. 
 I> If you want to know more about the API  check out the [Bing Search API Migration Guide and FAQ](http://datamarket.azure.com/dataset/bing/search).
 
-
 X> ### Exercises
 X> 
 X> Extend your `bing_search.py` module so that it can be run independently, i.e. running `python bing_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
 X> 
 X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
-
 
 T> ### Hint
 T>
@@ -263,7 +261,7 @@ The template code above performs two key tasks.
 - In all scenarios, the template presents a search box and a search buttons within a HTML `<form>` for users to enter and submit their search queries.
 - If a `results_list` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
 	
-To style the HTML, we have made use of [Bootstrap panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
+To style the HTML, we have made use of Bootstrap [panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
 
 As you will see from our corresponding view code shortly, a `results_list` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
 
@@ -297,7 +295,7 @@ Once you have put in the URL mapping and added a link to the search page, you sh
 
 {id="fig-bing-python-search"}
 ![Searching for "Python for Noobs".
-](images/images/ch14-bing-python-search.png)
+](images/ch14-bing-python-search.png)
 
 <!--
 I> Application Programming Interface
