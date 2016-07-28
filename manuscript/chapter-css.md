@@ -67,95 +67,42 @@ The alternative option is to use *class selectors*. This approach is similar to 
 
 ![An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the `.blue` CSS style to override the red text of the `h1` style.](images/css-class.png)
 
-W> Ensure `id`s are Unique
+W> ### Ensure `id`s are Unique
 W>
 W> Try to use id selectors sparingly. [Ask yourself:](http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/) *do I absolutely need to apply an identifier to this element in order to target it?* If you need to apply a given set of styles to more than one element, the answer will always be **no**. In cases like this, you should use a class or element selector.
 
 ## Fonts
+Due to the huge number available, using fonts has historically been a pitfall when it comes to web development. Picture this scenario: a web developer has installed and uses a particular font on his or her webpage. The font is pretty arcane - so the probability of the font being present on other computers is relatively small. A user who visits the developer's webpage subsequently sees the page rendered incorrectly as the font is not present on their system. CSS tackles this particular issue with the `font-family` property.
 
-Due to the huge number available, using fonts has historically been a
-pitfall when it comes to web development. Picture this scenario: a web
-developer has installed and uses a particular font on his or her
-webpage. The font is pretty arcane - so the probability of the font
-being present on other computers is relatively small. A user who visits
-the developer's webpage subsequently sees the page rendered incorrectly
-as the font is not present on their system. CSS tackles this particular
-issue with the `font-family` property.
+The value you specify for `font-family` can be a *list* of possible fonts - and the first one your computer or other device has installed is the font that is used to render the webpage. Text within the specified HTML element subsequently has the selected font applied. The example CSS shown below applies *Arial* if the font exists. If it doesn't, it looks for *Helvetica*. If that font doesn't exist, any available [sans-serif font](http://en.wikipedia.org/wiki/Sans-serif) is applied.
 
-The value you specify for `font-family` can be a *list* of possible
-fonts - and the first one your computer or other device has installed is
-the font that is used to render the webpage. Text within the specified
-HTML element subsequently has the selected font applied. The example CSS
-shown below applies *Arial* if the font exists. If it doesn't, it looks
-for *Helvetica*. If that font doesn't exist, any available [sans-serif
-font](http://en.wikipedia.org/wiki/Sans-serif) is applied.
+{lang="css",linenos=off}
+	h1 {
+	    font-family: 'Arial', 'Helvetica', sans-serif;
+	}
 
-``` {.sourceCode .css}
-h1 {
-    font-family: 'Arial', 'Helvetica', sans-serif;
-}
-```
-
-In 1996, Microsoft started the [Core fonts for the
-Web](http://en.wikipedia.org/wiki/Core_fonts_for_the_Web) initiative
-with the aim of guaranteeing a particular set of fonts to be present on
-all computers. Today however, you can use pretty much any font you
-like - check out [Google Fonts](http://www.google.com/fonts) for
-examples of the typesets you can use and [this Web Designer Depot
-article](http://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/)
-on how to use such fonts.
+In 1996, Microsoft started the [core fonts for the Web](http://en.wikipedia.org/wiki/Core_fonts_for_the_Web) initiative with the aim of guaranteeing a particular set of fonts to be present on all computers. Today however, you can use pretty much any font you like - check out [Google Fonts](http://www.google.com/fonts) for examples of the typesets you can use and [this Web Designer Depot article](http://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/) on how to use such fonts.
 
 ## Colours and Backgrounds
+Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of words and *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure fig-css-colours, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also [specify words to describe your colours](http://www.w3schools.com/cssref/css_colornames.asp), such as `green`, `yellow` or `blue`.
 
-Colours are important in defining the look and feel of your website. You
-can change the colour of any element within your webpage, ranging from
-background colours to borders and text. In this book, we make use of
-words and *hexadecimal colour codes* to choose the colours we want. As
-you can see from the list of basic colours in Figure fig-css-colours,
-you can supply either a *hexadecimal* or *RGB (red-green-blue)* value
-for the colour you want to use. You can also [specify words to describe
-your colours](http://www.w3schools.com/cssref/css_colornames.asp), such
-as `green`, `yellow` or `blue`.
+W> ### Pick Colours Sensibly
+W>
+W> Take great care when picking colours to use on your webpages. Don't select colours that don't contrast well - people simply won't be able to read them! There are many websites available that can help you pick out a good colour scheme - try [colorcombos.com](http://www.colorcombos.com/) for starters.
 
-> **warning**
->
-> You must take great care when picking colours to use on your webpages.
-> Don't select colours that don't contrast well - people simply won't be
-> able to read them! There are many websites available that can help you
-> pick out a good colour scheme - try
-> [colorcombos.com](http://www.colorcombos.com/) for starters.
+Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
-Applying colours to your elements is a straightforward process. The
-property that you use depends on the aspect of the element you wish to
-change! The following subsections explain the relevant properties and
-how to apply them.
+![Illustration of some basic colours with their corresponding hexadecimal and RGB values. Illustration adapted from [W3Schools](http://www.w3schools.com/cssref/css_colors.asp).](images/css-colours.png)
 
-![Illustration of some basic colours with their corresponding
-hexadecimal and RGB values. Illustration adapted from
-[W3Schools](http://www.w3schools.com/cssref/css_colors.asp).](../images/css-colours.svg)
+There are many different websites which you can use to aid you in picking the right hexadecimal codes to enter into your stylesheets. You aren't simply limited to the nine examples above! Try out [html-color-codes.com](http://html-color-codes.com/) for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as [color-hex.com](http://www.color-hex.com/color-wheel/) which gives you fine grained control over the colours you can choose.
 
-There are many different websites which you can use to aid you in
-picking the right hexadecimal codes to enter into your stylesheets. You
-aren't simply limited to the nine examples above! Try out
-[html-color-codes.com](http://html-color-codes.com/) for a simple grid
-of colours and their associated six character hexadecimal code. You can
-also try sites such as
-[color-hex.com](http://www.color-hex.com/color-wheel/) which gives you
-fine-grain control over the colours you can choose.
+I> Hexadecimal Colour Codes
+I>
+I> For more information on how colours are coded with hexadecimal, check out [this thorough tutorial](http://www.quackit.com/css/css_color_codes.cfm).
 
-> **note**
->
-> For more information on how colours are coded with hexadecimal, check
-> out [this thorough
-> tutorial](http://www.quackit.com/css/css_color_codes.cfm).
-
-> **warning**
->
-> As you may have noticed, CSS uses American/International English to
-> spell words. As such, there are a few words which are spelt slightly
-> differently compared to their British counterparts, like `color` and
-> `center`. If you have grown up in Great Britain, double check your
-> spelling and be prepared to spell it the *wrong way!* Hah!
+W> Watch Your English!
+W>
+W> As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like `color` and `center`. If you have grown up in the United Kingdom, double check your spelling and be prepared to spell it the *wrong way!*
 
 ### Text Colours
 
