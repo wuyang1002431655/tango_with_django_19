@@ -140,7 +140,7 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 	        urllib.request.install_opener(opener)  # Py3
 	        
 	        # Connect to the server and read the response generated.
-            # Once again, watch for differences between Python 2 (1 line) and 3 (2 lines).
+            # Once again, watch for differences between Python 2.7.x and 3.
 	        response = urllib.request.urlopen(search_url).read()  # Py3
 	        response = response.decode('utf-8')  # Py3
 	        
