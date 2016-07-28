@@ -63,28 +63,13 @@ The *id selector* is used to map to a unique element on your webpage. Each eleme
 ![An illustration demonstrating the use of an *id selector* in CSS. Note the blue header has an identifier which matches the CSS attribute `#blue_header`.](images/css-id.png)
 
 ### Class Selectors
+The alternative option is to use *class selectors*. This approach is similar to that of *id selectors*, with the difference that you can legitimately target multiple elements with the same class. If you have a group of HTML elements that you wish to apply the same style to, use a class-based approach. The selector for using this method is to precede the name of your class with a period (`.`) before opening up the style with curly braces (`{ }`). Check out Figure fig-css-class for an example.
 
-The alternative option is to use *class selectors*. This approach is
-similar to that of *id selectors*, with the difference that you can
-legitimately target multiple elements with the same class. If you have a
-group of HTML elements that you wish to apply the same style to, use a
-class-based approach. The selector for using this method is to precede
-the name of your class with a period (`.`) before opening up the style
-with curly braces (`{ }`). Check out Figure fig-css-class for an
-example.
+![An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the `.blue` CSS style to override the red text of the `h1` style.](images/css-class.png)
 
-![An illustration demonstrating the use of a *class selector* in CSS.
-The blue headers employ the use of the `.blue` CSS style to override the
-red text of the `h1` style.](../images/css-class.png)
-
-> **warning**
->
-> Try to use id selectors sparingly. [Ask
-> yourself:](http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/)
-> *do I absolutely need to apply an identifier to this element in order
-> to target it?* If you need to apply it to more than one element, the
-> answer will always be **no**. In cases like this, you should use a
-> class or element selector.
+W> Ensure `id`s are Unique
+W>
+W> Try to use id selectors sparingly. [Ask yourself:](http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/) *do I absolutely need to apply an identifier to this element in order to target it?* If you need to apply a given set of styles to more than one element, the answer will always be **no**. In cases like this, you should use a class or element selector.
 
 ## Fonts
 
