@@ -77,7 +77,7 @@ I> the required value out with `request.GET['page_id']`.
 I>
 I> You could also do this without using a *querystring*, but through the
 I> URL instead, i.e. `/rango/goto/<page_id>/`. In which case you would
-I> need to create a `urlpattern` that pulls out the `page\_id`.
+I> need to create a `urlpattern` that pulls out the `page_id`.
 
 
 ##Searching Within a Category Page
@@ -102,6 +102,7 @@ following steps:
 
 - Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
 - Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
+
 	{lang="python",linenos=off}
 		{% if user.authenticated %} 
 			<!-- Insert search code here -->
