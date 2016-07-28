@@ -182,21 +182,10 @@ This doesn't visually appear to change the look and feel, but it informs the too
 
 -->
 
-![A screenshot of the About page without
-style.](images/ch12-about-nostyling.png)
-
-\#TODO(leifos):update this screen shot.
+![A screenshot of the About page without styling.](images/ch12-about-nostyling.png)
 
 ![A screenshot of the About page with Bootstrap Styling
-applied.](../images/ch11-bootstrap-about.png)
-
-\#TODO(leifos):update this screen shot.
-
-
-![A screenshot of the Registration page with Bootstrap Styling applied
-but not customised.](../images/ch11-bootstrap-register-initial.png)
-
-\#TODO(leifos):update this screen shot.
+applied.](images/ch12-about-bootstrap.png)
 
 
 
