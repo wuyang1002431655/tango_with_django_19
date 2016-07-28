@@ -270,8 +270,7 @@ Bootstrap](http://v4-alpha.getbootstrap.com/components/list-group/) to improve h
 `<ul>` elements to `<ul class="list-group">` and the `<li>` elements to
 `<li class="list-group-item">`.
 
-![A screenshot of the Index page with a Jumbotron
-and Columns.](../images/ch11-bootstrap-index-initial.png)
+![A screenshot of the Index page with a Jumbotron and Columns.](images/ch12-styled-index.png)
 
 ###The Login Page
 Now let's turn our attention to the login page. On the Bootstrap website
@@ -315,10 +314,7 @@ check out the [Bootstrap section on
 buttons](http://v4-alpha.getbootstrap.com/components/buttons/) you can see there are
 lots of different colours that can be assigned to buttons.
 
-![A screenshot of the login page with customised Bootstrap
-Styling.](../images/ch11-bootstrap-login-custom.png)
-
-\#TODO(Leifos): update the screen shot
+![A screenshot of the login page with customised Bootstrap Styling.](images/ch12-styled-login.png)
 
 ### Other Form-based Templates
 
