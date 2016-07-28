@@ -1,5 +1,5 @@
 # Bing Search {#chapter-bing}
-Now that our Rango application is looking good and most of the core functionality has been implemented, we can move on some of the more advanced functionality. In this chapter, we will connect Rango up to Bing's Search API so that users can also search for pages, rather than just use the categories. Before we can do so, we need to set up an account to use Bing's Search API and write a wrapper to call Bing's web search functionality.
+Now that our Rango application is looking good and most of the core functionality has been implemented, we can move on some of the more advanced functionality. In this chapter, we will connect Rango up to Bing's Search API so that users can also search for pages, rather than just use the categories. Before we can do so, we need to set up an account to use Bing's Search API and write a wrapper to call Bing's Web search functionality.
 
 ## The Bing Search API
 The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can then be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application.
@@ -7,7 +7,7 @@ The Bing Search API provides you with the ability to embed search results from t
 Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, you will need to sign up for an *API key*. The key currently provides subscribers with access to 5000 queries per month, which should be more than enough for our purposes.
 
 ### Registering for a Bing API Key
-To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already have one! Otherwise, you can create a free account at [`https://account.windowsazure.com`](https://account.windowsazure.com).
+To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already have one! Otherwise, you can go online and create a free account with Microsoft at [`https://account.windowsazure.com`](https://account.windowsazure.com).
 
 When your account has been created, go to the [Windows Azure Marketplace Bing Search API page](https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44) and login.
 
@@ -38,11 +38,11 @@ This page allows you to try out the Bing Search API by filling out the boxes to 
 Assuming this all works take a copy of your API key. We will need this when we make requests as part of the authentication process. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be shown.   We'll be using it later, so take a note of it - and keep it safe!  The Bing API Service Explorer keeps a tab of how many queries you have left of your monthly quota. So if someone obtains your key, they'll be able to use your quota.  
 
 ## Adding Search Functionality
-Below we have provided the code which we can use to issued queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code.
+Below we have provided the code which we can use to issued queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code. You'll also need to take a copy of your Bing Search API key - we'll show you what to do with that shortly.
 
 I> ### Python 2 and 3 `import` Differences
 I> 
-I> Be careful: differences exist between how you parse URLs and obtain responses from remote servers. Python 3 [tided up the `urllib` package which we use](http://stackoverflow.com/a/2792652). As you work through the code below, ensure you only use the code for the particular version of Python you are using - look for the comments at the end of lines where differences may exist (`Py2.7.x` for Python 2.7.x, and `py3` for Python 3).
+I> Be careful: differences exist between how you parse URLs and obtain responses from remote servers. Python 3 [tided up the `urllib` package which that use](http://stackoverflow.com/a/2792652). As you work through the code below, ensure you only use the code for the particular version of Python you are using - look for the comments at the end of lines where differences may exist (`py2.7.x` for Python 2.7.x, and `py3` for Python 3).
 I>
 I> So, another friendly reminder: *don't simply copy and paste code!*
 
@@ -59,7 +59,6 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 	    returns: a string which is either None, i.e. no key found, or with a key.
 	    Remember: put bing.key in your .gitignore file to avoid committing it!
 	    """
-	    
 	    # See Python Anti-Patterns - it's an awesome resource!
 	    # Here we using "with" when opening documents.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
@@ -151,40 +150,36 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 	        
 	        # Loop through each page returned, populating out results list.
 	        for result in json_response['d']['results']:
-	            results.append({
-	                'title': result['Title'],
-	                'link': result['Url'],
-	                'summary': result['Description']})
+	            results.append({'title': result['Title'],
+	                            'link': result['Url'],
+	                            'summary': result['Description']})
 	    except:
 	        print("Error when querying the Bing API")
 	    
 	    # Return the list of results to the calling function.
 	    return results
 
+In the module above, we have implemented two functions: one to retrieve your Bing API key, and another to actually issue a given query to the Bing search engine. Below, we discuss how both of the functions work.
 
-As you can see we have written two functions. The first reads in your Bing API key, and the second issues the query.
+### `read_bing_key()` - Reading the Bing Key
+The `read_bing_key()` function reads in your key from a file called `bing.key` in the `<workspace>/tango_with_django/` directory. We have created this function because if you are putting your code into a public repository on GitHub for example, you should take some precautions to avoid sharing your API Key publicly. 
 
-### Reading the Bing Key
-The `read_bing_key()` function reads in your key from a file called, `bing.key` in the `rango` directory. We have created this function because if you are putting your code into a public repository on GitHub, for example, then you should take some pre-cautions to avoid sharing your API Key publicly. 
-
-One  solution is to store the  *Account Key* in a file called, `rango/bing.key`, which we don't commit to the Git repo. To make sure that we don't accidentally add it, update your `.gitignore` file to exclude `key` files, by adding `*.key`. This way the key will only be stored locally and you wont have someone else using your quota.
+From the Azure website, take a copy of your *Account key* and save it into `<workspace>/tango_with_django/bing.key`. The key should be the only contents of the file - nothing else should exist within it. This file should be kept from being committed to your GitHub repository. To make sure that you do not accidentally commit it, update your repository's `.gitignore` file to exclude any files with a `.key` extension, by adding the line `*.key`. This way, your key file will only be stored locally and you will not end up with someone using your query quota.
 
 
-### Executing the Query
-The `run_query()` function takes a query as a string, and returns the top ten results from Bing in a list that contains dictionary of the result items (`title`, `link`, `summary`). If you are interested, the inline commentary describes how the request is created and then issued to the Bing API.
+### `run_query()` - Executing the Query
+The `run_query()` function takes a query as a string, and returns the top ten results from Bing in a list that contains a dictionary of the result items (including the `title`, a `link`, and a `summary`). If you are interested, the inline commentary in the code snippet above describes how the request is created and then issued to the Bing API - check it out to further your understanding.
 
-Briefly, though, the logic of the function above can be broadly split into six main tasks:
+To summarise though, the logic of the `run_query()` function can be broadly split into six main tasks.
 
 * First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
-* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
-* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
-* This string is then parsed into a Python dictionary object using the ``json`` Python package.
-* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
-* The dictionary is returned by the function.
+* The function then prepares authentication, making use of your Bing API key. This is obtained by calling `read_bing_key()`, which in turn pulls your Account key from the `bing.key` file you created earlier.
+* We then connect to the Bing API through the function call `urllib2.urlopen()` (for Python 2.7.x), or `urllib.request.urlopen()` (for Python 3). The results from the server are read and saved as a string.
+* This string is then parsed into a Python dictionary object using the `json` Python package.
+* We loop through each of the returned results, populating a `results` dictionary. For each result, we take the `title` of the page, the `link` or URL and a short `summary` of each returned result.
+* The list of dictionaries is then returned by the function.
 
-Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the ``search_url`` variable which we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the ``print`` statement within the ``except`` block.
-
-
+Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the `format` key/value pair in the `search_url` variable that we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the `print` statement within the `except` block.
 
 I> ###Bing it on!
 I>
@@ -192,11 +187,12 @@ I> There are many different parameters that the Bing Search API can handle which
 I> If you want to know more about the API  check out the [Bing Search API Migration Guide and FAQ](http://datamarket.azure.com/dataset/bing/search).
 
 
-X> ###Exercises
-X>
-X> - Add a `main()` function to the `bing_search.py`, so that you can run the module independently i.e. `python bing_search.py`
-X> - Prompt the user to enter a query, i.e. use `raw_input()`
-X> - Issue the query via `run_query()` and print the results
+X> ### Exercises
+X> 
+X> Extend your `bing_search.py` module so that it can be run independently, i.e. running `python bing_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
+X> 
+X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
+X> - issues the query via `run_query()`, and prints the results.
 
 
 T> ### Hint
@@ -205,73 +201,73 @@ T> Add the following code, so that when you run `python bing_search.py` it calls
 T> 	
 T> {lang="python",linenos=off}
 T>		def main():
-T>			#insert your code here
-T>
-T> {lang="python",linenos=off}
+T>		    #insert your code here
+T>		
 T>		if __name__ == '__main__':
-T>			main()
-T>	
+T>		    main()
 T>
-T> When you run the module explicitly via `python bing_search.py` then the `bing_search` module is treated as the `__main__` module, and thus triggers `main()`.
-T> However, when the module is imported by another module, then `__name__` will not equal `__main__`, and so the `main()` function not be called. This way you can import it with your application without running `main()`.
+T> When you run the module explicitly via `python bing_search.py`, the `bing_search` module is treated as the `__main__` module, and thus triggers `main()`. However, when the module is imported by another module, then `__name__` will not equal `__main__`, and thus the `main()` function not be called. This way you can `import` it with your application without having to call `main()`.
 
-##Putting Search into Rango
-To add external search functionality, we will need to perform the following steps.
+## Putting Search into Rango
+Now that we have successfully implemented the search functionality module, we need to integrate it into our Rango app. There are two main steps that we need to complete for this to work.
 
--  We must first create a ``search.html`` template which extends from our ``base.html`` template. The ``search.html`` template will include a HTML ``<form>`` to capture the user's query as well as template code to present any results.
-- We then create a view to handle the rendering of the ``search.html`` template for us, as well as calling the ``run_query()`` function we defined above.
+-  We must first create a `search.html` template which extends from our `base.html` template. The `search.html` template will include a HTML `<form>` to capture the user's query as well as template code to present any results.
+- We then create a view to handle the rendering of the `search.html` template for us, as well as calling the `run_query()` function we defined above.
 
-###Adding a Search Template
-Let's first create a template called, ``rango/search.html``. Add the following HTML markup, Django template code, and Bootstrap classes.
+### Adding a Search Template
+Let's first create a template called, `rango/search.html`. Add the following HTML markup, Django template code, and Bootstrap classes.
 
 {lang="html",linenos=off}
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
+	
 	{% block title %} Search {% endblock %}
+	
 	{% block body_block %}
 	<div>
-		<h1>Search with Rango</h1>
-		<br/>
-		<form class="form-inline" id="user_form" 
-				method="post" action="{% url 'search' %}">
-			{% csrf_token %}
-			<div class="input-group">
-			<input class="form-control" type="text" size="50" 
-				name="query" value="" id="query" />
-			</div>
-			<button class="btn btn-primary" type="submit" name="submit"
-				value="Search">Search</button>
-		</form>	
-		<div>
-		{% if result_list %}
-		<h3>Results</h3>
-		<!-- Display search results in an ordered list -->
-			<div class="list-group">
-			{% for result in result_list %}
-				<div class="list-group-item">
-				<h4 class="list-group-item-heading">
-					<a href="{{ result.link }}">{{ result.title }}</a>
-				</h4>
-				<p class="list-group-item-text">{{ result.summary }}</p>
-				</div>
-			{% endfor %}
-			</div>
-		{% endif %}
-		</div>
+	    <h1>Search with Rango</h1>
+	    <br/>
+	    <form class="form-inline" id="user_form" 
+	          method="post" action="{% url 'search' %}">
+	        {% csrf_token %}
+	        <div class="input-group">
+	            <input class="form-control" type="text" size="50" 
+	                   name="query" value="" id="query" />
+	        </div>
+	        <button class="btn btn-primary" type="submit" name="submit"
+	                value="Search">Search</button>
+	    </form>
+	    
+	    <div>
+	        {% if result_list %}
+	        <h3>Results</h3>
+	        <!-- Display search results in an ordered list -->
+	        <div class="list-group">
+	        {% for result in result_list %}
+	            <div class="list-group-item">
+	                <h4 class="list-group-item-heading">
+	                    <a href="{{ result.link }}">{{ result.title }}</a>
+	                    </h4>
+	                    <p class="list-group-item-text">{{ result.summary }}</p>
+	            </div>
+	        {% endfor %}
+	        </div>
+	        {% endif %}
+	    </div>
 	</div>	
 	{% endblock %}
 
 
-The template code above performs two key tasks:
+The template code above performs two key tasks.
 
-- In all scenarios, the template presents a search box and a search buttons within a HTML ``<form>`` for users to enter and submit their search queries.
-- If a ``results_list`` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
+- In all scenarios, the template presents a search box and a search buttons within a HTML `<form>` for users to enter and submit their search queries.
+- If a `results_list` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
 	
-To style the HTMK we have made use of Bootstrap: panels, http://getbootstrap.com/components/#panels, list groups, http://getbootstrap.com/components/#list-group, and inline forms, http://getbootstrap.com/css/#forms-inline.
+To style the HTML, we have made use of [Bootstrap panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
 
-As you will see from our corresponding view code shortly, a ``results_list`` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
+As you will see from our corresponding view code shortly, a `results_list` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
 
-###Adding the View
+### Adding the View
 With our search template added, we can then add the view which prompts the rendering of our template. Add the following ``search()`` view to Rango's ``views.py`` module.
 
 {lang="python",linenos=off}	
