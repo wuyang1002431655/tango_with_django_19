@@ -558,319 +558,282 @@ This therefore means that relative positioning works from the position at which 
 
 ### Absolute Positioning
 
-Our final positioning technique is *absolute positioning.* While we
-still modify the `position` parameter of a style, we use `absolute` as
-the value instead of `relative`. In contrast to relative positioning,
-absolute positioning places an element *relative to its first parent
-element that has a position value other than static.* This may sound a
-little bit confusing, but let's go through it step by step to figure out
-what exactly happens.
+Our final positioning technique is *absolute positioning.* While we still modify the `position` parameter of a style, we use `absolute` as the value instead of `relative`. In contrast to relative positioning, absolute positioning places an element *relative to its first parent element that has a position value other than static.* This may sound a little bit confusing, but let's go through it step by step to figure out what exactly happens.
 
-First, we can again take our earlier example of the two coloured
-`<span>` elements within a `<div>` container. The two `<span>` elements
-are placed side-by-side as they would naturally.
+First, we can again take our earlier example of the two coloured `<span>` elements within a `<div>` container. The two `<span>` elements are placed side-by-side as they would naturally.
 
-``` {.sourceCode .html}
-<div class="container">
-    <span class="yellow">Span 1</span>
-    <span class="blue">Span 2</span>
-</div>
-```
+{lang="html",linenos=off}
+	<div class="container">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
 
-``` {.sourceCode .css}
-.container {
-    border: 1px solid black;
-    height: 70px;
-}
+{lang="css",linenos=off}
+	.container {
+	    border: 1px solid black;
+	    height: 70px;
+	}
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	}
 
-.yellow {
-    background-color: yellow;
-    border: 1px solid black;
-}
+This produces the output shown below. Note that we again set our `.container` height to an artificial value of 70 pixels to give us more room.
 
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-}
-```
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-abs-ex1-hidden-container {
+	        position: relative;
+	    }
+	
+	    .css-abs-ex1-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 70px;
+	    }
+	
+	    .css-abs-ex1-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-abs-ex1-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	    }
+	</style>
 
-This produces the output shown below. Note that we again set our
-`.container` height to an artificial value of 70 pixels to give us more
-room.
+{lang="html",linenos=off}
+	<div class="css-abs-ex1-hidden-container">
+	    <div class="css-abs-ex1-container">
+	        <span class="css-abs-ex1-yellow">Span 1</span>
+	        <span class="css-abs-ex1-blue">Span 2</span>
+	    </div>
+	</div>
 
-<style type="text/css">
-    .css-abs-ex1-hidden-container {
-        position: relative;
-    }
-
-    .css-abs-ex1-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 70px;
-    }
-
-    .css-abs-ex1-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
-
-    .css-abs-ex1-blue {
-        background-color: blue;
-        border: 1px solid black;
-    }
-</style>
-
-<div class="css-abs-ex1-hidden-container">
-    <div class="css-abs-ex1-container">
-        <span class="css-abs-ex1-yellow">Span 1</span>
-        <span class="css-abs-ex1-blue">Span 2</span>
-    </div>
-</div>
 We now apply absolute positioning to our `.blue` element.
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    position: absolute;
-}
-```
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	}
 
-Like with relative positioning, this has no overall effect on the
-positioning of our blue element in the webpage. We must apply one or
-more of `top`, `bottom`, `left` or `right` in order for a new position
-to take effect. As a demonstration, we can apply `top` and `left`
-properties to our blue element like in the example below.
+Like with relative positioning, this has no overall effect on the positioning of our blue element in the webpage. We must apply one or more of `top`, `bottom`, `left` or `right` in order for a new position to take effect. As a demonstration, we can apply `top` and `left` properties to our blue element like in the example below.
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-```
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	}
+	
+	<style type="text/css">
+	    .css-abs-ex2-hidden-container {
+	        position: relative;
+	        padding-top: 30px;
+	    }
+	
+	    .css-abs-ex2-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 70px;
+	    }
+	
+	    .css-abs-ex2-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-abs-ex2-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	    }
+	</style>
 
-<style type="text/css">
-    .css-abs-ex2-hidden-container {
-        position: relative;
-        padding-top: 30px;
-    }
+{lang="html",linenos=off}
+	<div class="css-abs-ex2-hidden-container">
+	    <div class="css-abs-ex2-container">
+	        <span class="css-abs-ex2-yellow">Span 1</span>
+	        <span class="css-abs-ex2-blue">Span 2</span>
+	    </div>
+	</div>
 
-    .css-abs-ex2-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 70px;
-    }
+Wow, what happened here? Our blue element is now positioned outside of our container! You'll note that if you run this code within your own web browser window, the blue element appears in the top left-hand corner of the viewport. This therefore means that our `top`, `bottom`, `left` and `right` properties take on a slightly different meaning when absolute positioning is concerned.
 
-    .css-abs-ex2-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+As our container element's position is by default set to `position: static`, the blue and yellow elements are moving to the top left and bottom right of our screen respectively. Let's now modify our `.yellow` class to move the yellow `<span>` to 5 pixels from the bottom right-hand corner of our page. The `.yellow` class now looks like the example below.
 
-    .css-abs-ex2-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-</style>
-
-<div class="css-abs-ex2-hidden-container">
-    <div class="css-abs-ex2-container">
-        <span class="css-abs-ex2-yellow">Span 1</span>
-        <span class="css-abs-ex2-blue">Span 2</span>
-    </div>
-</div>
-Wow, what happened here? Our blue element is now positioned outside of
-our container! You'll note that if you run this code within your own web
-browser window, the blue element appears in the top left-hand corner of
-the viewport. This therefore means that our `top`, `bottom`, `left` and
-`right` properties take on a slightly different meaning when absolute
-positioning is concerned.
-
-As our container element's position is by default set to
-`position: static`, the blue and yellow elements are moving to the top
-left and bottom right of our screen respectively. Let's now modify our
-`.yellow` class to move the yellow `<span>` to 5 pixels from the bottom
-right-hand corner of our page. The `.yellow` class now looks like the
-example below.
-
-``` {.sourceCode .css}
-.yellow {
-    background-color: yellow;
-    border: 1px solid black;
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-}
-```
+{lang="css",linenos=off}
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	    position: absolute;
+	    bottom: 5px;
+	    right: 5px;
+	}
 
 This produces the following result.
 
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-abs-ex3-hidden-container {
+	        position: relative;
+	        padding: 30px 0 35px;
+	    }
+	
+	    .css-abs-ex3-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 70px;
+	    }
+	
+	    .css-abs-ex3-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        position: absolute;
+	        bottom: 5px;
+	        right: 5px;
+	    }
+	
+	    .css-abs-ex3-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	    }
+	</style>
+
+{lang="html",linenos=off}
+	<div class="css-abs-ex3-hidden-container">
+	    <div class="css-abs-ex3-container">
+	        <span class="css-abs-ex3-yellow">Span 1</span>
+	        <span class="css-abs-ex3-blue">Span 2</span>
+	    </div>
+	</div>
+
+But what if we don't want our elements to be positioned absolutely in relation to the entire page? More often than not, we'll be looking to adjusting the positioning of our elements in relation to a container. If we recall our definition for absolute positioning, we will note that absolute positions are calculated *relative to the first parent element that has a position value other than static.* As our container is the only parent for our two `<span>` elements, the container to which the absolutely positioned elements is therefore the `<body>` of our HTML page. We can fix this by adding `position: relative;` to our `.container` class, just like in the example below.
+
+{lang="css",linenos=off}
+	.container {
+	    border: 1px solid black;
+	    height: 70px;
+	    position: relative;
+	}
+
+This produces the following result. `.container` becomes the first parent element with a position value of anything other than `relative`, meaning our `<span>` elements latch on!
+
+{lang="css",linenos=off}
 <style type="text/css">
-    .css-abs-ex3-hidden-container {
-        position: relative;
-        padding: 30px 0 35px;
-    }
+	    .css-abs-ex4-hidden-container {
+	        position: relative;
+	    }
+	
+	    .css-abs-ex4-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 70px;
+	        position: relative;
+	    }
+	
+	    .css-abs-ex4-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        position: absolute;
+	        bottom: 5px;
+	        right: 5px;
+	    }
+	
+	    .css-abs-ex4-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	    }
+	</style>
 
-    .css-abs-ex3-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 70px;
-    }
+{lang="html",linenos=off}
+	<div class="css-abs-ex4-hidden-container">
+	    <div class="css-abs-ex4-container">
+	        <span class="css-abs-ex4-yellow">Span 1</span>
+	        <span class="css-abs-ex4-blue">Span 2</span>
+	    </div>
+	</div>
 
-    .css-abs-ex3-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-    }
+Our elements are now absolutely positioned in relation to `.container`. Great! Now, let's adjust the positioning values of our two `<span>` elements to move them around.
 
-    .css-abs-ex3-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-</style>
+{lang="css",linenos=off}
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	    position: absolute;
+	    top: 20px;
+	    right: 100px;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	    float: right;
+	    bottom: 50px;
+	    left: 40px;
+	}
+	
+	<style type="text/css">
+	    .css-abs-ex5-hidden-container {
+	        position: relative;
+	    }
+	
+	    .css-abs-ex5-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 70px;
+	        position: relative;
+	    }
+	
+	    .css-abs-ex5-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        position: absolute;
+	        top: 20px;
+	        right: 100px;
+	    }
+	
+	    .css-abs-ex5-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: absolute;
+	        float: right;
+	        bottom: 50px;
+	        left: 40px;
+	    }
+	</style>
 
-<div class="css-abs-ex3-hidden-container">
-    <div class="css-abs-ex3-container">
-        <span class="css-abs-ex3-yellow">Span 1</span>
-        <span class="css-abs-ex3-blue">Span 2</span>
-    </div>
-</div>
-But what if we don't want our elements to be positioned absolutely in
-relation to the entire page? More often than not, we'll be looking to
-adjusting the positioning of our elements in relation to a container. If
-we recall our definition for absolute positioning, we will note that
-absolute positions are calculated *relative to the first parent element
-that has a position value other than static.* As our container is the
-only parent for our two `<span>` elements, the container to which the
-absolutely positioned elements is therefore the `<body>` of our HTML
-page. We can fix this by adding `position: relative;` to our
-`.container` class, just like in the example below.
+{lang="html",linenos=off}
+	<div class="css-abs-ex5-hidden-container">
+	    <div class="css-abs-ex5-container">
+	        <span class="css-abs-ex5-yellow">Span 1</span>
+	        <span class="css-abs-ex5-blue">Span 2</span>
+	    </div>
+	</div>
 
-``` {.sourceCode .css}
-.container {
-    border: 1px solid black;
-    height: 70px;
-    position: relative;
-}
-```
-
-This produces the following result. `.container` becomes the first
-parent element with a position value of anything other than `relative`,
-meaning our `<span>` elements latch on!
-
-<style type="text/css">
-    .css-abs-ex4-hidden-container {
-        position: relative;
-    }
-
-    .css-abs-ex4-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 70px;
-        position: relative;
-    }
-
-    .css-abs-ex4-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-    }
-
-    .css-abs-ex4-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-</style>
-
-<div class="css-abs-ex4-hidden-container">
-    <div class="css-abs-ex4-container">
-        <span class="css-abs-ex4-yellow">Span 1</span>
-        <span class="css-abs-ex4-blue">Span 2</span>
-    </div>
-</div>
-Our elements are now absolutely positioned in relation to `.container`.
-Awesome! Let's adjust the positioning values of our two `<span>`
-elements to move them around.
-
-``` {.sourceCode .css}
-.yellow {
-    background-color: yellow;
-    border: 1px solid black;
-    position: absolute;
-    top: 20px;
-    right: 100px;
-}
-
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    position: absolute;
-    float: right;
-    bottom: 50px;
-    left: 40px;
-}
-```
-
-<style type="text/css">
-    .css-abs-ex5-hidden-container {
-        position: relative;
-    }
-
-    .css-abs-ex5-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 70px;
-        position: relative;
-    }
-
-    .css-abs-ex5-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        position: absolute;
-        top: 20px;
-        right: 100px;
-    }
-
-    .css-abs-ex5-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: absolute;
-        float: right;
-        bottom: 50px;
-        left: 40px;
-    }
-</style>
-
-<div class="css-abs-ex5-hidden-container">
-    <div class="css-abs-ex5-container">
-        <span class="css-abs-ex5-yellow">Span 1</span>
-        <span class="css-abs-ex5-blue">Span 2</span>
-    </div>
-</div>
-Note that we also apply `float: right;` to our `.blue` element. This is
-to demonstrate that unlike relative positioning, absolute positioning
-*ignores any other positioning properties applied to an element*.
-`top: 10px` for example will always ensure that an element appears 10
-pixels down from its parent (set with `position: relative;`), regardless
-of whether the element has been floated or not.
+Note that we also apply `float: right;` to our `.blue` element. This is to demonstrate that unlike relative positioning, absolute positioning *ignores any other positioning properties applied to an element*. `top: 10px` for example will always ensure that an element appears 10 pixels down from its parent (set with `position: relative;`), regardless of whether the element has been floated or not.
 
 ## The Box Model {#section-css-box}
-
 When using CSS, you're never too far away from using *padding*,
 *borders* and *margins*. These properties are some of the most
 fundamental styling techniques which you can apply to the elements
