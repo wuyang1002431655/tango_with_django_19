@@ -1036,8 +1036,8 @@ This produces links as shown below. Hover over them to see them change!
 
 {lang="html",linenos=off}
 	<div class="css-links-example">
-	    <a href="http://www.django.com/">Django</a>&nbsp;&nbsp;
-	    <a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;&nbsp;
+	    <a href="http://www.django.com/">Django</a>&nbsp;
+	    <a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;
 	    <a href="http://2scoops.org/">Two Scoops of Django</a>
 	</div>
 
