@@ -104,7 +104,7 @@ W> ### Watch Your English!
 W>
 W> As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like `color` and `center`. If you have grown up in the United Kingdom, double check your spelling and be prepared to spell it the *wrong way!*
 
-### Text Colours
+### Text Colours {#section-css-colours-text}
 To change the colour of text within an element, you must apply the `color` property to the element containing the text you wish to change. The following CSS for example changes all the text within an element using class `red` to...red!
 
 {lang="css",linenos=off}
@@ -129,7 +129,6 @@ In the example above, we use multiple colours to specify a different colour for 
 Our example applies any element with class `some-element` with a black top border, a red right border and a green bottom border. No left border value is supplied, meaning that the left-hand border is left transparent. To specify a colour for only one side of an element's border, consider using the `border-top-color`, `border-right-color`, `border-bottom-color` and `border-left-color` properties where appropriate.
 
 ### Background Colours
-
 You can also change the colour of an element's background through use of the CSS `background-color` property. Like the `color` property described above, the `background-color` property can be easily applied by specifying a single colour as its value. Check out the example below which applies a bright green background to the entire webpage. Not very pretty!
 
 {lang="css",linenos=off}
@@ -138,7 +137,6 @@ You can also change the colour of an element's background through use of the CSS
 	}
 
 ### Background Images
-
 Of course, a colour isn't the only way to change your backgrounds. You can also apply background images to your elements, too. We can achieve this through the `background-image` property.
 
 {lang="css",linenos=off}
@@ -154,252 +152,191 @@ I>
 I> By default, background images default to the top-left corner of the relevant element and are repeated on both the horizontal and vertical axes. You can customise this functionality by altering [how the image is repeated](http://www.w3schools.com/cssref/pr_background-repeat.asp) with the `background-image` property. You can also specify [where the image is placed](http://www.w3schools.com/cssref/pr_background-position.asp) by default with the `background-position` property.
 
 ## Containers, Block-Level and Inline Elements
+Throughout the crash course thus far, we've introduced you to the `<span>` element but have neglected to tell you what it is. All will become clear in this section as we explain *inline* and *block-level* elements.
 
-Throughout the crash course thus far, we've introduced you to the
-`<span>` element but have neglected to tell you what it is. All will
-become clear in this section as we explain *inline* and *block-level*
-elements.
+A `<span>` is considered to be a so-called *container element*. Along with a `<div>` tag, these elements are themselves meaningless and are provided only for you to *contain* and *separate* your page's content in a logical manner. For example, you may use a `<div>` to contain markup related to a navigation bar, with another `<div>` to contain markup related to the footer of your webpage. As containers themselves are meaningless, styles are usually applied to help control the presentational semantics of your webpage.
 
-A `<span>` is considered to be a so-called *container element*. Along
-with a `<div>` tag, these elements are themselves meaningless and are
-provided only for you to *contain* and *separate* your page's content in
-a logical manner. For example, you may use a `<div>` to contain markup
-related to a navigation bar, with another `<div>` to contain markup
-related to the footer of your webpage. As containers themselves are
-meaningless, styles are usually applied to help control the
-presentational semantics of your webpage.
+Containers come in two flavours: *block-level elements* and *inline elements*. Check out the [figure below](#image-css-nesting-blocks) for an illustration of the two kinds in action, and read on for a short description of each.
 
-Containers come in two flavours: *block-level elements* and *inline
-elements*. Check out Figure fig-css-nesting-blocks for an illustration
-of the two kinds in action, and read on for a short description of each.
-
-![Diagram demonstrating how block-level elements and inline elements are
-rendered by default. With block-level elements as green, note how a line
-break is taken between each element. Conversely, inline elements can
-appear on the same line beside each other. You can also nest block-level
-and inline elements within each other, but block-level elements cannot
-be nested within an inline element.](../images/css-nesting-blocks.svg)
+{#image-css-nesting-blocks}
+![Diagram demonstrating how block-level elements and inline elements are rendered by default. With block-level elements as green, note how a line break is taken between each element. Conversely, inline elements can appear on the same line beside each other. You can also nest block-level and inline elements within each other, but block-level elements cannot be nested within an inline element.](images/css-nesting-blocks.png)
 
 ### Block-Level Elements
+In simple terms, *block-level elements* are by default rectangular in shape and spread across the entire width of the containing element. Block-level elements therefore by default appear underneath each other. The rectangular structure of each block-level element is commonly referred to as the *box model*, which we discuss [later on in this chapter](#section-css-box). A typical block-level element you will use is the `<div>` tag, short for *division.*
 
-In simple terms, a *block-level element* are by default rectangular in
-shape and spread across the entire width of the containing element.
-Block-level elements therefore by default appear underneath each other.
-The rectangular structure of each block-level element is commonly
-referred to as the *box model*, which we discuss in Section
-css-course-box-model-label. A typical block-level element you will use
-is the `<div>` tag, short for *division.*
-
-Block-level elements can be nested within other block-level elements to
-create a hierarchy of elements. You can also nest *inline elements*
-within block-level elements, but not vice-versa! Read on to find out
-why.
+Block-level elements can be nested within other block-level elements to create a hierarchy of elements. You can also nest *inline elements* within block-level elements, but not vice-versa! Read on to find out why.
 
 ### Inline Elements
+An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage, and are commonly found to be wrapped around text. You'll find that `<span>` tags are commonly used for this purpose.
 
-An *inline element* does exactly what it says on the tin. These elements
-appear *inline* to block-level elements on your webpage, and are
-commonly found to be wrapped around text. You'll find that `<span>` tags
-are commonly used for this purpose.
+This text-wrapping application was explained in the [text colours section](#section-css-colours-text), where a portion of text could be wrapped in `<span>` tags to change its colour. The corresponding HTML markup would look similar to the example below.
 
-This text-wrapping application was explained in Section
-css-course-colours-text-label, where a portion of text could be wrapped
-in `<span>` tags to change its colour. The corresponding HTML markup
-would look similar to the example below.
+{lang="html",linenos=off}
+	<div>
+	    This is some text wrapped within a block-level element. <span class="red">This text is wrapped within an inline element!</span> But this text isn't.
+	</div>
 
-``` {.sourceCode .html}
-<div>
-    This is some text wrapped within a block-level element. <span class="red">This text is wrapped within an inline element!</span> But this text isn't.
-</div>
-```
-
-Refer back to Figure fig-css-nesting-blocks to refresh your mind about
-what you can and cannot nest before you move on.
+Refer back to the [nested blocks figure above](#image-css-nesting-blocks) to refresh your mind about what you can and cannot nest before you move on.
 
 ## Basic Positioning
+An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. These elements are said to be *positioned statically*.
 
-An important concept that we have not yet covered in this CSS crash
-course regards the positioning of elements within your webpage. Most of
-the time, you'll be satisfied with inline elements appearing alongside
-each other, and block-level elements appearing underneath each other.
-These elements are said to be *positioned statically*.
-
-However, there will be scenarios where you require a little bit more
-control on where everything goes. In this section, we'll briefly cover
-three important techniques for positioning elements within your webpage:
-*floats*, *relative positioning* and *absolute positioning*.
+However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover three important techniques for positioning elements within your webpage: *floats*, *relative positioning* and *absolute positioning*.
 
 ### Floats
+CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Using floats allows us to position elements to the left or right of a particular container - or page.
 
-CSS *floats* are one of the most straightforward techniques for
-positioning elements within your webpage. Using floats allows us to
-position elements to the left or right of a particular container - or
-page.
+Let's work through an example. Consider the following HTML markup and CSS code.
 
-Let's work through an example. Consider the following HTML markup and
-CSS code.
+{lang="html",linenos=off}
+	<div class="container">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
 
-``` {.sourceCode .html}
-<div class="container">
-    <span class="yellow">Span 1</span>
-    <span class="blue">Span 2</span>
-</div>
-```
-
-``` {.sourceCode .css}
-.container {
-    border: 1px solid black;
-}
-
-.yellow {
-    background-color: yellow;
-    border: 1px solid black;
-}
-
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-}
-```
+{lang="css",linenos=off}
+	.container {
+	    border: 1px solid black;
+	}
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	}
 
 This produces the output shown below.
 
-<style type="text/css">
-    .css-float-ex1-container {
-        border: 1px solid black;
-        padding: 10px;
-    }
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-float-ex1-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	    }
+	    
+	    .css-float-ex1-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	    
+	    .css-float-ex1-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	    }
+	</style>
+	
+{lang="html",linenos=off}
+	<div class="css-float-ex1-container">
+	    <span class="css-float-ex1-yellow">Span 1</span>
+	    <span class="css-float-ex1-blue">Span 2</span>
+	</div>
 
-    .css-float-ex1-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+We can see that each element follows its natural flow: the container element with class `container` spans the entire width of its parent container, while each of the `<span>` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text `Span 2` to the right of its container. We can achieve this by modifying our CSS `.blue` class to look like the following example.
 
-    .css-float-ex1-blue {
-        background-color: blue;
-        border: 1px solid black;
-    }
-</style>
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	}
 
-<div class="css-float-ex1-container">
-    <span class="css-float-ex1-yellow">Span 1</span>
-    <span class="css-float-ex1-blue">Span 2</span>
-</div>
-We can see that each element follows its natural flow: the container
-element with class `container` spans the entire width of its parent
-container, while each of the `<span>` elements are enclosed inline
-within the parent. Now suppose that we wish to then move the blue
-element with text `Span 2` to the right of its container. We can achieve
-this by modifying our CSS `.blue` class to look like the following
-example.
+By applying the `float: right;` property and value pairing, we should then see something similar to the example shown below.
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    float: right;
-}
-```
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-float-ex2-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	    }
+	
+	    .css-float-ex2-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-float-ex2-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        float: right;
+	    }
+	</style>
+	
+{lang="html",linenos=off}
+	<div class="css-float-ex2-container">
+	    <span class="css-float-ex2-yellow">Span 1</span>
+	    <span class="css-float-ex2-blue">Span 2</span>
+	</div>
 
-By applying the `float: right;` property and value pairing, we should
-then see something similar to the example shown below.
+Note how the `.blue` element now appears at the right of its parent container, `.container`. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied `float: left` to the `.yellow` `<span>`?
 
-<style type="text/css">
-    .css-float-ex2-container {
-        border: 1px solid black;
-        padding: 10px;
-    }
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-float-ex3-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        margin-bottom: 20px;
+	    }
+	
+	    .css-float-ex3-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        float: left;
+	    }
+	
+	    .css-float-ex3-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        float: right;
+	    }
+	</style>
+	
+{lang="html",linenos=off}
+	<div class="css-float-ex3-container">
+	    <span class="css-float-ex3-yellow">Span 1</span>
+	    <span class="css-float-ex3-blue">Span 2</span>
+	</div>
 
-    .css-float-ex2-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+This would float the `.yellow` element, removing it from the natural flow of the webpage. In effect, it is not sitting on top of the `.container` container. This explains why the parent container does not now fill down with the `<span>` elements like you would expect. You can apply the `overflow: hidden;` property to the parent container as shown below to fix this problem. For more information on how this trick works, have a look at [this QuirksMode.org online article](http://www.quirksmode.org/css/clearing.html).
 
-    .css-float-ex2-blue {
-        background-color: blue;
-        border: 1px solid black;
-        float: right;
-    }
-</style>
+{lang="css",linenos=off}
+	.container {
+	    border: 1px solid black;
+	    overflow: hidden;
+	}
+	
+	<style type="text/css">
+	    .css-float-ex4-container {
+	        border: 1px solid black;
+	        overflow: hidden;
+	        padding: 10px;
+	    }
+	
+	    .css-float-ex4-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        float: left;
+	    }
+	
+	    .css-float-ex4-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        float: right;
+	    }
+	</style>
+	
+{lang="html",linenos=off}
+	<div class="css-float-ex4-container">
+	    <span class="css-float-ex4-yellow">Span 1</span>
+	    <span class="css-float-ex4-blue">Span 2</span>
+	</div>
 
-<div class="css-float-ex2-container">
-    <span class="css-float-ex2-yellow">Span 1</span>
-    <span class="css-float-ex2-blue">Span 2</span>
-</div>
-Note how the `.blue` element now appears at the right of its parent
-container, `.container`. We have in effect disturbed the natural flow of
-our webpage by artificially moving an element! What if we then also
-applied `float: left` to the `.yellow` `<span>`?
-
-<style type="text/css">
-    .css-float-ex3-container {
-        border: 1px solid black;
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-
-    .css-float-ex3-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        float: left;
-    }
-
-    .css-float-ex3-blue {
-        background-color: blue;
-        border: 1px solid black;
-        float: right;
-    }
-</style>
-
-<div class="css-float-ex3-container">
-    <span class="css-float-ex3-yellow">Span 1</span>
-    <span class="css-float-ex3-blue">Span 2</span>
-</div>
-This would float the `.yellow` element, removing it from the natural
-flow of the webpage. In effect, it is not sitting on top of the
-`.container` container. This explains why the parent container does not
-now fill down with the `<span>` elements like you would expect. You can
-apply the `overflow: hidden;` property to the parent container as shown
-below to fix this problem. For more information on how this trick works,
-have a look at [this QuirksMode.org online
-article](http://www.quirksmode.org/css/clearing.html).
-
-``` {.sourceCode .css}
-.container {
-    border: 1px solid black;
-    overflow: hidden;
-}
-```
-
-<style type="text/css">
-    .css-float-ex4-container {
-        border: 1px solid black;
-        overflow: hidden;
-        padding: 10px;
-    }
-
-    .css-float-ex4-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        float: left;
-    }
-
-    .css-float-ex4-blue {
-        background-color: blue;
-        border: 1px solid black;
-        float: right;
-    }
-</style>
-
-<div class="css-float-ex4-container">
-    <span class="css-float-ex4-yellow">Span 1</span>
-    <span class="css-float-ex4-blue">Span 2</span>
-</div>
-Applying `overflow: hidden` ensures that that our `.container` pushes
-down to the appropriate height.
+Applying `overflow: hidden` ensures that that our `.container` pushes down to the appropriate height.
 
 ### Relative Positioning
-
 *Relative positioning* can be used if you required a greater degree of
 control over where elements are positioned on your webpage. As the name
 may suggest to you, relative positioning allows you to position an
