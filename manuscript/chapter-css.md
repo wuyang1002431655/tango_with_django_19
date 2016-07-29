@@ -834,52 +834,24 @@ Our elements are now absolutely positioned in relation to `.container`. Great! N
 Note that we also apply `float: right;` to our `.blue` element. This is to demonstrate that unlike relative positioning, absolute positioning *ignores any other positioning properties applied to an element*. `top: 10px` for example will always ensure that an element appears 10 pixels down from its parent (set with `position: relative;`), regardless of whether the element has been floated or not.
 
 ## The Box Model {#section-css-box}
-When using CSS, you're never too far away from using *padding*,
-*borders* and *margins*. These properties are some of the most
-fundamental styling techniques which you can apply to the elements
-within your webpages. They are incredibly important and are all related
-to what we call the *CSS box model.*
+When using CSS, you're never too far away from using *padding*, *borders* and *margins*. These properties are some of the most fundamental styling techniques which you can apply to the elements within your webpages. They are incredibly important and are all related to what we call the *CSS box model.*
 
-Each element that you create on a webpage can be considered as a box.
-The [CSS box model](http://www.w3.org/TR/CSS2/box.html) is defined by
-the [W3C](http://www.w3.org/) as a formal means of describing the
-elements or boxes that you create, and how they are rendered in your web
-browser's viewport. Each element or box consists of *four separate
-areas*, all of which are illustrated in Figure fig-css-box-model. The
-areas - listed from inside to outside - are the *content area*, the
-*padding area*, the *border area* and the *margin area*.
+Each element that you create on a webpage can be considered as a box. The [CSS box model](http://www.w3.org/TR/CSS2/box.html) is defined by the [W3C](http://www.w3.org/) as a formal means of describing the elements or boxes that you create, and how they are rendered in your web browser's viewport. Each element or box consists of *four separate areas*, all of which are illustrated in the [figure below](#image-css-box-model). The areas - listed from inside to outside - are the *content area*, the *padding area*, the *border area* and the *margin area*.
 
-![An illustration demonstrating the CSS box model, complete with key
-showing the four areas of the model.](../images/css-box-model.svg)
+{#image-css-box-model}
+![An illustration demonstrating the CSS box model, complete with key showing the four areas of the model.](images/css-box-model.png)
 
-For each element within a webpage, you can create a margin, apply some
-padding or a border with the respective properties `margin`, `padding`
-and `border`. Margins clear a transparent area around the border of your
-element, meaning margins are incredibly useful for creating a gap
-between elements. In contrast, padding creates a gap between the content
-of an element and its border. This therefore gives the impression that
-the element appears wider. If you supply a background colour for an
-element, the background colour is extended with the element's padding.
-Finally, borders are what you might expect them to be - they provide a
-border around your element's content and padding.
+For each element within a webpage, you can create a margin, apply some padding or a border with the respective properties `margin`, `padding` and `border`. Margins clear a transparent area around the border of your element, meaning margins are incredibly useful for creating a gap between elements. In contrast, padding creates a gap between the content of an element and its border. This therefore gives the impression that the element appears wider. If you supply a background colour for an element, the background colour is extended with the element's padding. Finally, borders are what you might expect them to be - they provide a border around your element's content and padding.
 
-For more information on the CSS box model, check out [addedbytes
-excellent explanation of the
-model](http://www.addedbytes.com/articles/for-beginners/the-box-model-for-beginners/).
-Heck, [why not even order a t-shirt with the box model on
-it](http://cssboxmodel.com/)?
+For more information on the CSS box model, check out [addedbytes excellent explanation of the model](http://www.addedbytes.com/articles/for-beginners/the-box-model-for-beginners/). [Why not even order a t-shirt with the box model on it](http://cssboxmodel.com/)?
 
-> **warning**
->
-> As you may gather from examining Figure fig-css-box-model, the width
-> of an element isn't defined simply by the value you enter as the
-> element's `width`. Rather, you should always consider the width of the
-> border and padding on both sides of your element. This can be
-> represented mathematically as:
->
-> `total_width = content_width + left padding + right padding + left border + left margin + right margin`
->
-> Don't forget this. You'll save yourself a lot of trouble if you don't!
+W> ### Watch out for the `width`!
+W>
+W> As you may gather from the [box model illustration](#image-css-box-model), the width of an element isn't defined simply by the value you enter as the element's `width`. Rather, you should always consider the width of the border and padding on both sides of your element. This can be represented mathematically as:
+W>
+W> `total_width = content_width + left padding + right padding + left border + left margin + right margin`
+W>
+W> Don't forget this. You'll save yourself a lot of trouble if you don't!
 
 ## Styling Lists
 
