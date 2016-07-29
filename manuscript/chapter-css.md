@@ -958,7 +958,7 @@ While we may have the correct orientation, our list now looks awful. Where does 
 When applied, our list looks so much better - and quite professional, too!
 
 {lang="css",linenos=off}
-<style type="text/css">
+	<style type="text/css">
 	    .css-lists-ex4 {
 	        list-style-type: none;
 	    }
