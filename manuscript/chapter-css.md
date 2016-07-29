@@ -337,247 +337,224 @@ This would float the `.yellow` element, removing it from the natural flow of the
 Applying `overflow: hidden` ensures that that our `.container` pushes down to the appropriate height.
 
 ### Relative Positioning
-*Relative positioning* can be used if you required a greater degree of
-control over where elements are positioned on your webpage. As the name
-may suggest to you, relative positioning allows you to position an
-element *relative to where it would otherwise be located.* We make use
-of relative positioning with the `position: relative;` property and
-value pairing. However, that's only part of the story.
+*Relative positioning* can be used if you require a greater degree of control over where elements are positioned on your webpage. As the name may suggest to you, relative positioning allows you to position an element *relative to where it would otherwise be located.* We make use of relative positioning with the `position: relative;` property and value pairing. However, that's only part of the story.
 
-Let's explain how this works. Consider our previous example where two
-`<span>` elements are sitting within their container.
+Let's explain how this works. Consider our previous example where two `<span>` elements are sitting within their container.
 
-``` {.sourceCode .html}
-<div class="container">
-    <span class="yellow">Span 1</span>
-    <span class="blue">Span 2</span>
-</div>
-```
+{lang="html",linenos=off}
+	<div class="container">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
 
-``` {.sourceCode .css}
-.container {
-    border: 1px solid black;
-    height: 200px;
-}
+{lang="css",linenos=off}
+	.container {
+	    border: 1px solid black;
+	    height: 200px;
+	}
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	}
 
-.yellow {
-    background-color: yellow;
-    border: 1px solid black;
-}
+This produces the following result - just as we would expect. Note that we have artificially increased the `height` of our `container` element to 150 pixels. This will allow us more room with which to play with.
 
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-}
-```
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-rel-ex1-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 150px;
+	    }
+	
+	    .css-rel-ex1-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-rel-ex1-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	    }
+	</style>
 
-This produces the following result - just as we would expect. Note that
-we have artificially increased the `height` of our `container` element
-to 150 pixels. This will allow us more room with which to play with.
+{lang="html",linenos=off}
+	<div class="css-rel-ex1-container">
+	    <span class="css-rel-ex1-yellow">Span 1</span>
+	    <span class="css-rel-ex1-blue">Span 2</span>
+	</div>
 
-<style type="text/css">
-    .css-rel-ex1-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 150px;
-    }
+Now let's attempt to position our `.blue` `<span>` element relatively. First, we apply the `position: relative;` property and value pairing to our `.blue` class, like so.
 
-    .css-rel-ex1-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: relative;
+	}
 
-    .css-rel-ex1-blue {
-        background-color: blue;
-        border: 1px solid black;
-    }
-</style>
+This has no effect on the positioning of our `.blue` element. What it does do however is change the positioning of `.blue` from `static` to `relative`. This paves the way for us to specify where - from the original position of our element - we now wish the element to be located at.
 
-<div class="css-rel-ex1-container">
-    <span class="css-rel-ex1-yellow">Span 1</span>
-    <span class="css-rel-ex1-blue">Span 2</span>
-</div>
-Now let's attempt to position our `.blue` `<span>` element relatively.
-First, we apply the `position: relative;` property and value pairing to
-our `.blue` class, like so.
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: relative;
+	    left: 150px;
+	    top: 80px;
+	}
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    position: relative;
-}
-```
+By applying the `left` and `top` properties as shown in the example above, we are wanting the `.blue` element to be *pushed* 150 pixels *from the left*. In other words, we move the element 150 pixels to the right. Think about that carefully! The `top` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result our experimentation can be seen below.
 
-This has no effect on the positioning of our `.blue` element. What it
-does do however is change the positioning of `.blue` from `static` to
-`relative`. This paves the way for us to specify where - from the
-original position of our element - we now wish the element to be located
-at.
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-rel-ex2-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 150px;
+	    }
+	
+	    .css-rel-ex2-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-rel-ex2-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: relative;
+	        left: 150px;
+	        top: 80px;
+	    }
+	</style>
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    position: relative;
-    left: 150px;
-    top: 80px;
-}
-```
+{lang="html",linenos=off}
+	<div class="css-rel-ex2-container">
+	    <span class="css-rel-ex2-yellow">Span 1</span>
+	    <span class="css-rel-ex2-blue">Span 2</span>
+	</div>
 
-By applying the `left` and `top` properties as shown in the example
-above, we are wanting the `.blue` element to be *pushed* 150 pixels
-*from the left*. In other words, we move the element 150 pixels to the
-right. Think about that carefully! The `top` property indicates that the
-element should be pushed 80 pixels from the *top* of the element. The
-result our experimentation can be seen below.
+From this behaviour, we can deduce that the properties `right` and `bottom` *push* elements from the right and bottom respectively. We can test this out by applying the properties to our `.yellow` class as shown below.
 
-<style type="text/css">
-    .css-rel-ex2-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 150px;
-    }
+{lang="css",linenos=off}
+	.yellow {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	    position: relative;
+	    right: 10px;
+	    bottom: 10px;
+	}
 
-    .css-rel-ex2-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+This produces the following output. The `.yellow` container is pushed into the top left-hand corner of our container by pushing up and to the right.
 
-    .css-rel-ex2-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: relative;
-        left: 150px;
-        top: 80px;
-    }
-</style>
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-rel-ex3-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	        height: 150px;
+	    }
+	
+	    .css-rel-ex3-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	        position: relative;
+	        right: 10px;
+	        bottom: 10px;
+	    }
+	
+	    .css-rel-ex3-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        position: relative;
+	        left: 150px;
+	        top: 80px;
+	    }
+	</style>
 
-<div class="css-rel-ex2-container">
-    <span class="css-rel-ex2-yellow">Span 1</span>
-    <span class="css-rel-ex2-blue">Span 2</span>
-</div>
-From this behaviour, we can deduce that the properties `right` and
-`bottom` *push* elements from the right and bottom respectively. We can
-test this out by applying the properties to our `.yellow` class as shown
-below.
+{lang="html",linenos=off}
+	<div class="css-rel-ex3-container">
+	    <span class="css-rel-ex3-yellow">Span 1</span>
+	    <span class="css-rel-ex3-blue">Span 2</span>
+	</div>
 
-``` {.sourceCode .css}
-.yellow {
-    background-color: blue;
-    border: 1px solid black;
-    float: right;
-    position: relative;
-    right: 10px;
-    bottom: 10px;
-}
-```
+T> ### Order Matters
+T>
+T> What happens if you apply both a `top` and `bottom` property, or a `left` and `right` property? Interestingly, the *first* property for the relevant axis is applied. For example, if `bottom` is specified before `top`, the `bottom` property is used.
 
-This produces the following output. The `.yellow` container is pushed
-into the top left-hand corner of our container by pushing up and to the
-right.
+We can even apply relative positioning to elements which are floated. Consider our earlier example where the two `<span>` elements were positioned on either side of the container by floating `.blue` to the right.
 
-<style type="text/css">
-    .css-rel-ex3-container {
-        border: 1px solid black;
-        padding: 10px;
-        height: 150px;
-    }
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-rel-ex4-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	    }
+	
+	    .css-rel-ex4-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-rel-ex4-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        float: right;
+	    }
+	</style>
 
-    .css-rel-ex3-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-        position: relative;
-        right: 10px;
-        bottom: 10px;
-    }
+{lang="html",linenos=off}
+	<div class="css-rel-ex4-container">
+	    <span class="css-rel-ex4-yellow">Span 1</span>
+	    <span class="css-rel-ex4-blue">Span 2</span>
+	</div>
 
-    .css-rel-ex3-blue {
-        background-color: blue;
-        border: 1px solid black;
-        position: relative;
-        left: 150px;
-        top: 80px;
-    }
-</style>
-
-<div class="css-rel-ex3-container">
-    <span class="css-rel-ex3-yellow">Span 1</span>
-    <span class="css-rel-ex3-blue">Span 2</span>
-</div>
-> **note**
->
-> What happens if you apply both a `top` and `bottom` property, or a
-> `left` and `right` property? Interestingly, the *first* property for
-> the relevant axis is applied. For example, if `bottom` is specified
-> before `top`, the `bottom` property is used.
-
-We can even apply relative positioning to elements which are floated.
-Consider our earlier example where the two `<span>` elements were
-positioned on either side of the container by floating `.blue` to the
-right.
-
-<style type="text/css">
-    .css-rel-ex4-container {
-        border: 1px solid black;
-        padding: 10px;
-    }
-
-    .css-rel-ex4-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
-
-    .css-rel-ex4-blue {
-        background-color: blue;
-        border: 1px solid black;
-        float: right;
-    }
-</style>
-
-<div class="css-rel-ex4-container">
-    <span class="css-rel-ex4-yellow">Span 1</span>
-    <span class="css-rel-ex4-blue">Span 2</span>
-</div>
 We can then alter the `.blue` class to the following.
 
-``` {.sourceCode .css}
-.blue {
-    background-color: blue;
-    border: 1px solid black;
-    float: right;
-    position: relative;
-    right: 100px;
-}
-```
+{lang="css",linenos=off}
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	    position: relative;
+	    right: 100px;
+	}
 
-<style type="text/css">
-    .css-rel-ex5-container {
-        border: 1px solid black;
-        padding: 10px;
-    }
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-rel-ex5-container {
+	        border: 1px solid black;
+	        padding: 10px;
+	    }
+	
+	    .css-rel-ex5-yellow {
+	        background-color: yellow;
+	        border: 1px solid black;
+	    }
+	
+	    .css-rel-ex5-blue {
+	        background-color: blue;
+	        border: 1px solid black;
+	        float: right;
+	        position: relative;
+	        right: 150px;
+	    }
+	</style>
 
-    .css-rel-ex5-yellow {
-        background-color: yellow;
-        border: 1px solid black;
-    }
+{lang="html",linenos=off}
+	<div class="css-rel-ex5-container">
+	    <span class="css-rel-ex5-yellow">Span 1</span>
+	    <span class="css-rel-ex5-blue">Span 2</span>
+	</div>
 
-    .css-rel-ex5-blue {
-        background-color: blue;
-        border: 1px solid black;
-        float: right;
-        position: relative;
-        right: 150px;
-    }
-</style>
-
-<div class="css-rel-ex5-container">
-    <span class="css-rel-ex5-yellow">Span 1</span>
-    <span class="css-rel-ex5-blue">Span 2</span>
-</div>
-This therefore means that relative positioning works from the position
-at which the element would have otherwise been at - regardless of any
-other position-changing properties being applied. Neat!
+This therefore means that relative positioning works from the position at which the element would have otherwise been at - regardless of any other position changing properties being applied.
 
 ### Absolute Positioning
 
