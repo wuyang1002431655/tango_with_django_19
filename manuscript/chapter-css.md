@@ -7,7 +7,7 @@ I> ### CSS Properties
 I>
 I> There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the [W3C website](http://www.w3.org/TR/CSS2/propidx.html) and [HTML Dog](http://www.htmldog.com/reference/cssproperties/) for lists of available properties. [pageresource.com](http://www.pageresource.com/dhtml/cssprops.htm) also has a neat list of properties, with descriptions of what each one does. Check out Section css-course-reading-label for a more comprehensive set of links.
 
-CSS works by following a *select and apply pattern* - for a specified element, a set of styling properties are applied. Take a look at the following example in Figure fig-css-render where we have some HTML containing `<h1>` tags. In the CSS code example, we specify that all `h1` are styled. We'll come back to [selectors](http://www.w3schools.com/cssref/css_selectors.asp) later on in [this chapter](#section-css-selectors). For now though, you can assume the CSS style defined will be applied to our `<h1>` tags. The style contains four properties:
+CSS works by following a *select and apply pattern* - for a specified element, a set of styling properties are applied. Take a look at the following example in the [figure below](#image-css-render), where we have some HTML containing `<h1>` tags. In the CSS code example, we specify that all `h1` are styled. We'll come back to [selectors](http://www.w3schools.com/cssref/css_selectors.asp) later on in [this chapter](#section-css-selectors). For now though, you can assume the CSS style defined will be applied to our `<h1>` tags. The style contains four properties:
 
 -   `font-size`, setting the size of the font to 16pt;
 -   `font-style`, which when set to `italic` italicises the contents of all `<h1>` tags within the document;
@@ -63,8 +63,9 @@ The *id selector* is used to map to a unique element on your webpage. Each eleme
 ![An illustration demonstrating the use of an *id selector* in CSS. Note the blue header has an identifier which matches the CSS attribute `#blue_header`.](images/css-id.png)
 
 ### Class Selectors
-The alternative option is to use *class selectors*. This approach is similar to that of *id selectors*, with the difference that you can legitimately target multiple elements with the same class. If you have a group of HTML elements that you wish to apply the same style to, use a class-based approach. The selector for using this method is to precede the name of your class with a period (`.`) before opening up the style with curly braces (`{ }`). Check out Figure fig-css-class for an example.
+The alternative option is to use *class selectors*. This approach is similar to that of *id selectors*, with the difference that you can legitimately target multiple elements with the same class. If you have a group of HTML elements that you wish to apply the same style to, use a class-based approach. The selector for using this method is to precede the name of your class with a period (`.`) before opening up the style with curly braces (`{ }`). Check out the [figure below](#image-css-class) for an example.
 
+{#image-css-class}
 ![An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the `.blue` CSS style to override the red text of the `h1` style.](images/css-class.png)
 
 W> ### Ensure `id`s are Unique
@@ -84,7 +85,7 @@ The value you specify for `font-family` can be a *list* of possible fonts - and 
 In 1996, Microsoft started the [core fonts for the Web](http://en.wikipedia.org/wiki/Core_fonts_for_the_Web) initiative with the aim of guaranteeing a particular set of fonts to be present on all computers. Today however, you can use pretty much any font you like - check out [Google Fonts](http://www.google.com/fonts) for examples of the typesets you can use and [this Web Designer Depot article](http://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/) on how to use such fonts.
 
 ## Colours and Backgrounds
-Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of words and *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure fig-css-colours, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also [specify words to describe your colours](http://www.w3schools.com/cssref/css_colornames.asp), such as `green`, `yellow` or `blue`.
+Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of words and *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours shown in the [figure below](#image-css-colours), you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also [specify words to describe your colours](http://www.w3schools.com/cssref/css_colornames.asp), such as `green`, `yellow` or `blue`.
 
 W> ### Pick Colours Sensibly
 W>
@@ -92,6 +93,7 @@ W> Take great care when picking colours to use on your webpages. Don't select co
 
 Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
+{#image-css-colours}
 ![Illustration of some basic colours with their corresponding hexadecimal and RGB values.](images/css-colours.png)
 
 There are many different websites which you can use to aid you in picking the right hexadecimal codes to enter into your stylesheets. You aren't simply limited to the nine examples above! Try out [html-color-codes.com](http://html-color-codes.com/) for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as [color-hex.com](http://www.color-hex.com/color-wheel/) which gives you fine grained control over the colours you can choose.
@@ -736,7 +738,7 @@ But what if we don't want our elements to be positioned absolutely in relation t
 This produces the following result. `.container` becomes the first parent element with a position value of anything other than `relative`, meaning our `<span>` elements latch on!
 
 {lang="css",linenos=off}
-<style type="text/css">
+	<style type="text/css">
 	    .css-abs-ex4-hidden-container {
 	        position: relative;
 	    }
@@ -855,410 +857,306 @@ W> Don't forget this. You'll save yourself a lot of trouble if you don't!
 
 ## Styling Lists
 
-Lists are everywhere. Whether you're reading a list of learning outcomes
-for a course or a reading a list of times for the train, you know what a
-list looks like and appreciate its simplicity. If you have a list of
-items on a webpage, why not use a HTML list? Using lists within your
-webpages - [according to Brainstorm and
-Raves](http://brainstormsandraves.com/articles/semantics/structure/) -
-promotes good HTML document structure, allowing text-based browsers,
-screen readers and other browsers that do not support CSS to render your
-page in a sensible manner.
+Lists are everywhere. Whether you're reading a list of learning outcomes for a course or a reading a list of times for the train, you know what a list looks like and appreciate its simplicity. If you have a list of items on a webpage, why not use a HTML list? Using lists within your webpages - [according to Brainstorm and Raves](http://brainstormsandraves.com/articles/semantics/structure/) - promotes good HTML document structure, allowing text-based browsers, screen readers and other browsers that do not support CSS to render your page in a sensible manner.
 
-Lists however don't look particularly appealing to end-users. Take the
-following HTML list that we'll be styling as we go along trying out
-different things.
+Lists however don't look particularly appealing to end-users. Take the following HTML list that we'll be styling as we go along trying out different things.
 
-``` {.sourceCode .html}
-<ul class="sample-list">
-    <li>Django</li>
-    <li>How to Tango with Django</li>
-    <li>Two Scoops of Django</li>
-</ul>
-```
+{lang="html",linenos=off}
+	<ul class="sample-list">
+	    <li>Django</li>
+	    <li>How to Tango with Django</li>
+	    <li>Two Scoops of Django</li>
+	</ul>
 
 Rendered without styling, the list looks pretty boring.
 
-<style type="text/css">
-    .css-lists-border {
-        overflow: hidden;
-        border: 1px solid black;
-        padding: 10px 0 10px;
-        margin: 10px 0 10px;
-    }
-</style>
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-lists-border {
+	        overflow: hidden;
+	        border: 1px solid black;
+	        padding: 10px 0 10px;
+	        margin: 10px 0 10px;
+	    }
+	</style>
 
-<div class="css-lists-border">
-    <ul>
-        <li>Django</li>
-        <li>How to Tango with Django</li>
-        <li>Two Scoops of Django</li>
-    </ul>
-</div>
-Let's make some modifications. First, let's get rid of the ugly bullet
-points. With our `<ul>` element already (and conveniently) set with
-class `sample-list`, we can create the following style.
+{lang="html",linenos=off}
+	<div class="css-lists-border">
+	    <ul>
+	        <li>Django</li>
+	        <li>How to Tango with Django</li>
+	        <li>Two Scoops of Django</li>
+	    </ul>
+	</div>
 
-``` {.sourceCode .css}
-.sample-list {
-    list-style-type: none;
-}
-```
+Let's make some modifications. First, let's get rid of the ugly bullet points. With our `<ul>` element already (and conveniently) set with class `sample-list`, we can create the following style.
+
+{lang="css",linenos=off}
+	.sample-list {
+	    list-style-type: none;
+	}
 
 This produces the following result. Note the now lacking bullet points!
 
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-lists-ex2 {
+	        list-style-type: none;
+	    }
+	</style>
+
+{lang="html",linenos=off}
+	<div class="css-lists-border">
+	    <ul class="css-lists-ex2">
+	        <li>Django</li>
+	        <li>How to Tango with Django</li>
+	        <li>Two Scoops of Django</li>
+	    </ul>
+	</div>
+
+Let's now change the orientation of our list. We can do this by altering the `display` property of each of our list's elements (`<li>`). The following style maps to this for us.
+
+{lang="css",linenos=off}
+	.sample-list li {
+	    display: inline;
+	}
+
+When applied, our list elements now appear on a single line, just like in the example below.
+
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-lists-ex3 {
+	        list-style-type: none;
+	    }
+	
+	    .css-lists-ex3 li {
+	        display: inline;
+	    }
+	</style>
+
+{lang="css",linenos=off}
+	<div style="text-align: center;">
+	    <div class="css-lists-border">
+	        <ul class="css-lists-ex3">
+	            <li>Django</li>
+	            <li>How to Tango with Django</li>
+	            <li>Two Scoops of Django</li>
+	        </ul>
+	    </div>
+	</div>
+
+While we may have the correct orientation, our list now looks awful. Where does one element start and the other end? It's a complete mess! Let's adjust our list element style and add some contrast and padding to make things look nicer.
+
+{lang="css",linenos=off}
+	.example-list li {
+	    display: inline;
+	    background-color: #333333;
+	    color: #FFFFFF;
+	    padding: 10px;
+	}
+
+When applied, our list looks so much better - and quite professional, too!
+
+{lang="css",linenos=off}
 <style type="text/css">
-    .css-lists-ex2 {
-        list-style-type: none;
-    }
-</style>
+	    .css-lists-ex4 {
+	        list-style-type: none;
+	    }
+	
+	    .css-lists-ex4 li {
+	        display: inline;
+	        background-color: #333333;
+	        color: #FFFFFF;
+	        padding: 10px;
+	    }
+	</style>
 
-<div class="css-lists-border">
-    <ul class="css-lists-ex2">
-        <li>Django</li>
-        <li>How to Tango with Django</li>
-        <li>Two Scoops of Django</li>
-    </ul>
-</div>
-Let's now change the orientation of our list. We can do this by altering
-the `display` property of each of our list's elements (`<li>`). The
-following style maps to this for us.
+{lang="html",linenos=off}
+	<div style="text-align: center;">
+	    <div class="css-lists-border">
+	        <ul class="css-lists-ex4">
+	            <li>Django</li>
+	            <li>How to Tango with Django</li>
+	            <li>Two Scoops of Django</li>
+	         </ul>
+	    </div>
+	</div>
 
-``` {.sourceCode .css}
-.sample-list li {
-    display: inline;
-}
-```
+From the example, it is hopefully clear that lists can be easily customised to suit the requirements of your webpages. For more information and inspiration on how to style lists, you can check out some of the selected links below.
 
-When applied, our list elements now appear on a single line, just like
-in the example below.
+-   Have a look at [this excellent tutorial on styling lists on A List Apart](http://alistapart.com/article/taminglists/).
+-   Have a look at [this about.com article which demonstrates how to use your own bullets](http://webdesign.about.com/od/css/a/aa012907.htm)!
+-   Check out [this advanced tutorial from Web Designer Wall](http://webdesignerwall.com/tutorials/advanced-css-menu) that uses graphics to make awesome looking lists. In the tutorial, the author uses Photoshop - you could try using a simpler graphics package if you don't feel confident with Photoshop.
+-   [This awesome site compilation from devsnippets.com](http://devsnippets.com/article/styling-your-lists.html) provides some great inspiration and tips on how you can style lists.
 
-<style type="text/css">
-    .css-lists-ex3 {
-        list-style-type: none;
-    }
-
-    .css-lists-ex3 li {
-        display: inline;
-    }
-</style>
-
-<div style="text-align: center;">
-<div class="css-lists-border">
-    <ul class="css-lists-ex3">
-        <li>Django</li>
-        <li>How to Tango with Django</li>
-        <li>Two Scoops of Django</li>
-    </ul>
-</div>
-</div>
-While we may have the correct orientation, our list now looks awful.
-Where does one element start and the other end? It's a complete mess!
-Let's adjust our list element style and add some contrast and padding to
-make things look nicer.
-
-``` {.sourceCode .css}
-.example-list li {
-    display: inline;
-    background-color: #333333;
-    color: #FFFFFF;
-    padding: 10px;
-}
-```
-
-When applied, our list looks so much better - and quite professional,
-too!
-
-<style type="text/css">
-    .css-lists-ex4 {
-        list-style-type: none;
-    }
-
-    .css-lists-ex4 li {
-        display: inline;
-        background-color: #333333;
-        color: #FFFFFF;
-        padding: 10px;
-    }
-</style>
-
-<div style="text-align: center;">
-<div class="css-lists-border">
-    <ul class="css-lists-ex4">
-        <li>Django</li>
-        <li>How to Tango with Django</li>
-        <li>Two Scoops of Django</li>
-    </ul>
-</div>
-</div>
-From the example, it is hopefully clear that lists can be easily
-customised to suit the requirements of your webpages. For more
-information and inspiration on how to style lists, you can check out
-some of the selected links below.
-
--   Have a look at [this excellent tutorial on styling lists on A List
-    Apart](http://alistapart.com/article/taminglists/).
--   Have a look at [this about.com article which demonstrates how to use
-    your own bullets](http://webdesign.about.com/od/css/a/aa012907.htm)!
--   Check out [this advanced tutorial from Web Designer
-    Wall](http://webdesignerwall.com/tutorials/advanced-css-menu) which
-    uses graphics to make awesome looking lists. In the tutorial, the
-    author uses Photoshop - you could try using a simpler graphics
-    package if you don't feel confident with Photoshop.
--   [This awesome site compilation from
-    devsnippets.com](http://devsnippets.com/article/styling-your-lists.html)
-    provides some great inspiration and tips on how you can style lists.
-
-The possibilities of styling lists is endless! You could say it's a
-never-ending list...
+The possibilities of styling lists is endless! You could say it's a never-ending list...
 
 ## Styling Links {#section-css-links}
+CSS provides you with the ability to easily style hyperlinks in any way you wish. You can change their colour, their font or any other aspect that you wish - and you can even change how they look when you hover over them!
 
-CSS provides you with the ability to easily style hyperlinks in any way
-you wish. You can change their colour, their font or any other aspect
-that you wish - and you can even change how they look when you hover
-over them!
+Hyperlinks are represented within a HTML page through the `<a>` tag, which is short for *anchor*. We can apply styling to all hyperlinks within your webpage as shown in following example.
 
-Hyperlinks are represented within a HTML page through the `<a>` tag,
-which is short for *anchor*. We can apply styling to all hyperlinks
-within your webpage as shown in following example.
+{lang="css",linenos=off}
+	a {
+	    color: red;
+	    text-decoration: none;
+	}
 
-``` {.sourceCode .css}
-a {
-    color: red;
-    text-decoration: none;
-}
-```
+Every hyperlink's text colour is changed to red, with the default underline of the text removed. If we then want to change the `color` and `text-decoration` properties again when a user hovers over a link, we can create another style using the so-called [pseudo-selector](http://css-tricks.com/pseudo-class-selectors/) `:hover`. Our two styles now look like the example below.
 
-Every hyperlink's text colour is changed to red, with the default
-underline of the text removed. If we then want to change the `color` and
-`text-decoration` properties again when a user hovers over a link, we
-can create another style using the so-called
-[pseudo-selector](http://css-tricks.com/pseudo-class-selectors/)
-`:hover`. Our two styles now look like the example below.
-
-``` {.sourceCode .css}
-a {
-    color: red;
-    text-decoration: none;
-}
-
-a:hover {
-    color: blue;
-    text-decoration: underline;
-}
-```
+{lang="css",linenos=off}
+	a {
+	    color: red;
+	    text-decoration: none;
+	}
+	
+	a:hover {
+	    color: blue;
+	    text-decoration: underline;
+	}
 
 This produces links as shown below. Hover over them to see them change!
 
-<style type="text/css">
-    .css-links-example {
-        padding: 10px 0 10px;
-        text-align: center;
-    }
-    .css-links-example a {
-        color: red;
-        text-decoration: none;
-    }
+{lang="css",linenos=off}
+	<style type="text/css">
+	    .css-links-example {
+	        padding: 10px 0 10px;
+	        text-align: center;
+	    }
+	    .css-links-example a {
+	        color: red;
+	        text-decoration: none;
+	    }
+	
+	    .css-links-example a:hover {
+	        color: blue;
+	        text-decoration: underline;
+	    }
+	</style>
 
-    .css-links-example a:hover {
-        color: blue;
-        text-decoration: underline;
-    }
-</style>
+{lang="html",linenos=off}
+	<div class="css-links-example">
+	    <a href="http://www.django.com/">Django</a>&nbsp;&nbsp;
+	    <a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;&nbsp;
+	    <a href="http://2scoops.org/">Two Scoops of Django</a>
+	</div>
 
-<div class="css-links-example">
-    <a href="http://www.django.com/">Django</a>&nbsp;&nbsp;
-    <a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;&nbsp;
-    <a href="http://2scoops.org/">Two Scoops of Django</a>
-</div>
-You may not however wish for the same link styles across the entire
-webpage. For example, your navigation bar may have a dark background
-while the rest of your page has a light background. This would
-necessitate having different link stylings for the two areas of your
-webpage. The example below demonstrates how you can apply different link
-styles by using a slightly more complex CSS style selector.
+You may not however wish for the same link styles across the entire webpage. For example, your navigation bar may have a dark background while the rest of your page has a light background. This would necessitate having different link stylings for the two areas of your webpage. The example below demonstrates how you can apply different link styles by using a slightly more complex CSS style selector.
 
-``` {.sourceCode .css}
-#dark {
-    background-color: black;
-}
-
-#dark a {
-    color: white;
-    text-decoration: underline;
-}
-
-#dark a:hover {
-    color: aqua;
-}
-
-.light {
-    background-color: white;
-}
-
-.light a {
-    color: black;
-    text-decoration: none;
-}
-
-.light a:hover {
-    color: olive;
-    text-decoration: underline;
-}
-```
+{lang="css",linenos=off}
+	#dark {
+	    background-color: black;
+	}
+	
+	#dark a {
+	    color: white;
+	    text-decoration: underline;
+	}
+	
+	#dark a:hover {
+	    color: aqua;
+	}
+	
+	.light {
+	    background-color: white;
+	}
+	
+	.light a {
+	    color: black;
+	    text-decoration: none;
+	}
+	
+	.light a:hover {
+	    color: olive;
+	    text-decoration: underline;
+	}
 
 We can then construct some simple markup to demonstrate these classes.
 
-``` {.sourceCode .html}
-<div id="dark">
-    <a href="http://www.google.co.uk/">Google Search</a>
-</div>
+{lang="html",linenos=off}
+	<div id="dark">
+	    <a href="http://www.google.co.uk/">Google Search</a>
+	</div>
+	
+	<div class="light">
+	    <a href="http://www.bing.co.uk/">Bing Search</a>
+	</div>
 
-<div class="light">
-    <a href="http://www.bing.co.uk/">Bing Search</a>
-</div>
-```
+The resultant output looks similar to the example shown below. Again, hover over the links to see them change!
 
-The resultant output looks similar to the example shown below. Again,
-hover over the links to see them change!
+{lang="css",linenos=off}
+	<style type="text/css">
+	    #css-links-multiple-dark {
+	        background-color: black;
+	        margin-bottom: 10px;
+	        padding: 5px;
+	        margin-top: 10px;
+	        width: 90%;
+	        margin-left: auto;
+	        margin-right: auto;
+	        border: 1px solid #000000;
+	    }
+	
+	    #css-links-multiple-dark a {
+	        color: white;
+	        text-decoration: underline;
+	    }
+	
+	    #css-links-multiple-dark a:hover {
+	        color: aqua;
+	    }
+	
+	    .css-links-multiple-light {
+	        background-color: white;
+	        padding: 5px;
+	        margin-bottom: 10px;
+	        width: 90%;
+	        margin-left: auto;
+	        margin-right: auto;
+	        border: 1px solid #000000;
+	    }
+	
+	    .css-links-multiple-light a {
+	        color: black;
+	        text-decoration: none;
+	    }
+	
+	    .css-links-multiple-light a:hover {
+	        color: olive;
+	        text-decoration: underline;
+	    }
+	</style>
 
-<style type="text/css">
-    #css-links-multiple-dark {
-        background-color: black;
-        margin-bottom: 10px;
-        padding: 5px;
-        margin-top: 10px;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid #000000;
-    }
+{lang="html",linenos=off}
+	<div style="text-align: center;">
+	    <div id="css-links-multiple-dark">
+	        <a href="http://www.google.co.uk/">Google Search</a>
+	    </div>
+	
+	    <div class="css-links-multiple-light">
+	        <a href="http://www.bing.co.uk/">Bing Search</a>
+	    </div>
+	</div>
 
-    #css-links-multiple-dark a {
-        color: white;
-        text-decoration: underline;
-    }
-
-    #css-links-multiple-dark a:hover {
-        color: aqua;
-    }
-
-    .css-links-multiple-light {
-        background-color: white;
-        padding: 5px;
-        margin-bottom: 10px;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid #000000;
-    }
-
-    .css-links-multiple-light a {
-        color: black;
-        text-decoration: none;
-    }
-
-    .css-links-multiple-light a:hover {
-        color: olive;
-        text-decoration: underline;
-    }
-</style>
-
-<div style="text-align: center;">
-    <div id="css-links-multiple-dark">
-        <a href="http://www.google.co.uk/">Google Search</a>
-    </div>
-
-    <div class="css-links-multiple-light">
-        <a href="http://www.bing.co.uk/">Bing Search</a>
-    </div>
-</div>
-With a small amount of CSS, you can make some big changes in the way
-your webpages appear to end users.
+With a small amount of CSS, you can make some big changes in the way your webpages appear to end users.
 
 ## The Cascade
+It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes into play. [Looking back at the CSS rendering example way back at the start of this chapter](#image-css-render), you will notice that the red text shown is **bold**, yet no such property is defined in our `h1` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For `<h1>` elements, the [W3C website provides a typical style that is applied](http://www.w3.org/TR/html-markup/h1.html#h1-display). If you check the typical style, you'll notice that it contains a `font-weight: bold;` property and value pairing, explaining where the **bold** text comes from. As we define a further style for `<h1>` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for `font-size`), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out the [figure below](#image-css-cascading) for a graphical representation of the cascading process.
 
-It's worth pointing out where the *Cascading* in *Cascading Style
-Sheets* comes into play. You may have noticed in the example rendered
-output in Figure fig-css-render that the red text is **bold**, yet no
-such property is defined in our `h1` style. This is a perfect example of
-what we mean by *cascading styles*. Most HTML elements have associated
-with them a *default style* which web browsers apply. For `<h1>`
-elements, the [W3C website provides a typical style that is
-applied](http://www.w3.org/TR/html-markup/h1.html#h1-display). If you
-check the typical style, you'll notice that it contains a
-`font-weight: bold;` property and value pairing, explaining where the
-**bold** text comes from. As we define a further style for `<h1>`
-elements, typical property/value pairings *cascade* down into our style.
-If we define a new value for an existing property/value pairing (such as
-we do for `font-size`), we *override* the existing value. This process
-can be repeated many times - and the property/value pairings at the end
-of the process are applied to the relevant element. Check out
-fig-css-cascading for a graphical representation of the cascading
-process.
-
-![Illustration demonstrating the *cascading* in *Cascading Style Sheets*
-at work. Take note of the `font-size` property in our `h1` style - it is
-overridden from the default value. The cascading styles produce the
-resultant style, shown on the right of the
-illustration.](../images/css-cascading.png)
+{#image-css-cascading}
+![Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the `font-size` property in our `h1` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.](images/css-cascading.png)
 
 ## Additional Reading
+What we've discussed in this section is by no means a definitive guide to CSS. There are [300-page books](http://www.amazon.co.uk/Professional-CSS-Cascading-Sheets-Design/dp/047017708X) devoted to CSS alone! What we have provided you with here is a very brief introduction showing you the very basics of what CSS is and how you can use it.
 
-What we've discussed in this section is by no means a definitive guide
-to CSS. There are [300-page
-books](http://www.amazon.co.uk/Professional-CSS-Cascading-Sheets-Design/dp/047017708X)
-devoted to CSS alone! What we have provided you with here is a very
-brief introduction showing you the very basics of what CSS is and how
-you can use it.
+As you develop your web applications, you'll undoubtedly run into issues and frustrating problems with styling web content. This is part of the learning experience, and you still have a bit to learn. We strongly recommend that you invest some time trying out several online tutorials about CSS - there isn't really any need to buy a book (unless you want to).
 
-As you develop your web applications, you'll undoubtedly run into issues
-and frustrating problems with styling web content. This is part of the
-learning experience, and you still have a bit to learn. We strongly
-recommend that you invest some time trying out several online tutorials
-about CSS - there isn't really any need to buy a book (unless you want
-to).
+-   The *W3C* [provides a neat tutorial on CSS](http://www.w3.org/Style/Examples/011/firstcss.en.html), taking you by the hand and guiding you through the different stages required. They also introduce you to several new HTML elements along the way, and show you how to style them accordingly.
+-   [W3Schools also provides some cool CSS tutorials](http://www.w3schools.com/css/css_examples.asp). Instead of guiding you through the process of creating a webpage with CSS, *W3Schools* has a series of mini-tutorials and code examples to show you to to achieve a particular feature, such as setting a background image. We highly recommend that you have a look here.
+-   [html.net has a series of lessons on CSS](http://html.net/tutorials/css/) which you can work through. Like W3Schools, the tutorials on *html.net* are split into different parts, allowing you to jump into a particular part you may be stuck with.
 
--   The *W3C* [provides a neat tutorial on
-    CSS](http://www.w3.org/Style/Examples/011/firstcss.en.html), taking
-    you by the hand and guiding you through the different stages
-    required. They also introduce you to several new HTML elements along
-    the way, and show you how to style them accordingly.
--   [W3Schools also provides some cool CSS
-    tutorials](http://www.w3schools.com/css/css_examples.asp). Instead
-    of guiding you through the process of creating a webpage with CSS,
-    *W3Schools* has a series of mini-tutorials and code examples to show
-    you to to achieve a particular feature, such as setting a background
-    image. We highly recommend that you have a look here.
--   [html.net has a series of lessons on
-    CSS](http://html.net/tutorials/css/) which you can work through.
-    Like W3Schools, the tutorials on *html.net* are split into different
-    parts, allowing you to jump into a particular part you may be stuck
-    with.
--   It's also worth having a look at
-    [CSSeasy.com](http://csseasy.com/)'s collection of tutorials,
-    providing you with the basics on how to develop different kinds of
-    page layouts.
+This list is by no means exhaustive, and a quick web search will indeed yield much more about CSS for you to chew on. Just remember: CSS can be tricky to learn, and there may be times where you feel you want to throw your computer through the window. We say this is pretty normal - but take a break if you get to that stage. We'll be tackling some more advanced CSS stuff as we progress through the tutorial in the next few sections.
 
-This list is by no means exhaustive, and a quick web search will indeed
-yield much more about CSS for you to chew on. Just remember: CSS can be
-tricky to learn, and there may be times where you feel you want to throw
-your computer through the window. We say this is pretty normal - but
-take a break if you get to that stage. We'll be tackling some more
-advanced CSS stuff as we progress through the tutorial in the next few
-sections.
-
-> **note**
->
-> With an increasing array of devices equipped with more and more
-> powerful processors, we can make our web-based content do more. To
-> keep up, [CSS has constantly
-> evolved](http://www.w3schools.com/css3/css3_intro.asp) to provide new
-> and intuitive ways to express the presentational semantics of our
-> SGML-based markup. To this end, support [for relatively new CSS
-> properties](http://www.quackit.com/css/css3/properties/) may be
-> limited on several browsers, which can be a source of frustration. The
-> only way to reliably ensure that your website works across a wide
-> range of different browsers and platforms is to [test, test and test
-> some more!](http://browsershots.org/)
+I> ### CSS And Browser Compatibility
+I>
+I> With an increasing array of devices equipped with more and more powerful processors, we can make our web-based content do more. To keep up, [CSS has constantly evolved](http://blogs.adobe.com/dreamweaver/2015/12/the-evolution-of-css.html) to provide new  and intuitive ways to express the presentational semantics of our SGML-based markup. To this end, support [for relatively new CSS  properties](http://www.quackit.com/css/css3/properties/) may be limited on several browsers, which can be a source of frustration. The only way to reliably ensure that your website works across a wide range of different browsers and platforms is to [test, test and test some more!](http://browsershots.org/)
