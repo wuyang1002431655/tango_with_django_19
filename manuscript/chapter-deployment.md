@@ -1,4 +1,4 @@
-#Deploying Your Project{#chapter-deploy}
+#Deploying Your Project {#chapter-deploy}
 
 
 This chapter provides a step-by-step guide on how to deploy your Django
@@ -76,7 +76,6 @@ This command creates a new virtual environment called `rango` using the version 
 	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/preactivate
 	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/postactivate
 	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/get_env_details
-	(rango) 13:40 ~ $ 
 
 This process will take a little while to complete, after which you will
 be presented with a slightly different prompt.
@@ -221,7 +220,9 @@ You should be presented with the default []`Hello, World!` webpage](#hello-world
 application. Let's go change that.
 
 {#hello-world}
-![Default Hello World Application.](images/ch-deploy-hello-world.png)
+![Default Hello World Application.]
+(images/ch-deploy-hello-world.png)
+
 
 
 ###Configure the Virtual Environment
@@ -320,19 +321,16 @@ servers to serve your static content, for example From the
 PythonAnywhere dashboard, click the *Web* tab and choose the subdomain
 hosting your application from the list on the left.
 
-Underneath the *Static files* header, perform the following.
+Underneath the *Static files* header, perform the following. 
 
-1.  Click `Enter URL` and enter `/static/admin`, followed by return.
-2.  Click the corresponding `Enter path` text. Set this to
-    `/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/contrib/admin/static/admin`,
-    where `<username>` should be replaced with your PythonAnywhere
-    username. `<python-version>` should also be replaced with `2.7`, `3.3`, etc, depending on which one you selected. You may also need to change `rango` if this is not the
-    name of your application's virtual environment. Remember to hit
-    return to confirm the path.
-3.  Repeat the two steps above for the URL `/static/` and path
-    `/home/<username>/<path-to>/tango_with_django_project/static`,
-    with the path setting pointing to the `static` directory of your web
-    application.
+Click the `Enter path` text. Set this to:   
+
+{lang="python",linenos=off}  
+	/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/contrib/admin/static/admin
+	
+where `<username>` should be replaced with your PythonAnywhere username. `<python-version>` should also be replaced with `2.7`, `3.3`, etc, depending on which one you selected. You may also need to change `rango` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path. Then click `Enter URL` and enter `/static/admin`, followed by return.
+
+Repeat the two steps above for the URL `/static/` and path `/home/<username>/<path-to>/tango_with_django_project/static`,  with the path setting pointing to the `static` directory of your web application.
 
 With these changes saved, reload your web application by clicking the
 *Reload* button at the top of the page. Don't forget about potential
@@ -374,16 +372,13 @@ Log files can be viewed via the PythonAnywhere web interface by clicking
 on the *Web* tab, or by viewing the files in `/var/log/` within a Bash
 console instance. The files provided are:
 
--   `access.log`, which provides a log of requests made to your
-    subdomain;
--   `error.log`, which logs any error messages produced by your web
-    application; and
--   `server.log`, providing log details for the UNIX processes running
-    your application.
+- `access.log`, which provides a log of requests made to your subdomain;
+- `error.log`, which logs any error messages produced by your web application; and
+- `server.log`, providing log details for the UNIX processes running your application.
 
 Note that the names for each log file are prepended with your subdomain.
 For example, `access.log` will have the name
-`<username.pythonanywhere.com.access.log`.
+`<username>.pythonanywhere.com.access.log`.
 
 When debugging, you may find it useful to delete or move the log files
 so that you don't have to scroll through a huge list of previous
