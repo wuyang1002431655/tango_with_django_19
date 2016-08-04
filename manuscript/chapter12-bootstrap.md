@@ -1,6 +1,5 @@
 #Bootstrapping Rango {#chapter-bootstrap}
-In this chapter, we will be styling Rango using the *Twitter Bootstrap
-4 Alpha* toolkit. Bootstrap is the most popular HTML, CSS, JS Framework, which we can use to style our application. The toolkit lets you design and style responsive web applications, and is pretty easy to use once you get familiar with it.
+In this chapter, we will be styling Rango using the *Twitter Bootstrap 4 Alpha* toolkit. Bootstrap is the most popular HTML, CSS, JS Framework, which we can use to style our application. The toolkit lets you design and style responsive web applications, and is pretty easy to use once you get familiar with it.
 
 
 I> ### Cascading Style Sheets
@@ -440,4 +439,4 @@ In this chapter we have described how to quickly style your Django application u
 Now that Rango is starting to look better we can go back and add in the
 extra functionality that will really pull the application together.
 
-![A screenshot of the Registration page with customised Bootstrap Styling.](../images/ch12-styled-register.png)
+![A screenshot of the Registration page with customised Bootstrap Styling.](images/ch12-styled-register.png)
