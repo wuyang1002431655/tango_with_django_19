@@ -47,28 +47,17 @@ If you've coded up the tutorial using Python 3.x, then change `<python-version>`
 	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/postactivate
 	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/get_env_details
 
-This process will take a little while to complete, after which you will
-be presented with a slightly different prompt.
+Note in the example above, the PythonAnywhere username used is `rangodemo` - this will be replaced with your own username. The process of creating the virtual environment will take a little while to complete, after which you will be presented with a slightly different prompt.
 
 {lang="text",linenos=off}
 	(rango)13:40 ~ $
 
-Note the inclusion of `(rango)` compared to your previous command
-prompt. This signifies that we have activated the `rango` virtual
-environment, so any package installations will be done within that
-environment, leaving the wider system setup alone. If you issue the
-command `ls -la`, you will see that a directory called `.virtualenvs`
-has been created. This is the directory in which all of your virtual
-environments and associated packages will be stored. To confirm the
-setup, issue the command `which pip`. This will print the location in
-which the active `pip` binary is located - hopefully within
-`.virtualenvs` and `rango`, as shown in the example below.
+Note the inclusion of `(rango)` compared to the previous command prompt. This signifies that the `rango` virtual environment has been activated, so any package installations will be done within that virtual environment, leaving the wider system setup alone. If you issue the command `ls -la`, you will see that a directory called `.virtualenvs` has been created. This is the directory in which all of your virtual environments and associated packages will be stored. To confirm the setup, issue the command `which pip`. This will print the location in which the active `pip` binary is located - hopefully within `.virtualenvs` and `rango`, as shown in the example below.
 
 {lang="text",linenos=off}    
 	/home/<username>/.virtualenvs/test/bin/pip
 
-To see what packages are already installed, enter `pip list`. Now we can customise the virtual environment by installing the required packages for our Rango application. 
-Install all the required packages:
+To see what packages are already installed, enter `pip list`. Now we can customise the virtual environment by installing the required packages for our Rango application. Install all the required packages, by issuing the following commands.
 
 {lang="text",linenos=off}    
 	$ pip install -U django==1.9.5
@@ -76,28 +65,20 @@ Install all the required packages:
 	$ pip install django-registration-redux
 	$ pip install django-bootstrap-toolkit
 
-Alternatively, you could use `pip freeze > requirements.txt` to save your
-current development environment, and then on PythonAnywhere, run
-`pip install -r requirements.txt` to install all the packages in a job
-lot.
+Alternatively, you could use `pip freeze > requirements.txt` to save your current development environment, and then on PythonAnywhere, run `pip install -r requirements.txt` to install all the packages in one go.
 
-I> ###Waiting for the Bits to Download
+I> ### Waiting for the Bits to Download
 I>
-I> Installing all theses packages may take some time - so relax, call a friend, or tweet about our tutorial `@tangowithdjango`!
+I> Installing all theses packages may take some time, so you can relax, call a friend, or tweet about our tutorial `@tangowithdjango`!
 
-
-Once installed, check if Django has been installed with the command
-`which django-admin.py`. You should receive output similar to the
-following example.
+Once installed, check if Django has been installed with the command `which django-admin.py`. You should receive output similar to the following example.
 
 {lang="text",linenos=off}    
 	/home/<username>/.virtualenvs/rango/bin/django-admin.py
 
 I> ###Virtual Environments on PythonAnywhere
 I>
-I> PythonAnywhere also provides instructions on how to setup virtual
-I> environments, see
-I> <https://www.pythonanywhere.com/wiki/VirtualEnvForNewerDjango>.
+I> PythonAnywhere also provides instructions on how to setup virtual environments. [Check out their Wiki documentation for more information](https://help.pythonanywhere.com/pages/VirtualEnvForNewerDjango).
 
 ### Virtual Environment Switching
 
