@@ -161,7 +161,7 @@ I> So, another friendly reminder: *don't simply copy and paste code!*
 
 In the module above, we have implemented two functions: one to retrieve your Bing API key, and another to actually issue a given query to the Bing search engine. Below, we discuss how both of the functions work.
 
-### `read_bing_key()` - Reading the Bing Key
+### `read_bing_key()` - Reading the Bing Key {#section-bing-adding-key}
 The `read_bing_key()` function reads in your key from a file called `bing.key`, located in your Django project's root directory (i.e. `<workspace>/tango_with_django/`). We have created this function because if you are putting your code into a public repository on GitHub for example, you should take some precautions to avoid sharing your API Key publicly. 
 
 From the Azure website, take a copy of your *Account key* and save it into `<workspace>/tango_with_django/bing.key`. The key should be the only contents of the file - nothing else should exist within it. This file should be kept from being committed to your GitHub repository. To make sure that you do not accidentally commit it, update your repository's `.gitignore` file to exclude any files with a `.key` extension, by adding the line `*.key`. This way, your key file will only be stored locally and you will not end up with someone using your query quota.

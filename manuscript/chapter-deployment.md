@@ -202,11 +202,11 @@ We're almost there. One issue which we still have to address is to sort out path
 
 Underneath the *Static files* header, perform the following. 
 
-Click the `Enter path` text. Set this to:   
+Click the `Enter path` text. Set this to (all on one line):   
 
 {lang="python",linenos=off}  
 	/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/
-	    contrib/admin/static/admin
+	  contrib/admin/static/admin
 	
 where `<username>` should be replaced with your PythonAnywhere username. `<python-version>` should also be replaced with `2.7`, `3.4`, etc., depending on which Python version you selected. You may also need to change `rango` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path. Then click `Enter URL` and enter `/static/admin`, followed by hitting return.
 
