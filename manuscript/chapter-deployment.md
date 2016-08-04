@@ -33,7 +33,7 @@ First, open a Bash console from the PythonAnywhere *Consoles* tab by clicking th
 {lang="bash",linenos=off}    
 	$ mkvirtualenv --python=<python-version> rango
 
-If you've coded up the tutorial using Python 3.x, then change `<python-version>` to either *python3.4* or *python3.5*. If your are using Python 2.7.x, then change `<python-version>` to *python2.7*. The command you enter creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
+If you've coded up the tutorial using Python 3.x, then change `<python-version>` to either `python3.4` or `python3.5`. If your are using Python 2.7.x, then change `<python-version>` to `python2.7`. The command you enter creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
 
 {lang="bash",linenos=off}
 	13:38 ~ $ mkvirtualenv --python=python2.7 rango
@@ -41,11 +41,11 @@ If you've coded up the tutorial using Python 3.x, then change `<python-version>`
 	New python executable in /home/rangodemo/.virtualenvs/rango/bin/python2.7
 	Also creating executable in /home/rangodemo/.virtualenvs/rango/bin/python
 	Installing setuptools, pip, wheel...done.
-	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/predeactivate
-	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/postdeactivate
-	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/preactivate
-	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/postactivate
-	virtualenvwrapper.user_scripts creating /home/rangodemo/.virtualenvs/rango/bin/get_env_details
+	virtualenvwrapper creating /home/rangodemo/.virtualenvs/.../predeactivate
+	virtualenvwrapper creating /home/rangodemo/.virtualenvs/.../postdeactivate
+	virtualenvwrapper creating /home/rangodemo/.virtualenvs/.../preactivate
+	virtualenvwrapper creating /home/rangodemo/.virtualenvs/.../postactivate
+	virtualenvwrapper creating /home/rangodemo/.virtualenvs/.../get_env_details
 
 Note in the example above, the PythonAnywhere username used is `rangodemo` - this will be replaced with your own username. The process of creating the virtual environment will take a little while to complete, after which you will be presented with a slightly different prompt.
 
