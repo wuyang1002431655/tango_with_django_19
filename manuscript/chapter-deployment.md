@@ -19,11 +19,10 @@ The PythonAnywhere web interface contains a *dashboard* which in turn provides a
 - a *schedule* tab, allowing you to setup tasks to be executed at particular times; and
 - a *databases* tab, which allows you to configure a MySQL instance for your applications should you require it.
 
-Of the the five tabs provided, we'll be working primarily with the *consoles* and *web* tabs. The [PythonAnywhere wiki](https://www.pythonanywhere.com/wiki/) provides a series of detailed explanations on how to use the other tabs.
+Of the five tabs provided, we'll be working primarily with the *consoles* and *web* tabs. The [PythonAnywhere Wiki](https://www.pythonanywhere.com/wiki/) provides a series of detailed explanations on how to use the other tabs.
 
 {#pa-interface}
 ![The PythonAnywhere dashboard, showing the *Consoles* tab.](images/ch-deploy-pa-interface.png)
-
 
 ## Creating a Virtual Environment
 As part of a its standard default Bash environment, PythonAnywhere comes with Python 2.7.6 and a number of pre-installed Python Packages (including *Django 1.3.7* and *Django-Registration 0.8*). Since we are using a different setup, we need to select a particular Python version and setup a virtual environment for our application.
@@ -130,7 +129,7 @@ Now that the database is setup, we need to configure the PythonAnywhere [*NGINX*
 
 A popup box will then appear. Follow the instructions on-screen, and when the time comes, select the *manual configuration* option and complete the wizard. Make sure you select the same Python version as the one you selected earlier.
 
-In a new tab or window in your web browser, go visit the domain `http://<username>.pythonanywhere.com`. You should be presented with the [default `Hello, World!` webpage, as shown below](#hello-world). This is because the WSGI script is currently serving up this page, and not your Django application. This is what we need to change next.
+In a new tab or window in your Web browser, go visit your PythonAnywhere subdomain at the address `http://<username>.pythonanywhere.com`. You should be presented with the [default `Hello, World!` webpage, as shown below](#hello-world). This is because the WSGI script is currently serving up this page, and not your Django application. This is what we need to change next.
 
 {#hello-world}
 ![The default PythonAnywhere *hello world* webpage.](images/ch-deploy-hello-world.png)
@@ -176,7 +175,8 @@ The good people at PythonAnywhere have set up a sample WSGI file for us with sev
 	os.chdir(path)
 	
 	# TELL DJANGO WHERE YOUR SETTINGS MODULE IS LOCATED
-	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
+	os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+	                      'tango_with_django_project.settings')
 	
 	# IMPORT THE DJANGO SETUP
 	import django
@@ -191,14 +191,13 @@ Ensure that you replace `<username>` with your PythonAnywhere username, and upda
 
 The script adds your project's directory to the `PYTHONPATH` for the Python instance that runs your web application. This allows Python to access your project's modules. If you have additional paths to add, you can easily insert them here. You can then specify the location of your project's `settings.py` module. The final step is to include the Django WSGI handler and invoke it for your application.
 
-When you have completed the WSGI configuration, click the *Save* button at the top-right of the webpage. Navigate back to the *Web* tab within the PythonAnywhere dashboard, and click the *Reload* button at the top of the page. When the application is reloaded, visit `http://<username>.pythonanywhere.com`. Hopefully, it all went well, you should see your application up and running. If not, check through your scripts and paths carefully. Double check your paths by actually visiting the directories, and use `pwd` to confirm the path. 
+When you have completed the WSGI configuration, click the *Save* button at the top-right of the webpage. Navigate back to the *Web* tab within the PythonAnywhere dashboard, and click the *Reload* button at the top of the page. When the application is reloaded, you can then revisit your PythonAnywhere subdomain at `http://<username>.pythonanywhere.com`. Hopefully, if all went well, you should see your application up and running. If not, check through your scripts and paths carefully. Double check your paths by actually visiting the directories, and use `pwd` to confirm the path. 
 	
 I> ### Bad Gateway Errors??
 I>
 I> During testing, we noted that you can sometimes receive `HTTP 502 - Bad Gateway` errors instead of your application. Try reloading your application again, and then waiting a longer. If the problem persists, try reloading again. If the problem still persists, [check out your log files](#section-deploy-logfiles) to see if any accesses/errors are occurring, before contacting the PythonAnywhere support.
 
 ### Assigning Static Paths
-
 We're almost there. One issue which we still have to address is to sort out paths for our application. Doing so will allow PythonAnywhere's servers to serve your static content, for example From the PythonAnywhere dashboard, click the *Web* tab and choose the subdomain hosting your application from the list on the left.
 
 Underneath the *Static files* header, perform the following. 
@@ -206,7 +205,8 @@ Underneath the *Static files* header, perform the following.
 Click the `Enter path` text. Set this to:   
 
 {lang="python",linenos=off}  
-	/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/contrib/admin/static/admin
+	/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/
+	    contrib/admin/static/admin
 	
 where `<username>` should be replaced with your PythonAnywhere username. `<python-version>` should also be replaced with `2.7`, `3.4`, etc., depending on which Python version you selected. You may also need to change `rango` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path. Then click `Enter URL` and enter `/static/admin`, followed by hitting return.
 
@@ -219,7 +219,6 @@ With these changes saved, reload your web application by clicking the *Reload* b
 [Add your Bing API key]({#section-bing-adding-key}) to `bing.key` to enable the search functionality in Rango.
 
 ### Turning off `DEBUG` Mode
-
 When you application is ready to go, it's a good idea to instruct Django that your application is now hosted on a production server. To do this, open your project's `settings.py` file and change `DEBUG = True` to `DEBUG = False`. This disables [Django's debug mode](https://docs.djangoproject.com/en/1.9/ref/settings/#debug), and removes explicit error messages.
 
 Changing the value of `DEBUG` also means you should set the `ALLOWED_HOSTS` property. Failing to perform this step will make Django return `HTTP 400 Bad Request` errors. Alter `ALLOWED_HOSTS` so that it includes your PythonAnywhere subdomain like in the example below.
@@ -230,8 +229,7 @@ Changing the value of `DEBUG` also means you should set the `ALLOWED_HOSTS` prop
 Again, ensure `<username>` is changed to your PythonAnywhere username. Once complete, save the file and reload the application via the PythonAnywhere Web interface.
 
 ## Log Files {#section-deploy-logfiles}
-
-Deploying your web application to an online environment introduces another layer of complexity. It is likely that you will encounter new and bizarre errors due to unsuspecting problems. When facing such errors, vital clues may be found in one of the three log files that the Web server on PythonAnywhere creates.
+Deploying your Web application to an online environment introduces another layer of complexity. It is likely that you will encounter new and bizarre errors due to unsuspecting problems. When facing such errors, vital clues may be found in one of the three log files that the Web server on PythonAnywhere creates.
 
 Log files can be viewed via the PythonAnywhere web interface by clicking on the *Web* tab, or by viewing the files in `/var/log/` within a Bash console instance. The files provided are:
 
