@@ -204,7 +204,7 @@ migrations for the rango application, then the migrate command creates
 the *SQLlite3* database. Once the database is created, the database can be
 populated and a superuser created.
 
-##Setting up your Web Application
+##Setting up Your Web Application
 
 Now that the database is setup, we need to configure the PythonAnywhere
 NGINX webserver to serve up your application . Within PythonAnywhere's

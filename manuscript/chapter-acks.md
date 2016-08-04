@@ -21,6 +21,7 @@ Duncan Drizy
 [Burak K.](https://github.com/McMutton)
 [koviusesGitHub](https://github.com/koviusesGitHub)
 Nitin Tulswani
+Mike Gleen
 
 Thank you all very much!
 

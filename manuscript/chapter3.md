@@ -1,7 +1,7 @@
 #Django Basics {#chapter-django-basics}
 Let's get started with Django! In this chapter, we'll be giving you an overview of the creation process. You'll be setting up a new project and a new Web application. By the end of this chapter, you will have a simple Django powered website up and running!
 
-##Testing your Setup
+##Testing Your Setup
 
 Let's start by checking that your Python and Django installations are
 correct for this tutorial. To do this, open a new terminal window and issue the following
@@ -47,7 +47,7 @@ I> Snippets beginning with a dollar sign (`$`) indicates that the remainder of t
 I>
 I> Whenever you see `>>>`, the following is a command that should be entered into the interactive Python interpreter. This is launched by issuing `$ python`. See what we did there? You can also exit the Python interpreter by entering `>>> quit()`.
 
-##Creating your Django Project
+##Creating Your Django Project
 To create a new Django Project, go to your `workspace` directory, and issue the following command:
 
 {lang="text",linenos=off}

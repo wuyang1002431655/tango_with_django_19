@@ -14,7 +14,7 @@ Before we get started, let's go over the data requirements for the Rango app tha
 {id="fig-rango-erd-repeat"}
 ![The Entity Relationship Diagram of Rango's two main entities.](images/rango-erd.png)
 
-## Telling Django about your Database {#section-models-database-telling}
+## Telling Django about Your Database {#section-models-database-telling}
 Before we can create any models, we need to set up our database with Django. In Django 1.9, a `DATABASES` variable is automatically created in your `settings.py` module when you set up a new project. It'll look similar to the following example.
 
 {lang="python",linenos=off}
@@ -194,7 +194,7 @@ This will start an instance of the Python interpreter and load in your project's
 	
 	# Now list all the category objects stored once more.
 	>>> print(Category.objects.all())
-	[<Category: test>] # We now have a category called 'test' saved in the database!
+	[<Category: test>] # We now have a category called 'Test' saved in the database!
 	
 	# Quit the Django shell.
 	>>> quit()
