@@ -1,71 +1,41 @@
-#Deploying Your Project {#chapter-deploy}
+# Deploying Your Project {#chapter-deploy}
+This chapter provides a step-by-step guide on how to deploy your Django applications. We'll be looking at deploying applications on [PythonAnywhere](https://www.pythonanywhere.com/?affiliate_id=000116e3), an online IDE and web hosting service. The service provides in-browser access to the server-based Python and Bash command line interfaces, meaning you can interact with PythonAnywhere's servers just like you would with a regular terminal instance on your own computer. Currently, PythonAnywhere are offering a free account which sets you up with an adequate amount of storage space and CPU time to get a Django application up and running.
 
-
-This chapter provides a step-by-step guide on how to deploy your Django
-applications. We'll be looking at deploying applications on
-[PythonAnywhere](https://www.pythonanywhere.com/?affiliate_id=000116e3), an online IDE and web
-hosting service. The service provides in-browser access to the
-server-based Python and Bash command line interfaces, meaning you can
-interact with PythonAnywhere's servers just like you would with a
-regular terminal instance on your own computer. Currently,
-PythonAnywhere are offering a free account which sets you up with an
-adequate amount of storage space and CPU time to get a Django
-application up and running.
-
-I> ###Go Git It
+I> ### Go Git It!
 I>
-I> You can do this chapter independently (assuming you have some
-I> knowledge of Git, if not refer to the [chapter on using git](#chapter-git)).
+I> You can do this chapter independently, assuming you have some working knowledge of Git. If you don't, refer to the [chapter on using Git](#chapter-git)).
 
-##Creating a PythonAnywhere Account
+## Creating a PythonAnywhere Account
+First, [sign up for a Beginner PythonAnywhere account](https://www.pythonanywhere.com/?affiliate_id=000116e3). If your application takes off and becomes popular, you can always upgrade your account at a later stage to gain more storage space and CPU time along with a number of other benefits - such as hosting specific domains and SSH abilities, for example.
 
-First [sign up for a Beginner PythonAnywhere
-account](https://www.pythonanywhere.com/?affiliate_id=000116e3). If your application
-takes off and becomes popular, you can always upgrade your account at a
-later stage to gain more storage space and CPU time along with a number
-of other benefits (like hosting specific domains and SSH abilities, etc).
+Once your account has been created, you will have your own little slice of the World Wide Web at `http://<username>.pythonanywhere.com`, where `<username>` is your PythonAnywhere username. It is from this URL that your hosted application will be available.
 
-Once your account has been created, you will have your own little slice
-of the World Wide Web at `http://<username>.pythonanywhere.com`, where
-`<username>` is your PythonAnywhere username. It is from this URL that
-your hosted application will be available from.
-
-##The PythonAnywhere Web Interface
-
-The PythonAnywhere web interface contains a *dashboard* which in turn
-provides a series of tabs allowing you to manage your application. The
-tabs as [illustrated in the figure below](#pa-interface) include:
+## The PythonAnywhere Web Interface
+The PythonAnywhere web interface contains a *dashboard* which in turn provides a series of tabs allowing you to manage your application. The tabs as [illustrated in the figure below](#pa-interface) include:
 
 - a *consoles* tab, allowing you to create and interact with Python and Bash console instances;
 - a *files* tab, which allows you to upload to and organise files within your disk quota;
--   a *web* tab, allowing you to configure settings for your hosted web application;
--   a *schedule* tab, allowing you to setup tasks to be executed at particular times; and
--   a *databases* tab, which allows you to configure a MySQL instance for your applications should you require it.
+- a *web* tab, allowing you to configure settings for your hosted web application;
+- a *schedule* tab, allowing you to setup tasks to be executed at particular times; and
+- a *databases* tab, which allows you to configure a MySQL instance for your applications should you require it.
 
-Of the the five tabs provided, we'll be working primarily with the
-*consoles* and *web* tabs. The [PythonAnywhere
-wiki](https://www.pythonanywhere.com/wiki/) provides a series of
-detailed explanations on how to use the other tabs.
+Of the the five tabs provided, we'll be working primarily with the *consoles* and *web* tabs. The [PythonAnywhere wiki](https://www.pythonanywhere.com/wiki/) provides a series of detailed explanations on how to use the other tabs.
 
 {#pa-interface}
-![The PythonAnywhere dashboard, showing the *Consoles*
-tab.](images/ch-deploy-pa-interface.png)
+![The PythonAnywhere dashboard, showing the *Consoles* tab.](images/ch-deploy-pa-interface.png)
 
 
-##Creating a Virtual Environment
-As part of a its standard default BASH environment, PythonAnywhere comes with a Python 2.7.6 and a number of pre-installed Python Packages (i.e. *Django 1.3.7*, *Django-Registration 0.8*, etc). Since we are using a different setup, we need to select Python Version and setup a virtual environment for our application.
+## Creating a Virtual Environment
+As part of a its standard default Bash environment, PythonAnywhere comes with Python 2.7.6 and a number of pre-installed Python Packages (including *Django 1.3.7* and *Django-Registration 0.8*). Since we are using a different setup, we need to select a particular Python version and setup a virtual environment for our application.
 
-First, open a Bash console from the PythonAnywhere *Consoles* tab by
-clicking the *Bash* link. When the terminal is ready for you to
-interact, enter the following commands.
+First, open a Bash console from the PythonAnywhere *Consoles* tab by clicking the *Bash* link. When the terminal is ready for you to use, enter the following commands.
 
-{lang="text",linenos=off}    
+{lang="bash",linenos=off}    
 	$ mkvirtualenv --python=<python-version> rango
 
-If you've coded up the tutorial using Python 3, then change `<python-version>` to either *python3.3*, *python3.4* or *python3.5*. If your are using Python 2.7, then change `<python-version>` to *python2.7*. 
-This command creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
+If you've coded up the tutorial using Python 3.x, then change `<python-version>` to either *python3.4* or *python3.5*. If your are using Python 2.7.x, then change `<python-version>` to *python2.7*. The command you enter creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
 
-{lang="text",linenos=off}
+{lang="bash",linenos=off}
 	13:38 ~ $ mkvirtualenv --python=python2.7 rango
 	Running virtualenv with interpreter /usr/bin/python2.7
 	New python executable in /home/rangodemo/.virtualenvs/rango/bin/python2.7
@@ -163,7 +133,7 @@ an example shown below.
 	(rango) 16:49 ~ $ deactivate 
 	16:51 ~ $
 
-###Cloning your Git Repository
+### Cloning your Git Repository
 Now that your virtual environment for Rango is all setup, you can now
 clone your Git repository to obtain a copy of your project's files.
 Clone your repository by issuing the following command from your home
@@ -204,7 +174,7 @@ migrations for the rango application, then the migrate command creates
 the *SQLlite3* database. Once the database is created, the database can be
 populated and a superuser created.
 
-##Setting up Your Web Application
+## Setting up Your Web Application
 
 Now that the database is setup, we need to configure the PythonAnywhere
 NGINX webserver to serve up your application . Within PythonAnywhere's
@@ -225,7 +195,7 @@ application. Let's go change that.
 
 
 
-###Configure the Virtual Environment
+### Configure the Virtual Environment
 To set the virtual environment, navigate to the *Web* tab in PythonAnywhere's dashboard. From there scroll all the way down under you see the heading *Virtualenv*. 
 
 Enter in the path to your virtual environment. Assuming you created a virtual environment called `rango` the path would be:
@@ -360,7 +330,7 @@ Again, ensure `<username>` is changed to your PythonAnywhere username.
 Once complete, save the file and reload the application via the
 PythonAnywhere web interface.
 
-##Log Files
+## Log Files
 
 Deploying your web application to an online environment introduces
 another layer of complexity. It is likely that you will encounter new
