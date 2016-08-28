@@ -39,7 +39,7 @@ To tell the Django project where templates will be stored, open your project's `
 What we need to do to tell Django where our templates are stored is modify the `DIRS` list, and is set to an empty list by default. Change the dictionary key/value pair to look like the following.
 
 {lang="python",linenos=off}
-	'DIRS': ['<workspace>/templates']
+	'DIRS': ['<workspace>/tango_with_django_project/templates']
 
 Note that you are *required to use absolute paths* to locate the `templates` directory. If you are collaborating with team members or working on different computers, then this will become a problem. You'll have different usernames and different drive structures, meaning the paths to the `<workspace>` directory will be different. One solution would be to the path for each different configuration, for example:
 	

@@ -249,7 +249,7 @@ W> Remember to add `{% load staticfiles %}` to the top of **each template** that
 `base.html`.](../images/rango-template-inheritance.svg)
 -->
 
-## The `render()` method and the `request` Context
+## The `render()` Method and the `request` Context
 When writing views we have used a number of different methods, the preferred way is to use the Django shortcut method `render()`. The `render()` method requires that you pass through the `request` as the first argument. The `request` context houses a lot of information regarding the session, the user, etc, see the [Official Django Documentation on Request objects](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). By passing the `request` through to the template mean that you will also have access to such information when creating templates. In the next chapter we will access information about the `user` - but for now check through all of your views and make sure that they have been implemented using the `render()` method. Otherwise, your templates wont have the information we need later on.
 
 I> ### Render and Context

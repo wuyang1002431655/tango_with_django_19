@@ -10,7 +10,7 @@ this chapter, we will describe:
 - explain how to interpret JQuery code
 - and provide a number of small examples
 
-##Including JQuery in your Django Project/Application
+##Including JQuery in Your Django Project/Application
 
 In your *base* template include a reference to:
 
