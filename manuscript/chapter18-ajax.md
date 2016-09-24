@@ -231,7 +231,7 @@ returns the top 8 matching results as follows:
 			starts_with = request.GET['suggestion']
 		cat_list = get_category_list(8, starts_with)
 		
-		return render(request, 'rango/cats.html', {'cat_list': cat_list })
+		return render(request, 'rango/cats.html', {'cats': cat_list })
 
 
 Note here we are re-using the `rango/cats.html` template :-).

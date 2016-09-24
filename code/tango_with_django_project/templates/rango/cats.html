@@ -7,7 +7,5 @@
 		         <li><a href="{% url 'show_category' c.slug %}">{{ c.name }}</a></li>
 		    {% endif %}
 		{% endfor %}
-	{% else %}
-		<li> <strong>There are no category present.</strong></li>
 	{% endif %}
 	</ul>
