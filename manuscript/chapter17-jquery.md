@@ -1,14 +1,13 @@
 #JQuery and Django
 
-JQuery rocks! JQuery is a library written in Javascript that seriously
-pimps its power and utility. A few lines of JQuery often encapsulates
-hundreds of lines of javascript. JQuery provides a suite of
+JQuery rocks! JQuery is a library written in Javascript that lets you access the power of Javascript without the pain. This is because a few lines of JQuery often encapsulates
+hundreds of lines of Javascript. Also, JQuery provides a suite of
 functionality that is mainly focused on manipulating HTML elements. In
 this chapter, we will describe:
 
 - how to incorporate JQuery within your Django Application
 - explain how to interpret JQuery code
-- and provide a number of small examples
+- and provide a number of small examples 
 
 ##Including JQuery in Your Django Project/Application
 
@@ -29,12 +28,12 @@ you can also just directly refer to it:
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
 
-Make sure you have your static files set up (see Chapter setup-label)
+Make sure you have your static files set up (see [Chapter Templates and Static Media](#chapter-templates-static))
 
 In the static folder create a *js* folder and plonk the JQuery
 javascript file (`jquery.js`) here along with an file called
-`rango-jquery.js`, which will house our javascript code. In
-`rango-jquery.js`, add the following javascript:
+`rango-jquery.js`, which will house our Javascript code. In
+`rango-jquery.js`, add the following Javascript:
 
 {lang="javascript",linenos=off}
 	$(document).ready(function() {
@@ -48,15 +47,16 @@ ready i.e. the complete page is loaded, then the anonymous function
 denoted by `function(){ }` will be executed. It is pretty typical, if
 not standard, to wait until the document has been finished loading
 before running the JQuery functions. Otherwise, the code my try to run,
-but the HTML elements may not have been downloaded (see
-<http://api.jquery.com/ready/>).
+but the HTML elements may not have been downloaded. See the [JQuery Documentation on Ready](<http://api.jquery.com/ready/) for more details.
 
 I> ### Stylistic Note
 I>
 I> JQuery requires you to think in a more `functional` programming style, as opposed to the typical 
 I> Javascript style which is often written in a more `procedural` programming style. For all the 
-I> JQuery commands they follow a similar pattern: Select and Act. Select an element, and then act on I> the element. So it is good to keep this in mind. There are different selection operators, and 
-I> various actions that can then be performed/applied. In the next, subsections we will take a few I> JQuery functions that you can use to manipulate the HTML elements.
+I> JQuery commands they follow a similar pattern: Select and Act. Select an element, and then act on 
+I> the element. So it is good to keep this in mind. There are different selection operators, and 
+I> various actions that can then be performed/applied. In the next, subsections we will take a few 
+I> JQuery functions that you can use to manipulate the HTML elements.
 
 ###Example Popup Box on Click
 
@@ -66,7 +66,7 @@ same functionality in standard Javascript versus JQuery.
 In your `about.html` template, add the following piece of code:
 
 {lang="html",linenos=off}
-	<button onClick="alert('You clicked the button using Javascript.');"> 
+	<button  class="btn btn-primary" onClick="alert('You clicked the button using Javascript.');"> 
 		Click Me - I run Javascript 
 	</button>
 
@@ -76,12 +76,12 @@ handler of the button. Load up the `about` page, and try it out.
 Now lets do it using JQuery, by first adding another button:
 
 {lang="html",linenos=off}
-	<button id="about-btn"> Click Me - I'm Javascript on Speed</button>
+	<button  class="btn btn-primary" id="about-btn"> Click Me - I'm Javascript on Speed</button>
 		<p>This is a example</p>
 		<p>This is another example</p>
 
 
-Notice that there is not javascript code associated with the button
+Notice that there is not Javascript code associated with the button
 currently. We will be doing that with the following code added to
 `rango-jquery.js`:
 
@@ -107,7 +107,7 @@ true for a simple function like `alert()` but for more complex functions
 it is much cleaner, as the JQuery/Javascript code is maintained in a
 separate file (completely!!). This is because we assign the event
 handler at run-time rather than statically within the code. We achieve
-separation of concerns between the jquery/javascript code and the html
+separation of concerns between the Jquery/Javascript code and the html
 code.
 
 T> ###Keep Them Separated
@@ -133,7 +133,7 @@ Then all elements, that had a `class="ouch"` would be selected, and
 assigned to its on click handler, the `alert()` function. Note that all
 the elements would be assigned the same function.
 
-Also, html tags can also be selected by referring to the tag in the
+Also, HTML tags can also be selected by referring to the tag in the
 selector:
 
 {lang="javascript",linenos=off}
@@ -145,7 +145,9 @@ selector:
 	});
 
 
-Here, we are selecting all the `p` html elements, and on hover we are
+Add this Javascript to your `rango-jquery.js`, and then in the `about.html` template, add a paragraph, `<p>This text is for a Jquery Example</p>`. Try it out, go to the about page and hover over the text.
+
+Here, we are selecting all the `p` HTML elements, and on hover we are
 associated two functions, one for on hover, and the other for hover off.
 You can see that we are using another selector called, `this`, which
 selects the element in question, and then sets it color to red or blue,
@@ -182,7 +184,7 @@ It is also possible to access the html of a particular element. For
 example, lets put a `div` in the `about.html`:
 
 {lang="html",linenos=off}
-	<div id="msg">Hello</div>
+	<div id="msg">Hello  - I'm here for a Jquery Example too</div>
 
 
 Then add the following JQuery to `rango-jquery.js`:
@@ -190,14 +192,14 @@ Then add the following JQuery to `rango-jquery.js`:
 {lang="javascript",linenos=off}
 	$("#about-btn").click( function(event) {
 		msgstr = $("#msg").html()
-		msgstr = msgstr + "o"
+		msgstr = msgstr + "ooo"
 		$("#msg").html(msgstr)
 	 });
 
 
 On click of the element with id `#about-btn`, we first get the html
 inside the element with id `msg` and append "o" to it. Then we change
-the html inside the element by calling the `html` function again, but
+the HTML inside the element by calling the `html` function again, but
 this time passing through string `msgstr` to replace the html inside
 that element.
 

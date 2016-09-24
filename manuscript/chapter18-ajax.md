@@ -252,7 +252,7 @@ In the base template in the sidebar div add in the following HTML code:
 		<li class="nav-header">Find a Category</li>
 		<form>
 			<label></label>
-			<li><input  class="search-query span10" type="text" 
+			<li><input  class="search-query" type="text" 
 				name="suggestion" value="" id="suggestion" />
 			</li>
 		</form>
@@ -289,7 +289,7 @@ the category list html.
 
 X> ###Exercises
 X>
-X>To let registered users quickly and easily add a Page to the 
+X> To let registered users quickly and easily add a Page to the 
 X> Category put an "Add" button next to each search result.
 X> - Update the `category.html` template:
 X> 		- Add a mini-button next to each search result (if the user is authenticated), garnish the button with the title and URL data, so that the JQuery can pick it out.

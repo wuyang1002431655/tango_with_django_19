@@ -8,7 +8,7 @@
 			$('#likes').hide();
 		});
 	});
-	});
+
 
 
 
@@ -18,4 +18,7 @@
 		$.get('/rango/suggest/', {suggestion: query}, function(data){
 			$('#cats').html(data);
 		});
+	});
+
+
 	});
