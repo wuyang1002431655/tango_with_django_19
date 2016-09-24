@@ -285,34 +285,47 @@ contents of the input box is obtained and placed into the `query`
 variable. Then a AJAX GET request is made calling
 `/rango/category_suggest/` with the `query` as the parameter. On
 success, the HTML element with id="cats" i.e. the div, is updated with
-the category list html.
+the category list HTML.
 
 X> ###Exercises
 X>
 X> To let registered users quickly and easily add a Page to the 
 X> Category put an "Add" button next to each search result.
 X> - Update the `category.html` template:
-X> 		- Add a mini-button next to each search result (if the user is authenticated), garnish the button with the title and URL data, so that the JQuery can pick it out.
-X>		- Put a \<div\> with `id="page"` around the pages in the category so that it can be updated when pages are added.
+X> 		- Add a small button next to each search result (if the user is authenticated), garnish the button with the title and URL data, so that the JQuery can pick it out.
+X>		- Put a `<div>` with `id="page"` around the pages in the category so that it can be updated when pages are added.
 X> - Remove that link to `add` button, if you like.
-X> - Create a view auto\_add\_page that accepts a parameterised GET request (title, url, catid) and adds it to the category
-X> - Map an url to the view `url(r'^auto_add_page/$', views.auto_add_page, name='auto_add_page'),`
-X> - Add an event handler to the button using JQuery - when added hide the button. The response could also update the pages listed on the category page, too.
+X> - Create a view `auto_add_page` that accepts a parameterised GET request (title, url, catid) and adds it to the category
+X> - Map an url to the view `url(r'^add/$', views.auto_add_page, name='auto_add_page'),`
+X> - Add an event handler to the add buttons using JQuery - when added hide the button. The response could also update the pages listed on the category page, too.
 
 
 T> ### Hints
 T>
-T> HTML Template code:
+T> HTML Template code for `category.html`:
 T> {lang="html",linenos=off}
 T> 		{% if user.is_authenticated %}
 T> 			<button data-catid="{{category.id}}" data-title="{{ result.title }}"
 T>				 data-url="{{ result.link }}" 
-T>					class="rango-add btn btn-mini btn-info btn-sm" type="button">Add</button>
+T>					class="rango-add btn btn-info btn-sm" type="button">Add</button>
 T>		{% endif %}
 T>
 T> JQuery code:
-T>  
-T> Note here we are assigned the event handler to all the buttons with class `rango-add`.
+T> 
+T> {lang="javascript",linenos=off}
+T> 			$('.rango-add').click(function(){
+T> 				var catid = $(this).attr("data-catid");
+T> 				var url = $(this).attr("data-url");
+T> 				var title = $(this).attr("data-title");
+T> 				var me = $(this)
+T> 				$.get('/rango/add/', 
+T> 					{category_id: catid, url: url, title: title}, function(data){
+T> 						$('#pages').html(data);
+T> 						me.hide();
+T> 					});
+T> 				});  
+T>
+T> Note that we need to assign the click event handler to all the buttons with class `rango-add`.
 T>
 T>View code:
 T>
@@ -333,3 +346,23 @@ T> 					p = Page.objects.get_or_create(category=category, title=title, url=url)
 T> 					pages = Page.objects.filter(category=category).order_by('-views')
 T> 					# Adds our results list to the template context under name pages.
 T> 					context_dict['pages'] = pages
+T>			return render(request, 'rango/page_list.html', context_dict)
+T>
+T>
+T> HTML Template code for `page_list.html`
+T>
+T> {lang="html",lineos=off}
+T> 		{% if pages %}
+T>			<ul>
+T>			{% for page in pages %}
+T>			<li><a href="{% url 'goto' %}?page_id={{page.id}}"\>{{ page.title }}</a></li>
+T>			{% endfor %}
+T>			</ul>
+T>		{% else %}
+T>			<strong>No pages currently in category.</strong>
+T>		{% endif %}
+T>
+T>
+T> Don't forget to add in your URL mapping, too!
+T>
+T> ` url(r'^add/$', views.auto_add_page, name='auto_add_page'),`

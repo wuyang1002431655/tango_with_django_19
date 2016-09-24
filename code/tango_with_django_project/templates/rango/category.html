@@ -19,7 +19,7 @@
 	{% endif %}
 	</div>
 
-		
+		<div id="pages">
 		{% if pages %}
 		<ul>
 			{% for page in pages %}
@@ -29,14 +29,14 @@
 		{% else %}
 			<strong>No pages currently in category.</strong>
 		{% endif %}
-		<!-- {% if user.is_authenticated %} {% endif %} -->
-		<a href="{% url 'add_page' category.slug %}">Add a Page</a>
+
 		
 	{% else %}
 		The specified category does not exist!
 	{% endif %}
-
-
+		</div>
+<!-- {% if user.is_authenticated %} {% endif %} -->
+		<a href="{% url 'add_page' category.slug %}">Add a Page</a>
 	</div>
 
 	<hr>
@@ -63,6 +63,11 @@
 					<a href="{{ result.link }}">{{ result.title }}</a>
 					</h4>
 					<p class="list-group-item-text">{{ result.summary }}</p>
+						{% if user.is_authenticated %}
+						<button data-catid="{{category.id}}" data-title="{{ result.title }}"
+					 data-url="{{ result.link }}"
+						class="rango-add btn btn-info btn-sm" type="button">Add</button>
+					{% endif %}
 					</div>
 				{% endfor %}
 				</div>
