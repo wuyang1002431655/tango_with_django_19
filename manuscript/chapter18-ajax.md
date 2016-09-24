@@ -196,6 +196,12 @@ With these elements added into the templates, you can add in some JQuery to upda
 	- If the call is successful, replace the content of the `<div>` with id="cats" with the data received.
 	- Here you can use the JQuery `.html()` function i.e. `$('#cats').html( data )`
 
+X> ###Exercise
+X>
+X> Update the population script by adding in the following categories: Pascal, Perl, Php, Prolog, PostScript, Programming, 
+
+
+
 ### Parameterise the Get Category List Function
 
 In this helper function we use a filter to find all the categories that
