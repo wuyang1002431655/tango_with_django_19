@@ -151,27 +151,20 @@ Next we need to override the `save()` method of the `Category` model, which we w
 	    def __str__(self):
 	        return self.name
 
-Now that the model has been updated, we need to propagate these changes to the database.
-However, since we already have data in the database we need to consider the implications of this change.
-Basically, for all the existing category names, we want to turn them into slugs (which is performed when the record is saved). When we update the models via the migration tool, it will add the field, and provide the option of populating the field with a default value. Of course, we want a specific value in each field. In order to correctly populate the slug field we will need to first perform the migration and then re-run the population script - this is because in the population script we explicitly call the 'save' method for each entry. This will trigger the 'save' we have implemented and update the slug accordingly.
+Now that the model has been updated, the changes must now be propagated to the database. However, since data already exists within the database, we need to consider the implications of the change. Essentially, for all the existing category names, we want to turn them into slugs (which is performed when the record is initially saved). When we update the models via the migration tool, it will add the `slug` field and provide the option of populating the field with a default value. Of course, we want a specific value for each entry - so we will first need to perform the migration, and then re-run the population script. This is because the population script will explicitly call the `save` method on each entry, triggering the 'save' as implemented above, and thus update the slug accordingly for each entry.
 
-To perform the migration issue the following commands:
+To perform the migration, issue the following commands (as detailed in the [Models and Databases Workflow](#section-models-databases-workflow)).
 
 {lang="text",linenos=off}
 	$ python manage.py makemigrations rango
 	$ python manage.py migrate
 
-
-Since we did not provide a default value for the slug, and we already
-have existing data in the model, the migrate command will give you
-two options. Select the option to provide a default, and enter `''`. 
-Then re-run the population script, which will update the slug field.
+Since we did not provide a default value for the slug and we already have existing data in the model, the migrate command will give you two options. Select the option to provide a default, and enter `''`.  Then re-run the population script, which will update the slug fields.
 
 {lang="text",linenos=off}
 	$ python populate_rango.py
 
 Now run the development server (`python manage.py runserver`), and inspect the data in the models via the admin interface (`http://127.0.0.1:8000/admin/`).
-
 
 If you go to add in a new category via the admin interface you may encounter a problem, or two!
 
