@@ -44,7 +44,7 @@ First, create a file called `forms.py` within the `rango` application
 directory. While this step is not absolutely necessary, as you could put
 the forms in the `models.py`, this makes the codebase tidier and easier to work with.
 
-### Creating `ModelForm` Classes
+### Creating `ModelForm` Classes {#section-forms-pagecategory-modelform}
 Within Rango's `forms.py` module, we will be creating a number of
 classes that inherit from Django's `ModelForm`. In essence, [a
 `ModelForm`](https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/#modelform)
@@ -399,14 +399,14 @@ I> Models](https://docs.djangoproject.com/en/1.9/topics/db/models/#overriding-pr
 I> for more examples on how you can override default functionality to
 I> slot your own in.
 
-
 X> ###Exercises
 X>
 X> Now that you've worked through the chapter, consider the following questions, and how you could potentially solve them.
 X> 
 X> - What would happen if you don't enter in a category name on the add category form?
 X> - What happens when you try to add a category that already exists?
-X> - What happens when you visit a category that does not exist? A *hint* for a potential solution to this problem can be seen in the following section.
+X> - What happens when you visit a category that does not exist? A hint for a potential solution to solving this problem can be found below.
+X> - In the [section above where we implemented our `ModelForm` classes](#section-forms-pagecategory-modelform), we repeated the `max_length` values for fields that we had previously defined in [the models chapter](#chapter-models-databases). This is bad practice - we are *repeating ourselves!* How can you refactor your code so that you are *not* repeating the `max_length` values?
 X>
 X> Clearly, there are a lot of other aspects we need to consider - but we will leave these for homework.
 X> - If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/) to reinforce what you have learnt here.
@@ -460,5 +460,6 @@ T>    `{% if cat %} .... {% else %} A category by this name does not exist {% en
 T> -   Update the `category.html` with a link to `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
 T> - Make sure that in your `add_page.html` template that the form posts to `/rango/category/{{ category.slug }}/add_page/`.
 T> -   Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
+T> - You can avoid the repetition of `max_length` parameters through the use of an additional attribute in your `Category` class. This attribute could be used to store the value for `max_length`, and then be referenced where required.
 T>
 T> If you get *really* stuck you can check out [our code on GitHub](https://github.com/leifos/tango_with_django_19/tree/master/code).
