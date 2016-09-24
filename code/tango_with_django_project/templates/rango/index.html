@@ -8,7 +8,11 @@
 	
 	<div class="jumbotron">
 		<h1 class="display-3">Rango says...</h1>
-		<p class="lead">hey there partner! </p>
+		{% if user.is_authenticated %}
+			<p class="lead">hey there {{ user.username }}</p>
+		{% else %}
+			<p class="lead">hey there partner! </p>
+		{% endif %}
 			
  	</div>
 			
