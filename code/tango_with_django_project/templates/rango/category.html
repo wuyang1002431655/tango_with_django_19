@@ -28,7 +28,7 @@
 
 
 	</div>
-	{% if user.is_authenticated %}
+
 	<hr>
 
 	<div>
@@ -37,9 +37,8 @@
 			{% csrf_token %}
 			<div class="form-group">
 				<input class="form-control" type="text" size="50"
-					name="query" value="{{ category.slug }}" id="query" />
+					name="query" value="{{ query }}" id="query" />
 			</div>
-
 			<button class="btn btn-primary" type="submit" name="submit"
 				 value="Search">Search</button>
 			</form>
@@ -61,7 +60,7 @@
 			</div>
 
 	</div>
-	{% endif %}
+
 
 
 	{% endblock %}
