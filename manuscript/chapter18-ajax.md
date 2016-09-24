@@ -134,7 +134,7 @@ an AJAX GET request. Add in the following code:
 	$('#likes').click(function(){
 		var catid;
 		catid = $(this).attr("data-catid");
-		$.get('/rango/like_category/', {category_id: catid}, function(data){
+		$.get('/rango/like/', {category_id: catid}, function(data){
 			$('#like_count').html(data);
 			$('#likes').hide();
 		});
@@ -177,11 +177,10 @@ To do this you will need to do the following.
 	- If the query string is not empty, ask the Category model to get the top 8 categories that start with the query string.
 	- The list of category objects will then be combined into a piece of HTML via template.
 	- Instead of creating a template called `suggestions.html` re-use the `cats.html` as it will be displaying data of the same type (i.e. categories).
-	- To let the client ask for this data, you will need to create a URL mapping; lets call it *category\_suggest*
+	- To let the client ask for this data, you will need to create a URL mapping; lets call it *suggest*
 
-With the mapping, view, and template for this view in place, you will
-need to update the `base.html` template and add in some javascript so
-that the categories can be displayed as the user types.
+With the URL mapping, view, and template in place, you will
+need to update the `base.html` template to provide a category search box, and then add in some Javascript/JQuery code to link up everything so that when the user types the suggested categories are displayed.
 
 In the `base.html` template modify the sidebar block so that a div with an id="cats" encapsulates the categories being presented. The JQuery/AJAX will update this element.
 
@@ -232,7 +231,7 @@ returns the top 8 matching results as follows:
 			starts_with = request.GET['suggestion']
 		cat_list = get_category_list(8, starts_with)
 		
-		return render(request, 'rango/category_list.html', {'cat_list': cat_list })
+		return render(request, 'rango/cats.html', {'cat_list': cat_list })
 
 
 Note here we are re-using the `rango/cats.html` template :-).
@@ -242,7 +241,7 @@ Note here we are re-using the `rango/cats.html` template :-).
 Add the following code to `urlpatterns` in `rango/urls.py`:
 
 {lang="python",linenos=off}
-	url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
+	url(r'^suggest/$', views.suggest_category, name='suggest_category'),
 
 ### Update Base Template
 
@@ -275,7 +274,7 @@ Add the following JQuery code to the `js/rango-ajax.js`:
 	$('#suggestion').keyup(function(){
 		var query;
 		query = $(this).val();
-		$.get('/rango/suggest_category/', {suggestion: query}, function(data){
+		$.get('/rango/suggest/', {suggestion: query}, function(data){
 			$('#cats').html(data);
 		});
 	});
@@ -308,11 +307,11 @@ T> {lang="html",linenos=off}
 T> 		{% if user.is_authenticated %}
 T> 			<button data-catid="{{category.id}}" data-title="{{ result.title }}"
 T>				 data-url="{{ result.link }}" 
-T>					class="rango-add btn btn-mini btn-info" type="button">Add</button>
+T>					class="rango-add btn btn-mini btn-info btn-sm" type="button">Add</button>
 T>		{% endif %}
 T>
 T> JQuery code:
-T> 
+T>  
 T> Note here we are assigned the event handler to all the buttons with class `rango-add`.
 T>
 T>View code:
