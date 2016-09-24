@@ -299,7 +299,7 @@ X> - Now map the this view to `/rango/about/`. For this step, you'll only need t
 X> - Revise the `HttpResponse` in the `index` view to include a link to the about page.
 X> - In the `HttpResponse` in the `about` view include a link back to the main page.
 X> - If you haven't done so already, now's a good time to head off and complete part one of the official [Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial01/).
-X> - Now that you have started the book, follow us on Twitter @tangowithdjango, and let us know how your going!
+X> - Now that you have started the book, follow us on Twitter [@tangowithdjango](https://twitter.com/tangowithdjango), and let us know how you are getting on!
 
 I> ### Hints
 I> 

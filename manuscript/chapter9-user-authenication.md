@@ -281,10 +281,10 @@ Now we need to make the template that will be used by the new `register()` view.
 	    <h1>About Page</h1>
 	    {% if registered %}
 	        Rango says: <strong>thank you for registering!</strong>
-	        <a href="/rango/">Return to the homepage.</a><br />
+	        <a href="{% url 'index' %}">Return to the homepage.</a><br />
 	    {% else %}
 	        Rango says: <strong>register here!</strong><br />
-	        <form id="user_form" method="post" action="/rango/register/"
+	        <form id="user_form" method="post" action="{% url 'register' %}"
 	              enctype="multipart/form-data">
 	        
 	        {% csrf_token %}
@@ -298,6 +298,9 @@ Now we need to make the template that will be used by the new `register()` view.
 	    </form>
 	    {% endif %}
 	{% endblock %}
+
+I> ### Using the `url` Template Tag
+I> Note that we are using the `url` template tag in the above template code - we'll be creating the mapping `register` in the following section.
 
 The first thing to note here is that this template makes use of the `registered` variable we used in our view indicating whether registration was successful or not. Note that `registered` must be `False` in order for the template to display the
 registration form - otherwise, apart from the title, only a success message is displayed.
@@ -410,7 +413,7 @@ First, open up Rango's views module at `rango/views.py` and create a new view ca
 	        # blank dictionary object...
 	        return render(request, 'rango/login.html', {})
 
-Like before, this view may seem rather complex as it has to handle a variety of scenarios. Like in previous examples, the `user_login()` view handles form rendering and processing - where the form this time contains `username` and `password` fields.
+As before, this view may seem rather complex as it has to handle a variety of scenarios. As shown in previous examples, the `user_login()` view handles form rendering and processing - where the form this time contains `username` and `password` fields.
 
 First, if the view is accessed via the HTTP `GET` method, then the login form is displayed. However, if the form has been posted via the HTTP `POST` method, then we can handle processing the form.
 
@@ -446,7 +449,7 @@ With our new view created, we'll need to create a new template allowing users to
 	
 	{% block body_block %}
 	<h1>Login to Rango</h1>
-	<form id="login_form" method="post" action="/rango/login/">
+	<form id="login_form" method="post" action="{% url 'login' %}">
 	    {% csrf_token %}
 	    Username: <input type="text" name="username" value="" size="50" />
 	    <br />
@@ -470,7 +473,7 @@ Our final step is to provide users of Rango with a handy link to access the logi
 {lang="html",linenos=off}
 	<ul>
 	    ...
-	    <li><a href="/rango/login/">Login</a><li>
+	    <li><a href="{% url 'login' %}">Login</a><li>
 	</ul>
 
 If you like, you can also modify the header of the index page to provide a personalised message if a user is logged in, and a more generic message if the user isn't. Within the `index.html` template, find the message, as shown in the code snippet below.

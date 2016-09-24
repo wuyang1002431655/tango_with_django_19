@@ -94,14 +94,7 @@ In `rango/forms.py` add the following code.
 We need to specify which fields that are included on the form, via `fields`, or specify the fields that
 are to be excluded, via `exclude`.
 
-Django provides us with a number of ways to customise the forms that are
-created on our behalf. In the code sample above, we've specified the
-widgets that we wish to use for each field to be displayed. For example,
-in our `PageForm` class, we've defined `forms.CharField` for the `title`
-field, and `forms.URLField` for `url` field. Both fields provide text
-entry for users. Note the `max_length` parameters we supply to our
-fields - the lengths that we specify are identical to the maximum length
-of each field we specified in the underlying data models. Go back to the [chapter on models](#chapter-models-databases) to check for yourself, or have a look at Rango's `models.py` file.
+Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our `PageForm` class, we've defined `forms.CharField` for the `title` field, and `forms.URLField` for `url` field. Both fields provide text entry for users. Note the `max_length` parameters we supply to our fields - the lengths that we specify are identical to the maximum length of each field we specified in the underlying data models. Go back to the [chapter on models](#chapter-models-databases) to check for yourself, or have a look at Rango's `models.py` file.
 
 You will also notice that we have included several `IntegerField`
 entries for the views and likes fields in each form. Note that we have
@@ -109,30 +102,9 @@ set the widget to be hidden with the parameter setting
 `widget=forms.HiddenInput()`, and then set the value to zero with
 `initial=0`. This is one way to set the field to zero by default. And since the fields will be hidden the user won't be able to enter a value for these fields.
 
- However, as you can see in the
-`PageForm`, despite the fact that we have a hidden field, we still need
-to include the field in the form. If in `fields` we excluded `views`,
-then the form would not contain that field (despite it being specified)
-and so the form would not return the value zero for that field. This may
-raise an error depending on how the model has been set up. If in the
-models we specified that the `default=0` for these fields then we can
-rely on the model to automatically populate field with the default
-value - and thus avoid a `not null` error. In this case, it would not be
-necessary to have these hidden fields. We have also included the field
-`slug` in the form, and set it to use the `widget=forms.HiddenInput()`,
-but rather than specifying an initial or default value, we have said the
-field is not required by the form. This is because our model will be
-responsible on `save()` to populating this field. Essentially, you need
-to be careful when you define your models and forms to make sure that
-form is going to contain and pass on all the data that is required to
-populate your model correctly.
+However, as you can see in the `PageForm`, despite the fact that we have a hidden field, we still need to include the field in the form. If in `fields` we excluded `views`, then the form would not contain that field (despite it being specified) and so the form would not return the value zero for that field. This may raise an error depending on how the model has been set up. If in the models we specified that the `default=0` for these fields then we can rely on the model to automatically populate field with the default value - and thus avoid a `not null` error. In this case, it would not be necessary to have these hidden fields. We have also included the field `slug` in the `CategoryForm`, and set it to use the `widget=forms.HiddenInput()`, but rather than specifying an initial or default value, we have said the field is not required by the form. This is because our model will be responsible on `save()` to populating this field. Essentially, you need to be careful when you define your models and forms to make sure that form is going to contain and pass on all the data that is required to populate your model correctly.
 
-Besides the `CharField` and `IntegerField` widget, many more are
-available for use. As an example, Django provides `EmailField` (for
-e-mail address entry), `ChoiceField` (for radio input buttons), and
-`DateField` (for date/time entry). There are many other field types you
-can use, which perform error checking for you (e.g. *is the value
-provided a valid integer?*). 
+Besides the `CharField` and `IntegerField` widgets, many more are available for use. As an example, Django provides `EmailField` (for e-mail address entry), `ChoiceField` (for radio input buttons), and `DateField` (for date/time entry). There are many other field types you can use, which perform error checking for you (e.g. *is the value provided a valid integer?*). 
 
 
 Perhaps the most important aspect of a class inheriting from `ModelForm`
@@ -430,16 +402,14 @@ I> slot your own in.
 
 X> ###Exercises
 X>
-X> Now that you've worked through the chapter, consider the following questions:
+X> Now that you've worked through the chapter, consider the following questions, and how you could potentially solve them.
 X> 
 X> - What would happen if you don't enter in a category name on the add category form?
 X> - What happens when you try to add a category that already exists?
-X> - What happens when you visit a category that does not exist?
-X> - How could you more gracefully handle the case above? Wouldn't it be nicer if category page would magically appear, even if it didn't exist. And only when pages are added, we create the category?
+X> - What happens when you visit a category that does not exist? A *hint* for a potential solution to this problem can be seen in the following section.
 X>
-X> Clearly there is a lot of other aspects we need to consider - but we will leave these for homework :-)
-X> -   If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/)
-X>     to reinforce what you have learnt here.
+X> Clearly, there are a lot of other aspects we need to consider - but we will leave these for homework.
+X> - If you have not done so already undertake [part four of the official Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial04/) to reinforce what you have learnt here.
 
 ### Creating an *Add Pages* View, Template and URL Mapping {#section-forms-addpage}
 

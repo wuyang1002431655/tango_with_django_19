@@ -90,7 +90,7 @@ For each field, you can specify the `unique` attribute. If set to `True`, only o
 
 You can also specify additional attributes for each field, such as stating a default value with the syntax `default='value'`, and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
 
-Django provides three  mechanisms to related models in the database, which are:
+Django provides three types of field for forging relationships between models in your database. These are:
 
 * `ForeignKey`, a field type that allows us to create a [one-to-many relationship](https://en.wikipedia.org/wiki/One-to-many_(data_model));
 * `OneToOneField`, a field type that allows us to define a strict [one-to-one relationship](https://en.wikipedia.org/wiki/One-to-one_(data_model)); and

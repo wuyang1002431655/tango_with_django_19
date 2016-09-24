@@ -202,7 +202,7 @@ Now that we have added in the slug field we can now use the slugs to uniquely id
 
 W> ### Migration Woes
 W>
-W> It is always best to plan out your database in advance and avoid changing them. 
+W> It's always best to plan out your database in advance and avoid changing it. 
 W> Making a population script means that you easily recreate your database if you need to delete it.
 W> Sometimes it is just better to just delete the database and recreate everything than try and work out where the conflict is coming from.
 W> A neat exercise is to write a script to output the data in the database so that any changes you make can be saved out into a file that can be read in later.
@@ -301,21 +301,22 @@ I>
 I> Placing conditional checks in your templates - like `{% if category %}` in the example above - also makes sense semantically. The outcome of the conditional check directly affects the way in which the rendered page is presented to the user - and presentational aspects of your Django applications should be encapsulated within templates.
 
 ### Parameterised URL Mapping
-Now let's have a look at how we actually pass the value of the `category_name_url` parameter to the `category()` function. To do so, we need to modify Rango's `urls.py` file and update the `urlpatterns` tuple as follows.
+Now let's have a look at how we actually pass the value of the `category_name_url` parameter to the `show_category()` function. To do so, we need to modify Rango's `urls.py` file and update the `urlpatterns` tuple as follows.
 
 {lang="python",linenos=off}
-	urlpatterns = patterns('',
+	urlpatterns = [
 	    url(r'^$', views.index, name='index'),
 	    url(r'^about/$', views.about, name='about'),
 	    url(r'^category/(?P<category_name_slug>[\w\-]+)/$', 
-	    views.show_category, name='show_category'),) 
+	        views.show_category, name='show_category'),
+	]
 
 We have added in a rather complex entry that will invoke `view.show_category()` when the URL pattern `r'^category/(?P<category_name_slug>[\w\-]+)/$'` is matched. 
 
 There are a two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. When you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
 The next thing to note is that the regular expression `[\w\-]+)` will look for any sequence of alphanumeric characters e.g. `a-z`, `A-Z`, or `0-9` denoted by `\w` and any hyphens (-) denoted by `\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
 
-The URL pattern will match a sequence of alphanumeric characters and hyphens which are between the `rango/category/` and the trailing `/`. This sequence will be stored in the parameter `category_name_slug` and passed to `views.category()`. For example, the URL `rango/category/python-books/` would result in the `category_name_slug` having the value, `python-books`. However, if the URL was `rango/category/python_books/` or `rango/category/££££-$$$$$/` then the sequence of characters between `rango/category/` and the trailing `/` would not match the regular expression, and a `404 not found` error would result because there would be no matching URL pattern.
+The URL pattern will match a sequence of alphanumeric characters and hyphens which are between the `rango/category/` and the trailing `/`. This sequence will be stored in the parameter `category_name_slug` and passed to `views.show_category()`. For example, the URL `rango/category/python-books/` would result in the `category_name_slug` having the value, `python-books`. However, if the URL was `rango/category/python_books/` or `rango/category/££££-$$$$$/` then the sequence of characters between `rango/category/` and the trailing `/` would not match the regular expression, and a `404 not found` error would result because there would be no matching URL pattern.
 
 All view functions defined as part of a Django applications *must* take at least one parameter. This is typically called `request` - and provides access to information related to the given  HTTP request made by the user. When parameterising URLs, you supply additional named parameters to the signature for the given view.  That is why our `category()` view was defined as `def show_category(request, category_name_slug)`.
 

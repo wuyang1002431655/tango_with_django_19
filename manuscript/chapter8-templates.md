@@ -21,7 +21,7 @@ One can also reference a URL pattern without a specified name, by referencing th
 
 In this example, we must ensure that the app `rango` has the view `about`, contained within its `views.py` module.
 
-In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this you, can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
+In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this you can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
 
 {lang="html",linenos=off}
 	{% for category in categories %}
@@ -40,8 +40,6 @@ T>
 T> [Django provides the ability to *namespace* URL configuration modules](http://django.readthedocs.io/en/1.9.x/intro/tutorial03.html#namespacing-url-names) (e.g. `urls.py`) for each individual app that you employ in your project. Simply adding a `app_name` variable to your app's `urls.py` module is enough. The example below specifies the namespace for the Rango app to be `rango`.
 T>
 T> {lang="python",linenos=off}
-T> 	app_name = 'rango'
-T> 	urlpatterns = [...
 T> 	from django.conf.urls import url
 T> 	from rango import views
 T> 	
@@ -169,14 +167,13 @@ From the example above, we have introduced two new features into the base templa
 -   The first is a template block called `title_block`. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not override the block, then the `title_block` defaults to `How to Tango with Django!`, resulting in a complete title of `Rango - How to Tango with Django!`. Look at the contents of the `<title>` tag in the above template to see how this works.
 -   We have also included the list of links from our current `index.html` template and placed them into a HTML `<div>` tag underneath our `body_block` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (`<hr />`) which provides a visual separation for the user between the `body_block` content and the links.
 
-
 ## Template Inheritance {#section-templates-inheritance}
 Now that we've created a base template with blocks, we can now update all the templates we have created so that they inherit from the base template. Let's start by refactoring the template `rango/category.html`.
 
 To do this, first remove all the repeated HTML code leaving only the HTML and template tags/commands specific to the page. Then at the beginning of the template add the following line of code:
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+	{% extends 'rango/base.html' %}
 
 The `extends` command takes one parameter - the template which is to be extended/inherited from (i.e. `rango/base.html`). The parameter you supply to the `extends` command should be relative from your project's `templates` directory. For example, all templates we use for Rango should extend from `rango/base.html`, not `base.html`. We can then further modify the `category.html` template so it looks like the following complete example.
 
@@ -207,6 +204,9 @@ The `extends` command takes one parameter - the template which is to be extended
 		{% endif %}
 	{% endblock %}
 
+W> ### Loading `staticfiles`
+W>
+W> You'll need to make sure you add `{% load staticfiles %}` to the top of **each template** that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them. If you've programmed before, this works somewhat differently from object orientated programming languages such as Java, where imports cascade down inheriting classes.
 Notice how we used the `url` template tag to refer to `rango/<category-name>/add_page/` URL pattern. The `category.slug` is passed through as a parameter to the `url` template tag and Django's Template Engine will produce the correct URL for us.
 
 Now that we inherit from `rango/base.html`, the `category.html` template is much cleaner extending the `title_block` and `body_block` blocks. You don't need a well-formatted HTML document because `base.html` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete, rendered HTML document which is sent to the client's browser. This rendered HTML document will then conform to the standards, containing components such as the document type declaration on the first line.
@@ -227,7 +227,7 @@ X>
 X> - Update all other previously defined templates in the Rango app to extend from the new `base.html` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from `base.html`. 
 X> - While you're at it, make sure you remove the links from our `index.html` template. We don't need them anymore! You can also remove the link to Rango's homepage within the `about.html` template.
 X> - Convert the restricted page to use a template. Call the template `restricted.html`, and ensure that it too extends from our `base.html` template.
-X> - Update all references to Rango URLs with the `url` template tag.
+X> - Update all references to Rango URLs with the `url` template tag. You can also do this in your `views.py` module too - check out the [`reverse()` helper function](https://docs.djangoproject.com/en/1.9/ref/urlresolvers/#reverse).
 
 
 T> ### Hints
@@ -238,11 +238,6 @@ T> - To reference the links to category pages, you can use the following templat
 T>
 T> {lang="html",linenos=off}
 T> 		<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
-
-
-W> ### Loading `staticfiles`
-W>
-W> Remember to add `{% load staticfiles %}` to the top of **each template** that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them. If you've programmed before, this works somewhat differently from object orientated programming languages such as Java, where imports cascade down inheriting classes.
 
 <!-->
 ![A class diagram demonstrating how your templates should inherit from
@@ -261,7 +256,7 @@ I> 	    return HttpResponse('
 I> 	        Rango says: Here is the about page.
 I> 	        <a href="/rango/">Index</a>')
 I>
-I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine access information such as the request type (e.g. `GET`/`POST`), and information relating to the user's status (have a look at [Chapter 9](#chapter-user)).
+I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine to access information such as the request type (e.g. `GET`/`POST`), and information relating to the user's status (have a look at [Chapter 9](#chapter-user)).
 I>
 I> {lang="python",linenos=off}
 I> 	def about(request):
@@ -304,7 +299,7 @@ From this code snippet, you can see a new method called `get_category_list()`. T
 	        <li><a href="{% url 'show_category'  c.slug %}">{{ c.name }}</a></li>
 	    {% endfor %}
 	{% else %}
-	    <li> <strong>There are no category present.</strong></li>
+	    <li> <strong>There are no categories present.</strong></li>
 	{% endif %}
 	</ul>
 
@@ -323,7 +318,7 @@ T> ### Remember to Restart the Server!
 T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, they won't be registered by Django, and you'll get confused and irritated.
 
 ###Parameterised Template Tags 
-We can also *paramaterise* the template tags we create, allowing for greater flexibility. As an example, we'll use parameterisation to highlight which category we are looking at when visiting its page. Adding in a parameter is easy - we can update the `get_category_list()` method as follows.
+We can also *parameterise* the template tags we create, allowing for greater flexibility. As an example, we'll use parameterisation to highlight which category we are looking at when visiting its page. Adding in a parameter is easy - we can update the `get_category_list()` method as follows.
 
 {lang="python",linenos=off}
 	def get_category_list(cat=None):

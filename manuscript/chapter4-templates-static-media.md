@@ -41,7 +41,7 @@ What we need to do to tell Django where our templates are stored is modify the `
 {lang="python",linenos=off}
 	'DIRS': ['<workspace>/tango_with_django_project/templates']
 
-Note that you are *required to use absolute paths* to locate the `templates` directory. If you are collaborating with team members or working on different computers, then this will become a problem. You'll have different usernames and different drive structures, meaning the paths to the `<workspace>` directory will be different. One solution would be to the path for each different configuration, for example:
+Note that you are *required to use absolute paths* to locate the `templates` directory. If you are collaborating with team members or working on different computers, then this will become a problem. You'll have different usernames and different drive structures, meaning the paths to the `<workspace>` directory will be different. One solution would be to add the path for each different configuration. For example:
 	
 {lang="python",linenos=off}
 	'DIRS': [ '/Users/leifos/templates',
@@ -233,7 +233,7 @@ With these minor changes in place, start the Django development server once more
 ![Our first Rango template, complete with a picture of Rango the chameleon.](images/ch4-rango-site-with-pic.png)
 
 T> ### Templates and `<!DOCTYPE>`
-T> When creating the HTML templates, always ensure that the [`DOCTYPE` declaration](http://www.w3schools.com/tags/tag_doctype.asp) appears on the **fist line**. If you put the `{% load staticfiles %}` first then whitespace is added before the `DOCTYPE` declaration which can lead to your HTML code to [fail validation](https://validator.w3.org/).
+T> When creating the HTML templates, always ensure that the [`DOCTYPE` declaration](http://www.w3schools.com/tags/tag_doctype.asp) appears on the **first line**. If you put the `{% load staticfiles %}` first then whitespace is added before the `DOCTYPE` declaration which can lead to your HTML code to [fail validation](https://validator.w3.org/).
 
 
 T> ### Loading other Static Files
