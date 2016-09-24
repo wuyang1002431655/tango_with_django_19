@@ -9,6 +9,6 @@ urlpatterns = [
     url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', views.add_page, name='add_page'),
 	url(r'search/$', views.search, name='search'),
     url(r'goto/$', views.track_url, name='goto'),
-    url(r'like/$', views.like_category, name='like_category'),
+    url(r'like/$', views_ajax.like_category, name='like_category'),
 
 ]
