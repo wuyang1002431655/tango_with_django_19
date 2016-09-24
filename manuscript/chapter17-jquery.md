@@ -16,9 +16,9 @@ In your *base* template include a reference to:
 
 {lang="html",linenos=off}
 	{% load staticfiles %}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
 	<!-- OR if working from local -->
-	<script src="{% static "js/jquery-2.1.4.js" %}"></script>
+	<script src="{% static "js/jquery.min.js" %}"></script>
 	<script src="{% static "js/rango-jquery.js" %}"></script>
 
 
@@ -26,7 +26,7 @@ Here we assume you have downloaded a version of the JQuery library, but
 you can also just directly refer to it:
 
 {lang="html",linenos=off}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
 
 Make sure you have your static files set up (see Chapter setup-label)
