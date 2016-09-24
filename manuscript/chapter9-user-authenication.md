@@ -54,7 +54,7 @@ If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.p
 		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	]
 
-As previously mentioned, Django by default uses the PBKDF2 algorithm to hash passwords. If you do not specify a `PASSWORD_HASHERS` tuple, Django therefore defaults to the `django.contrib.auth.hashers.PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
+As previously mentioned, Django by default uses the PBKDF2 algorithm to hash passwords. If you do not specify a `PASSWORD_HASHERS` tuple, Django therefore defaults to the `PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).
 
 
 ## Password Validators
