@@ -52,7 +52,7 @@ will need to perform the following steps.
 - The `track_url()` view will examine the HTTP `GET` request parameters and pull out the `page_id`. The HTTP `GET` requests will look something like `/rango/goto/?page_id=1`.
 	- In the view, select/get the `page` with `page_id` and then increment the associated `views` field, and `save()` it.
 	- Have the view redirect the user to the specified URL using Django's `redirect` method. Remember to include the import, `from django.shortcuts import redirect`
-	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage. Use the `reverse` method from `django.shortcuts` to get the URL string and then redirect. 
+	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage. Use the `reverse` method from `django.core.urlresolvers` to get the URL string and then redirect. If you are using Django 1.10, then you can import the `reverse` method from `django.shortcuts`.
 	- See [Django Shortcut Functions](https://docs.djangoproject.com/en/1.9/topics/http/shortcuts/) for more on `redirect` and `reverse`.
 - Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
 	- Remember to use  the `url` *templatetag* instead of using the direct URL i.e. 
@@ -86,21 +86,20 @@ I> need to create a `urlpattern` that pulls out the `page_id`, i.e. `r'goto/(?P<
 
 Rango aims to provide users with a helpful directory of useful web pages. At
 the moment, the search functionality is essentially independent of the
-categories. It would be nicer to have search integrated with browsing categories.
-Let's assume that a user will first browse through the category of
-interest. If they can't find the page that they want, they can
-then search for it. If they find a page that is suitable, then they can
-add it to the category that they are in. Let's focus on the first
-problem, of putting search on the category page. To do this, perform the
+categories. It would be nicer to have search integrated within the categories.
+We will assume that a user will first browse through the category of
+interest. If they can't find a relevant page, they can
+then search. If they find a page that is relevant, then they can
+add it to the category. Let's focus on the first problem, of putting search on the category page. To do this, perform the
 following steps:
 
-- Remove the generic *Search* link from the menu bar, i.e. we are decommissioning the global search function.
+- Remove the generic *Search* link from the menu bar, i.e. we are decommissioning the global search functionality.
 - Take the search form and results template markup from `search.html` and place it into `category.html`.
 - Update the search form so that that action refers back to the category page, i.e.:
 
 	{lang="python",linenos=on}
 		<form class="form-inline" id="user_form" 
-			method="post" action="{% url 'category'  category.slug %}">
+			method="post" action="{% url 'show_category'  category.slug %}">
 
 - Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
 - Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
@@ -120,7 +119,7 @@ them to a new form, to collect the user's profile picture and URL details. To ad
 UserProfile registration functionality:
 
 - Create a `profile_registration.html` which will display the `UserProfileForm`.
-- Create a `register_profile()` view to capture the profile detials
+- Create a `register_profile()` view to capture the profile details
 - Map the view to a url, i.e. `rango/add_profile/`.
 - In the `MyRegistrationView` update the `get_success_url()` to point to `rango/add_profile/`
 
