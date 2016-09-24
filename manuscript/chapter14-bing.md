@@ -228,7 +228,7 @@ Let's first create a template called, `rango/search.html`. Add the following HTM
 	    <form class="form-inline" id="user_form" 
 	          method="post" action="{% url 'search' %}">
 	        {% csrf_token %}
-	        <div class="input-group">
+	        <div class="form-group">
 	            <input class="form-control" type="text" size="50" 
 	                   name="query" value="" id="query" />
 	        </div>

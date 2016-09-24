@@ -92,13 +92,23 @@ def show_category(request, category_name_slug):
         # the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
-	
+
         # We get here if we didn't find the specified category.
         # Don't do anything -
         # the template will display the "no category" message for us.        
     except Category.DoesNotExist:
         context_dict['category'] = None
         context_dict['pages'] = None
+
+
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+             # Run our Bing function to get the results list!
+             result_list = run_query(query)
+    context_dict['result_list'] = result_list
+
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
     
