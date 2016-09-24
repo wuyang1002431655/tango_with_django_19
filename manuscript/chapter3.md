@@ -293,33 +293,19 @@ X>###Exercises
 X>
 X> Now that you have got Django and your new app up and running, give the following exercises a go to reinforce what you've learnt. Getting to this stage is a significant landmark in working with Django. Creating views and mapping URLs to views is the first step towards developing more complex and usable Web applications.
 X> 
-X> -   Revise the procedure and make sure you follow how the URLs are
-X>     mapped to views.
-X> -   Now create a new view called `about` which returns the following:
-X>     `Rango says here is the about page.`
-X> -   Now map the this view to `/rango/about/`. For this step, you'll only
-X>     need to edit the `urls.py` of the rango application.
-X> -   Revise the `HttpResponse` in the `index` view to include a link to
-X>     the about page.
-X> -   In the `HttpResponse` in the `about` view include a link back to the
-X>     main page.
-X> -   If you haven't done so already, it is a good point to go off an
-X>     complete part one of the official [Django
-X>     Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial01/).
-X> -   Now that you have started the book, follow us on Twitter @tangowithdjango, and let us know how your going!
+X> - Revise the procedure and make sure you follow how the URLs are mapped to views.
+X> - Now create a new view called `about` which returns the following: `Rango says here is the about page.`
+X> - Now map the this view to `/rango/about/`. For this step, you'll only need to edit the `urls.py` of the rango application.
+X> - Revise the `HttpResponse` in the `index` view to include a link to the about page.
+X> - In the `HttpResponse` in the `about` view include a link back to the main page.
+X> - If you haven't done so already, now's a good time to head off and complete part one of the official [Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial01/).
+X> - Now that you have started the book, follow us on Twitter @tangowithdjango, and let us know how your going!
 
 I> ### Hints
 I> 
 I> If you're struggling to get the exercises done, the following hints will
 I> hopefully provide you with some inspiration on how to progress.
 I> 
-I> -   Your `index` view should be updated to include a link to the `about`
-I>     view. Keep it simple for now - something like
-I>     `Rango says: Hello world! <br/> <a href='/rango/about'>About</a>`
-I>     will suffice. We'll be going back later to improve the presentation
-I>     of these pages.
-I> -   The regular expression to match `about/` is `r'^about/'` - this will
-I>     be handy when thinking about your URL pattern.
-I> -   The HTML to link back to the index page is
-I>     `<a href="/rango/">Index</a>`. The link uses the same structure as
-I>     the link to the `about` page shown above.
+I> - Your `index` view should be updated to include a link to the `about` view. Keep it simple for now - something like `Rango says: Hello world! <br/> <a href='/rango/about'>About</a>` will suffice. We'll be going back later to improve the presentation of these pages.
+I> - The regular expression to match `about/` is `r'^about/'` - this will be handy when thinking about your URL pattern.
+I> - The HTML to link back to the index page is `<a href="/rango/">Index</a>`. The link uses the same structure as the link to the `about` page shown above.
