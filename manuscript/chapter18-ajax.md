@@ -77,8 +77,7 @@ To prepare the template we will need to add in the "Like" button with
 	<div>
 	<strong id="like_count">{{ category.likes }}</strong> people like this category
 	{% if user.is_authenticated %}
-		<button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-			<span class="glyphicon glyphicon-thumbs-up"></span>
+		<button id="likes" data-catid="{{category.id}}" class="btn btn-primary  btn-sm" type="button">
 			Like
 		</button>
 		{% endif %}
@@ -144,15 +143,15 @@ an AJAX GET request. Add in the following code:
 This piece of JQuery/Javascript will add an event handler to the element
 with id `#likes`, i.e. the button. When clicked, it will extract the
 category id from the button element, and then make an AJAX GET request
-which will make a call to `/rango/like_category/` encoding the
+which will make a call to `/rango/like/` encoding the
 `category_id` in the request. If the request is successful, then the
 HTML element with id like\_count (i.e. the \<strong\> ) is updated with
 the data returned by the request, and the HTML element with id likes
 (i.e. the \<button\>) is hidden.
 
 There is a lot going on here and getting the mechanics right when
-constructing pages with AJAX can be a bit tricky. Essentially here, when
-the button is clicked an AJAX request is made, given our url mapping,
+constructing pages with AJAX can be a bit tricky. Essentially, when
+the button is clicked an AJAX request is made, given our URL mapping,
 this invokes the `like_category` view which updates the category and
 returns the new number of likes. When the AJAX request receives the
 response it updates parts of the page, i.e. the text and the button. The
