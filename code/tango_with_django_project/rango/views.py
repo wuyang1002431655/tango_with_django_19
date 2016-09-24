@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect, reverse
 from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
@@ -160,3 +161,18 @@ def search(request):
              result_list = run_query(query)
     return render(request, 'rango/search.html', {'result_list': result_list})
 
+def track_url(request):
+    page_id = None
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+    if page_id:
+        try:
+            page = Page.objects.get(id=page_id)
+            page.views = page.views + 1
+            page.save()
+            return redirect(page.url)
+        except:
+            return HttpResponse("Page id {0} not found".format(page_id))
+    print("No page_id in get string")
+    return redirect(reverse('index'))

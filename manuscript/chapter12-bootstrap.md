@@ -78,6 +78,7 @@ The changes that we performed are listed below along with the updated HTML (so t
 			<nav class="nav navbar-nav pull-xs-left">
 			<a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
 			<a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
+			<a class="nav-item nav-link" href="{% url 'search' %}">Search</a>
 			{% if user.is_authenticated %}
 			<a class="nav-item nav-link" 
 				href="{% url 'add_category' %}">

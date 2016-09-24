@@ -147,7 +147,7 @@ To do this, from within your Django project directory (e.g. `<workspace>/tango_w
 {lang="text",linenos=off}
     $ python manage.py startapp rango
 
-The `startapp` command creates a new directory within your project's root. Unsurprisingly, this directory is called `rango` - and contained within it are another five Python scripts:
+The `startapp` command creates a new directory within your project's root. Unsurprisingly, this directory is called `rango` - and contained within it are a number of Python scripts:
 
 - another `__init__.py`, serving the exact same purpose as discussed previously;
 - `admin.py`, where you can register your models so that you can benefit from some Django machinery which creates an admin interface for you;
@@ -306,6 +306,7 @@ X>     main page.
 X> -   If you haven't done so already, it is a good point to go off an
 X>     complete part one of the official [Django
 X>     Tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial01/).
+X> -   Now that you have started the book, follow us on Twitter @tangowithdjango, and let us know how your going!
 
 I> ### Hints
 I> 

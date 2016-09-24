@@ -51,13 +51,14 @@ will need to perform the following steps.
 - Create a new view called `track_url()`, and map it to URL `/rango/goto/` and name it `'name=goto'`.
 - The `track_url()` view will examine the HTTP `GET` request parameters and pull out the `page_id`. The HTTP `GET` requests will look something like `/rango/goto/?page_id=1`.
 	- In the view, select/get the `page` with `page_id` and then increment the associated `views` field, and `save()` it.
-	- Have the view redirect the user to the specified URL using Django's `redirect` method.
-	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage.
+	- Have the view redirect the user to the specified URL using Django's `redirect` method. Remember to include the import, `from django.shortcuts import redirect`
+	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage. Use the `reverse` method from `django.shortcuts` to get the URL string and then redirect. 
+	- See [Django Shortcut Functions](https://docs.djangoproject.com/en/1.9/topics/http/shortcuts/) for more on `redirect` and `reverse`.
 - Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
 	- Remember to use  the `url` *templatetag* instead of using the direct URL i.e. 
 	
 	{lang="python",linenos=on}
-		<a href="{% url 'goto' %}?pageid={{page.id}}"\>
+		<a href="{% url 'goto' %}?page_id={{page.id}}"\>
 
 
 I> ### `GET` Parameters Hint
@@ -66,9 +67,10 @@ I> If you're unsure of how to retrieve the `page_id` *querystring* from the
 I> HTTP `GET` request, the following code sample should help you.
 I>
 I> {lang="python",linenos=off}
+I> 		page_id = None
 I> 		if request.method == 'GET':
-I> 					if 'page_id' in request.GET:
-I> 						page_id = request.GET['page_id']
+I> 				if 'page_id' in request.GET:
+I> 					page_id = request.GET['page_id']
 I>
 I> Always check the request method is of type `GET` first, then you can
 I> access the dictionary `request.GET` which contains values passed as part
@@ -77,16 +79,16 @@ I> the required value out with `request.GET['page_id']`.
 I>
 I> You could also do this without using a *querystring*, but through the
 I> URL instead, i.e. `/rango/goto/<page_id>/`. In which case you would
-I> need to create a `urlpattern` that pulls out the `page_id`.
+I> need to create a `urlpattern` that pulls out the `page_id`, i.e. `r'goto/(?P<page_id>\d+)/$'`.
 
 
 ##Searching Within a Category Page
 
-Rango aims to provide users with a helpful directory of page links. At
+Rango aims to provide users with a helpful directory of useful web pages. At
 the moment, the search functionality is essentially independent of the
-categories. It would be nicer to have search integrated into category
-browsing. Let's assume that a user will first browse their category of
-interest first. If they can't find the page that they want, they can
+categories. It would be nicer to have search integrated with browsing categories.
+Let's assume that a user will first browse through the category of
+interest. If they can't find the page that they want, they can
 then search for it. If they find a page that is suitable, then they can
 add it to the category that they are in. Let's focus on the first
 problem, of putting search on the category page. To do this, perform the
