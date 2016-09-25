@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'like/$', views_ajax.like_category, name='like_category'),
     url(r'^suggest/$', views_ajax.suggest_category, name='suggest_category'),
     url(r'^add/$', views_ajax.auto_add_page, name='auto_add_page'),
+    url(r'^register_profile/$', views.register_profile, name='register_profile'),
 ]

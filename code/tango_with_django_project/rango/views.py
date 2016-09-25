@@ -3,9 +3,10 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from rango.models import Category, Page
-from rango.forms import CategoryForm, PageForm
+from rango.forms import CategoryForm, PageForm, UserProfileForm
 from datetime import datetime
 from rango.bing_search import run_query
+from registration.backends.simple.views import RegistrationView
 
 # Create your views here.
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -62,7 +63,6 @@ def index(request):
     
 
 def about(request):
-
     if request.session.test_cookie_worked():
         print("TEST COOKIE WORKED!")
         request.session.delete_test_cookie()
@@ -193,3 +193,24 @@ def track_url(request):
             return HttpResponse("Page id {0} not found".format(page_id))
     print("No page_id in get string")
     return redirect(reverse('index'))
+
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            
+            return redirect('index')
+        else:
+            print(form.errors)
+
+    context_dict = {'form':form}
+    
+    return render(request, 'rango/profile_registration.html', context_dict)
+
+class RangoRegistrationView(RegistrationView):
+    def get_success_url(self, request):
+        return reverse('register_profile')
