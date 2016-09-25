@@ -2,11 +2,15 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
 from rango.forms import CategoryForm, PageForm, UserProfileForm
 from datetime import datetime
 from rango.bing_search import run_query
 from registration.backends.simple.views import RegistrationView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -194,6 +198,7 @@ def track_url(request):
     print("No page_id in get string")
     return redirect(reverse('index'))
 
+@login_required
 def register_profile(request):
     form = UserProfileForm()
     if request.method == 'POST':
@@ -214,3 +219,60 @@ def register_profile(request):
 class RangoRegistrationView(RegistrationView):
     def get_success_url(self, request):
         return reverse('register_profile')
+
+@login_required
+def profile(request, username):
+    act_user = User.objects.get(username=username)
+    userprofile, created = UserProfile.objects.get_or_create(user=act_user)
+    
+    if request.method == 'POST':
+        if 'is_password' in request.POST:
+            print "IS_PASSWORD"
+            data = {}
+            if 'old_password' in request.POST:
+                data['old_password'] = request.POST['old_password']
+            if 'new_password1' in request.POST:
+                data['new_password1'] = request.POST['new_password1']
+            if 'new_password2' in request.POST:
+                data['new_password2'] = request.POST['new_password2']
+            form = PasswordChangeForm(act_user, data)
+            if form.is_valid():
+                form.save(commit=True)
+                act_user.save()
+                user = authenticate(username=username, password=data['new_password1'])
+                login(request, user)
+                return render(request, 'rango/profile.html', {'userprofile': userprofile, 'act_user': act_user, 'user':user })
+            else:
+                if form.errors:
+                    print form.errors
+                return render(request, 'rango/profile.html', {'userprofile': userprofile, 'act_user': act_user, 'user':act_user, 'form':form})
+        else:
+            if 'email' in request.POST:
+                act_user.email = request.POST['email']
+            if 'website' in request.POST:
+                userprofile.website = request.POST["website"]
+            if 'picture' in request.FILES:
+                userprofile.picture = request.FILES["picture"]
+            
+            userprofile.save()
+            act_user.save()
+    
+    return render(request, 'rango/profile.html', {'userprofile': userprofile, 'act_user': act_user })
+
+@login_required
+def users_profiles(request):
+    user_list = User.objects.all()
+    userprofile_list = UserProfile.objects.all()
+    return render(request, 'rango/users_profiles.html', {'user_list' : user_list, 'userprofile_list' : userprofile_list})
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    userprofile = UserProfile.objects.get(user=user)
+    return render(request, 'rango/edit_profile.html', {'user':user, 'userprofile':userprofile})
+
+@login_required
+def change_password(request):
+    user = request.user
+    userprofile = UserProfile.objects.get(user=user)
+    return render(request, 'rango/change_password.html', {'user':user, 'userprofile':userprofile})
