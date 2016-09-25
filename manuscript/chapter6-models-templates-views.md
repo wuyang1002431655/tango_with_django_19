@@ -393,7 +393,7 @@ X>
 X> - Update the population script to add some value to the `views` count for each page.
 X> - Modify the index page to also include the top 5 most viewed pages.
 X> - Include a heading for the "Most Liked Categories" and "Most Viewed Pages"
-X> - Include a back to the index page from the category page.
+X> - Include a link back to the index page from the category page.
 X> - Undertake [part three of official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/) if you have not done so already to reinforce what you've learnt here.
 
 {id="fig-ch6-exercises"}
