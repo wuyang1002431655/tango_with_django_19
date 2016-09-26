@@ -205,7 +205,7 @@ the `result_list` and `query`, and if there is no query, we provide a
 default query, i.e. the category name. The query box then displays this
 value.
 
-## Create and View Profiles
+## Creating and Viewing Profiles {#section-hints-profiles}
 This section provides a solution for creating Rango `UserProfile` accounts, and provides the necessary infrastructure to allow users of Rango to view these profiles. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
 
 
@@ -254,7 +254,7 @@ Looking at Rango's `models.py` module, you should see a `UserProfile` model that
 	    def __str__(self):
 	        return self.user.username
 
-In order to provide the necessary HTML markup on-the-fly for this model, we need to implement a Django `ModelForm` class, based upon our `UserProfile` model. Looking back to the [chapter detailing Django forms](#chapter-forms), we can implement a `ModelForm` for our `UserProfile` as shown in the example below. Unsurprisingly, we call this new class a `UserProfileForm`.
+In order to provide the necessary HTML markup on the fly for this model, we need to implement a Django `ModelForm` class, based upon our `UserProfile` model. Looking back to the [chapter detailing Django forms](#chapter-forms), we can implement a `ModelForm` for our `UserProfile` as shown in the example below. Perhaps unsurprisingly, we call this new class `UserProfileForm`.
 
 {lang="python",linenos=off}
 	class UserProfileForm(forms.ModelForm):
@@ -268,7 +268,41 @@ In order to provide the necessary HTML markup on-the-fly for this model, we need
 Note the inclusion of optional (through `required=False`) `website` and `picture` HTML form fields - and the nested `Meta` class that associates the `UserProfileForm` with the `UserProfile` model. The `exclude` attribute instructs the Django form machinery to *not* produce a form field for the `user` model attribute. As the newly registered user doesn't have reference to their `User` object, we'll have to manually associate this with their new `UserProfile` instance when we create it later.
 
 ### Creating a Profile Registration View
-Creating the view
+Next, we need to create the corresponding view to handle the processing of a `UserProfileForm` form, the subsequent creation of a new `UserProfile` instance, and instructing Django to render any response with our new `profile_registration.html` template. By now, this should be pretty straightforward to implement. Handling a form means being able to handle a request to render the form (via a HTTP `GET`), and being able to process any entered information (via a HTTP `POST`). A possible implementation for this view is shown below.
+
+{lang="python",linenos=off}
+	@login_required
+	def register_profile(request):
+	    form = UserProfileForm()
+	    
+	    if request.method == 'POST':
+	        form = UserProfileForm(request.POST)
+	        if form.is_valid():
+	            user_profile = form.save(commit=False)
+	            user_profile.user = request.user
+	            user_profile.save()
+	            
+	            return redirect('index')
+	        else:
+	            print(form.errors)
+	
+	    context_dict = {'form':form}
+	    
+	    return render(request, 'rango/profile_registration.html', context_dict)
+
+Upon creating a new `UserProfileForm` instance, we then check our `request` object to determine if a `GET` or `POST` was made. If the request was a `POST`, we then recreate the `UserProfileForm`, using data gathered from the `POST` request. We then check if the submitted form was valid - meaning that form fields were filled out correctly. In this case, we only really need to check if the URL supplied is valid - since the URL and profile picture fields are marked as optional.
+
+With a valid `UserProfileForm`, we can then create a new instance of the `UserProfile` model with the line `user_profile = form.save(commit=False)`. Setting `commit=False` gives us time to manipulate the `UserProfile` instance before we commit it to the database. This is where can then add in the necessary step to associate the new `UserProfile` instance with the newly created `User` object that has been just created (refer to the [flow at the top of this section](#section-hints-profiles) to refresh your memory). After successfully saving the new `UserProfile` instance, we then redirect the newly created user to Rango's `index` view, using the URL pattern name. If form validation failed for any reason, errors are simply printed to the console. You will probably in your own code want to make the handling of errors more robust.
+
+If the request sent was a HTTP `GET`, the user simply wants to request a blank form to fill out - so we respond by `render`ing the `profile_registration.html` template created above with a blank instance of the `UserProfileForm`, passed to the rendering context dictionary as `form` - thus satisfying the requirement we created in our template. This solution should therefore handle all required scenarios for creating, parsing and saving data from a `UserProfileForm` form.
+
+E> ### Can't find `login_required`?
+E> Remember, once a newly registered user hits this view, they will have had a new account created for them - so we can safely assume that he or she is now logged into Rango. This is why we are using the neat `@login_required` decorator at the top of our view to prevent individuals from accessing the view when they are unauthorised to do so.
+E> 
+E> If you are receiving an error stating that the `login_required()` function (used as a decorator to our new view) cannot be located, ensure that you have the following `import` statement at the top of your `view.py` module.
+E>
+E> {lang="python",linenos=off}
+E> 	from django.contrib.auth.decorators import login_required
 
 ### Mapping the View to a URL
 Map the view to a url
