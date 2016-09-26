@@ -202,7 +202,7 @@ def track_url(request):
 def register_profile(request):
     form = UserProfileForm()
     if request.method == 'POST':
-        form = UserProfileForm(request.POST)
+        form = UserProfileForm(request.POST, request.FILES)
         if form.is_valid():
             user_profile = form.save(commit=False)
             user_profile.user = request.user
@@ -231,7 +231,7 @@ def profile(request, username):
     form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
     
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=userprofile)
+        form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
         if form.is_valid():
             form.save(commit=True)
             return redirect('profile', user.username)
