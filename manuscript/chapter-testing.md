@@ -21,8 +21,7 @@ there are numerous reasons why you should include tests:
 -   Tests help teams work together: they make sure your team doesn't
     inadvertently break your code.
 
-According to the [Python Guide]
-(http://docs.python-guide.org/en/latest/writing/tests/), there are a
+According to the [Python Guide](http://docs.python-guide.org/en/latest/writing/tests/), there are a
 number of general rules you should try to follow when writing tests.
 Below are some main rules:
 
@@ -82,32 +81,30 @@ the following code into `rango/tests.py`:
 	from rango.models import Category
 	
 	class CategoryMethodTests(TestCase):
-		def test_ensure_views_are_positive(self):
-			"""
-			ensure_views_are_positive should results True for categories 
-			where views are zero or positive
-			"""
-			cat = Category(name='test',views=-1, likes=0)
-			cat.save()
-			self.assertEqual((cat.views >= 0), True)
+	    def test_ensure_views_are_positive(self):
+	        """
+	        ensure_views_are_positive should results True for categories 
+	        where views are zero or positive
+	        """
+	        cat = Category(name='test',views=-1, likes=0)
+	        cat.save()
+	        self.assertEqual((cat.views >= 0), True)
 
 The first thing you should notice, if you have not written tests before,
 is that we have to inherit from TestCase. The naming over the method in
 the class also follows a convention, all tests start with `test_` and
 they also contain some type of assertion, which is the test. Here we are
 checking if the values are equal, with the `assertEqual` method, but other
-types of assertions are also possible. See the Python Documentation on
-unit tests, <https://docs.python.org/2/library/unittest.html> for other
+types of assertions are also possible. See the [Python 2 Documentation on
+unit tests](<https://docs.python.org/2/library/unittest.html>) or the [Python 3 Documentation on unit tests](https://docs.python.org/3/library/unittest.html) for other
 commands (i.e. `assertItemsEqual`, `assertListEqual`, `assertDictEqual`,
 etc). Django's testing machinery is derived from Python's but also
 provides a number of other asserts and specific test cases.
 
-Now lets run test:
+Now lets run the test:
 
 {lang="text",linenos=off}
-	
 	$ python manage.py test rango
-	
 	
 	Creating test database for alias 'default'...
 	F
@@ -115,11 +112,11 @@ Now lets run test:
 	FAIL: test_ensure_views_are_positive (rango.tests.CategoryMethodTests)
 	----------------------------------------------------------------------
 	Traceback (most recent call last):
-		File "/Users/leif/Code/tango_with_django_project_19/rango/tests.py", 
-		line 12, in test_ensure_views_are_positive
-		self.assertEqual((cat.views>=0), True)
-		AssertionError: False != True
-		
+	    File "/Users/leif/Code/tango_with_django_project_19/rango/tests.py", 
+	    line 12, in test_ensure_views_are_positive
+	    self.assertEqual((cat.views>=0), True)
+	    AssertionError: False != True
+	    
 	----------------------------------------------------------------------
 	Ran 1 test in 0.001s
 	
@@ -141,15 +138,15 @@ created i.e. one with dashes, and in lowercase. Add the following code
 to `rango/tests.py`:
 
 {lang="python", linenos=off}
-	
 	def test_slug_line_creation(self):
-		"""
-		slug_line_creation checks to make sure that when we add a category an appropriate slug line is created
-		i.e. "Random Category String" -> "random-category-string"
-		"""
-		cat = cat('Random Category String')
-		cat.save()
-		self.assertEqual(cat.slug, 'random-category-string')
+	    """
+	    slug_line_creation checks to make sure that when we add 
+	    a category an appropriate slug line is created
+	    i.e. "Random Category String" -> "random-category-string"
+	    """
+	    cat = cat('Random Category String')
+	    cat.save()
+	    self.assertEqual(cat.slug, 'random-category-string')
 
 Does your code still work?
 
@@ -169,17 +166,17 @@ Category model is empty.
 	
 	class IndexViewTests(TestCase):
 	
-		def test_index_view_with_no_categories(self):
-			"""
-			If no questions exist, an appropriate message should be displayed.
-			"""
-			response = self.client.get(reverse('index'))
-			self.assertEqual(response.status_code, 200)
-			self.assertContains(response, "There are no categories present.")
-			self.assertQuerysetEqual(response.context['categories'], [])
+	    def test_index_view_with_no_categories(self):
+	        """
+	        If no questions exist, an appropriate message should be displayed.
+	        """
+	        response = self.client.get(reverse('index'))
+	        self.assertEqual(response.status_code, 200)
+	        self.assertContains(response, "There are no categories present.")
+	        self.assertQuerysetEqual(response.context['categories'], [])
 
 
-First of all, the django `TestCase` has access to a `client` object,
+First of all, the Django `TestCase` has access to a `client` object,
 which can make requests. Here, it uses the helper function `reverse` to
 look up the url of the `index` page. Then it tries to get that page,
 where the `response` is stored. The test then checks a number of things:
@@ -195,35 +192,35 @@ add a helper method.
 	from rango.models import Category
 	
 	def add_cat(name, views, likes):
-		c = Category.objects.get_or_create(name=name)[0]
-		c.views = views
-		c.likes = likes
-		c.save()
-		return c
+	    c = Category.objects.get_or_create(name=name)[0]
+	    c.views = views
+	    c.likes = likes
+	    c.save()
+	    return c
 
 Then add another method to the `class IndexViewTests(TestCase)`:
 
 {lang="python",linenos=off}
 	def test_index_view_with_categories(self):
-		"""
-		If no questions exist, an appropriate message should be displayed.
-		"""
-		
-		add_cat('test',1,1)
-		add_cat('temp',1,1)
-		add_cat('tmp',1,1)
-		add_cat('tmp test temp',1,1)
-		
-		response = self.client.get(reverse('index'))
-		self.assertEqual(response.status_code, 200)
-		self.assertContains(response, "tmp test temp")
-		
-		num_cats =len(response.context['categories'])
-		self.assertEqual(num_cats , 4)
+	    """
+	    Check to make sure that the index has categories displayed
+	    """
+	    
+	    add_cat('test',1,1)
+	    add_cat('temp',1,1)
+	    add_cat('tmp',1,1)
+	    add_cat('tmp test temp',1,1)
+	    
+	    response = self.client.get(reverse('index'))
+	    self.assertEqual(response.status_code, 200)
+	    self.assertContains(response, "tmp test temp")
+	    
+	    num_cats =len(response.context['categories'])
+	    self.assertEqual(num_cats , 4)
 
 In this test, we populate the database with four categories, and then
 check if the page loads, if it contains the text `tmp test temp` and if
-the number of categories is equal to 4.
+the number of categories is equal to 4. Not that this makes three checks, but is only consider to be one test.
 
 
 ###Testing the Rendered Page
@@ -264,10 +261,10 @@ the rango application. To see the coverage report you need to then type:
 	rango/tests                                   12      0   100%
 	rango/urls                                    12     12     0%
 	rango/views                                  110    110     0%
-	tango_with_django_project/__init__          0      0   100%
-	tango_with_django_project/settings         28      0   100%
-	tango_with_django_project/urls              9      9     0%
-	tango_with_django_project/wsgi              4      4     0%
+	tango_with_django_project/__init__             0      0   100%
+	tango_with_django_project/settings            28      0   100%
+	tango_with_django_project/urls                 9      9     0%
+	tango_with_django_project/wsgi                 4      4     0%
 	--------------------------------------------------------------
 	TOTAL                                        310    206    34%
 

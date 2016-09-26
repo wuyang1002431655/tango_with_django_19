@@ -33,7 +33,8 @@ Here we assume you have downloaded a version of the JQuery library, but
 you can also just directly refer to it:
 
 {lang="html",linenos=off}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
+	</script>
 
 If you are using Bootstrap, then scroll to the bottom of the template code, and you will the JQuery library being imported at the end.
 You can then add a link to `rango-ajax.js` after the Jquery library import.
@@ -77,10 +78,11 @@ To prepare the template we will need to add in the "Like" button with
 	<div>
 	<strong id="like_count">{{ category.likes }}</strong> people like this category
 	{% if user.is_authenticated %}
-		<button id="likes" data-catid="{{category.id}}" class="btn btn-primary  btn-sm" type="button">
-			Like
-		</button>
-		{% endif %}
+	    <button id="likes" data-catid="{{category.id}}" 
+	        class="btn btn-primary  btn-sm" type="button">
+	        Like
+	    </button>
+	{% endif %}
 	</div>
 
 
@@ -95,19 +97,17 @@ number of likes for that category.
 	
 	@login_required
 	def like_category(request):
-	
-	cat_id = None
-	if request.method == 'GET':
-		cat_id = request.GET['category_id']
-	likes = 0
-	if cat_id:
-		cat = Category.objects.get(id=int(cat_id))
-		if cat:
-			likes = cat.likes + 1
-			cat.likes =  likes
-			cat.save()
-	return HttpResponse(likes)
-	
+	    cat_id = None
+	    if request.method == 'GET':
+	    cat_id = request.GET['category_id']
+	    likes = 0
+	    if cat_id:
+	        cat = Category.objects.get(id=int(cat_id))
+	        if cat:
+	            likes = cat.likes + 1
+	            cat.likes =  likes
+	            cat.save()
+	    return HttpResponse(likes)
 
 On examining the code, you will see that we are only allowing
 authenticated users to even access this view because we have put a decorator `@login_required` before our view. 
@@ -132,12 +132,12 @@ an AJAX GET request. Add in the following code:
 
 {lang="javascript",linenos=off}
 	$('#likes').click(function(){
-		var catid;
-		catid = $(this).attr("data-catid");
-		$.get('/rango/like/', {category_id: catid}, function(data){
-			$('#like_count').html(data);
-			$('#likes').hide();
-		});
+	    var catid;
+	    catid = $(this).attr("data-catid");
+	    $.get('/rango/like/', {category_id: catid}, function(data){
+	        $('#like_count').html(data);
+	            $('#likes').hide();
+	    });
 	});
 
 This piece of JQuery/Javascript will add an event handler to the element
@@ -213,14 +213,14 @@ instead.
 
 {lang="python",linenos=off}
 	def get_category_list(max_results=0, starts_with=''):
-		cat_list = []
-		if starts_with:
-			cat_list = Category.objects.filter(name__istartswith=starts_with)
-		
-		if max_results > 0:
-			if len(cat_list) > max_results:
-				cat_list = cat_list[:max_results]
-		return cat_list
+	    cat_list = []
+	    if starts_with:
+	        cat_list = Category.objects.filter(name__istartswith=starts_with)
+	    
+	    if max_results > 0:
+	        if len(cat_list) > max_results:
+	            cat_list = cat_list[:max_results]
+	    return cat_list
 
 
 ### Create a Suggest Category View
@@ -230,14 +230,14 @@ returns the top 8 matching results as follows:
 
 {lang="python",linenos=off}
 	def suggest_category(request):
-		cat_list = []
-		starts_with = ''
-		
-		if request.method == 'GET':
-			starts_with = request.GET['suggestion']
-		cat_list = get_category_list(8, starts_with)
-		
-		return render(request, 'rango/cats.html', {'cats': cat_list })
+	    cat_list = []
+	    starts_with = ''
+	    
+	    if request.method == 'GET':
+	        starts_with = request.GET['suggestion']
+	    cat_list = get_category_list(8, starts_with)
+	    
+	    return render(request, 'rango/cats.html', {'cats': cat_list })
 
 
 Note here we are re-using the `rango/cats.html` template :-).
@@ -255,13 +255,13 @@ In the base template in the sidebar div add in the following HTML code:
 
 {lang="html",linenos=off}
 	<ul class="nav nav-list">
-		<li class="nav-header">Find a Category</li>
-		<form>
-			<label></label>
-			<li><input  class="search-query" type="text" 
-				name="suggestion" value="" id="suggestion" />
-			</li>
-		</form>
+	    <li class="nav-header">Find a Category</li>
+	    <form>
+	        <label></label>
+	    <li><input  class="search-query" type="text" 
+	            name="suggestion" value="" id="suggestion" />
+	        </li>
+	    </form>
 	</ul>
 	<div id="cats">
 	</div>
@@ -278,11 +278,11 @@ Add the following JQuery code to the `js/rango-ajax.js`:
 
 {lang="javascript",linenos=off}
 	$('#suggestion').keyup(function(){
-		var query;
-		query = $(this).val();
-		$.get('/rango/suggest/', {suggestion: query}, function(data){
-			$('#cats').html(data);
-		});
+	    var query;
+	    query = $(this).val();
+	    $.get('/rango/suggest/', {suggestion: query}, function(data){
+	        $('#cats').html(data);
+	    });
 	});
 
 Here, we attached an event handler to the HTML input element with
@@ -308,67 +308,65 @@ X> - Add an event handler to the add buttons using JQuery - when added hide the 
 
 T> ### Hints
 T>
-T> HTML Template code for `category.html`:
-T> {lang="html",linenos=off}
-T> 		{% if user.is_authenticated %}
-T> 			<button data-catid="{{category.id}}" data-title="{{ result.title }}"
-T>				 data-url="{{ result.link }}" 
-T>					class="rango-add btn btn-info btn-sm" type="button">Add</button>
-T>		{% endif %}
-T>
-T> JQuery code:
-T> 
-T> {lang="javascript",linenos=off}
-T> 			$('.rango-add').click(function(){
-T> 				var catid = $(this).attr("data-catid");
-T> 				var url = $(this).attr("data-url");
-T> 				var title = $(this).attr("data-title");
-T> 				var me = $(this)
-T> 				$.get('/rango/add/', 
-T> 					{category_id: catid, url: url, title: title}, function(data){
-T> 						$('#pages').html(data);
-T> 						me.hide();
-T> 					});
-T> 				});  
-T>
-T> Note that we need to assign the click event handler to all the buttons with class `rango-add`.
-T>
-T>View code:
-T>
-T> {lang="python",linenos=off}
-T> 		@login_required
-T> 		def auto_add_page(request):
-T> 			cat_id = None
-T> 			url = None
-T> 			title = None
-T> 			context_dict = {}
-T> 			if request.method == 'GET':
-T> 				cat_id = request.GET['category_id']
-T> 				url = request.GET['url']
-T> 				title = request.GET['title']
-T> 				if cat_id:
-T> 					category = Category.objects.get(id=int(cat_id))
-T> 					p = Page.objects.get_or_create(category=category, title=title, url=url)
-T> 					pages = Page.objects.filter(category=category).order_by('-views')
-T> 					# Adds our results list to the template context under name pages.
-T> 					context_dict['pages'] = pages
-T>			return render(request, 'rango/page_list.html', context_dict)
-T>
-T>
-T> HTML Template code for `page_list.html`
-T>
-T> {lang="html",lineos=off}
-T> 		{% if pages %}
-T>			<ul>
-T>			{% for page in pages %}
-T>			<li><a href="{% url 'goto' %}?page_id={{page.id}}"\>{{ page.title }}</a></li>
-T>			{% endfor %}
-T>			</ul>
-T>		{% else %}
-T>			<strong>No pages currently in category.</strong>
-T>		{% endif %}
-T>
-T>
-T> Don't forget to add in your URL mapping, too!
-T>
-T> ` url(r'^add/$', views.auto_add_page, name='auto_add_page'),`
+T> Below we have included code fragments to help you complete these exercises.
+
+The HTML Template code for `category.html` that inserts a button, and crucially keeps a record of the category that the button is associated with.
+
+lang="html",linenos=off}
+	{% if user.is_authenticated %}
+	    <button data-catid="{{category.id}}" data-title="{{ result.title }}"
+	        data-url="{{ result.link }}" 
+	            class="rango-add btn btn-info btn-sm" type="button">Add</button>
+	{% endif %}
+
+
+The JQuery code that adds the `click` event handler to every button with the class `rango-add`:
+ 
+{lang="javascript",linenos=off}
+	$('.rango-add').click(function(){
+	    var catid = $(this).attr("data-catid");
+	    var url = $(this).attr("data-url");
+	    var title = $(this).attr("data-title");
+	    var me = $(this)
+	    $.get('/rango/add/', 
+	        {category_id: catid, url: url, title: title}, function(data){
+	            $('#pages').html(data);
+	            me.hide();
+	        });
+	    });  
+
+The View code that handles the adding of a link to a category:
+
+{lang="python",linenos=off}
+	@login_required
+	def auto_add_page(request):
+	    cat_id = None
+	    url = None
+	    title = None
+	    context_dict = {}
+	    if request.method == 'GET':
+	        cat_id = request.GET['category_id']
+	        url = request.GET['url']
+	        title = request.GET['title']
+	        if cat_id:
+	            category = Category.objects.get(id=int(cat_id))
+	            p = Page.objects.get_or_create(category=category, title=title, url=url)
+	            pages = Page.objects.filter(category=category).order_by('-views')
+	            # Adds our results list to the template context under name pages.
+	            context_dict['pages'] = pages
+	    return render(request, 'rango/page_list.html', context_dict)
+
+The HTML Template code for the new template `page_list.html`:
+
+{lang="html",lineos=off}
+	{% if pages %}
+	<ul>
+	    {% for page in pages %}
+	    <li><a href="{% url 'goto' %}?page_id={{page.id}}"\>{{ page.title }}</a></li>
+	    {% endfor %}
+	</ul>
+	{% else %}
+	    <strong>No pages currently in category.</strong>
+	{% endif %}
+
+Finally, don't forget to add in the URL mapping:  `url(r'^add/$', views.auto_add_page, name='auto_add_page'),`.
