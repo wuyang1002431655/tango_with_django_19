@@ -325,7 +325,7 @@ Now that everything is (almost) working, we need to tweak the process that users
 
 {lang="python",linenos=off}
 	class MyRegistrationView(RegistrationView):
-	    def get_success_url(self,request, user):
+	    def get_success_url(self, request, user):
 	        return url('register_profile')
 
 Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how...
@@ -337,7 +337,7 @@ With the creation of a `UserProfile` object now complete, let's implement the fu
 - creating a new view called `profile()` that uses the `profile.html` template; and
 - mapping the `profile()` view to a new URL (`/rango/profile`).
 
-We'll also need to provide a new hyperlink in Rango's `base.html` template to access the new view. For this solution, we'll be creating a generalised view that allows you to access the information of any user of Rango. The code will allow allow logged in users to also edit their profile; but only *their* profile - thus satisfying the requirements of the exercise.
+We'll also need to provide a new hyperlink in Rango's `base.html` template to access the new view. For this solution, we'll be creating a generalised view that allows you to access the information of any user of Rango. The code will allow logged in users to also edit their profile; but only *their* profile - thus satisfying the requirements of the exercise.
 
 ### Creating the Template
 First, let's create a simple template for displaying a user's profile. The following HTML markup and Django template code should be placed within the new `profile.html` template within Rango's template directory.
@@ -402,7 +402,7 @@ Based upon the template created above, we can then implement a simple view to ha
 	    return render(request, 'rango/profile.html',
 	        {'userprofile': userprofile, 'selecteduser': user, 'form': form})
 
-This view requires that a user be logged in - hence the use of the `@login_requred` decorator. The view begins by selecting the selected `django.contrib.auth.User` from the database - if it exists. If it doesn't, we perform a simple redirect to Rango's homepage rather than greet the user with an error message. We can't display information for a non-existent user! If the user does exist, we can therefore select the user's `UserProfile` instance. If it doesn't exist, we can create a blank one. We then populate a `UserProfileForm` object with the selected user's details if we require it. This is determined by the template as it determines what content is presented to the user.
+This view requires that a user be logged in - hence the use of the `@login_required` decorator. The view begins by selecting the selected `django.contrib.auth.User` from the database - if it exists. If it doesn't, we perform a simple redirect to Rango's homepage rather than greet the user with an error message. We can't display information for a non-existent user! If the user does exist, we can therefore select the user's `UserProfile` instance. If it doesn't exist, we can create a blank one. We then populate a `UserProfileForm` object with the selected user's details if we require it. This is determined by the template as it determines what content is presented to the user.
 
 We then determine if the request is a HTTP `POST` - meaning that the user submitted a form to update their account information. We then extract information from the form into a `UserProfileForm` instance that is able to reference to the `UserProfile` model instance that it is saving to, rather than creating a new `UserProfile` instance each time. Remember, we are *updating*, not creating *new*. A valid form is then saved. An invalid form or a HTTP `GET` request triggers the rendering of the `profile.html` template with the relevant variables that are passed through to the template via its context.
 
