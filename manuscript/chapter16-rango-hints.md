@@ -418,3 +418,73 @@ Everything should now be working as expected - but it'd be nice to add a link in
 	<a href="{% url 'profile' user.username %}">Profile</a>
 
 Note that you may want to add additional information to this link, such as adding a `class` attribute to the `<a>` tag to style it correctly. The link called the URL matched to name `profile` (see above), specifying the currently logged in username as the subsequent portion of the URL.
+
+## Listing all Users
+Our final challenge is to create another page that allows one to view a list of all users on the Rango app. This one is relatively straightforward - we need to implement another template, view and URL mapping - but the view in this instance is very simplistic. We'll be creating a list of users registered to Rango - and providing a hyperlink to view their profile using the code we implemented in the previous section.
+
+### Creating the `list_profiles.html` Template
+With the exercise not providing names to files and views, we can call the template what we want. Let's call it `list_profiles.html` - so go ahead and create that file in Rango's `templates` directory.
+
+Within the file, add the following HTML markup and Django template code.
+
+{lang="html",linenos=off}
+	{% extends 'rango/base_bootstrap.html' %}
+	
+	{% load staticfiles %}
+	
+	{% block title %}User Profiles{% endblock %}
+	
+	{% block body_block %}
+	<h1>User Profiles</h1>
+	
+	<div class="panel">
+	    {% if user_list %}
+	    <div class="panel-heading">
+	        <!-- Display search results in an ordered list -->
+	        <div class="panel-body">
+	            <div class="list-group">
+	                {% for listuser in user_list %}
+	                <div class="list-group-item">
+	                    <h4 class="list-group-item-heading">
+	                        <a href="{% url 'profile' listuser.username %}">{{ listuser.username }}</a>
+	                    </h4>
+	                    <p class="list-group-item-text">E-mail:{{ listuser.email }}</p>
+	                </div>
+	                {% endfor %}
+	            </div>
+	        </div>
+	    </div>
+	    {% else %}
+	        <p>There are no users for the site.</p>
+	    {% endif %}
+	</div>
+	{% endblock %}
+
+Relatively straightforward - we create a series of `<div>` tags using various Bootstrap classes to style the list. For each user, we display their username and e-mail address, providing a hyperlink for their username which takes the user to the profile of the selected user.
+
+E> ### Styling the List - Can You do Better?
+E> We've included some Bootstrap styles here to make the list look a little nicer. Why not try and experiment and add your own CSS customisations to make the list of users look even more attractive? You can refer to the [CSS Crash Course chapter](#chapter-css) if you need any help.
+
+### Creating the View
+With our template created, we can now create the corresponding view that selects all users from the `UserProfile` model. We also make the assumption that the current user must be logged in to view the other users of Rango. The following view `list_profiles()` can be added to Rango's `views.py` module to provide this functionality.
+
+{lang="python",linenos=off}
+	@login_required
+	def list_profiles(request):
+	    user_list = User.objects.all()
+	    userprofile_list = UserProfile.objects.all()
+	    return render(request, 'rango/list_profiles.html', {'user_list' : user_list, 'userprofile_list' : userprofile_list})
+
+I> ### `User` and `UserProfile`
+I> Remember, we need to provide both `User` and `UserProfile` objects to the template's context, as information pertaining to a given user is available over both models.
+
+### Mapping the View and Adding a Link
+Our final step is to map a URL to the new `list_profiles()` view. Add the following to the `urlpatterns` list in Rango's `urls.py` module to do this.
+
+{lang="python",linenos=off}
+    url(r'^profiles/$', views.list_profiles, name='list_profiles'),
+
+We could also add a new hyperlink to Rango's `base.html` template, allowing users *who are logged in* to view the new page. Like before, add the following markup to the base template which provides links only to logged in users.
+
+{lang="html",linenos=off}
+	<a href="{% url 'list_profiles' %}">List Profiles</a>

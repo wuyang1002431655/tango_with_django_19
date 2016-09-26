@@ -82,8 +82,7 @@ I> URL instead, i.e. `/rango/goto/<page_id>/`. In which case you would
 I> need to create a `urlpattern` that pulls out the `page_id`, i.e. `r'goto/(?P<page_id>\d+)/$'`.
 
 
-##Searching Within a Category Page
-
+## Searching Within a Category Page
 Rango aims to provide users with a helpful directory of useful web pages. At
 the moment, the search functionality is essentially independent of the
 categories. It would be nicer to have search integrated within the categories.
@@ -124,10 +123,8 @@ Another useful feature to let users inspect and edit their own profile. Undertak
 - First, create a template called `profile.html`. In this template, add in the fields associated with the user profile and the user (i.e. username, email, website and picture).
 - Create a view called `profile()`. This view will obtain the data required to render the user profile template.
 - Map the URL `/rango/profile/` to your new `profile()` view.
-- In the base template add a link called *Profile* into the menu bar, preferably on the right-hand side with other user-related links. This should only be available to users who are logged in (i.e. `{% if user.is_authenticated %}`).
+- In the base template add a link called *Profile* into the menu bar, preferably with other user-related links. This should only be available to users who are logged in (i.e. `{% if user.is_authenticated %}`).
 
-To let users browse through user profiles, you can create a users page,
-that lists all the users. If you click on a user page, then you can see
-their profile (but make sure that a user can only edit their own page).
+To let users browse through user profiles, you can also create a users page, that lists all the users. If you click on a user page, then you can see their profile. However, you must make sure that that a user can only edit their own page!
 
 In the next chapter, we provide a series of hints and tips to help you complete the aforementioned features.
