@@ -98,16 +98,15 @@ following steps:
 
 	{lang="python",linenos=on}
 		<form class="form-inline" id="user_form" 
-			method="post" action="{% url 'show_category'  category.slug %}">
+		    method="post" action="{% url 'show_category'  category.slug %}">
 
 - Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
 - Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
 
 	{lang="python",linenos=off}
 		{% if user.authenticated %} 
-			<!-- Insert search code here -->
+		    <!-- Insert search code here -->
 		{% endif %}
-		
 
 ##Create and View Profiles
 If you have swapped over to the `django-registration-redux` package, then you'll have to collect the `UserProfile` data. To do this, instead of re-directing the user to the Rango index page, you will need redirect them to a new form, to collect the user's profile picture and URL details. To add the UserProfile registration functionality, you need to:

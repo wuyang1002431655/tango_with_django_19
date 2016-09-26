@@ -20,19 +20,21 @@ to the actual URL.
 	from django.shortcuts import redirect
 	
 	def track_url(request):
-		page_id = None
-		url = '/rango/'
-		if request.method == 'GET':
-			if 'page_id' in request.GET:
-				page_id = request.GET['page_id']
-				try:
-					page = Page.objects.get(id=page_id)
-					page.views = page.views + 1
-					page.save()
-					url = page.url
-					except:
-					pass
-		return redirect(url)
+	    page_id = None
+	    url = '/rango/'
+	    if request.method == 'GET':
+	        if 'page_id' in request.GET:
+	            page_id = request.GET['page_id']
+	            
+	            try:
+	                page = Page.objects.get(id=page_id)
+	                page.views = page.views + 1
+	                page.save()
+	                url = page.url
+	            except:
+	                pass
+	                
+	    return redirect(url)
 
 
 Be sure that you import the `redirect()` function to `views.py` if it
@@ -58,20 +60,17 @@ to click.
 
 {lang="python",linenos=off}
 	{% for page in pages %}
-	<li>
-		<a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }}</a>
-		{% if page.views > 1 %}
-			({{ page.views }} views)
-		{% elif page.views == 1 %}
-			({{ page.views }} view)
-		{% endif %}
-	</li>
+	    <li>
+	        <a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }}</a>
+	        {% if page.views > 1 %}
+	            ({{ page.views }} views)
+	        {% elif page.views == 1 %}
+	            ({{ page.views }} view)
+	        {% endif %}
+	    </li>
 	{% endfor %}
 
-
-Here you can see that in the template we have added some control
-statements to display `view`, `views` or nothing depending on the value
-of `page.views`.
+Here you can see that in the template we have added some control statements to display `view`, `views` or nothing depending on the value of `page.views`.
 
 ### Updating Category View
 
@@ -115,14 +114,14 @@ This is very similar to the template code in the `search.html`, but we have upda
 
 {lang="html",linenos=off}
 	<form class="form-inline" id="user_form"
-		method="post" action="{% url 'show_category'  category.slug %}">
-		{% csrf_token %}
-		<div class="form-group">
-			<input class="form-control" type="text" size="50"
-				name="query" value="{{ query }}" id="query" />
-		</div>
-		<button class="btn btn-primary" type="submit" name="submit"
-			value="Search">Search</button>
+	    method="post" action="{% url 'show_category'  category.slug %}">
+	    {% csrf_token %}
+	    <div class="form-group">
+	        <input class="form-control" type="text" size="50"
+	            name="query" value="{{ query }}" id="query" />
+	    </div>
+	    <button class="btn btn-primary" type="submit" name="submit"
+	        value="Search">Search</button>
 	</form>
 
 After the search form, we need to provide a space where the results are rendered. Again, this code is similar to the template code in `search.html`.
@@ -130,18 +129,18 @@ After the search form, we need to provide a space where the results are rendered
 {lang="html",linenos=off}
 	<div>
 	{% if result_list %}
-		<h3>Results</h3>
-		<!-- Display search results in an ordered list -->
-		<div class="list-group">
-		{% for result in result_list %}
-			<div class="list-group-item">
-				<h4 class="list-group-item-heading">
-					<a href="{{ result.link }}">{{ result.title }}</a>
-				</h4>
-				<p class="list-group-item-text">{{ result.summary }}</p>
-			</div>
-		{% endfor %}
-		</div>
+	    <h3>Results</h3>
+	    <!-- Display search results in an ordered list -->
+	    <div class="list-group">
+	    {% for result in result_list %}
+	        <div class="list-group-item">
+	            <h4 class="list-group-item-heading">
+	                <a href="{{ result.link }}">{{ result.title }}</a>
+	            </h4>
+	            <p class="list-group-item-text">{{ result.summary }}</p>
+	        </div>
+	    {% endfor %}
+	    </div>
 	{% endif %}
 	</div>
 	
@@ -155,50 +154,51 @@ following code demonstrates this new functionality.
 
 {lang="python",linenos=off}
 	def show_category(request, category_name_slug):
-		# Create a context dictionary which we can pass
-		# to the template rendering engine.
-		context_dict = {}
-		
-		try:
-		# Can we find a category name slug with the given name?
-		# If we can't, the .get() method raises a DoesNotExist exception.
-		# So the .get() method returns one model instance or raises an exception.
-		category = Category.objects.get(slug=category_name_slug)
-		# Retrieve all of the associated pages.
-		# Note that filter() returns a list of page objects or an empty list
-		pages = Page.objects.filter(category=category)
-		# Adds our results list to the template context under name pages.
-		context_dict['pages'] = pages
-		# We also add the category object from
-		# the database to the context dictionary.
-		# We'll use this in the template to verify that the category exists.
-		context_dict['category'] = category
-		# We get here if we didn't find the specified category.
-		# Don't do anything -
-		# the template will display the "no category" message for us.        
-		except Category.DoesNotExist:
-		context_dict['category'] = None
-		context_dict['pages'] = None
-		
-		
-		# New code added here to handle a POST request
-		
-		# create a default query based on the category name
-		# to be shown in the search box
-		context_dict['query'] = category.name
-		
-		result_list = []
-		if request.method == 'POST':
-		query = request.POST['query'].strip()
-		if query:
-		# Run our Bing function to get the results list!
-		result_list = run_query(query)
-		context_dict['query'] = query
-		context_dict['result_list'] = result_list
-		
-		
-		# Go render the response and return it to the client.
-		return render(request, 'rango/category.html', context_dict)
+	    # Create a context dictionary which we can pass
+	    # to the template rendering engine.
+	    context_dict = {}
+	    
+	    try:
+	        # Can we find a category name slug with the given name?
+	        # If we can't, the .get() method raises a DoesNotExist exception.
+	        # So the .get() method returns one model instance or raises an exception.
+	        category = Category.objects.get(slug=category_name_slug)
+	        # Retrieve all of the associated pages.
+	        # Note that filter() returns a list of page objects or an empty list
+	        pages = Page.objects.filter(category=category)
+	        # Adds our results list to the template context under name pages.
+	        context_dict['pages'] = pages
+	        # We also add the category object from
+	        # the database to the context dictionary.
+	        # We'll use this in the template to verify that the category exists.
+	        context_dict['category'] = category
+	        # We get here if we didn't find the specified category.
+	        # Don't do anything -
+	        # the template will display the "no category" message for us.
+	    except Category.DoesNotExist:
+	        context_dict['category'] = None
+	        context_dict['pages'] = None
+	    
+	    
+	    # New code added here to handle a POST request
+	    
+	    # create a default query based on the category name
+	    # to be shown in the search box
+	    context_dict['query'] = category.name
+	    
+	    result_list = []
+	    if request.method == 'POST':
+	        query = request.POST['query'].strip()
+	        
+	        if query:
+	            # Run our Bing function to get the results list!
+	            result_list = run_query(query)
+	            context_dict['query'] = query
+	            context_dict['result_list'] = result_list
+	    
+	    
+	    # Go render the response and return it to the client.
+	    return render(request, 'rango/category.html', context_dict)
 
 Notice that in the `context_dict` that we pass through, now includes
 the `result_list` and `query`, and if there is no query, we provide a
