@@ -208,13 +208,21 @@ value.
 ## Creating and Viewing Profiles {#section-hints-profiles}
 This section provides a solution for creating Rango `UserProfile` accounts, and provides the necessary infrastructure to allow users of Rango to view these profiles. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
 
+- Create a `profile_registration.html` which will display the `UserProfileForm`.
+- Create a `UserProfileForm` `ModelForm` class to handle the new form.
+- Create a `register_profile()` view to capture the profile details.
+- Map the view to a URL, i.e. `rango/register_profile/`.
+- In the `MyRegistrationView` defined in the [Django `registration-redux` chapter](#section-redux-templates-flow), update the `get_success_url()` to point to `rango/add_profile/`.
+
 
 The basic flow for a registering user here would be:
 
 - clicking the `Register` link;
-- filling out the initial Django Registration-Redux form;
+- filling out the initial Django `registration-redux` form (and thus registering);
 - filling out the new `UserProfileForm` form; and
 - completing the registration.
+
+This therefore assumes that a user will be registered with Rango *before* the profile form is saved.
 
 ### Creating a Profile Registration Template
 First, let's create a template that'll provide the necessary markup for displaying an additional registration form. In this solution, we're going to keep the Django Registration-Redux form separate from our Profile Registration form - just to delineate between the two. If you can think of a neat way to mix both forms together, why not try it?
@@ -305,7 +313,19 @@ E> {lang="python",linenos=off}
 E> 	from django.contrib.auth.decorators import login_required
 
 ### Mapping the View to a URL
-Map the view to a url
+Now that our template, `ModelForm` and corresponding view have all been implemented, a seasoned Djangoer should now be thinking: *map it!* We need to map our new view to a URL, so that users can access the newly created content. This can be easily achieved by opening up Rango's `urls.py` module, and adding the following line to the `urlpatterns` list.
 
-### Extending `Django-Registration-Redux`
-Adding a new class.
+{lang="python",linenos=off}
+	url(r'^register_profile/$', views.register_profile, name='register_profile'),
+
+This maps our new `register_profile()` view to the URL `/rango/register_profile/`. Remember, the `/rango/` part of the URL comes from your project's `urls.py` module - the remainder of the URL is then handled by the Rango app's `urls.py` module.
+
+### Modifying Registration Flow
+Now that everything is (almost) working, we need to tweak the process that users undertake when registering. Back in the [Django `registration-redux` chapter](#section-redux-templates-flow), we created a new class-based view called `MyRegistrationView` that changes the URL that users are redirected to upon a successful registration. This needs to be changes from redirecting a user to the Rango homepage (with URL name `index`) to our new user profile registration URL. From the previous section, we gave this the name `register_profile`. This therefore means simply changing the `MyRegistrationView` class to look like the following example.
+
+{lang="python",linenos=off}
+	class MyRegistrationView(RegistrationView):
+	    def get_success_url(self,request, user):
+	        return url('register_profile')
+
+Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how...

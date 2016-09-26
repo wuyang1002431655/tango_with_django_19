@@ -111,20 +111,15 @@ following steps:
 		
 
 ##Create and View Profiles
+If you have swapped over to the `django-registration-redux` package, then you'll have to collect the `UserProfile` data. To do this, instead of re-directing the user to the Rango index page, you will need redirect them to a new form, to collect the user's profile picture and URL details. To add the UserProfile registration functionality, you need to:
 
-If you have swapped over to the `django-registration-redux` package,
-then you'll have to collect the `UserProfile` data. To do this, instead
-of re-directing the user to the Rango index page, you will need re-direct
-them to a new form, to collect the user's profile picture and URL details. To add the
-UserProfile registration functionality:
+- create a `profile_registration.html` which will display the `UserProfileForm`;
+- create a `UserProfileForm` `ModelForm` class to handle the new form;
+- create a `register_profile()` view to capture the profile details;
+- map the view to a URL, i.e. `rango/register_profile/`; and
+- in the `MyRegistrationView`, update the `get_success_url()` to point to `rango/add_profile/`.
 
-- Create a `profile_registration.html` which will display the `UserProfileForm`.
-- Create a `register_profile()` view to capture the profile details
-- Map the view to a url, i.e. `rango/add_profile/`.
-- In the `MyRegistrationView` update the `get_success_url()` to point to `rango/add_profile/`
-
-Another useful feature to let users inspect and edit their own profile.
-Undertake the following steps to add this functionality.
+Another useful feature to let users inspect and edit their own profile. Undertake the following steps to add this functionality.
 
 - First, create a template called `profile.html`. In this template, add in the fields associated with the user profile and the user (i.e. username, email, website and picture).
 - Create a view called `profile()`. This view will obtain the data required to render the user profile template.

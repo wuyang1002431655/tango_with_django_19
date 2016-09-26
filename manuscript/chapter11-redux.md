@@ -198,7 +198,7 @@ Next de-commission the `register`, `login`, `logout` functionality from
 the `rango` application, i.e. remove the urls, views, and templates (or
 comment them out).
 
-### Modifying the Registration Flow
+### Modifying the Registration Flow {#section-redux-templates-flow}
 
 At the moment, when users register, it takes them to the registration
 complete page. This feels a bit clunky, so instead, we can take them to
@@ -213,15 +213,15 @@ do this update the `tango_with_django_project/urls.py` by importing
 	# Create a new class that redirects the user to the index page, 
 	#if successful at logging
 	class MyRegistrationView(RegistrationView):
-		def get_success_url(self,request, user):
-			return '/rango/'
+	    def get_success_url(self,request, user):
+	        return '/rango/'
 
-Then update the `urlpatterns` by adding the following line before the pattern for `accounts`.
+Then update the `urlpatterns` list in your Django project's `urls.py` module by adding the following line before the pattern for `accounts`. Note that this is *not* the `urls.py` module within the `rango` directory!
 
 {lang="python",linenos=off}
 	url(r'^accounts/register/$', 
-		MyRegistrationView.as_view(), 
-			name='registration_register'),
+	    MyRegistrationView.as_view(), 
+	        name='registration_register'),
 	
 
 By doing so, when `accounts/register/` is visited this pattern is matched first, and then re-directed to our customised registration view.
