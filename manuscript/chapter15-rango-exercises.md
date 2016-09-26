@@ -69,8 +69,8 @@ I>
 I> {lang="python",linenos=off}
 I> 		page_id = None
 I> 		if request.method == 'GET':
-I> 				if 'page_id' in request.GET:
-I> 					page_id = request.GET['page_id']
+I> 		        if 'page_id' in request.GET:
+I> 		            page_id = request.GET['page_id']
 I>
 I> Always check the request method is of type `GET` first, then you can
 I> access the dictionary `request.GET` which contains values passed as part

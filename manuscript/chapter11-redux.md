@@ -103,7 +103,7 @@ First, create a new directory in the `templates` directory, called
 with the Django Registration Redux application, as it will look in this
 directory for the templates it requires.
 
-### Login Template
+### Login Template {#section-redux-templates-login}
 
 In `templates/registration` create the file, `login.html` with the
 following code:

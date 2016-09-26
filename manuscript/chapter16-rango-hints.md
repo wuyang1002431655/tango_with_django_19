@@ -1,15 +1,13 @@
 #Making Rango Tango! Code and Hints {#chapter-hints}
 
-Hopefully, you will have been able to complete the exercises given the
-workflows we provided, if not, or if you need a little help checkout
-snippets of code and use them within your version of Rango.
+Hopefully, you will have been able to complete the exercises given the workflows we provided. If not, or if you need a little help, have a look at the potential solutions we have provided below, and use them within your version of Rango.
 
-##Track Page Click Throughs
+I> ### Got a different solution?
+I> The solutions provided in this chapter address one potential way to solve each problem. There are more than likely many different ways in which the problems can be solved. If you find a different way to solve them, let us know!
 
-Currently, Rango provides a direct link to external pages. This is not
-very good if you want to track the number of times each page is clicked
-and viewed. To count the number of times a page is viewed via Rango you
-will need to perform the following steps.
+## Track Page Click Throughs
+
+Currently, Rango provides a direct link to external pages. This is not very good if you want to track the number of times each page is clicked and viewed. To count the number of times a page is viewed via Rango, you'll need to perform the following steps.
 
 ### Creating a URL Tracking View
 
@@ -88,7 +86,7 @@ Now, confirm it all works, by clicking on links, and then going back to
 the category page. Don't forget to refresh or click to another category
 to see the updated page.
 
-##Searching Within a Category Page
+## Searching Within a Category Page
 
 Rango aims to provide users with a helpful directory of page links. At
 the moment, the search functionality is essentially independent of the
@@ -151,7 +149,6 @@ After the search form, we need to provide a space where the results are rendered
 Remember to wrap the search form and search results with `{% if user.authenticated %}` and `{% endif %}`, so that only authenticated users can search. You don't want random users to be wasting your Bing Search budget!
 
 ### Updating the Category View
-
 Update the category view to handle a HTTP `POST` request (i.e. when the
 user submits a search) and inject the results list into the context. The
 following code demonstrates this new functionality.
@@ -207,3 +204,74 @@ Notice that in the `context_dict` that we pass through, now includes
 the `result_list` and `query`, and if there is no query, we provide a
 default query, i.e. the category name. The query box then displays this
 value.
+
+## Create and View Profiles
+This section provides a solution for creating Rango `UserProfile` accounts, and provides the necessary infrastructure to allow users of Rango to view these profiles. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
+
+
+The basic flow for a registering user here would be:
+
+- clicking the `Register` link;
+- filling out the initial Django Registration-Redux form;
+- filling out the new `UserProfileForm` form; and
+- completing the registration.
+
+### Creating a Profile Registration Template
+First, let's create a template that'll provide the necessary markup for displaying an additional registration form. In this solution, we're going to keep the Django Registration-Redux form separate from our Profile Registration form - just to delineate between the two. If you can think of a neat way to mix both forms together, why not try it?
+
+Create a template in Rango's templates directory called `profile_registration.html`. Within this new template, add the following markup and Django template code.
+
+{lang="html",linenos=off}
+	{% extends "rango/base.html" %}
+	
+	{% block title_block %}
+	    Registration - Step 2
+	{% endblock %}
+	
+	{% block body_block %}
+	    <h1>Registration - Step 2</h1>
+	    <form method="post" action=".">
+	        {% csrf_token %}
+	        {{ form.as_p }}
+	        <input type="submit" value="Submit" />
+	    </form>
+	{% endblock %}
+
+Much like the previous Django Registration-Redux form that we [created previously](#section-redux-templates-login), this template inherits from our `base.html` template, which incorporates the basic layout for our Rango app. We also create an HTML `form` inside the `body_block` block. This will be populated with fields from a `form` object that we'll be passing into the template from the corresponding view (see below).
+
+### Creating the `UserProfileForm` Class
+Looking at Rango's `models.py` module, you should see a `UserProfile` model that you implemented previously. We've included it below to remind you of what it contains - a reference to a Django `contrib.auth.User` object, and fields for storing a Website and profile image.
+
+{lang="python",linenos=off}
+	class UserProfile(models.Model):
+	    # This line is required. Links UserProfile to a User model instance.
+	    user = models.OneToOneField(User)
+	    # The additional attributes we wish to include.
+	    website = models.URLField(blank=True)
+	    picture = models.ImageField(upload_to='profile_images', blank=True)
+	    
+	    # Override the __unicode__() method to return out something meaningful!
+	    def __str__(self):
+	        return self.user.username
+
+In order to provide the necessary HTML markup on-the-fly for this model, we need to implement a Django `ModelForm` class, based upon our `UserProfile` model. Looking back to the [chapter detailing Django forms](#chapter-forms), we can implement a `ModelForm` for our `UserProfile` as shown in the example below. Unsurprisingly, we call this new class a `UserProfileForm`.
+
+{lang="python",linenos=off}
+	class UserProfileForm(forms.ModelForm):
+	    website = forms.URLField(required=False)
+	    picture = forms.ImageField(required=False)
+	    
+	    class Meta:
+	        model = UserProfile
+	        exclude = ('user',)
+
+Note the inclusion of optional (through `required=False`) `website` and `picture` HTML form fields - and the nested `Meta` class that associates the `UserProfileForm` with the `UserProfile` model. The `exclude` attribute instructs the Django form machinery to *not* produce a form field for the `user` model attribute. As the newly registered user doesn't have reference to their `User` object, we'll have to manually associate this with their new `UserProfile` instance when we create it later.
+
+### Creating a Profile Registration View
+Creating the view
+
+### Mapping the View to a URL
+Map the view to a url
+
+### Extending `Django-Registration-Redux`
+Adding a new class.
