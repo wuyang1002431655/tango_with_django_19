@@ -66,8 +66,9 @@ same functionality in standard Javascript versus JQuery.
 In your `about.html` template, add the following piece of code:
 
 {lang="html",linenos=off}
-	<button  class="btn btn-primary" onClick="alert('You clicked the button using Javascript.');"> 
-		Click Me - I run Javascript 
+	<button  class="btn btn-primary" 
+	    onClick="alert('You clicked the button using Javascript.');"> 
+	    Click Me - I run Javascript 
 	</button>
 
 As you can see, we are assigning the function `alert()` to the `onClick`
@@ -76,9 +77,10 @@ handler of the button. Load up the `about` page, and try it out.
 Now lets do it using JQuery, by first adding another button:
 
 {lang="html",linenos=off}
-	<button  class="btn btn-primary" id="about-btn"> Click Me - I'm Javascript on Speed</button>
-		<p>This is a example</p>
-		<p>This is another example</p>
+	<button  class="btn btn-primary" id="about-btn"> 
+	    Click Me - I'm Javascript on Speed</button>
+	<p>This is a example</p>
+	<p>This is another example</p>
 
 
 Notice that there is not Javascript code associated with the button
@@ -87,9 +89,9 @@ currently. We will be doing that with the following code added to
 
 {lang="javascript",linenos=off}
 	$(document).ready( function() {
-		$("#about-btn").click( function(event) {
-			alert("You clicked the button using JQuery!");
-		});
+	    $("#about-btn").click( function(event) {
+	        alert("You clicked the button using JQuery!");
+	    });
 	});
 
 Reload the page, and try it out. Hopefully, you will see that both
@@ -125,7 +127,7 @@ added the following code:
 
 {lang="javascript",linenos=off}
 	$(".ouch").click( function(event) {
-		alert("You clicked me! ouch!");
+	    alert("You clicked me! ouch!");
 	});
 
 
@@ -138,10 +140,10 @@ selector:
 
 {lang="javascript",linenos=off}
 	$("p").hover( function() {
-		$(this).css('color', 'red');
+	    $(this).css('color', 'red');
 	}, 
 	function() {
-		$(this).css('color', 'blue');
+	    $(this).css('color', 'blue');
 	});
 
 
@@ -191,10 +193,10 @@ Then add the following JQuery to `rango-jquery.js`:
 
 {lang="javascript",linenos=off}
 	$("#about-btn").click( function(event) {
-		msgstr = $("#msg").html()
-		msgstr = msgstr + "ooo"
-		$("#msg").html(msgstr)
-	 });
+	    msgstr = $("#msg").html()
+	    msgstr = msgstr + "ooo"
+	    $("#msg").html(msgstr)
+	});
 
 
 On click of the element with id `#about-btn`, we first get the html

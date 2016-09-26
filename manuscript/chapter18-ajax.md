@@ -33,7 +33,8 @@ Here we assume you have downloaded a version of the JQuery library, but
 you can also just directly refer to it:
 
 {lang="html",linenos=off}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
+	<script 
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
 	</script>
 
 If you are using Bootstrap, then scroll to the bottom of the template code, and you will the JQuery library being imported at the end.
@@ -182,19 +183,20 @@ To do this you will need to do the following.
 With the URL mapping, view, and template in place, you will
 need to update the `base.html` template to provide a category search box, and then add in some Javascript/JQuery code to link up everything so that when the user types the suggested categories are displayed.
 
-In the `base.html` template modify the sidebar block so that a div with an id="cats" encapsulates the categories being presented. The JQuery/AJAX will update this element.
+In the `base.html` template modify the sidebar block so that a div with an id="cats" encapsulates the categories being presented. The JQuery/AJAX will update this element. Before this `<div>` add an input box for a user to enter the letters of a category, i.e.:
 
-- Above this `<div>` add an input box for a user to enter the letters of a category, i.e.:
-`<input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />`
+{lang="html",linenos=off}
+	<input  class="input-medium search-query" type="text" 
+	     name="suggestion" value="" id="suggestion" />
 
 With these elements added into the templates, you can add in some JQuery to update the categories list as the user types.
 
-	- Associate an on keypress event handler to the *input* with `id="suggestion"`
-	- `$('#suggestion').keyup(function(){ ... })`
-	- On keyup, issue an ajax call to retrieve the updated categories list
-	- Then use the JQuery `.get()` function i.e. `$(this).get( ... )`
-	- If the call is successful, replace the content of the `<div>` with id="cats" with the data received.
-	- Here you can use the JQuery `.html()` function i.e. `$('#cats').html( data )`
+- Associate an on keypress event handler to the *input* with `id="suggestion"`
+- `$('#suggestion').keyup(function(){ ... })`
+- On keyup, issue an ajax call to retrieve the updated categories list
+- Then use the JQuery `.get()` function i.e. `$(this).get( ... )`
+- If the call is successful, replace the content of the `<div>` with id="cats" with the data received.
+- Here you can use the JQuery `.html()` function i.e. `$('#cats').html( data )`
 
 X> ###Exercise
 X>
