@@ -1,5 +1,5 @@
-# Templates and Static Media {#chapter-templates-static}
-In this chapter, we'll be introducing the Django template engine, as well as showing how to serve *static media* files which can be integrated within your app's webpages.
+# Templates and Media {#chapter-templates-static}
+In this chapter, we'll be introducing the Django template engine, as well as showing how to serve both *static* and *uploaded* media files, both of which can be integrated within your app's webpages.
 
 ## Using Templates
 Up until this point, you have plugged a few things together to create a Django powered webpage. This is coupled to a view, which is in turn coupled with a series of URL mappings. Here we will delve into how to combine *templates* into the mix.
@@ -294,7 +294,8 @@ X> * Convert the about page to use a template as well, using a template called `
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
 
-
+## Serving Uploaded Media {#section-templates-upload}
+blah
 
 
 
