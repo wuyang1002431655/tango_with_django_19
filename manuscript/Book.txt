@@ -14,7 +14,6 @@ chapter11-redux.md
 chapter12-bootstrap.md
 chapter14-bing.md
 
-chapter-work-in-progress.md
 chapter15-rango-exercises.md
 chapter16-rango-hints.md
 chapter17-jquery.md

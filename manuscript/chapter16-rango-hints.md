@@ -2,8 +2,11 @@
 
 Hopefully, you will have been able to complete the exercises given the workflows we provided. If not, or if you need a little help, have a look at the potential solutions we have provided below, and use them within your version of Rango.
 
-I> ### Got a different solution?
-I> The solutions provided in this chapter address one potential way to solve each problem. There are more than likely many different ways in which the problems can be solved. If you find a different way to solve them, let us know!
+I> ### Got a better solution?
+I>
+I> The solutions provided in this chapter are only one way to solve each problem.
+I> They are based on what we have learnt so far. However, if you implement them differently, 
+I> feel free to share your solutions with us - and tweet links to @tangowithdjango for others to see.
 
 ## Track Page Click Throughs
 
@@ -308,7 +311,8 @@ With a valid `UserProfileForm`, we can then create a new instance of the `UserPr
 If the request sent was a HTTP `GET`, the user simply wants to request a blank form to fill out - so we respond by `render`ing the `profile_registration.html` template created above with a blank instance of the `UserProfileForm`, passed to the rendering context dictionary as `form` - thus satisfying the requirement we created in our template. This solution should therefore handle all required scenarios for creating, parsing and saving data from a `UserProfileForm` form.
 
 E> ### Can't find `login_required`?
-E> Remember, once a newly registered user hits this view, they will have had a new account created for them - so we can safely assume that he or she is now logged into Rango. This is why we are using the neat `@login_required` decorator at the top of our view to prevent individuals from accessing the view when they are unauthorised to do so.
+E>
+E> Remember, once a newly registered user hits this view, they will have had a new account created for them - so we can safely assume that he or she is now logged into Rango. This is why we are using the `@login_required` decorator at the top of our view to prevent individuals from accessing the view when they are unauthorised to do so.
 E> 
 E> If you are receiving an error stating that the `login_required()` function (used as a decorator to our new view) cannot be located, ensure that you have the following `import` statement at the top of your `view.py` module.
 E>
@@ -331,7 +335,7 @@ Now that everything is (almost) working, we need to tweak the process that users
 	    def get_success_url(self, request, user):
 	        return url('register_profile')
 
-Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how...
+Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how.
 
 ## Viewing your Profile  {#section-hints-profileview}
 With the creation of a `UserProfile` object now complete, let's implement the functionality to allow a user to view his or her profile and edit it. The process is again pretty similar to what we've done before. We'll need to consider the following aspects:
