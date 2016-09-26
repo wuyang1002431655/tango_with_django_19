@@ -323,7 +323,7 @@ templates. For the `add_page.html` template, we can set it up as
 follows.
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+		{% extends "rango/base.html" %}
 	{% block title %}Add Page{% endblock %}
 	
 	{% block body_block %}
@@ -361,42 +361,32 @@ X> - Create a similar template for the Add Category page called `add_category.ht
 For the `registration_form.html`, we can update the form as follows:
 
 {lang="python",linenos=off}
-	{% extends "base.html" %}
-	{% block body_block %}
-	<form role="form"  method="post" action=".">
-		{% csrf_token %}
-		<h2 class="form-signin-heading">Sign Up Here</h2>
-		<div class="form-group" >
-			<p class="required"> 
-				<label for="id_username">Username:</label>
-				<input class="form-control"  id="id_username" maxlength="30" 
-					name="username" type="text"
-						placeholder="Enter username"/></p>
-	</div>
-	<div class="form-group">
-		<p class="required">
-			<label for="id_email">E-mail:</label>
-			<input class="form-control" id="id_email" 
-				name="email" type="email"
-					placeholder="Enter email" /></p>
-		</div>
-		<div class="form-group">
-			<p class="required">
-				<label for="id_password1">Password:</label>
-				<input class="form-control" id="id_password1" 
-					name="password1" type="password" 
-						placeholder="Enter password" /></p>
-			</div>
-			<div class="form-group">
-				<p class="required">
-					<label for="id_password2">Password (again):</label>
-					<input class="form-control" id="id_password2" 
-						name="password2" type="password" 
-							placeholder="Enter password again" /></p>
-				</div>
-		<button type="submit" class="btn btn-default">Submit</button>
-	</form>
-	{% endblock %}
+    {% extends "rango/base.html" %}
+    {% block body_block %}
+
+    <h2 class="form-signin-heading">Sign Up Here</h2>
+
+    <form role="form"  method="post" action=".">
+        {% csrf_token %}
+        <div class="form-group" >
+        <p class="required"><label class="required" for="id_username">Username:</label>
+            <input class="form-control" id="id_username" maxlength="30" name="username" type="text" />
+            <span class="helptext">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+        </p>
+        <p class="required"><label class="required" for="id_email">E-mail:</label>
+            <input class="form-control" id="id_email" name="email" type="email" />
+        </p>
+        <p class="required"><label class="required" for="id_password1">Password:</label>
+            <input class="form-control" id="id_password1" name="password1" type="password" />
+        </p>
+        <p class="required"><label class="required" for="id_password2">Password confirmation:</label>
+            <input class="form-control" id="id_password2" name="password2" type="password" />
+            <span class="helptext">Enter the same password as before, for verification.</span>
+        </p>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    {% endblock %}
 
 Again we have manually transformed the form created by the
 `{{ form.as_p }}` template tag, and added the various bootstrap classes.
@@ -414,7 +404,7 @@ To use the toolkit within our templates, we need to first load the toolkit `{% l
 `{{ form|as_bootstrap }}`. Applying this solution to the `category.html` template, we arrive at the following.
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+		{% extends "rango/base.html" %}
 	
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
