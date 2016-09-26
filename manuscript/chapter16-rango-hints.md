@@ -352,7 +352,10 @@ First, let's create a simple template for displaying a user's profile. The follo
 	{% block body_block %}
 	
 	<h1>{{selecteduser.username}} Profile</h1>
-	<img src="{{ MEDIA_URL }}{{userprofile.picture }}" width="300" height="300" alt="{{selecteduser.username}}" />
+	<img src="{{ MEDIA_URL }}{{userprofile.picture }}"
+	     width="300"
+	     height="300"
+	     alt="{{selecteduser.username}}" />
 	<br/>
 	<div>
 	    {% if selecteduser.username == user.username %}
@@ -362,7 +365,8 @@ First, let's create a simple template for displaying a user's profile. The follo
 	            <input type="submit" value="Update" />
 	        </form>
 	    {% else %}
-	    <p><strong>Website:</strong> <a href="{{userprofile.website}}">{{userprofile.website}}</a></p>
+	    <p><strong>Website:</strong> <a href="{{userprofile.website}}">
+	        {{userprofile.website}}</a></p>
 	     endif %}
 	</div>
 	<div id="edit_profile"></div>
@@ -384,7 +388,8 @@ Based upon the template created above, we can then implement a simple view to ha
 	        return redirect('index')
 	    
 	    userprofile = UserProfile.objects.get_or_create(user=user)[0]
-	    form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
+	    form = UserProfileForm(
+	        {'website': userprofile.website, 'picture': userprofile.picture})
 	    
 	    if request.method == 'POST':
 	        form = UserProfileForm(request.POST, instance=userprofile)
@@ -394,14 +399,15 @@ Based upon the template created above, we can then implement a simple view to ha
 	        else:
 	            print(form.errors)
 	    
-	    return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+	    return render(request, 'rango/profile.html',
+	        {'userprofile': userprofile, 'selecteduser': user, 'form': form})
 
 This view requires that a user be logged in - hence the use of the `@login_requred` decorator. The view begins by selecting the selected `django.contrib.auth.User` from the database - if it exists. If it doesn't, we perform a simple redirect to Rango's homepage rather than greet the user with an error message. We can't display information for a non-existent user! If the user does exist, we can therefore select the user's `UserProfile` instance. If it doesn't exist, we can create a blank one. We then populate a `UserProfileForm` object with the selected user's details if we require it. This is determined by the template as it determines what content is presented to the user.
 
 We then determine if the request is a HTTP `POST` - meaning that the user submitted a form to update their account information. We then extract information from the form into a `UserProfileForm` instance that is able to reference to the `UserProfile` model instance that it is saving to, rather than creating a new `UserProfile` instance each time. Remember, we are *updating*, not creating *new*. A valid form is then saved. An invalid form or a HTTP `GET` request triggers the rendering of the `profile.html` template with the relevant variables that are passed through to the template via its context.
 
-E> ### A Simple Exercise
-E> How can we change the code above to prevent unauthorised users from changing the details of a user account that isn't theirs? What conditional statement do we need to add to enforce this additional check?
+X> ### A Simple Exercise
+X> How can we change the code above to prevent unauthorised users from changing the details of a user account that isn't theirs? What conditional statement do we need to add to enforce this additional check?
 
 ### Mapping the View to a URL
 We then need to map our new `profile()` view to a URL. As usual, this involves the addition of a single line of code to Rango's `urls.py` module. Add the following line to the bottom of the `urlpatterns` list.
@@ -446,9 +452,11 @@ Within the file, add the following HTML markup and Django template code.
 	                {% for listuser in user_list %}
 	                <div class="list-group-item">
 	                    <h4 class="list-group-item-heading">
-	                        <a href="{% url 'profile' listuser.username %}">{{ listuser.username }}</a>
+	                        <a href="{% url 'profile' listuser.username %}">
+	                            {{ listuser.username }}</a>
 	                    </h4>
-	                    <p class="list-group-item-text">E-mail:{{ listuser.email }}</p>
+	                    <p class="list-group-item-text">
+	                        E-mail:{{ listuser.email }}</p>
 	                </div>
 	                {% endfor %}
 	            </div>
@@ -462,8 +470,8 @@ Within the file, add the following HTML markup and Django template code.
 
 Relatively straightforward - we create a series of `<div>` tags using various Bootstrap classes to style the list. For each user, we display their username and e-mail address, providing a hyperlink for their username which takes the user to the profile of the selected user.
 
-E> ### Styling the List - Can You do Better?
-E> We've included some Bootstrap styles here to make the list look a little nicer. Why not try and experiment and add your own CSS customisations to make the list of users look even more attractive? You can refer to the [CSS Crash Course chapter](#chapter-css) if you need any help.
+X> ### Styling the List - Can You do Better?
+X> We've included some Bootstrap styles here to make the list look a little nicer. Why not try and experiment and add your own CSS customisations to make the list of users look even more attractive? You can refer to the [CSS Crash Course chapter](#chapter-css) if you need any help.
 
 ### Creating the View
 With our template created, we can now create the corresponding view that selects all users from the `UserProfile` model. We also make the assumption that the current user must be logged in to view the other users of Rango. The following view `list_profiles()` can be added to Rango's `views.py` module to provide this functionality.
@@ -473,9 +481,11 @@ With our template created, we can now create the corresponding view that selects
 	def list_profiles(request):
 	    user_list = User.objects.all()
 	    userprofile_list = UserProfile.objects.all()
-	    return render(request, 'rango/list_profiles.html', {'user_list' : user_list, 'userprofile_list' : userprofile_list})
+	    
+	    return render(request, 'rango/list_profiles.html',
+	        {'user_list' : user_list, 'userprofile_list' : userprofile_list})
 
-I> ### `User` and `UserProfile`
+I> ### Why both `User` and `UserProfile`?
 I> Remember, we need to provide both `User` and `UserProfile` objects to the template's context, as information pertaining to a given user is available over both models.
 
 ### Mapping the View and Adding a Link
@@ -488,3 +498,5 @@ We could also add a new hyperlink to Rango's `base.html` template, allowing user
 
 {lang="html",linenos=off}
 	<a href="{% url 'list_profiles' %}">List Profiles</a>
+
+With this link added, you should now have completed all the exercises! Congratulations!
