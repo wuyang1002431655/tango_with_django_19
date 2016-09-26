@@ -323,7 +323,7 @@ templates. For the `add_page.html` template, we can set it up as
 follows.
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+		{% extends "rango/base.html" %}
 	{% block title %}Add Page{% endblock %}
 	
 	{% block body_block %}
@@ -361,7 +361,7 @@ X> - Create a similar template for the Add Category page called `add_category.ht
 For the `registration_form.html`, we can update the form as follows:
 
 {lang="python",linenos=off}
-	{% extends "base.html" %}
+		{% extends "rango/base.html" %}
 	{% block body_block %}
 	<form role="form"  method="post" action=".">
 		{% csrf_token %}
@@ -414,7 +414,7 @@ To use the toolkit within our templates, we need to first load the toolkit `{% l
 `{{ form|as_bootstrap }}`. Applying this solution to the `category.html` template, we arrive at the following.
 
 {lang="html",linenos=off}
-	{% extends 'base.html' %}
+		{% extends "rango/base.html" %}
 	
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
