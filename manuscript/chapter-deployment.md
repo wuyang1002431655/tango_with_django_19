@@ -3,7 +3,7 @@ This chapter provides a step-by-step guide on how to deploy your Django applicat
 
 I> ### Go Git It!
 I>
-I> You can do this chapter independently, assuming you have some working knowledge of Git. If you don't, refer to the [chapter on using Git](#chapter-git)).
+I> You can do this chapter independently as we have already implemented Rango and it is available from GitHub. If you haven't used Git/GitHub before you can check out our [chapter on using Git](#chapter-git)).
 
 ## Creating a PythonAnywhere Account
 First, [sign up for a Beginner PythonAnywhere account](https://www.pythonanywhere.com/?affiliate_id=000116e3). If your application takes off and becomes popular, you can always upgrade your account at a later stage to gain more storage space and CPU time along with a number of other benefits - such as hosting specific domains and SSH abilities, for example.
