@@ -186,7 +186,7 @@ W> ### Don't Forget the Slashes!
 W> When setting `STATIC_URL`, check that you end the URL you specify with a forward slash (e.g. `/static/`, not `/static`). As per the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-STATIC_URL), not doing so can open you up to a world of pain. The extra slash at the end ensures that the root of the URL (e.g. `/static/`) is separated from the static content you want to serve (e.g. `images/rango.jpg`).
 
 I> ### Serving Static Content
-I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production environment. The [official Django documentation on deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when we deploy Rango.
+I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production environment. The [official Django documentation on deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when we [deploy Rango](#chapter-deploy).
 
 ### Static Media Files and Templates
 Now that you have your Django project set up to handle static files, you can now make use of these files within your templates to improve their appearance and add additional functionality.
@@ -269,6 +269,65 @@ T> 	[10/Apr/2016 15:12:52] "GET /static/images/not-here.jpg HTTP/1.1" 404 0
 T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
+## Serving Uploaded Media {#section-templates-upload}
+While static media files are intrinsic to your web app working correctly client side, *media files* are simply files uploaded by your app's users. Examples include the uploading of a user's profile image to be displayed by your app, or the uploading of student essays to a Web server to be graded by a Professor. They are not mission critical to your app; rather, the ability to upload media provides your app is merely a useful feature.
+
+In order to serve media files successfully, we also need to tweak your Django project's settings to get this to work. This section details what you need to add - but we won't be testing file uploading here. You'll be [laying the groundwork for doing this later on](#chapter-ex).
+
+I> ### Serving Media Files
+I> Like serving static content, Django provides the ability to serve media files in your development environment - to make sure everything is working. The methods that Django uses to serve this content are highly unsuitable for a production environment, so you should be looking to host your app's media files by some other means. The [deployment chapter](#chapter-deploy) will discuss this in more detail.
+
+### Modifying `settings.py`
+To begin, we first of all need to once again head into our Django project's `settings.py` module. In here, we'll be adding a couple more things. Like static files, media files are uploaded to a specified directory on your filesystem. We need to tell Django where to upload user uploaded content to.
+
+At the top of your `settings.py` module, locate your existing `BASE_DIR`, `TEMPLATE_DIR` and `STATIC_DIR` variables - they should be close to the top. Underneath, add a further variable, `MEDIA_DIR`.
+
+{lang="python",linenos=off}
+	MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+
+This line instructs Django that media files will be uploaded to your Django project's root, plus '/media' - or `<workspace>/tango_with_django_project/media/`. As we previously mentioned, keeping these path variables at the top of your `settings.py` module makes it easy to change paths later on if necessary.
+
+Now find a blank spot in `settings.py`, and add two more variables. The variables `MEDIA_ROOT` and `MEDIA_URL` will be [picked up and used by Django to set up media file hosting](https://docs.djangoproject.com/en/1.9/howto/static-files/#serving-files-uploaded-by-a-user-during-development).
+
+{lang="python",linenos=off}
+	MEDIA_ROOT = MEDIA_DIR
+	MEDIA_URL = '/media/'
+
+W> ### Once again, don't Forget the Slashes!
+W> Like the `STATIC_URL` variable, ensure that `MEDIA_URL` ends with a forward slash (i.e. `/media/`, not `/media`). The extra slash at the end ensures that the root of the URL (e.g. `/media/`) is separated from the user uploaded content you want to serve.
+
+The two variables tell Django where to look in your filesystem for uploaded media files (`MEDIA_ROOT`), and what URL to serve them from (`MEDIA_URL`). With the configuration defined above, the uploaded file `cats.jpg` will for example be available on your Django development server at `http://localhost:8000/media/cats.jpg`.
+
+When we come to working with templates [later on in this book](#chapter-mtv), it'll be handy for us to obtain a reference to the `MEDIA_URL` path when we need to reference uploaded content. Django provides a [*template context processor*](https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media) that'll make it easy for us to do. While we don't strictly need this set up now, it's a good time to just add it in.
+
+To do this, find the `TEMPLATES` list in `settings.py`. Within that list, look for the nested `context_processors` list, and within that list, add a new processor, `django.core.context_processors.media`. Your `context_processors` list should then look similar to the example below.
+
+{lang="python",linenos=off}
+	'context_processors': [
+	    'django.template.context_processors.debug',
+	    'django.template.context_processors.request',
+	    'django.contrib.auth.context_processors.auth',
+	    'django.contrib.messages.context_processors.messages',
+	    'django.core.context_processors.media'
+	],
+
+### Tweaking your URLs
+The final step for setting up the serving of media in a development environment is to tell Django to serve static content from `MEDIA_URL`. This can be achieved by opening your project's `urls.py` module, and modifying it by appending a call to the `static()` function to your project's `urlpatterns` list.
+
+{lang="python",linenos=off}
+	urlpatterns = [
+	    ...
+	    ...
+	] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+You'll also need to add `import` statements at the top of the `urls.py` module so that Python can figure out what `settings` and `static` actually are.
+
+{lang="python",linenos=off}
+	from django.conf import settings
+	from django.conf.urls.static import static
+
+Once this is complete, you should be able to serve content from the `media` directory of your project from the `/media/` URL.
+
 ## Basic Workflow
 With the chapter complete, you should now know how to setup and create templates, use templates within your views, setup and use the Django development server to serve static media files, *and* include images within your templates. We've covered quite a lot!
 
@@ -287,15 +346,18 @@ The steps involved for getting a static media file onto one of your pages is ano
 2. Add a reference to the static media file to a template. For example, an image would be inserted into an HTML page through the use of the `<img />` tag. 
 3. Remember to use the `{% load staticfiles %}` and `{% static "<filename>" %}` commands within the template to access the static files. Replace `<filename>` with the path to the image or resource you wish to reference. **Whenever you wish to refer to a static file, use the `static` template tag!**
 
+The steps for serving a user uploaded media file are similar to those for serving static media.
+
+1. Place a file within your project's `media` directory. The `media` directory is specified by your project's `MEDIA_ROOT` variable. 
+2. Link to the media file in a template through the use of the `{{ MEDIA_URL }}` context variable. For example, referencing an uploaded image `dog.jpg` would have an `<img />` tag like `<img src="{{ MEDIA_URL}}dog.jpg">`.
+
 X> ### Exercises
 X> Give the following exercises a go to reinforce what you've learnt from this chapter.
 X> 
 X> * Convert the about page to use a template as well, using a template called `about.html`.
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
-
-## Serving Uploaded Media {#section-templates-upload}
-blah
+X> * In your Django project directory, create a new directory called `media` and copy an image into there. Try and view it in your browser to ensure that your media serving settings are correct!
 
 
 

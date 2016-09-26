@@ -126,4 +126,7 @@ Another useful feature to let users inspect and edit their own profile. Undertak
 
 To let users browse through user profiles, you can also create a users page, that lists all the users. If you click on a user page, then you can see their profile. However, you must make sure that that a user can only edit their own page!
 
+T> ### Referencing Uploaded Content in Templates
+T> If you have successfully completed all of the [Templates and Media chapter](#section-templates-upload), your Django setup should be ready to deal with the uploading and serving of user media files. You should be able to reference the `MEDIA_URL` URL (defined in `settings.py`) in your templates through use of the `{{ MEDIA_URL }}` tag, provided by the [media template context processor](https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media).
+
 In the next chapter, we provide a series of hints and tips to help you complete the aforementioned features.
