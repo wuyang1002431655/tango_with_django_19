@@ -238,7 +238,7 @@ Create a template in Rango's templates directory called `profile_registration.ht
 	
 	{% block body_block %}
 	    <h1>Registration - Step 2</h1>
-	    <form method="post" action=".">
+	    <form method="post" action="." enctype="multipart/form-data">
 	        {% csrf_token %}
 	        {{ form.as_p }}
 	        <input type="submit" value="Submit" />
@@ -246,6 +246,9 @@ Create a template in Rango's templates directory called `profile_registration.ht
 	{% endblock %}
 
 Much like the previous Django `registration-redux` form that we [created previously](#section-redux-templates-login), this template inherits from our `base.html` template, which incorporates the basic layout for our Rango app. We also create an HTML `form` inside the `body_block` block. This will be populated with fields from a `form` object that we'll be passing into the template from the corresponding view (see below).
+
+W> ### Don't Forget `multipart/form-data`!
+W> When creating your form, don't forget to include the `enctype="multipart/form-data"` attribute in the `<form>` tag. We need to set this to [instruct the Web browser and server that no character encoding should be used](http://stackoverflow.com/questions/4526273/what-does-enctype-multipart-form-data-mean) - as we are performing *file uploads*. If you don't include this attribute, the image upload component will not work.
 
 ### Creating the `UserProfileForm` Class
 Looking at Rango's `models.py` module, you should see a `UserProfile` model that you implemented previously. We've included it below to remind you of what it contains - a reference to a Django `django.contrib.auth.User` object, and fields for storing a Website and profile image.
@@ -284,7 +287,7 @@ Next, we need to create the corresponding view to handle the processing of a `Us
 	    form = UserProfileForm()
 	    
 	    if request.method == 'POST':
-	        form = UserProfileForm(request.POST)
+	        form = UserProfileForm(request.POST, request.FILES)
 	        if form.is_valid():
 	            user_profile = form.save(commit=False)
 	            user_profile.user = request.user
@@ -298,7 +301,7 @@ Next, we need to create the corresponding view to handle the processing of a `Us
 	    
 	    return render(request, 'rango/profile_registration.html', context_dict)
 
-Upon creating a new `UserProfileForm` instance, we then check our `request` object to determine if a `GET` or `POST` was made. If the request was a `POST`, we then recreate the `UserProfileForm`, using data gathered from the `POST` request. We then check if the submitted form was valid - meaning that form fields were filled out correctly. In this case, we only really need to check if the URL supplied is valid - since the URL and profile picture fields are marked as optional.
+Upon creating a new `UserProfileForm` instance, we then check our `request` object to determine if a `GET` or `POST` was made. If the request was a `POST`, we then recreate the `UserProfileForm`, using data gathered from the `POST` request. As we are also handling a file image upload (for the user's profile image), we also need to pull the uploaded file from `request.FILES`. We then check if the submitted form was valid - meaning that form fields were filled out correctly. In this case, we only really need to check if the URL supplied is valid - since the URL and profile picture fields are marked as optional.
 
 With a valid `UserProfileForm`, we can then create a new instance of the `UserProfile` model with the line `user_profile = form.save(commit=False)`. Setting `commit=False` gives us time to manipulate the `UserProfile` instance before we commit it to the database. This is where can then add in the necessary step to associate the new `UserProfile` instance with the newly created `User` object that has been just created (refer to the [flow at the top of this section](#section-hints-profiles) to refresh your memory). After successfully saving the new `UserProfile` instance, we then redirect the newly created user to Rango's `index` view, using the URL pattern name. If form validation failed for any reason, errors are simply printed to the console. You will probably in your own code want to make the handling of errors more robust.
 
@@ -359,7 +362,7 @@ First, let's create a simple template for displaying a user's profile. The follo
 	<br/>
 	<div>
 	    {% if selecteduser.username == user.username %}
-	        <form method="post" action=".">
+	        <form method="post" action="." enctype="multipart/form-data">
 	             {% csrf_token %}
 	            {{ form.as_p }}
 	            <input type="submit" value="Update" />
@@ -367,7 +370,7 @@ First, let's create a simple template for displaying a user's profile. The follo
 	    {% else %}
 	    <p><strong>Website:</strong> <a href="{{userprofile.website}}">
 	        {{userprofile.website}}</a></p>
-	     endif %}
+	    {% endif %}
 	</div>
 	<div id="edit_profile"></div>
 {% endblock %}
@@ -375,6 +378,8 @@ First, let's create a simple template for displaying a user's profile. The follo
 Note that there are a few variables (`selecteduser`, `userprofile` and `form`) that we need to define in the template's context - we'll be doing so in the next section.
 
 The fun part of this template is within the `body_block` block. The template shows the user's profile image at the top. Underneath, the template shows a form allowing the user to change his or her details, which is populated from the `form` variable. This form however is *only shown* when the selected user matches the user that is currently logged in, thus only allowing the presently logged in user to edit his or her profile. If the selected user does not match the currently logged in user, then the selected user's website is displayed - but it cannot be edited.
+
+You should also take not of the fact that we again use `enctype="multipart/form-data"` in the form due to the fact image uploading is used.
 
 ### Creating the `profile()` View
 Based upon the template created above, we can then implement a simple view to handle the viewing of user profiles and submission of form data. In Rango's `views.py` module, create a new view called `profile()`.
@@ -392,7 +397,7 @@ Based upon the template created above, we can then implement a simple view to ha
 	        {'website': userprofile.website, 'picture': userprofile.picture})
 	    
 	    if request.method == 'POST':
-	        form = UserProfileForm(request.POST, instance=userprofile)
+	        form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
 	        if form.is_valid():
 	            form.save(commit=True)
 	            return redirect('profile', user.username)
