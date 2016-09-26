@@ -205,8 +205,8 @@ the `result_list` and `query`, and if there is no query, we provide a
 default query, i.e. the category name. The query box then displays this
 value.
 
-## Creating and Viewing Profiles {#section-hints-profiles}
-This section provides a solution for creating Rango `UserProfile` accounts, and provides the necessary infrastructure to allow users of Rango to view these profiles. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
+## Creating a `UserProfile` Instance {#section-hints-profiles}
+This section provides a solution for creating Rango `UserProfile` accounts. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
 
 - Create a `profile_registration.html` which will display the `UserProfileForm`.
 - Create a `UserProfileForm` `ModelForm` class to handle the new form.
@@ -225,7 +225,7 @@ The basic flow for a registering user here would be:
 This therefore assumes that a user will be registered with Rango *before* the profile form is saved.
 
 ### Creating a Profile Registration Template
-First, let's create a template that'll provide the necessary markup for displaying an additional registration form. In this solution, we're going to keep the Django Registration-Redux form separate from our Profile Registration form - just to delineate between the two. If you can think of a neat way to mix both forms together, why not try it?
+First, let's create a template that'll provide the necessary markup for displaying an additional registration form. In this solution, we're going to keep the Django `registration-redux` form separate from our Profile Registration form - just to delineate between the two. If you can think of a neat way to mix both forms together, why not try it?
 
 Create a template in Rango's templates directory called `profile_registration.html`. Within this new template, add the following markup and Django template code.
 
@@ -245,10 +245,10 @@ Create a template in Rango's templates directory called `profile_registration.ht
 	    </form>
 	{% endblock %}
 
-Much like the previous Django Registration-Redux form that we [created previously](#section-redux-templates-login), this template inherits from our `base.html` template, which incorporates the basic layout for our Rango app. We also create an HTML `form` inside the `body_block` block. This will be populated with fields from a `form` object that we'll be passing into the template from the corresponding view (see below).
+Much like the previous Django `registration-redux` form that we [created previously](#section-redux-templates-login), this template inherits from our `base.html` template, which incorporates the basic layout for our Rango app. We also create an HTML `form` inside the `body_block` block. This will be populated with fields from a `form` object that we'll be passing into the template from the corresponding view (see below).
 
 ### Creating the `UserProfileForm` Class
-Looking at Rango's `models.py` module, you should see a `UserProfile` model that you implemented previously. We've included it below to remind you of what it contains - a reference to a Django `contrib.auth.User` object, and fields for storing a Website and profile image.
+Looking at Rango's `models.py` module, you should see a `UserProfile` model that you implemented previously. We've included it below to remind you of what it contains - a reference to a Django `django.contrib.auth.User` object, and fields for storing a Website and profile image.
 
 {lang="python",linenos=off}
 	class UserProfile(models.Model):
@@ -320,7 +320,7 @@ Now that our template, `ModelForm` and corresponding view have all been implemen
 
 This maps our new `register_profile()` view to the URL `/rango/register_profile/`. Remember, the `/rango/` part of the URL comes from your project's `urls.py` module - the remainder of the URL is then handled by the Rango app's `urls.py` module.
 
-### Modifying Registration Flow
+### Modifying the Registration Flow
 Now that everything is (almost) working, we need to tweak the process that users undertake when registering. Back in the [Django `registration-redux` chapter](#section-redux-templates-flow), we created a new class-based view called `MyRegistrationView` that changes the URL that users are redirected to upon a successful registration. This needs to be changes from redirecting a user to the Rango homepage (with URL name `index`) to our new user profile registration URL. From the previous section, we gave this the name `register_profile`. This therefore means simply changing the `MyRegistrationView` class to look like the following example.
 
 {lang="python",linenos=off}
@@ -329,3 +329,92 @@ Now that everything is (almost) working, we need to tweak the process that users
 	        return url('register_profile')
 
 Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how...
+
+## Viewing your Profile  {#section-hints-profileview}
+With the creation of a `UserProfile` object now complete, let's implement the functionality to allow a user to view his or her profile and edit it. The process is again pretty similar to what we've done before. We'll need to consider the following aspects:
+
+- the creation of a new template, `profile.html`;
+- creating a new view called `profile()` that uses the `profile.html` template; and
+- mapping the `profile()` view to a new URL (`/rango/profile`).
+
+We'll also need to provide a new hyperlink in Rango's `base.html` template to access the new view. For this solution, we'll be creating a generalised view that allows you to access the information of any user of Rango. The code will allow allow logged in users to also edit their profile; but only *their* profile - thus satisfying the requirements of the exercise.
+
+### Creating the Template
+First, let's create a simple template for displaying a user's profile. The following HTML markup and Django template code should be placed within the new `profile.html` template within Rango's template directory.
+
+{lang="html",linenos=off}
+	{% extends 'rango/base.html' %}
+	
+	{% load staticfiles %}
+	
+	{% block title %}{{ selecteduser.username }} Profile{% endblock %}
+	
+	{% block body_block %}
+	
+	<h1>{{selecteduser.username}} Profile</h1>
+	<img src="{{ MEDIA_URL }}{{userprofile.picture }}" width="300" height="300" alt="{{selecteduser.username}}" />
+	<br/>
+	<div>
+	    {% if selecteduser.username == user.username %}
+	        <form method="post" action=".">
+	             {% csrf_token %}
+	            {{ form.as_p }}
+	            <input type="submit" value="Update" />
+	        </form>
+	    {% else %}
+	    <p><strong>Website:</strong> <a href="{{userprofile.website}}">{{userprofile.website}}</a></p>
+	     endif %}
+	</div>
+	<div id="edit_profile"></div>
+{% endblock %}
+
+Note that there are a few variables (`selecteduser`, `userprofile` and `form`) that we need to define in the template's context - we'll be doing so in the next section.
+
+The fun part of this template is within the `body_block` block. The template shows the user's profile image at the top. Underneath, the template shows a form allowing the user to change his or her details, which is populated from the `form` variable. This form however is *only shown* when the selected user matches the user that is currently logged in, thus only allowing the presently logged in user to edit his or her profile. If the selected user does not match the currently logged in user, then the selected user's website is displayed - but it cannot be edited.
+
+### Creating the `profile()` View
+Based upon the template created above, we can then implement a simple view to handle the viewing of user profiles and submission of form data. In Rango's `views.py` module, create a new view called `profile()`.
+
+{lang="python",linenos=off}
+	@login_required
+	def profile(request, username):
+	    try:
+	        user = User.objects.get(username=username)
+	    except User.DoesNotExist:
+	        return redirect('index')
+	    
+	    userprofile = UserProfile.objects.get_or_create(user=user)[0]
+	    form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
+	    
+	    if request.method == 'POST':
+	        form = UserProfileForm(request.POST, instance=userprofile)
+	        if form.is_valid():
+	            form.save(commit=True)
+	            return redirect('profile', user.username)
+	        else:
+	            print(form.errors)
+	    
+	    return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+This view requires that a user be logged in - hence the use of the `@login_requred` decorator. The view begins by selecting the selected `django.contrib.auth.User` from the database - if it exists. If it doesn't, we perform a simple redirect to Rango's homepage rather than greet the user with an error message. We can't display information for a non-existent user! If the user does exist, we can therefore select the user's `UserProfile` instance. If it doesn't exist, we can create a blank one. We then populate a `UserProfileForm` object with the selected user's details if we require it. This is determined by the template as it determines what content is presented to the user.
+
+We then determine if the request is a HTTP `POST` - meaning that the user submitted a form to update their account information. We then extract information from the form into a `UserProfileForm` instance that is able to reference to the `UserProfile` model instance that it is saving to, rather than creating a new `UserProfile` instance each time. Remember, we are *updating*, not creating *new*. A valid form is then saved. An invalid form or a HTTP `GET` request triggers the rendering of the `profile.html` template with the relevant variables that are passed through to the template via its context.
+
+E> ### A Simple Exercise
+E> How can we change the code above to prevent unauthorised users from changing the details of a user account that isn't theirs? What conditional statement do we need to add to enforce this additional check?
+
+### Mapping the View to a URL
+We then need to map our new `profile()` view to a URL. As usual, this involves the addition of a single line of code to Rango's `urls.py` module. Add the following line to the bottom of the `urlpatterns` list.
+
+{lang="python",linenos=off}
+	url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
+
+Note the inclusion of a `username` variable which is matched to anything after `/profile/` - meaning that the URL `/rango/profile/maxwelld90` would yield a `username` of `maxwelld90`, which is in turn passed to the `profile()` view as parameter `username`. This is how we are able to determine what user the current user has selected to view.
+
+### Tweaking `base.html`
+Everything should now be working as expected - but it'd be nice to add a link in Rango's `base.html` template to link the currently logged in user to their profile, providing them with the ability to view or edit it. In Rango's `base.html` template, find the code that lists a series of links in the navigation bar of the page when the *user is logged in*. Add the following hyperlink to this collection.
+
+{lang="html",linenos=off}
+	<a href="{% url 'profile' user.username %}">Profile</a>
+
+Note that you may want to add additional information to this link, such as adding a `class` attribute to the `<a>` tag to style it correctly. The link called the URL matched to name `profile` (see above), specifying the currently logged in username as the subsequent portion of the URL.
