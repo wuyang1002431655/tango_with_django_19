@@ -257,14 +257,14 @@ In the base template in the sidebar div add in the following HTML code:
 
 {lang="html",linenos=off}
 	<ul class="nav nav-list">
-	    <li class="nav-header">Find a Category</li>
+	    <li class="nav-header">Type to find a category</li>
 	    <form>
-	        <label></label>
-	    <li><input  class="search-query" type="text" 
-	            name="suggestion" value="" id="suggestion" />
-	        </li>
+	    <li><input class="search-query form-control" type="text"
+				name="suggestion" value="" id="suggestion" />
+	    </li>
 	    </form>
 	</ul>
+    <hr>
 	<div id="cats">
 	</div>
 
@@ -273,6 +273,15 @@ Here we have added in an input box with `id="suggestion"` and div with
 `id="cats"` in which we will display the response. We don't need to add
 a button as we will be adding an event handler on keyup to the input box
 which will send the suggestion request.
+
+Next remove the following lines from the template:
+
+{lang="html",linenos=off}
+    {% block sidebar_block %}
+	    {% get_category_list category %}
+    {% endblock %}
+
+
 
 ### Add AJAX to Request Suggestions
 
