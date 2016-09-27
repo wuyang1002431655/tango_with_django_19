@@ -61,6 +61,7 @@ Burak Karaboga
 David Manlove
 [Adam Mertz](https://github.com/Amertz08)
 [Devin Fitzsimons](https://github.com/aisflat439)
+bernieyangmh (https://github.com/bernieyangmh)
 
 
 
