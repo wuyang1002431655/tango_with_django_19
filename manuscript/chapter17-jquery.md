@@ -44,7 +44,7 @@ ready i.e. the complete page is loaded, then the anonymous function
 denoted by `function(){ }` will be executed. It is pretty typical, if
 not standard, to wait until the document has been finished loading
 before running the JQuery functions. Otherwise, the code my try to run,
-but the HTML elements may not have been downloaded. See the [JQuery Documentation on Ready](<http://api.jquery.com/ready/) for more details.
+but the HTML elements may not have been downloaded. See the [JQuery Documentation on Ready](http://api.jquery.com/ready/) for more details.
 
 I> ### Stylistic Note
 I>
