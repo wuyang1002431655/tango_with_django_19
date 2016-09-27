@@ -21,7 +21,7 @@ are sadly rather tricky to accomplish. We demonstrate the most commonly
 used approaches, and provide links to additional reading for more
 information.
 
-> **warning**
+> ### Do not remove your default Python installation
 >
 > This section will detail how to run Python 2.7.5 *alongside* your
 > current Python installation. It is regarded as poor practice to remove
@@ -36,10 +36,10 @@ download and run the simple installer provided on the official Python
 website. You can download the installer by visiting the webpage at
 <http://www.python.org/getit/releases/2.7.5/>.
 
-> **warning**
->
-> Ensure that you download the `.dmg` file that is relevant to your
-> particular OS X installation!
+I> ### Make sure you have the correct version for your Mac
+I>
+I> Ensure that you download the `.dmg` file that is relevant to your
+I> particular OS X installation!
 
 1.  Once you have downloaded the `.dmg` file, double-click it in the
     Finder.
@@ -54,7 +54,7 @@ website. You can download the installer by visiting the webpage at
     can now delete the downloaded `.dmg` file.
 
 You should now have an updated version of Python installed, ready for
-Django! Easy, huh?
+Django! Easy, huh? You can also install Python 3.5+ in a similar version, if you prefer to use Python 3.
 
 #### Linux Distributions
 
@@ -96,14 +96,14 @@ distribution.
     `pythonbrew switch 2.7.5`.
 7.  Python 2.7.5 should now be installed and ready to go.
 
-> **note**
->
-> Directories and files beginning with a period or dot can be considered
-> the equivalent of *hidden files* in Windows. [Dot
-> files](http://en.wikipedia.org/wiki/Dot-file) are not normally visible
-> to directory-browsing tools, and are commonly used for configuration
-> files. You can use the `ls` command to view hidden files by adding the
-> `-a` switch to the end of the command, giving the command `ls -a`.
+T> ### Hidden Directories and Files
+T>
+T> Directories and files beginning with a period or dot can be considered
+T> the equivalent of *hidden files* in Windows. [Dot
+T> files](http://en.wikipedia.org/wiki/Dot-file) are not normally visible
+T> to directory-browsing tools, and are commonly used for configuration
+T> files. You can use the `ls` command to view hidden files by adding the
+T> `-a` switch to the end of the command, giving the command `ls -a`.
 
 #### Windows
 
@@ -310,10 +310,10 @@ terminal. To do so, just type `pip`. Instead of an unrecognised command
 error, you should be presented with a list of commands and switches that
 Pip accepts. If you see this, you're ready to move on!
 
-> **note**
->
-> With Windows-based computers, follow the same basic process. You won't
-> need to enter the `sudo` command, however.
+I> No Sudo on Windows
+I>
+I> With Windows-based computers, follow the same basic process. You won't
+I> need to enter the `sudo` command, however.
 
 ## Virtual Environments
 
@@ -386,36 +386,22 @@ We should also point out that when you develop code, you should always
 house your code within a version-controlled repository such as
 [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We
 won't be going through this right now so that we can get stuck into
-developing an application in Django. We have however provided a
-crash course on GIT \<git-crash-course\>. We highly recommend that you
-set up a GIT repository for your own projects. Doing so could save you
-from disaster.
+developing an application in Django. However, we have provided a  (chapter
+on using GIT)[#chapter-git] if you haven't used Git/GitHub before. We highly recommend that you
+set up a GIT repository for your own projects. Doing so could save you from disaster.
 
-Exercises
----------
-
-To get comfortable with your environment, try out the following
-exercises.
-
--   Install Python 2.7.5+ and Pip.
--   Play around with your CLI and create a directory called `code`,
-    which we use to create our projects in.
--   Install the Django and Pillow packages.
--   Setup your Virtual Environment
--   Setup your account on GitHub
--   Download and setup a Integrated Development Environemnt (like
-    PyCharm)
--
-
-    We have made the code for the book and application that you build available on GitHub, see [Tango With Django Book](https://github.com/leifos/tango_with_django_book) and [Rango Application](https://github.com/leifos/tango_with_django) .
-
-    :   -   If you spot any errors or problem with the book, you can
-            make a change request!
-        -   If you have any problems with the exercises, you can check
-            out the repository and see how we completed them.
-			
-### IDE
-
-### Installing Git
-
-Setup Git - the Git crash course expects a small section in this chapter detailing what you have to do to install git. Perhaps move the Windows information bit in the setting up Git part to here.
+X> ###Exercises
+X>
+X>
+X> To get comfortable with your environment, try out the following
+X> exercises.
+X>
+X> - Install Python 2.7.5+ or Python 3.5+ and Pip.
+X> - Play around with your CLI and create a directory called `code`,  which we use to create our projects in.
+X> - Install the Django and Pillow packages.
+X> - Setup your Virtual Environment
+X> - Setup your account on GitHub
+X> - Download and setup a Integrated Development Environemnt (like (PyCharm Edu)[https://www.jetbrains.com/pycharm-edu/download/])
+X> - We have made the code for the book and application that you build available on GitHub, see [Tango With Django Book](https://github.com/leifos/tango_with_django_book) and [Rango Application](https://github.com/leifos/tango_with_django) .
+X> -   If you spot any errors or problem with the book, you can make a change request!
+X> -  If you have any problems with the exercises, you can check out the repository and see how we completed them.
