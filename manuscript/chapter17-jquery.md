@@ -56,4 +56,157 @@ I> various actions that can then be performed/applied. In the next, subsections 
 I> JQuery functions that you can use to manipulate the HTML elements.
 
 
+###Example Popup Box on Click
+
+In this example, we want to show you the difference between doing the
+same functionality in standard Javascript versus JQuery.
+
+In your `about.html` template, add the following piece of code:
+
+{lang="html",linenos=off}
+	<button  class="btn btn-primary" 
+	    onClick="alert('You clicked the button using Javascript.');"> 
+	    Click Me - I run Javascript 
+	</button>
+
+As you can see, we are assigning the function `alert()` to the `onClick`
+handler of the button. Load up the `about` page, and try it out.
+
+Now lets do it using JQuery, by first adding another button:
+
+{lang="html",linenos=off}
+	<button  class="btn btn-primary" id="about-btn"> 
+	    Click Me - I'm Javascript on Speed</button>
+	<p>This is a example</p>
+	<p>This is another example</p>
+
+
+Notice that there is not Javascript code associated with the button
+currently. We will be doing that with the following code added to
+`rango-jquery.js`:
+
+{lang="javascript",linenos=off}
+	$(document).ready( function() {
+	    $("#about-btn").click( function(event) {
+	        alert("You clicked the button using JQuery!");
+	    });
+	});
+
+Reload the page, and try it out. Hopefully, you will see that both
+buttons pop up an alert.
+
+The JQuery/Javascript code here, first selects the document object, and
+when it is ready, it executes the functions within its body, i.e.
+`$("#about-btn").click()`, which selects the element in the page with id
+equal to `about-btn`, and then it programatically assigns to the on
+click event, the `alert()` function.
+
+At first you might think that jQuery is rather cumbersome, as it
+requires us to include a lot more code to do the same thing. This may be
+true for a simple function like `alert()` but for more complex functions
+it is much cleaner, as the JQuery/Javascript code is maintained in a
+separate file (completely!!). This is because we assign the event
+handler at run-time rather than statically within the code. We achieve
+separation of concerns between the Jquery/Javascript code and the html
+code.
+
+T> ###Keep Them Separated
+T>
+T> Remember when it comes to CSS, JAVASCRIPT and HTML, you gotta keep
+T> them separated!
+
+
+###Selectors
+
+There are different ways to select elements in JQuery. From the above
+example, shows how the `#` can be used to find `id` elements in your
+html document. To find classes, you can use `.`, so, for example, if we
+added the following code:
+
+{lang="javascript",linenos=off}
+	$(".ouch").click( function(event) {
+	    alert("You clicked me! ouch!");
+	});
+
+
+Then all elements, that had a `class="ouch"` would be selected, and
+assigned to its on click handler, the `alert()` function. Note that all
+the elements would be assigned the same function.
+
+Also, HTML tags can also be selected by referring to the tag in the
+selector:
+
+{lang="javascript",linenos=off}
+	$("p").hover( function() {
+	    $(this).css('color', 'red');
+	}, 
+	function() {
+	    $(this).css('color', 'blue');
+	});
+
+
+Add this Javascript to your `rango-jquery.js`, and then in the `about.html` template, add a paragraph, `<p>This text is for a Jquery Example</p>`. Try it out, go to the about page and hover over the text.
+
+Here, we are selecting all the `p` HTML elements, and on hover we are
+associated two functions, one for on hover, and the other for hover off.
+You can see that we are using another selector called, `this`, which
+selects the element in question, and then sets it color to red or blue,
+respectively. Note, the JQuery `hover()` function takes two functions
+(see <http://api.jquery.com/hover/>), the JQuery `click()` requires the
+event to passed through (see <http://api.jquery.com/click/>).
+
+Try adding the above code your `rango-jquery.js` file, make sure it is
+within the `$(document).ready()` function. What happens if you change
+the `$(this)` to `$(p)`?
+
+Hover, is an example of a mouse move event, for descriptions on other
+such events, see: <http://api.jquery.com/category/events/mouse-events/>
+
+##DOM Manipulation Example
+
+In the above example, we used the `hover` function to assign an event
+handler to the on hover event, and then used the `css` function to
+change the color of the element. The `css` is one example of DOM
+manipulation, however, the stand JQuery library provides many other ways
+to manipulate the DOM. For example, we can add classes to elements, with
+the `addClass` function:
+
+{lang="javascript",linenos=off}
+	$("#about-btn").addClass('btn btn-primary')
+
+
+This will select the element with id `#about-btn`, and assign the
+classes `btn` and `btn-primary` to it. By adding these Bootstrap classes
+will mean the button will now appear in the bootstrap style (assuming
+you are using the Bootstrap toolkit).
+
+It is also possible to access the html of a particular element. For
+example, lets put a `div` in the `about.html`:
+
+{lang="html",linenos=off}
+	<div id="msg">Hello  - I'm here for a Jquery Example too</div>
+
+
+Then add the following JQuery to `rango-jquery.js`:
+
+{lang="javascript",linenos=off}
+	$("#about-btn").click( function(event) {
+	    msgstr = $("#msg").html()
+	    msgstr = msgstr + "ooo"
+	    $("#msg").html(msgstr)
+	});
+
+
+On click of the element with id `#about-btn`, we first get the html
+inside the element with id `msg` and append "o" to it. Then we change
+the HTML inside the element by calling the `html` function again, but
+this time passing through string `msgstr` to replace the html inside
+that element.
+
+In this chapter we have provided a very rudimentary guide to using JQuery
+and incorporating it within your Django Application. From here you
+should be able to understand how JQuery operates and experiment with the
+different functions and libraries provided by JQuery and JQuery
+developers (see <http://jquery.com>). In the next chapter we will be
+using the JQuery to help provide AJAX functionality within Rango.
 
