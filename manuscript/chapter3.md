@@ -53,9 +53,10 @@ To create a new Django Project, go to your `workspace` directory, and issue the 
 {lang="text",linenos=off}
 	$ django-admin.py startproject tango_with_django_project
 
-
 If you don't have a `workspace` directory, then create one, so that you can house your Django projects and other code projects within this directory. We will refer to your `workspace` directory in the code as `<workspace>`. You will have to substitute in the path to your `workspace` directory, for example: `/Users/leifos/Code/` or `/Users/maxwelld90/Workspace/`.
 
+I> ### Can't find `django-admin.py`?
+I> Try entering `django-admin` instead. Depending on your setup, some systems may not recognise `django-admin.py`.
 
 I> ### Running Windows?
 I> On Windows, you may have to use the full path to the `django-admin.py` script, for example:

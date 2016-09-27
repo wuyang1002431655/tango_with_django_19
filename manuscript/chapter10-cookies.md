@@ -65,7 +65,7 @@ In the `about()` view, add the following three lines to the top of the function.
 
 {lang="python",linenos=off}
 	if request.session.test_cookie_worked():
-	    print "TEST COOKIE WORKED!"
+	    print("TEST COOKIE WORKED!")
 	    request.session.delete_test_cookie()
 
 With these small changes saved, run the Django development server and navigate to Rango's homepage, `http://127.0.0.1:8000/rango/`. Once the page is loaded, navigate to the registration page. When the registration page is loaded, you should see `TEST COOKIE WORKED!` appear in your Django development server's console, like in the [figure below](#fig-ch10-test-cookie).
@@ -88,7 +88,7 @@ Let's first make a function to handle the cookies given the request and response
 	    # We use the COOKIES.get() function to obtain the visits cookie.
 	    # If the cookie exists, the value returned is casted to an integer.
 	    # If the cookie doesn't exist, then the default value of 1 is used.
-	    visits_cookie = int(request.COOKIES.get('visits', '1'))
+	    visits = int(request.COOKIES.get('visits', '1'))
 	
 	    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
 	    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
@@ -96,14 +96,14 @@ Let's first make a function to handle the cookies given the request and response
 	
 	    # If it's been more than a day since the last visit...
 	    if (datetime.now() - last_visit_time).days > 0:
-	        visits = visits_cookie + 1
+	        visits = visits + 1
 	        #update the last visit cookie now that we have updated the count
 	        response.set_cookie('last_visit', str(datetime.now()))
 	    else:
 	        # set the last visit cookie 
 	        response.set_cookie('last_visit', last_visit_cookie)
-	    # update/set the visits cookie
-	
+	    
+	    # Update/set the visits cookie
 	    response.set_cookie('visits', visits)
 
 This function takes the request object and the response object - because we want to be able to access the incoming cookies from the request, and add or update cookies in the response. In the function, you can see that we call the `request.COOKIES.get()` function, which is a helper function provided by Django. If the cookie exists, it returns the value. If it does not exist, we can provide a default value.  Once we have the values for each cookie, we can calculate if a day has elapses between the last visit or not.

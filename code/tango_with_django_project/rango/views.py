@@ -217,7 +217,7 @@ def register_profile(request):
     return render(request, 'rango/profile_registration.html', context_dict)
 
 class RangoRegistrationView(RegistrationView):
-    def get_success_url(self, request):
+    def get_success_url(self, user):
         return reverse('register_profile')
 
 @login_required

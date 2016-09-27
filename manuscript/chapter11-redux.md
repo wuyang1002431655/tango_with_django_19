@@ -213,7 +213,7 @@ do this update the `tango_with_django_project/urls.py` by importing
 	# Create a new class that redirects the user to the index page, 
 	#if successful at logging
 	class MyRegistrationView(RegistrationView):
-	    def get_success_url(self,request, user):
+	    def get_success_url(self, user):
 	        return '/rango/'
 
 Then update the `urlpatterns` list in your Django project's `urls.py` module by adding the following line before the pattern for `accounts`. Note that this is *not* the `urls.py` module within the `rango` directory!
