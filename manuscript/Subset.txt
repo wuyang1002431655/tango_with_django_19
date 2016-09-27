@@ -6,3 +6,8 @@ chapter5-database-setup.md
 chapter6-models-templates-views.md
 chapter7-forms.md
 chapter8-templates.md
+chapter9-user-authenication.md
+chapter10-cookies.md
+chapter11-redux.md
+chapter12-bootstrap.md
+chapter14-bing.md
