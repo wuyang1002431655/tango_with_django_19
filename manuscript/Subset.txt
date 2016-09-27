@@ -13,4 +13,12 @@ chapter12-bootstrap.md
 chapter14-bing.md
 chapter15-rango-exercises.md
 chapter16-rango-hints.md
-
+chapter18-ajax.md
+chapter-testing.md
+chapter-deployment.md
+chapter-summary.md
+chapter-system-setup.md
+chapter-unix.md
+chapter-virtual-env.md
+chapter-git.md
+chapter-css.md
