@@ -248,7 +248,7 @@ Once you've done that, add the following new view, `register()`.
 	        else:
 	            # Invalid form or forms - mistakes or something else?
 	            # Print problems to the terminal.
-	            print user_form.errors, profile_form.errors
+	            print(user_form.errors, profile_form.errors)
 	    else:
 	        # Not a HTTP POST, so we render our form using two ModelForm instances.
 	        # These forms will be blank, ready for user input.
@@ -403,7 +403,7 @@ First, open up Rango's views module at `rango/views.py` and create a new view ca
 	                return HttpResponse("Your Rango account is disabled.")
 	        else:
 	            # Bad login details were provided. So we can't log the user in.
-	            print "Invalid login details: {0}, {1}".format(username, password)
+	            print("Invalid login details: {0}, {1}".format(username, password))
 	            return HttpResponse("Invalid login details supplied.")
 	        
 	    # The request is not a HTTP POST, so display the login form.
@@ -603,3 +603,4 @@ X> For now, work on the following two exercises to reinforce what you've learnt 
 X>
 X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have ensure links to add or edit pages appear only if the user browsing the website is logged in.
 X> - Provide informative error messages when users incorrectly enter their username or password.
+X> - Keep your templating know-how up to date by converting the restricted page view to use a template. Call the template `restricted.html`, and ensure that it too extends from Rango's `base.html` template.

@@ -226,7 +226,6 @@ X> Now that you've worked through this chapter, there are a number of exercises 
 X>
 X> - Update all other previously defined templates in the Rango app to extend from the new `base.html` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from `base.html`. 
 X> - While you're at it, make sure you remove the links from our `index.html` template. We don't need them anymore! You can also remove the link to Rango's homepage within the `about.html` template.
-X> - Convert the restricted page to use a template. Call the template `restricted.html`, and ensure that it too extends from our `base.html` template.
 X> - Update all references to Rango URLs with the `url` template tag. You can also do this in your `views.py` module too - check out the [`reverse()` helper function](https://docs.djangoproject.com/en/1.9/ref/urlresolvers/#reverse).
 
 

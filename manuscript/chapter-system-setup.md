@@ -208,7 +208,7 @@ Python 2.7.5 (v2.7.5:ab05e7dd2788, May 13 2013, 13:18:45)
 Type "help", "copyright", "credits" or "license" for more information.
 
 >>> import site
->>> print site.getsitepackages()[0]
+>>> print(site.getsitepackages()[0])
 
 '/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages'
 

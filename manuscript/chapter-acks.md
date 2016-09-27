@@ -59,6 +59,8 @@ Tanmay Kansara
 Burak Karaboga
 [Peter Mash](https://github.com/PeterMash)
 David Manlove
+[Adam Mertz](https://github.com/Amertz08)
+[Devin Fitzsimons](https://github.com/aisflat439)
 
 
 

@@ -332,7 +332,7 @@ Now that everything is (almost) working, we need to tweak the process that users
 
 {lang="python",linenos=off}
 	class MyRegistrationView(RegistrationView):
-	    def get_success_url(self, request, user):
+	    def get_success_url(self, user):
 	        return url('register_profile')
 
 Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how.

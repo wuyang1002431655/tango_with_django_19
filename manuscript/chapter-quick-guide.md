@@ -237,7 +237,7 @@ The basic template for the population script is:
 		....
 
 	if __name__ == '__main__':
-	    print "Starting population script..."
+	    print("Starting population script...")
 	    populate()
 
 ```

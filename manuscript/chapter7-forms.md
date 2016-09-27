@@ -158,8 +158,7 @@ this, add the following code to `rango/views.py`.
 	            # just print them to the terminal.
 	            print(form.errors)
 	    
-	    # Will handle the bad form, new form, or 
-	    # no form supplied cases.
+	    # Will handle the bad form, new form, or no form supplied cases.
 	    # Render the form with error messages (if any).
 	    return render(request, 'rango/add_category.html', {'form': form})
 
@@ -443,7 +442,7 @@ To get you started, here is the code for the `add_page()` view function.
 	                page.save()
 	                return show_category(request, category_name_slug)
 	        else:
-	            print form.errors
+	            print(form.errors)
 	    
 	    context_dict = {'form':form, 'category': category}
 	    return render(request, 'rango/add_page.html', context_dict)
