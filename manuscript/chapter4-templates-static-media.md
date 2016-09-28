@@ -1,10 +1,10 @@
 # Templates and Media Files {#chapter-templates-static}
-In this chapter, we'll be introducing the Django template engine, as well as showing how to serve both *static* and *uploaded* media files, both of which can be integrated within your app's webpages.
+In this chapter, we'll be introducing the Django template engine, as well as showing how to serve both *static* files and *media* files, both of which can be integrated within your app's webpages.
 
 ## Using Templates
-Up until this point, you have plugged a few things together to create a Django powered webpage. This is coupled to a view, which is in turn coupled with a series of URL mappings. Here we will delve into how to combine *templates* into the mix.
+Up until this point, we have only connected a URL mapping to a view. The Django framework, however, is based around Model-View-Template architecture. In this section, we will go through the mechanics of how *Templates* work with *Views*, then in the next couple of chapters we will put these together with *Models*.
 
-The layout from page to page within a website is often the same. Whether you see a common header or footer on a website's pages, the [repetition of page layouts](http://www.techrepublic.com/blog/web-designer/effective-design-principles-for-web-designers-repetition/) aids users with navigation, promotes organisation of the website and reinforces a sense of continuity. [Django provides templates](https://docs.djangoproject.com/en/1.9/ref/templates/) to make it easier for developers to achieve this design goal, as well as separating application logic (code within your views) from presentational concerns (look and feel of your app). In this chapter, you'll create a basic template which will be used to create a HTML page. This template will then be dispatched via a Django view. In the [chapter concerning databases and models](#chapter-models), we will take this a step further by using templates in conjunction with models to dispatch dynamically generated data.
+Why Templates? The layout from page to page within a website is often the same. Whether you see a common header or footer on a website's pages, the [repetition of page layouts](http://www.techrepublic.com/blog/web-designer/effective-design-principles-for-web-designers-repetition/) aids users with navigation, promotes organisation of the website and reinforces a sense of continuity. [Django provides templates](https://docs.djangoproject.com/en/1.9/ref/templates/) to make it easier for developers to achieve this design goal, as well as separating application logic (code within your views) from presentational concerns (look and feel of your app). In this chapter, you'll create a basic template which will be used to create a HTML page. This template will then be dispatched via a Django view. In the [chapter concerning databases and models](#chapter-models), we will take this a step further by using templates in conjunction with models to dispatch dynamically generated data.
 
 Q> ### Summary: What is a Template?
 Q> In the world of Django, think of a *template* as the scaffolding that is required to build a complete HTML webpage. A template contains the *static parts* of a webpage (that is, parts that never change), complete with special syntax (or *template tags*) which can be overridden and replaced with *dynamic content* that your Django app's views can replace to produce a final HTML response.
@@ -49,10 +49,10 @@ Note that you are *required to use absolute paths* to locate the `templates` dir
 	          '/Users/clueless_noob/templates', ]
 
 	
-However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the black slashes have to be constructed differently (see the warning below).
+However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the black slashes have to be constructed differently.
 
 W> ### Don't hard code Paths!
-W> The road to Hell is paved with hard coded paths. [Hard-coding paths](http://en.wikipedia.org/wiki/Hard_coding) is a [software engineering anti-pattern](http://sourcemaking.com/antipatterns), and will make your project [less portable](http://en.wikipedia.org/wiki/Software_portability) - meaning that when you run it on another computer, it probably won't work!
+W> The road to hell is paved with hard coded paths. [Hard-coding paths](http://en.wikipedia.org/wiki/Hard_coding) is a [software engineering anti-pattern](http://sourcemaking.com/antipatterns), and will make your project [less portable](http://en.wikipedia.org/wiki/Software_portability) - meaning that when you run it on another computer, it probably won't work!
 
 ### Dynamic Paths
 A better solution is to make use of built-in Python functions to work out the path of your `templates` directory automatically. This way, an absolute path can be obtained regardless of where you place your Django project's code. This in turn means that your project becomes more *portable.* 
@@ -126,11 +126,11 @@ You can then update the `index()` view function as follows. Check out the inline
 	    # Note that the first parameter is the template we wish to use.
 	    return render(request, 'rango/index.html', context=context_dict)
 
-First, we construct a dictionary of key/value pairs that we want to use within the template. Then, we call the `render()` helper function. This function takes as input the user's `request`, the template filename, and the context dictionary. The `render()` function will take this data and mash it together with the template to produce a complete HTML page. This is then returned and dispatched to the user's web browser.
+First, we construct a dictionary of key/value pairs that we want to use within the template. Then, we call the `render()` helper function. This function takes as input the user's `request`, the template filename, and the context dictionary. The `render()` function will take this data and mash it together with the template to produce a complete HTML page that is returned with a *HttpResponse*. This response is then returned and dispatched to the user's web browser.
 
 I> ### What is the Template Context?
 I> {#section-templates-static-context}
-I> When a template file is loaded with the Django templating system, a *template context* is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In the template we created earlier, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `Crunchy, creamy, cookie, candy, cupcake!` is mapped to template variable `boldmessage`. The string `Crunchy, creamy, cookie, candy, cupcake!` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
+I> When a template file is loaded with the Django Templating system, a *template context* is created. In simple terms, a template context is a Python dictionary that maps template variable names with Python variables. In the template we created above, we included a template variable name called `boldmessage`. In our updated `index(request)` view example, the string `Crunchy, creamy, cookie, candy, cupcake!` is mapped to template variable `boldmessage`. The string `Crunchy, creamy, cookie, candy, cupcake!` therefore replaces *any* instance of `{{ boldmessage }}` within the template.
 
 Now that you have updated the view to employ the use of your template, start the Django development server and visit `http://127.0.0.1:8000/rango/`. You should see your simple HTML template rendered, just like the [example screenshot shown below](#fig-ch4-first-template).
 
@@ -141,8 +141,8 @@ This example demonstrates how to use templates within your views. However, we ha
 {id="fig-ch4-first-template"}
 ![What you should see when your first template is working correctly. Note the bold text - `Crunchy, creamy, cookie, candy, cupcake!` - which originates from the view, but is rendered in the template.](images/ch4-first-template.png)
 
-## Serving Static Media {#section-templates-static-static}
-While you've got templates working, your Rango app is admittedly looking a bit plain right now - there's no styling or imagery. We can add references to other files in our HTML template such as [*Cascading Style Sheets (CSS)*](http://en.wikipedia.org/wiki/Cascading_Style_Sheets), [*JavaScript*](https://en.wikipedia.org/wiki/JavaScript) and images to improve the show. These are called *static files*, because they are not generated dynamically by a Web server; they are simply sent as is to a client's Web browser. This section shows you how to set Django up to serve static files, and shows you how to include an image within your simple template.
+## Serving Static Media Files {#section-templates-static-static}
+While you've got templates working, your Rango app is admittedly looking a bit plain right now - there's no styling or imagery. We can add references to other files in our HTML template such as [*Cascading Style Sheets (CSS)*](http://en.wikipedia.org/wiki/Cascading_Style_Sheets), [*JavaScript*](https://en.wikipedia.org/wiki/JavaScript) and images to improve the presentation. These are called *static files*, because they are not generated dynamically by a Web server; they are simply sent as is to a client's Web browser. This section shows you how to set Django up to serve static files, and shows you how to include an image within your simple template.
 
 ### Configuring the Static Media Directory
 To start, you will need to set up a directory in which static media files are stored. In your project directory (e.g. `<workspace>/tango_with_django_project/`), create a new directory called `static` and a new directory called `images` inside `static`. Check that the new `static` directory is at the same level as the `templates` directory you created earlier in this chapter.
@@ -180,13 +180,16 @@ X> ### Test your Configuration
 X> As a small exercise, test to see if everything is working correctly. Try and view the `rango.jpg` image in your browser when the Django development server is running.
 X> If your `STATIC_URL` is set to `/static/` and `rango.jpg` can be found at `images/rango.jpg`, what is the URL you enter into your Web browser's window?
 X>
-X> **Don't proceed until you are sure your configuration is working!**
+X> **Try to figure this out before you move on! The answer is coming up if you get stuck.**
 
 W> ### Don't Forget the Slashes!
 W> When setting `STATIC_URL`, check that you end the URL you specify with a forward slash (e.g. `/static/`, not `/static`). As per the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-STATIC_URL), not doing so can open you up to a world of pain. The extra slash at the end ensures that the root of the URL (e.g. `/static/`) is separated from the static content you want to serve (e.g. `images/rango.jpg`).
 
 I> ### Serving Static Content
 I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production environment. The [official Django documentation on deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when we [deploy Rango](#chapter-deploy).
+
+
+If you haven't figure it out, the image should be accessible if you visit: `http://127.0.0.1:8000/static/images/rango.jpg`.
 
 ### Static Media Files and Templates
 Now that you have your Django project set up to handle static files, you can now make use of these files within your templates to improve their appearance and add additional functionality.
@@ -220,10 +223,10 @@ To demonstrate how to include static files, open up the `index.html` templates y
 	    
 	</html>
 
-The first new line added ( i.e. `{% load staticfiles %}`) informs Django's template engine that we will be using static files with the template. This then enables us to access the media in the static directories via the use of the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/). This indicates to Django that we wish to show the image located in the static media directory called `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{%  % }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`. The HTML generated as a result would be:
+The first new line added ( i.e. `{% load staticfiles %}`) informs Django's template engine that we will be using static files within the template. This then enables us to access the media in the static directories via the use of the `static` [template tag](https://docs.djangoproject.com/en/1.9/ref/templates/builtins/). This indicates to Django that we wish to show the image located in the static media directory called `images/rango.jpg`. Template tags are denoted by curly brackets (e.g. `{%  % }`), and calling `static` will combine the URL specified in `STATIC_URL` with `images/rango.jpg` to yield `/static/images/rango.jpg`. The HTML generated by the Django Template Engine would be:
 
 {lang="html",linenos=off}
-	<img src="{% static "/static/images/rango.jpg" %}" alt="Picture of Rango" /> 
+	<img src="/static/images/rango.jpg" alt="Rango: A Green Lizard" /> 
 
 If for some reason the image cannot be loaded, it is always a good idea to specify an alternative text tagline. This is what the ``alt`` attribute provides inside the `img` tag.
 
@@ -237,7 +240,7 @@ T> When creating the HTML templates, always ensure that the [`DOCTYPE` declarati
 
 
 T> ### Loading other Static Files
-T> The ``{% static %}`` template tag call can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
+T> The ``{% static %}`` template tag can be used whenever you wish to reference static files within a template. The code example below demonstrates how you could include JavaScript, CSS and images into your templates with correct HTML markup.
 T>
 T> {lang="html",linenos=off}
 T> 	<!DOCTYPE html>
@@ -270,7 +273,8 @@ T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
 ## Serving Media {#section-templates-upload}
-While static media files are intrinsic to your web app working correctly client side, *media files* are simply files uploaded by your app's users, or media files you have stored in your database. For example when a user uploads their profile picture, or if you have table of products where each product contains a picture of the item.
+Static media files can be considered files that don't change and are essential to your application. However, often you will have to store *media files* which are dynamic in nature, and are loaded into your database, by your users or administrators, and so they may change.
+For example when a user uploads their profile picture, or if you have table of products where each product contains an image of the item.
 
 In order to serve media files successfully, we need to update Django project's settings. This section details what you need to add - [but we won't be fully testing it out until later](#chapter-ex) where we implement the functionality for users to upload profile pictures.
 
@@ -321,7 +325,7 @@ The final step for setting up the serving of media in a development environment 
 	    ...
 	] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-You'll also need to add `import` statements at the top of the `urls.py` module so that Python can figure out what `settings` and `static` actually are.
+You'll also need to add the following `import` statements at the top of the `urls.py` module.
 
 {lang="python",linenos=off}
 	from django.conf import settings
@@ -360,7 +364,7 @@ X> * Convert the about page to use a template as well, using a template called `
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
 X> * In your Django project directory, create a new directory called `media`, download a picture of a cat and save it the media directory in a file called, `cat.jpg`. 
-X> * In your about page, add in the `<IMG>` tag to display the picture of the cat, to ensure that your media is being served correctly.
+X> * In your about page, add in the `<img>` tag to display the picture of the cat, to ensure that your media is being served correctly.
 
 
 

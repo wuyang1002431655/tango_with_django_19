@@ -7,7 +7,7 @@ Before we get down to coding, it's really important that we get our development 
 * Your *Integrated Development Environment (IDE)*, if you choose to use one.
 * A *Version Control System (VCS)*, *Git*.
 
-If you already have Python 2.7/3.5 and Django 1.9 installed on your computer, and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, we below provide an overview of the different components and why they are important. We also provide a series of pointers on how to setup the various components.
+If you already have Python 2.7/3.4/3.5 and Django 1.9/1.10 installed on your computer, and are familiar with the technologies mentioned, then you can skip straight to the [Django Basics chapter](#chapter-django-basics). Otherwise, below we provide an overview of the different components and why they are important. We also provide a series of pointers on how to setup the various components.
 
 I> ### Your Development Environment
 I> Setting up your development environment is pretty tedious and often frustrating. It's not something that you'd do everyday. Below, we have put together the list of core technologies you need to get started and pointers on how to install them.
@@ -15,7 +15,7 @@ I>
 I> From experience, we can also say that it's a good idea when setting your development environment up to note down the steps you took. You'll need them again one day - whether because you have purchased a new computer, or you have been asked to help someone else set their computer up! Taking a note of everything you do will save you time and effort in the future. Don't just think short term!
 
 ## Python
-To work with Tango with Django, we require you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family - with a minimum of `2.7.5` - or version `3.4+` will work fine. If you're not sure how to install Python and would like some assistance, have a look at [the chapter dealing with installing components](#section-system-setup-python).
+To work with Tango with Django, we require you to have installed on your computer a copy of the Python programming language. Any version from the `2.7` family - with a minimum of `2.7.5` - or version `3.4+` will work fine. If you're not sure how to install Python and would like some assistance, have a look at [the chapter dealing with installing Python](#section-system-setup-python).
 
 I> ### Not sure how to use Python?
 I> If you haven't used Python before - or you simply wish to brush up on your skills - then we highly recommend that you check out and work through one or more of the following guides:
@@ -24,12 +24,15 @@ I> * [**Learn Python in 10 Minutes**](http://www.korokithakis.net/tutorials/pyth
 I> * [**The Official Python Tutorial**](http://docs.python.org/2/tutorial/);
 I> * [**Think Python: How to Think like a Computer Scientist**](http://www.greenteapress.com/thinkpython/) by Allen B. Downey; or
 I> * [**Learn to Program**](https://www.coursera.org/course/programming1) by Jennifer Campbell and Paul Gries.
+I>
+I> These will get you familiar with the basics of Python so you can start developing using Django. Note you don't need to be an expert in Python to work with Django. Python is awesome and you can pick it up as you go, if you already know another programming language.
+
 
 
 ## The Python Package Manager
 Pip is the python [package manager](https://en.wikipedia.org/wiki/Package_manager). The package manager allows you install various libraries for the Python programming language to enhance its functionality.
 
-A package manager, whether for Python, your [operating system](https://en.wikipedia.org/wiki/Advanced_Packaging_Tool) or [some other environment](https://docs.npmjs.com/cli/install), is a software tool that automates the process of installing, upgrading, configuring and removing *packages* - that is, a package of software which you can use on your computer. This is opposed to downloading, installing and maintaining software manually. Maintaining Python packages can be difficult - with other packages are *dependencies* of the package you are attempting to install, to maintaining system paths - pip should handle this all for you.
+A package manager, whether for Python, your [operating system](https://en.wikipedia.org/wiki/Advanced_Packaging_Tool) or [some other environment](https://docs.npmjs.com/cli/install), is a software tool that automates the process of installing, upgrading, configuring and removing *packages* - that is, a package of software which you can use on your computer. This is opposed to downloading, installing and maintaining software manually. Maintaining Python packages is pretty painful. Most packages often have *dependencies* so these need to be installed too. Then these packages may conflict or require particular versions which need to be resolved. Also, the system path to these packages needs to be specified and maintained. Luckily *pip* handles all this for you - so you can sit back and relax.
 
 Try and run pip with the command `$ pip`. If the command is not found, you'll need to install pip itself - check out the [system setup chapter](#chapter-system-setup) for more information. You should also ensure that the following packages are installed on your system. Run the following commands to install Django and [pillow](https://python-pillow.org/) (an image manipulation library for Python).
 
@@ -68,10 +71,10 @@ While not absolutely necessary, a good Python-based IDE can be very helpful to y
 
 Research which one is right for you, and be aware that some may require you to purchase a licence. Ideally, you'll want to select an IDE that supports integration with Django.
 
-We use PyCharm as it supports virtual environments and Django integration - though you will have to configure the IDE accordingly. We don't cover that here - although JetBrains do provide a [guide on setting PyCharm up](https://www.jetbrains.com/help/pycharm/2016.1/creating-and-running-your-first-django-project.html). [PyCharm is also available for students](https://www.jetbrains.com/student/) - and JetBrains provides a graduate discount, too.
+We use PyCharm as it supports virtual environments and Django integration - though you will have to configure the IDE accordingly. We don't cover that here - although JetBrains do provide a [guide on setting PyCharm up](https://www.jetbrains.com/help/pycharm/2016.1/creating-and-running-your-first-django-project.html).
 
 ##Code Repository
-We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on GIT](#chapter-git) for your reference which you can refer to later on. **We highly recommend that you set up a Git repository for your own projects. Doing so will could save you from disaster, as we can no doubt tell you.**
+We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on GIT](#chapter-git) for your reference which you can refer to later on. **We highly recommend that you set up a Git repository for your own projects.**
 
 X> ###Exercises
 X> 
