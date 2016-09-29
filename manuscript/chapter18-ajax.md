@@ -260,7 +260,7 @@ In the base template in the sidebar div add in the following HTML code:
 	    <li class="nav-header">Type to find a category</li>
 	    <form>
 	    <li><input class="search-query form-control" type="text"
-				name="suggestion" value="" id="suggestion" />
+	        name="suggestion" value="" id="suggestion" />
 	    </li>
 	    </form>
 	</ul>
@@ -361,7 +361,8 @@ The View code that handles the adding of a link to a category:
 	        title = request.GET['title']
 	        if cat_id:
 	            category = Category.objects.get(id=int(cat_id))
-	            p = Page.objects.get_or_create(category=category, title=title, url=url)
+	            p = Page.objects.get_or_create(category=category, 
+	                title=title, url=url)
 	            pages = Page.objects.filter(category=category).order_by('-views')
 	            # Adds our results list to the template context under name pages.
 	            context_dict['pages'] = pages

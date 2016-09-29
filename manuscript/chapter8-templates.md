@@ -1,5 +1,5 @@
 #Working with Templates {#chapter-templates-extra}
-So far, we've created several HTML templates for different pages within our Rango application. As you've created more and more templates, you may have noticed that a lot of the HTML code is actually repeated. As such, you could argue that we are therefore beginning to violate the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Furthermore, you might have noticed that the way we have been referring to different pages using *hard coded* URL paths. These are two issues we could definitely do without.
+So far, we've created several HTML templates for different pages within our Rango application. As you've created more and more templates, you may have noticed that a lot of the HTML code is actually repeated. We are violating the [DRY Principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Furthermore, you might have noticed that the way we have been referring to different pages using *hard coded* URL paths. Taken together, maintaining the site will be nightmare, because if we want to make a change to the general site structure or change a URL path, we will have to modify every template.
 
 In this chapter, we will use *template inheritance* to overcome the first problem, and the *URL template tag* to solve the second problem. We will start with addressing the latter problem first.
 
@@ -125,9 +125,10 @@ You can also specify *default content* for your blocks, which will be used if no
 When we create templates for each page, we will inherit from `rango/base.html` and override the contents of `body_block`. However, you can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, a block for the footer, a block for the sidebar, and more. Blocks are a really powerful feature of Django's templating system, and you can learn more about them check on [Django's official documentation on templates](https://docs.djangoproject.com/en/1.9/topics/templates/).
 
 I> ### Extract Common Structures
-I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future will far outweigh the initial overhead of doing this task.
 I>
-I> Think about it: *would you rather maintain one copy of your markup, or multiple copies?*
+I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a hassle to do, the time you will save in maintenance will far outweigh the initial overhead of doing it upfront.
+I>
+I> *Thinking hurts, but it is better than doing lots of grunt work!*
 
 
 ### Abstracting Further
@@ -222,6 +223,7 @@ I> If you haven't already done so, now would be a good time to read through the 
 
 
 X> ### Exercises
+X>
 X> Now that you've worked through this chapter, there are a number of exercises that you can work through to reinforce what you've learnt regarding Django and templating.
 X>
 X> - Update all other previously defined templates in the Rango app to extend from the new `base.html` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from `base.html`. 
@@ -259,11 +261,11 @@ I> To employ the use of a template, we call the `render()` function and pass thr
 I>
 I> {lang="python",linenos=off}
 I> 	def about(request):
-I>		# prints out whether the method is a GET or a POST
-I>		print(request.method)
-I>		# prints out the user name, if no one is logged in it prints `AnonymousUser`
-I>		print(request.user)
-I>		return render(request, 'rango/about.html', {})
+I>	    # prints out whether the method is a GET or a POST
+I>	    print(request.method)
+I>	    # prints out the user name, if no one is logged in it prints `AnonymousUser`
+I>	    print(request.user)
+I>	    return render(request, 'rango/about.html', {})
 I>
 I> Remember, the last parameter of `render()` is the context dictionary with which you can use to pass additional data to the Django template engine. As we have no additional data to give to the template, we pass through an empty dictionary, `{}`. 
 
@@ -313,8 +315,8 @@ To use the template tag in your `base.html` template, first load the custom temp
 
 Try it out. Now all pages that inherit from `base.html` will also include the list of categories (which we will move to the side later on). 
 
-T> ### Remember to Restart the Server!
-T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, they won't be registered by Django, and you'll get confused and irritated.
+T> ### Restart the Server!
+T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, the tags won't be registered by Django, and then you'll get confused and irritated.
 
 ###Parameterised Template Tags 
 We can also *parameterise* the template tags we create, allowing for greater flexibility. As an example, we'll use parameterisation to highlight which category we are looking at when visiting its page. Adding in a parameter is easy - we can update the `get_category_list()` method as follows.

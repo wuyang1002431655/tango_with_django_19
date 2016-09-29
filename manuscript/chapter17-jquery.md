@@ -112,9 +112,11 @@ code.
 
 T> ###Keep Them Separated
 T>
-T> Remember when it comes to CSS, JAVASCRIPT and HTML, you gotta keep
-T> them separated!
-
+T> [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) is a design principle which is good to keep in mind. In terms of web apps, the HTML is responsible for the page content, CSS is used to style the presentation of the content, while Javascript is responsible for how the user can interact with the content, and manipulating the content and style.
+T>
+T> By keeping them separated, you will have cleaner code and you will reduce maintenance woes in the future.
+T>
+T> Put another way, *never mix, never worry!*
 
 ###Selectors
 

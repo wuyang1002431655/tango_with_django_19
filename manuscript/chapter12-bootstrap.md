@@ -22,23 +22,20 @@ content pane.
 
 Download and save the HTML source for the Dashboard layout to a file called, `base_bootstrap.html` and save it to your `templates/rango` folder.
 
-Before we can use the template we need to modify the HTML so that we can use it in our application.
-The changes that we performed are listed below along with the updated HTML (so that you don't have to go to the trouble).
+Before we can use the template we need to modify the HTML so that we can use it in our application. The changes that we performed are listed below along with the updated HTML (so that you don't have to go to the trouble).
 
--   Replaced all references of `../../` to be `http://v4-alpha.getbootstrap.com/`
--   Replaced `dashboard.css` with the absolute reference,
-    `http://getbootstrap.com/examples/dashboard/dashboard.css`
--   Removed the search form from the top nav bar
--   Stripped out all the non-essential content from the html and
-    replaced it with `{% block body_block %}{% endblock %}`
--   Set the title element to be,
-    `<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>`
--   Changed `project name` to be `Rango`.
--   Added the links to the index page, login, register, etc to the top
-    nav bar.
--   Added in a side block, i.e., `{% block side_block %}{% endblock %}`
+- Replaced all references of `../../` to be `http://v4-alpha.getbootstrap.com/`
+- Replaced `dashboard.css` with the absolute reference:
+	- `http://getbootstrap.com/examples/dashboard/dashboard.css`
+- Removed the search form from the top nav bar
+- Stripped out all the non-essential content from the HTML and replaced it with:
+	- `{% block body_block %}{% endblock %}`
+- Set the title element to be:
+	- `<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>`
+- Changed `project name` to be `Rango`.
+- Added the links to the index page, login, register, etc to the top nav bar.
+- Added in a side block, i.e., `{% block side_block %}{% endblock %}`
 - Added in `{% load staticfiles %}` after the `DOCTYPE` tag.
-- Downloaded the [Rango Favicon](https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/static/images/favicon.ico) and saved it to `static/images/` and then updated the `<link>` tag to be `<link rel="icon" href="{% static 'images/favicon.ico' %}">`.
 
 ##The New Base Template
 
@@ -109,23 +106,30 @@ The changes that we performed are listed below along with the updated HTML (so t
 	<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+		<script 
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
 		</script>
 		<script>
-		window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+		window.jQuery || 
+		document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
 		</script>
-		<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+		<script 
+		src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
 		</script>
 		<!-- Just to make our placeholder images work.
 			 Don't actually copy the next line! -->
-		<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
+		<script 
+			src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
 		</script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+		<script 
+		src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
 		</script>
 	</body>
 	</html>
+	
 
+Once you have the new template, downloaded the [Rango Favicon](https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/static/images/favicon.ico) and saved it to `static/images/`.
 
 If you take a close look at the modified Dashboard HTML source, you'll notice it
 has a lot of structure in it created by a series of `<div>` tags.
@@ -369,19 +373,32 @@ For the `registration_form.html`, we can update the form as follows:
     <form role="form"  method="post" action=".">
         {% csrf_token %}
         <div class="form-group" >
-        <p class="required"><label class="required" for="id_username">Username:</label>
-            <input class="form-control" id="id_username" maxlength="30" name="username" type="text" />
-            <span class="helptext">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+        <p class="required"><label class="required" for="id_username">
+            Username:</label>
+            <input class="form-control" id="id_username" maxlength="30" 
+                 name="username" type="text" />
+            <span class="helptext">
+            Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.
+            </span>
         </p>
-        <p class="required"><label class="required" for="id_email">E-mail:</label>
-            <input class="form-control" id="id_email" name="email" type="email" />
+        <p class="required"><label class="required" for="id_email">
+            E-mail:</label>
+            <input class="form-control" id="id_email" name="email" 
+                 type="email" />
         </p>
-        <p class="required"><label class="required" for="id_password1">Password:</label>
-            <input class="form-control" id="id_password1" name="password1" type="password" />
+        <p class="required"><label class="required" for="id_password1">
+            Password:</label>
+            <input class="form-control" id="id_password1" name="password1"
+                type="password" />
         </p>
-        <p class="required"><label class="required" for="id_password2">Password confirmation:</label>
-            <input class="form-control" id="id_password2" name="password2" type="password" />
-            <span class="helptext">Enter the same password as before, for verification.</span>
+        <p class="required">
+            <label class="required" for="id_password2">
+                Password confirmation:</label>
+            <input class="form-control" id="id_password2" name="password2" 
+                 type="password" />
+            <span class="helptext">
+                 Enter the same password as before, for verification.
+            </span>
         </p>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
@@ -409,15 +426,15 @@ To use the toolkit within our templates, we need to first load the toolkit `{% l
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
 	{% block body\_block %}
-		<form id="category_form" method="post" 
-			action="{% url 'add_category' %}"\>
-		<h2 class="form-signin-heading"\>Add a Category</a></h2>
-		{% csrf_token %}
-		{{ form|as_bootstrap }}
-		<br/>
-		<button class="btn btn-primary" type="submit"
-			name="submit"\>Create Category\</button\>
-		</form>
+	    <form id="category_form" method="post" 
+	        action="{% url 'add_category' %}"\>
+	    <h2 class="form-signin-heading"\>Add a Category</a></h2>
+	    {% csrf_token %}
+	    {{ form|as_bootstrap }}
+	    <br/>
+	    <button class="btn btn-primary" type="submit"
+	         name="submit"\>Create Category</button>
+	    </form>
 	{% endblock %}
 
 This solution is much cleaner, and automated. However, it does not

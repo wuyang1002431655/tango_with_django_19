@@ -1,4 +1,4 @@
-#Making Rango Tango! Code and Hints {#chapter-hints}
+#Making Rango Tango! Hints {#chapter-hints}
 
 Hopefully, you will have been able to complete the exercises given the workflows we provided. If not, or if you need a little help, have a look at the potential solutions we have provided below, and use them within your version of Rango.
 

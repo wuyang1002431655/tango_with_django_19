@@ -44,7 +44,7 @@ Remember that the `index()` function is responsible for the main page view.  Mod
 	    # Render the response and send it back!
 	    return render(request, 'rango/index.html', context_dict)
 
-Here, the expression `Category.objects.order_by('-likes')`  queries the `Category` model to retrieve the top five categories. You can see that it uses
+Here, the expression `Category.objects.order_by('-likes')[:5]`  queries the `Category` model to retrieve the top five categories. You can see that it uses
 the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list (`[:5]`) and thus return a sublist of `Category` objects.
 
 With the query complete, we passed a reference to the list (stored as variable `category_list`) to the dictionary, `context_dict`. This dictionary is then passed as part of the context for the template engine in the `render()` call.
@@ -204,6 +204,7 @@ W> ### Migration Woes
 W>
 W> It's always best to plan out your database in advance and avoid changing it. 
 W> Making a population script means that you easily recreate your database if you need to delete it.
+W>
 W> Sometimes it is just better to just delete the database and recreate everything than try and work out where the conflict is coming from.
 W> A neat exercise is to write a script to output the data in the database so that any changes you make can be saved out into a file that can be read in later.
 

@@ -46,7 +46,7 @@ I> Be careful: differences exist between how you parse URLs and obtain responses
 I>
 I> So, another friendly reminder: *don't simply copy and paste code!*
 
-{lang="python",linenos=off}
+{lang="python",linenos=on}
 	import json
 	import urllib, urllib2  # Py2.7.x
 	import urllib  # Py3
@@ -215,7 +215,7 @@ Now that we have successfully implemented the search functionality module, we ne
 ### Adding a Search Template
 Let's first create a template called, `rango/search.html`. Add the following HTML markup, Django template code, and Bootstrap classes.
 
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
 	

@@ -269,7 +269,7 @@ We also establish a link between the two model instances that we create. After c
 ### Creating the *Registration* Template
 Now we need to make the template that will be used by the new `register()` view. Create a new template file, `rango/register.html`, and add the following code.
 
-{lang="html",linenos=off}
+{lang="html",linenos=on}
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
 	

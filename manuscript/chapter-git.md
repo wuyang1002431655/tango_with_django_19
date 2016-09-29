@@ -62,7 +62,7 @@ Cloning your repository is a straightforward process with the `git clone` comman
 For GitHub, try the following command, replacing the parts below as appropriate:
 
 {lang="text",linenos=off}
-    $ git clone https://<USER>:<PASS>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
+	$ git clone https://<USER>:<PASS>@github.com/<OWNER>/<REPO_NAME>.git <workspace>
 
 where you replace
 
@@ -75,13 +75,13 @@ where you replace
 If all is successful, you'll see some text like the example shown below.
 
 {lang="text",linenos=off}
-    $ git clone https://github.com/leifos/tango_with_django_19
-    Cloning into 'tango_with_django_19'...
-    remote: Counting objects: 18964, done.
-    remote: Total 18964 (delta 0), reused 0 (delta 0), pack-reused 18964
-    Receiving objects: 100% (18964/18964), 99.69 MiB | 3.51 MiB/s, done.
-    Resolving deltas: 100% (13400/13400), done.
-    Checking connectivity... done.
+	$ git clone https://github.com/leifos/tango_with_django_19
+	Cloning into 'tango_with_django_19'...
+	remote: Counting objects: 18964, done.
+	remote: Total 18964 (delta 0), reused 0 (delta 0), pack-reused 18964
+	Receiving objects: 100% (18964/18964), 99.69 MiB | 3.51 MiB/s, done.
+	Resolving deltas: 100% (13400/13400), done.
+	Checking connectivity... done.
 
 If the output lines end with `done`, everything should have worked. Check your filesystem to see if the directory has been created.
 
@@ -101,8 +101,8 @@ With your workspace setup, now would be a good time to make some final tweaks. H
 When using your Git repository as part of a team, any changes you make will be associated with the username you use to access your remote Git repository. However, you can also specify your full name and e-mail address to be included with changes that are made by you on the remote repository. Simply open a Command Prompt or terminal and navigate to your workspace. From there, issue two commands: one to tell Git your full name, and the other to tell Git your e-mail address.
 
 {lang="text",linenos=off}
-    $ git config user.name "John Doe"
-    $ git config user.email "johndoe123@me.com"
+	$ git config user.name "John Doe"
+	$ git config user.email "johndoe123@me.com"
 
 Obviously, replace the example name and e-mail address with your own - unless your name actually is John Doe.
 
@@ -110,9 +110,9 @@ Git also provides you with the capability to stop - or ignore - particular files
 
 Check out the following example of a `.gitignore` file:
 
-{lang="text",linenos=on}
-    `config/api_keys.py`
-    `*.pyc`
+{lang="text",linenos=off}
+	`config/api_keys.py`
+	`*.pyc`
 
 In this example file, there are two entries - one on each line. The first entry prompts Git to ignore the file `api_keys.py` residing within the `config` directory of your repository. The second entry then prompts Git to ignore *all* instance of files with a `.pyc` extension, or compiled Python files. This is a really nice feature: you can use *wildcards* to make generic entries if you need to!
 
@@ -127,7 +127,7 @@ I> When you create a new repository on GitHub, the service can offer to create a
 With your repository cloned and ready to go on your local computer, you're ready to get to grips with the Git workflow. This section shows you the basic Git workflow - and the associated Git commands you can issue.
 
 {id="fig-git-sequence"}
-![](images/git-sequence.png)
+![A Figure of the Git Workflow](images/git-sequence.png)
 
 We have provided a pictorial representation of the basic Git workflow as shown above. Match each of the numbers in the black circles to the numbered descriptions below to read more about each stage. **Refer to this diagram whenever you're unsure about the next step you should take - it's very useful!**
 
@@ -140,27 +140,33 @@ If you've already cloned your repository, it's good practice to get into the hab
 To perform a `git pull`, first navigate to your `<workspace>` directory within your Command Prompt or terminal, then issue `git pull`. Check out the snippet below from a Bash terminal to see exactly what you need to do, and what output you should expect to see.
 
 {lang="text",linenos=off}
-    $ cd <workspace>
-    $ git pull
-    remote: Counting objects: 3, done.
-    remote: Compressing objects: 100% (2/2), done.
-    remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-    Unpacking objects: 100% (3/3), done.
-    From https://github.com/someuser/somerepository
-       86a0b3b..a7cec3d  master     -> origin/master
-    Updating 86a0b3b..a7cec3d
-    Fast-forward
-     README.md | 1 +
-     1 file changed, 1 insertion(+)
-     create mode 100644 README.md
+	$ cd <workspace>
+	$ git pull
+	remote: Counting objects: 3, done.
+	remote: Compressing objects: 100% (2/2), done.
+	remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+	Unpacking objects: 100% (3/3), done.
+	From https://github.com/someuser/somerepository
+	    86a0b3b..a7cec3d  master     -> origin/master
+	Updating 86a0b3b..a7cec3d
+	Fast-forward
+	  README.md | 1 +
+	  1 file changed, 1 insertion(+)
+	  create mode 100644 README.md
 
 This example shows that a `README.md` file has been updated or created from the latest pull. 
 
 E> ### Getting an Error?
+E>
 E> If you receive `fatal: Not a git repository (or any of the parent directories): .git`, you're not in the correct directory. You need `cd` to your workspace directory - the one in which you cloned your repository to. A majority of Git commands only work when you're in a Git repository.
 
 T> ### Pull before you Push!
+T>
 T> Always `git pull` on your local copy of your repository before you begin work. **Always!**
+T>
+T> Before you are about to push, do another pull.
+T>
+T> Remember to talk to your team to coordinate your activity so you are not working on the same files, or using branching.
 
 ### 2. Doing Some Work!
 
@@ -207,7 +213,7 @@ I> In order to successfully commit, you need to modify at least one file in your
 As part of a commit, it's incredibly useful to your future self and others to explain why you committed when you did. You can supply an optional message with your commit if you wish to do so. Instead of simply issuing `git commit`, run the following amended command.
 
 {lang="text",linenos=off}
-    $ git commit -m "Updated helpers.py to include a Unicode conversion function, str_to_unicode()."
+	$ git commit -m "Updated helpers.py to include a Unicode conversion function."
 
 From the example above, you can see that using the `-m` switch followed by a string provides you with the opportunity to append a message to your commit. Be as explicit as you can, but don't write too much. People want to see at a glance what you did, and do not want to be bored or confused with a long essay. At the same time, don't be too vague. Simply specifying `Updated helpers.py` may tell a developer what file you modified, but they will require further investigation to see exactly what you changed.
 

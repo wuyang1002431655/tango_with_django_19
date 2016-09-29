@@ -74,7 +74,7 @@ I>
 I> In Python 3.x, strings are Unicode by default - so you only need to implement the `__str__()` method.
 
 
-When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. By default, all models have an auto-increment integer x field called `id` which is automatically assigned and acts a primary key.
+When you define a model, you need to specify the list of fields and their associated types, along with any required or optional parameters. By default, all models have an auto-increment integer field called `id` which is automatically assigned and acts a primary key.
 
 Django provides a [comprehensive series of built-in field types](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types). Some of the most commonly used are detailed below.
 
@@ -104,7 +104,7 @@ Finally, it is good practice to implement the `__str__()` and/or `__unicode__()`
 With our models defined in `models.py`, we can now let Django work its magic and create the tables in the underlying database. Django provides what is called a [*migration tool*](https://en.wikipedia.org/wiki/Data_migration) to help us set up and update the database to reflect any changes to your models. For example, if you were to add a new field then you can use the migration tools to update the database.
 
 ### Setting up
-First of all, the database must be *initialised*. This means creating it and all the associated tables within it so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command.
+First of all, the database must be *initialised*. This means creating the database and all the associated tables so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command.
 
 {lang="text",linenos=off}
 	$ python manage.py migrate
@@ -146,7 +146,7 @@ Whenever you make changes to your app's models, you need to *register* the chang
 	    - Create model Category
 	    - Create model Page
 
-Upon the completion of this command, check the `rango/migrations` directory to see that a Python script has been created. It's called `0001_initial.py`, which contains all the necessary details to create your database schema at that particular migration. 
+Upon the completion of this command, check the `rango/migrations` directory to see that a Python script has been created. It's called `0001_initial.py`, which contains all the necessary details to create your database schema for that particular migration. 
 
 I> ### Checking the Underlying SQL
 I> If you want to check out the underlying SQL that the Django ORM issues to the database engine for a given migration, you can issue the following command.
@@ -219,7 +219,7 @@ Navigate your Web browser to `http://127.0.0.1:8000/admin/`. You are then presen
 {id="fig-ch5-admin-first"}
 ![The Django admin interface, sans Rango models.](images/ch5-admin-first.png)
 
-While this looks good, we are missing the `Category` and `Page` models that were defined for the Rango app. To include these models, we need to give Rango some help.
+While this looks good, we are missing the `Category` and `Page` models that were defined for the Rango app. To include these models, we need to give Django some help.
 
 To do this, open the file `rango/admin.py`. With an `include` statement already present, modify the module so that you `register` each class you want to include. The example below registers both the `Category` and `Page` class to the admin interface.
 
@@ -245,7 +245,7 @@ X>
 X> Delete the `test` category that was previously created. We'll be populating the database shortly with more example data.
 
 I> ### User Management
-I> The Django admin interface is your port of call for user management, through the Authentication and Authorisation section. Here, you can create, modify and delete user accounts, all with varying privilege levels.
+I> The Django admin interface is your port of call for user management, through the Authentication and Authorisation section. Here, you can create, modify and delete user accounts, and varying privilege levels.
 
 T> ### Plural vs. Singular Spellings
 T>  Note the typo within the admin interface (`Categorys`, not `Categories`). This typo can be fixed by adding a nested `Meta` class into your model definitions with the `verbose_name_plural` attribute. Check out a modified version of the `Category` model below for an example, and [Django's official documentation on models](https://docs.djangoproject.com/en/1.9/topics/db/models/#meta-options) for more information about what can be stored within the `Meta` class.
@@ -255,7 +255,7 @@ T> 	class Category(models.Model):
 T> 	    name = models.CharField(max_length=128, unique=True)
 T> 	
 T> 	    class Meta:
-T> 	        verbose_name_plural = 'categories'
+T> 	        verbose_name_plural = 'Categories'
 T> 	        
 T> 	        def __str__(self):
 T> 	            return self.name
@@ -264,7 +264,7 @@ I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
 ## Creating a Population Script
-Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, just like `wTFzm8j3z7`. Rather than do this, it is better to write a script so that you and your collaborators works from the same tests data. Furthermore, this approach would guarantee that you have useful and pseudo realistic data rather than random junk. It's therefore good practice to create what we call a *population script* for your app. This script is designed to automatically populate your database with test data for you
+Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, like `wTFzmN00bz7`. Rather than do this, it is better to write a script to automatically populate the database with realistic and credible data. This is because when you go to demo or test your app, you some good examples in the database. Also, if you are deploying the app or sharing it with collaborators, then you/they wont have to go through the process of putting in sample data. It's therefore good practice to create what we call a *population script*. 
 
 To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
 
@@ -350,6 +350,8 @@ T> ### Understand this Code!
 T> To reiterate what we wrote earlier, don't simply copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. It'll help with your understanding.
 T> 
 T> Below we have provided explanations - hopefully you'll learn something new!
+T>
+T> Further note that when you see line numbers along side the code, it indicates that we have listed the entire file, rather than code fragments.
 
 While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look at lines 75 and 76. This is because above this point, we define functions, these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we call the `populate()` function.
 
@@ -411,13 +413,13 @@ The workflow for adding models can be broken down into five steps.
 
 1. First, create your new model(s) in your Django application's `models.py` file.
 2. Update `admin.py` to include and register your new model(s).
-3. Perform the migration `$ python manage.py makemigrations`.
+3. Perform the migration `$ python manage.py makemigrations <app_name>`.
 4. Apply the changes `$ python manage.py migrate`. This will create the necessary infrastructure within the database for your new model(s).
 5. Create/edit your population script for your new model(s).
 
 Invariably, there will be times when you will have to delete your database. When this happens, run the following commands from the `manage.py` module.
 
-1. `migrate` your database - this will set everything up in the new database. Ensure that your app is listed in the migrations that are committed. If it is not, run the `makemigrations <appname>` command, where `<appname>` is the name of your app.
+1. `migrate` your database - this will set everything up in the new database. Ensure that your app is listed in the migrations that are committed. If it is not, run the `makemigrations <app_name>` command, where `<app_name>` is the name of your app.
 2. Create a new administrative account with the `createsuperuser` command.
 
 X> ### Exercises
@@ -428,14 +430,14 @@ X> * Make the migrations for your app, then migrate your database to commit the 
 X> * Update your population script so that the `Python` category has `128` views and `64` likes, the `Django` category has `64` views and `32` likes, and the `Other Frameworks` category has `32` views and `16` likes.
 X> * Delete and recreate your database, populating it with your updated population script.
 X> * Complete parts [two](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) and [seven](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) of the official Django tutorial. These sections will reinforce what you've learnt on handling databases in Django, and show you additional techniques to customising the Django admin interface.
-X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed).
+X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed). You will need to complete the previous exercises or at least go through the official Django Tutorial to complete this exercise.
 
 
 {id="fig-admin-completed"}
 ![The updated admin interface `Page` view, complete with columns for category and URL.](images/ch5-admin-completed.png)
 
 T> ### Exercise Hints
-T> If you require some help or inspiration to get these exercises done, these hints will hopefully help you out.
+T> If you require some help or inspiration to complete these exercises done, here are some hints.
 T> 
 T> * Modify the `Category` model by adding in the fields, `view` and `likes` as `IntegerFields`.
 T> * Modify the `add_cat` function in the `populate.py` script, to take the `views` and `likes`. Once you get the `Category` `c`, then you can update the number of views with `c.views`, and similarly with `likes`. Don't forget to `save()` the instance!
@@ -452,4 +454,4 @@ I>
 I> {lang="text",linenos=off}
 I>     $ python manage.py test rango
 I>
-I> If you are interested in learning about automated testing, now is a good time to check out the [chapter on testing](#chapter-testing). The chapter runs through some of the basics on testing that can perform in Django.
+I> If you are interested in learning about automated testing, now is a good time to check out the [chapter on testing](#chapter-testing). The chapter runs through some of the basics on how you can write tests to automatically check the integrity of your code.

@@ -166,24 +166,25 @@ the installation technique that you chose, this may or may not have been
 done for you. To do this on your UNIX-based operating system, issue the
 following command in a terminal.
 
-```
-$ echo $PYTHONPATH
-```
+{lang="text",linenos=off}
+	$ echo $PYTHONPATH
+
 
 On a Windows-based machine, open a Command Prompt and issue the
 following.
 
-```
-$ echo %PYTHONPATH%
-```
+{lang="text",linenos=off}
+	$ echo %PYTHONPATH%
+
 
 If all works, you should then see output that looks something similar to
 the example below. On a Windows-based machine, you will obviously see a
 Windows path, most likely originating from the C drive.
 
-``` {.sourceCode .guess}
-/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages:
-```
+{lang="text",linenos=off}
+	/opt/local/Library/Frameworks/Python.framework/
+	    Versions/2.7/lib/python2.7/site-packages:
+
 
 This is the path to your Python installation's `site-packages`
 directory, where additional Python packages and modules are stored. If
@@ -200,20 +201,20 @@ work to discover the path of your `site-packages` installation. To do
 this, launch the Python interpreter. The following terminal session
 demonstrates the commands you should issue.
 
-```
-$ python
+{lang="text",linenos=off}
+	$ python
+	
+	Python 2.7.5 (v2.7.5:ab05e7dd2788, May 13 2013, 13:18:45)
+	[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+	Type "help", "copyright", "credits" or "license" for more information.
+	
+	>>> import site
+	>>> print(site.getsitepackages()[0])
+	
+	'/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages'
+	
+	>>> quit()
 
-Python 2.7.5 (v2.7.5:ab05e7dd2788, May 13 2013, 13:18:45)
-[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
-
->>> import site
->>> print(site.getsitepackages()[0])
-
-'/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages'
-
->>> quit()
-```
 
 Calling `site.getsitepackages()` returns a list of paths that point to
 additional Python package and module stores. The first typically returns
@@ -231,9 +232,9 @@ your configuration. On a UNIX-based or UNIX-derived operating system,
 edit your `.bashrc` file once more, adding the following to the bottom
 of the file.
 
-```
-export PYTHONPATH=$PYTHONPATH:<PATH_TO_SITE-PACKAGES>
-```
+{lang="text",linenos=off}
+	export PYTHONPATH=$PYTHONPATH:<PATH_TO_SITE-PACKAGES>
+
 
 Replace `<PATH_TO_SITE-PACKAGES>` with the path to your `site-packages`
 directory. Save the file, and quit and reopen any instances of your
@@ -274,36 +275,36 @@ represents the Setuptools version number. From a terminal instance, you
 can then change into the directory and execute the script `ez_setup.py`
 as shown below.
 
-```
-$ cd setuptools-1.1.6
-$ sudo python ez_setup.py
-```
+{lang="text",linenos=off}
+	$ cd setuptools-1.1.6
+	$ sudo python ez_setup.py
+
 
 In the example above, we also use `sudo` to allow the changes to become
 system-wide. The second command should install Setuptools for you. To
 verify that the installation was successful, you should be able to see
 output similar to that shown below.
 
-``` {.sourceCode .guess}
-Finished processing dependencies for setuptools==1.1.6
-```
+{lang="text",linenos=off}
+	Finished processing dependencies for setuptools==1.1.6
+
 
 Of course, `1.1.6` is substituted with the version of Setuptools you are
 installing. If this line can be seen, you can move onto installing Pip.
 This is a trivial process, and can be completed with one simple command.
 From your terminal instance, enter the following.
 
-```
-$ sudo easy_install pip
-```
+{lang="text",linenos=off}
+	$ sudo easy_install pip
+
 
 This command should download and install Pip, again with system-wide
 access. You should see the following output, verifying Pip has been
 successfully installed.
 
-```
-Finished processing dependencies for pip
-```
+{lang="text",linenos=off}
+	Finished processing dependencies for pip
+
 
 Upon seeing this output, you should be able to launch Pip from your
 terminal. To do so, just type `pip`. Instead of an unrecognised command
@@ -332,6 +333,7 @@ configuring a Python setup nowadays.
 They are pretty easy to setup, once you have pip installed, and you know
 the right commands. You need to install a couple of additional packages.
 
+{lang="text",linenos=off}
     $ pip install virtualenv
     $ pip install virtualenvwrapper
 
@@ -347,7 +349,8 @@ lot easier.
 If you are using a linux/unix based OS, then to use the wrapper you need
 to call the following shell script from your command line: :
 
-    $ source virtualenvwrapper.sh
+{lang="text",linenos=off}
+	$ source virtualenvwrapper.sh
 
 It is a good idea to add this to your bash/profile script. So you dont
 have to run it each and every time you want to use virtualenvironments.
@@ -356,17 +359,20 @@ However, if you are using windows, then install the
 [virtualenvwrapper-win](https://pypi.python.org/pypi/virtualenvwrapper-win)
 package:
 
-    $ pip install virtualenvwrapper-win
+{lang="text",linenos=off}
+	$ pip install virtualenvwrapper-win
 
 Now you should be all set to create a virtual environment:
 
-    $ mkvirtualenv rango
+{lang="text",linenos=off}
+	$ mkvirtualenv rango
 
 You can list the virtual environments created with `lsvirtualenv`, and
 you can activate a virtual environment as follows:
 
-    $ workon rango
-    (rango)$
+{lang="text",linenos=off}
+	$ workon rango
+	(rango)$
 
 Your prompt with change and the current virtual environment will be
 displayed, i.e. rango. Now within this environment you will be able to
@@ -386,8 +392,8 @@ We should also point out that when you develop code, you should always
 house your code within a version-controlled repository such as
 [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We
 won't be going through this right now so that we can get stuck into
-developing an application in Django. However, we have provided a  (chapter
-on using GIT)[#chapter-git] if you haven't used Git/GitHub before. We highly recommend that you
+developing an application in Django. However, we have provided a [chapter
+on using GIT](#chapter-git) if you haven't used Git/GitHub before. We highly recommend that you
 set up a GIT repository for your own projects. Doing so could save you from disaster.
 
 X> ###Exercises
@@ -401,7 +407,7 @@ X> - Play around with your CLI and create a directory called `code`,  which we u
 X> - Install the Django and Pillow packages.
 X> - Setup your Virtual Environment
 X> - Setup your account on GitHub
-X> - Download and setup a Integrated Development Environemnt (like (PyCharm Edu)[https://www.jetbrains.com/pycharm-edu/download/])
-X> - We have made the code for the book and application that you build available on GitHub, see [Tango With Django Book](https://github.com/leifos/tango_with_django_book) and [Rango Application](https://github.com/leifos/tango_with_django) .
-X> -   If you spot any errors or problem with the book, you can make a change request!
-X> -  If you have any problems with the exercises, you can check out the repository and see how we completed them.
+X> - Download and setup a Integrated Development Environment like [PyCharm Edu](https://www.jetbrains.com/pycharm-edu/download/).
+X> - We have made the code for the book and application that you build available on GitHub, see [Tango With Django Book](https://github.com/leifos/tango_with_django_book) and [Rango Application](https://github.com/leifos/tango_with_django).
+X> - If you spot any errors or problem with the book, you can make a change request!
+X> - If you have any problems with the exercises, you can check out the repository and see how we completed them.

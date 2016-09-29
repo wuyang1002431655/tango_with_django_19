@@ -57,7 +57,7 @@ will need to perform the following steps.
 - Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
 	- Remember to use  the `url` *templatetag* instead of using the direct URL i.e. 
 	
-	{lang="python",linenos=on}
+	{lang="python",linenos=off}
 		<a href="{% url 'goto' %}?page_id={{page.id}}"\>
 
 
@@ -69,8 +69,8 @@ I>
 I> {lang="python",linenos=off}
 I> 		page_id = None
 I> 		if request.method == 'GET':
-I> 		        if 'page_id' in request.GET:
-I> 		            page_id = request.GET['page_id']
+I> 		    if 'page_id' in request.GET:
+I> 		        page_id = request.GET['page_id']
 I>
 I> Always check the request method is of type `GET` first, then you can
 I> access the dictionary `request.GET` which contains values passed as part
@@ -96,7 +96,7 @@ following steps:
 - Take the search form and results template markup from `search.html` and place it into `category.html`.
 - Update the search form so that that action refers back to the category page, i.e.:
 
-	{lang="python",linenos=on}
+	{lang="python",linenos=off}
 		<form class="form-inline" id="user_form" 
 		    method="post" action="{% url 'show_category'  category.slug %}">
 
