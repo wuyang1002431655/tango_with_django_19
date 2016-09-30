@@ -28,6 +28,5 @@ chapter-acks.md
 
 chapter-system-setup.md
 chapter-unix.md
-chapter-virtual-env.md
 chapter-git.md
 chapter-css.md
