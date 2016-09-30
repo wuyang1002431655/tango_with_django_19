@@ -12,7 +12,7 @@ implemented alongside some awesome new additions.
 To make Rango more coherent and integrated it would be nice to add the
 following functionality.
 
-- Track the click throughs of Categories and Pages, i.e.:
+- Track the clickthroughs of Categories and Pages, i.e.:
 	- count the number of times a category is viewed;
 	- count the number of times a page is viewed via Rango; and
 	- collect likes for categories (see [Django and Ajax Chapter]({#chapter-ajax})).
@@ -41,7 +41,7 @@ most of it on your own (except those requiring AJAX). In the following
 chapter, we have included hints, tips and code snippets elaborating on how to
 implement these features. Of course, if you get really stuck, you can always check out our implementation on GitHub.
 
-##Track Page Click Throughs
+##Track Page Clickthroughs
 
 Currently, Rango provides a direct link to external pages. This is not
 very good if you want to track the number of times each page is clicked

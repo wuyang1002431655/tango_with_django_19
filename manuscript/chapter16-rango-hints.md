@@ -8,7 +8,7 @@ I> The solutions provided in this chapter are only one way to solve each problem
 I> They are based on what we have learnt so far. However, if you implement them differently, 
 I> feel free to share your solutions with us - and tweet links to @tangowithdjango for others to see.
 
-## Track Page Click Throughs
+## Track Page Clickthroughs
 
 Currently, Rango provides a direct link to external pages. This is not very good if you want to track the number of times each page is clicked and viewed. To count the number of times a page is viewed via Rango, you'll need to perform the following steps.
 
@@ -77,7 +77,7 @@ Here you can see that in the template we have added some control statements to d
 
 ### Updating Category View
 
-Since we are tracking the number of click throughs you can now update
+Since we are tracking the number of clickthroughs you can now update
 the `category()` view so that you order the pages by the number of
 views, i.e.:
 
