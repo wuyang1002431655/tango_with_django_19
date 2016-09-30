@@ -1,7 +1,7 @@
 #Overview 
 The aim of this book is to provide you with a practical guide to web development using *Django* and *Python*. The book is designed primarily for students, providing a walkthrough of the steps involved in getting a web application up and running with Django.
 
-This book seeks to complement the [official Django Tutorials](https://docs.djangoproject.com/en/1.9/intro/tutorial01/) and many of the other excellent tutorials available online. By putting everything together in one place, this book fills in many of the gaps in the official Django documentation providing an example-based design driven approach to learning the Django framework. Furthermore, this book provides an introduction to many of the aspects required to master web application development (e.g. HTML, CSS, Javascript, etc).
+This book seeks to complement the [official Django Tutorials](https://docs.djangoproject.com/en/1.9/intro/tutorial01/) and many of the other excellent tutorials available online. By putting everything together in one place, this book fills in many of the gaps in the official Django documentation providing an example-based design driven approach to learning the Django framework. Furthermore, this book provides an introduction to many of the aspects required to master web application development (e.g. HTML, CSS, JavaScript, etc.).
 
 ##Why Work with this Book?
 **This book will save you time.** On many occasions we've seen clever students get stuck, spending hours trying to fight with Django and other aspects of web development. More often than not, the problem was usually because a key piece of information was not provided, or something was not made clear. While the occasional blip might set you back 10-15 minutes, sometimes they can take hours to resolve. We've tried to remove as many of these hurdles as possible. This will mean you can get on with developing your application instead of stumbling along.
@@ -163,12 +163,10 @@ With this assumption, we then produce a series of tables that describe each enti
 | `url`      | `URLField`     |
 | `views`    | `IntegerField` |
 
-We will also have a model for the `User` so that they can register and login. We have not shown it here, but shall introduce it later in the book when we discuss User Authentication. In the following chapters will we see how to instantiate these models in Django and how to use  [Object Relational Mapping](https://en.wikipedia.org/wiki/Object-relational_mapping) (ORM) in Django to connect to the database.
+We will also have a model for the `User` so that they can register and login. We have not shown it here, but shall introduce it later in the book when we discuss User Authentication. In the following chapters, will we see how to instantiate these models in Django and how to use the built-in ORM to connect to the database.
 
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our Web application. While we will be focusing on using specific technologies, these steps are common to most database driven websites. It's a good idea to become familiar with reading and producing such specifications and designs so that you can communicate your designs and ideas with others. Here we will be focusing on using Django and the related technologies to implement this specification.
-
-
 
 T> ### Cut and Paste Coding
 T>

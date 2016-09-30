@@ -81,7 +81,7 @@ X>
 X> To get comfortable with your environment, try out the following exercises.
 X> 
 X>  -   Install Python 2.7.5+/3.4+ and Pip.
-X>  -   Play around with your CLI and create a directory called `code`,  which we use to create our projects in.
+X>  -   Play around with your *command line interface (CLI)* and create a directory called `code`,  which we use to create our projects in.
 X>  -   Setup your Virtual Environment (optional)
 X>  -   Install the Django and Pillow packages
 X>  -   Setup an account on a Git Repository site like: GitHub, BitBucket, etc if you haven't already done so.

@@ -214,7 +214,7 @@ To create an initial mapping, open `urls.py` located in your project directory a
 This maps the basic URL to the `index` view in the `rango` application. Run the development server (e.g. `python manage.py runserver`) and visit `http://127.0.0.1:8000` or whatever address your development server is running on. You'll then see the rendered output of the `index` view.
 
 ##Mapping URLs
-Rather than directly mapping URLs from the project to the application, we can make our application more modular (and thus re-usable) by changing how we route the incoming URL to a view. To do this, we first need to modify the project's `urls.py` and have it point to the application to handle any specific Rango application requests. Then, we need to specify how rango deals with such requests.
+Rather than directly mapping URLs from the project to the application, we can make our application more modular (and thus re-usable) by changing how we route the incoming URL to a view. To do this, we first need to modify the project's `urls.py` and have it point to the application to handle any specific Rango application requests. We then need to specify how Rango deals with such requests.
 
 First, open the project's `urls.py` file which is located inside your project configuration directory. As a relative path from your workspace directory, this would be the file `<workspace>/tango_with_django_project/tango_with_django_project/urls.py`. Update the `urlpatterns` list as shown in the example below.
 
@@ -250,10 +250,9 @@ Consequently, we need to create a new file called `urls.py` in the `rango` appli
 
 This code imports the relevant Django machinery for URL mappings and the `views` module from `rango`. This allows us to call the function `url` and point to the `index` view for the mapping in `urlpatterns`. 
 
+When we talk about URL strings, we assume that the host portion of a given URL (e.g. `http://127.0.0.1:8000`, `http://www.tangowithdjango.com`, or whatever) has *already been stripped away*. This means that the Django machinery need only handle the remainder of the URL string. For example, given the URL `http://127.0.0.1:8000/rango/about/`, Django would have a URL string of `/rango/about/`.
 
-When we talk about URL strings, we assume that the `http://127.0.0.1:8000/` or whatever web address is provided has already been stripped away, and the Django machinery needs to only handel the remainder of the URL string, i.e. `'http://127.0.0.1:8000/'` -> `''`,  `'http://127.0.0.1:8000/rango/'` ->  `'rango/'`, or `'http://127.0.0.1:8000/rango/about/'` ->  `'rango/about/'`.
-
-The URL mapping we have created above calls Django's `url()` function, where the first parameter is the regular expression `^$`, which matches to an empty string because `^` denotes starts with, while `$` denotes ends with. As there is nothing in between these characters then it only matches an empty string.  Any URL string supplied by the user that matches this pattern means that the view `views.index()` would be invoked by Django. You might be thinking that matching a blank URL is pretty pointless - what use would it serve? Remember that when the URL pattern matching takes place, only a portion of the original URL string is considered. This is because our the project will first process the original URL string (i.e. `rango/`) and strip away the `rango/` part, passing on an empty string to the rango application to handle.
+The URL mapping we have created above calls Django's `url()` function, where the first parameter is the regular expression `^$`, which matches to an empty string because `^` denotes starts with, while `$` denotes ends with. As there is nothing in between these characters then it only matches an empty string.  Any URL string supplied by the user that matches this pattern means that the view `views.index()` would be invoked by Django. You might be thinking that matching a blank URL is pretty pointless - what use would it serve? Remember that when the URL pattern matching takes place, only a portion of the original URL string is considered. This is because our the project will first process the original URL string (i.e. `rango/`) and strip away the `rango/` part, passing on an empty string to the Rango application to handle.
 
 The next parameter passed to the `url()` function is the `index` view, which will handle the incoming requests, followed by the optional parameter, `name` that is set to a string `'index'`. By naming our URL mappings we can employ *reverse URL matching* later on. That is we can reference the URL mapping by name rather than by the URL. Later we will explain how to use this when creating templates. But do check out [the Official Django documentation on this topic](https://docs.djangoproject.com/en/1.9/topics/http/urls/#naming-url-patterns) for more information.
 
@@ -297,8 +296,8 @@ X>
 X> Now that you have got Django and your new app up and running, give the following exercises a go to reinforce what you've learnt. Getting to this stage is a significant landmark in working with Django. Creating views and mapping URLs to views is the first step towards developing more complex and usable Web applications.
 X> 
 X> - Revise the procedure and make sure you follow how the URLs are mapped to views.
-X> - Create a new view method called `about` which returns the following HttpResponse: `'Rango says here is the about page.'`
-X> - Map this view to `/rango/about/`. For this step, you'll only need to edit the `urls.py` of the rango application. Remember the `/rango/` part is handled by the projects `urls.py`.
+X> - Create a new view method called `about` which returns the following `HttpResponse`: `'Rango says here is the about page.'`
+X> - Map this view to `/rango/about/`. For this step, you'll only need to edit the `urls.py` of the Rango application. Remember the `/rango/` part is handled by the projects `urls.py`.
 X> - Revise the `HttpResponse` in the `index` view to include a link to the about page.
 X> - In the `HttpResponse` in the `about` view include a link back to the main page.
 X> - Now that you have started the book, follow us on Twitter [@tangowithdjango](https://twitter.com/tangowithdjango), and let us know how you are getting on!
