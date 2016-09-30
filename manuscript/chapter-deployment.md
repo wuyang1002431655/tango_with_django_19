@@ -246,4 +246,4 @@ X>
 X> Congratulations, you've successfully deployed Rango!
 X> 
 X> -  Tweet a link of your application to [@tangowithdjango](https://twitter.com/tangowithdjango).
-X> -  Tweet or E-mail us to let us know your thoughts on the tutorial :-)
+X> -  Tweet or e-mail us to let us know your thoughts on the tutorial!

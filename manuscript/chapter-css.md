@@ -336,7 +336,7 @@ This would float the `.yellow` element, removing it from the natural flow of the
 	    <span class="css-float-ex4-blue">Span 2</span>
 	</div>
 
-Applying `overflow: hidden` ensures that that our `.container` pushes down to the appropriate height.
+Applying `overflow: hidden` ensures that our `.container` pushes down to the appropriate height.
 
 ### Relative Positioning
 *Relative positioning* can be used if you require a greater degree of control over where elements are positioned on your webpage. As the name may suggest to you, relative positioning allows you to position an element *relative to where it would otherwise be located.* We make use of relative positioning with the `position: relative;` property and value pairing. However, that's only part of the story.
@@ -1152,7 +1152,7 @@ What we've discussed in this section is by no means a definitive guide to CSS. T
 As you develop your web applications, you'll undoubtedly run into issues and frustrating problems with styling web content. This is part of the learning experience, and you still have a bit to learn. We strongly recommend that you invest some time trying out several online tutorials about CSS - there isn't really any need to buy a book (unless you want to).
 
 -   The *W3C* [provides a neat tutorial on CSS](http://www.w3.org/Style/Examples/011/firstcss.en.html), taking you by the hand and guiding you through the different stages required. They also introduce you to several new HTML elements along the way, and show you how to style them accordingly.
--   [W3Schools also provides some cool CSS tutorials](http://www.w3schools.com/css/css_examples.asp). Instead of guiding you through the process of creating a webpage with CSS, *W3Schools* has a series of mini-tutorials and code examples to show you to to achieve a particular feature, such as setting a background image. We highly recommend that you have a look here.
+-   [W3Schools also provides some cool CSS tutorials](http://www.w3schools.com/css/css_examples.asp). Instead of guiding you through the process of creating a webpage with CSS, *W3Schools* has a series of mini-tutorials and code examples to show you to achieve a particular feature, such as setting a background image. We highly recommend that you have a look here.
 -   [html.net has a series of lessons on CSS](http://html.net/tutorials/css/) which you can work through. Like W3Schools, the tutorials on *html.net* are split into different parts, allowing you to jump into a particular part you may be stuck with.
 
 This list is by no means exhaustive, and a quick web search will indeed yield much more about CSS for you to chew on. Just remember: CSS can be tricky to learn, and there may be times where you feel you want to throw your computer through the window. We say this is pretty normal - but take a break if you get to that stage. We'll be tackling some more advanced CSS stuff as we progress through the tutorial in the next few sections.

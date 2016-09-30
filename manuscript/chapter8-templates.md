@@ -91,7 +91,7 @@ For the time being, let's make this simple HTML page our app's base template. Sa
 
 W> ### `DOCTYPE` goes First!
 W>
-W> Remember that the `<!DOCTYPE html>` declaration always needs to be placed on the *first line* of your template.
+W> Remember that the `<!DOCTYPE html>` declaration *always needs to be placed on the first line* of your template.
 W> Not having a [document type declaration](https://en.wikipedia.org/wiki/Document_type_declaration) on line one may mean that the resultant page generated from your template will not comply with [W3C HTML guidelines](https://www.w3.org/standards/webdesign/htmlcss).
 
 ### Template Blocks
@@ -126,7 +126,7 @@ When we create templates for each page, we will inherit from `rango/base.html` a
 
 I> ### Extract Common Structures
 I>
-I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a hassle to do, the time you will save in maintenance will far outweigh the initial overhead of doing it upfront.
+I> You should always aim to extract as much reoccurring content for your base templates as possible. While it may be a hassle to do, the time you will save in maintenance will far outweigh the initial overhead of doing it up front.
 I>
 I> *Thinking hurts, but it is better than doing lots of grunt work!*
 
@@ -246,7 +246,7 @@ T> 		<a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
 -->
 
 ## The `render()` Method and the `request` Context
-When writing views we have used a number of different methods, the preferred way is to use the Django shortcut method `render()`. The `render()` method requires that you pass through the `request` as the first argument. The `request` context houses a lot of information regarding the session, the user, etc, see the [Official Django Documentation on Request objects](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). By passing the `request` through to the template mean that you will also have access to such information when creating templates. In the next chapter we will access information about the `user` - but for now check through all of your views and make sure that they have been implemented using the `render()` method. Otherwise, your templates wont have the information we need later on.
+When writing views we have used a number of different methods, the preferred way is to use the Django shortcut method `render()`. The `render()` method requires that you pass through the `request` as the first argument. The `request` context houses a lot of information regarding the session, the user, etc, see the [Official Django Documentation on Request objects](https://docs.djangoproject.com/en/1.9/ref/request-response/#httprequest-objects). By passing the `request` through to the template mean that you will also have access to such information when creating templates. In the next chapter we will access information about the `user` - but for now check through all of your views and make sure that they have been implemented using the `render()` method. Otherwise, your templates won't have the information we need later on.
 
 I> ### Render and Context
 I> As a quick example of the checks you must carry out, have a look at the `about()` view. Initially, this was implemented with a hard-coded string response, as shown below. Note that we only send the string - we don't make use of the request passed as the `request` parameter.

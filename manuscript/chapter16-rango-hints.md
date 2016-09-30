@@ -79,7 +79,7 @@ Here you can see that in the template we have added some control statements to d
 
 Since we are tracking the number of click throughs you can now update
 the `category()` view so that you order the pages by the number of
-views, i.e:
+views, i.e.:
 
 {lang="python",linenos=off}
 	pages = Page.objects.filter(category=category).order_by('-views')

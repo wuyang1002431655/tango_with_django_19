@@ -144,10 +144,7 @@ you can rectify this by performing the following:
 7.  Close any Command Prompt instances, open a new instance, and try run
     the `python` command again.
 
-This should get your Python installation fully working. Windows XP, [has
-slightly different
-instructions](http://www.computerhope.com/issues/ch000549.htm), and [so
-do Windows 8 installationsthis](http://stackoverflow.com/a/14224786).
+This should get your Python installation fully working. Things might [differ ever so slightly on Windows 10](http://stackoverflow.com/a/14224786).
 
 ### Setting Up the `PYTHONPATH`
 
@@ -376,8 +373,8 @@ you can activate a virtual environment as follows:
 
 Your prompt with change and the current virtual environment will be
 displayed, i.e. rango. Now within this environment you will be able to
-install all the packages you like, without interferring with your
-standard or other environements. Try `pip list` to see you dont have
+install all the packages you like, without interfering with your
+standard or other environments. Try `pip list` to see you don't have
 Django or Pillow installed in your virtual environment. You can now
 install them with pip so that they exist in your virtual environment.
 

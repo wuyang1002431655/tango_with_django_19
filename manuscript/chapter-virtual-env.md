@@ -28,8 +28,8 @@ to call the following shell script from your command line:
 {lang="text",linenos=off}
 	$ source virtualenvwrapper.sh
 
-It is a good idea to add this to your bash/profile script. So you dont
-have to run it each and every time you want to use virtual environments. However, if you are using windows, then install the
+It is a good idea to add this to your bash/profile script. You therefore don't
+have to run it each and every time you want to use a virtual environment. However, if you are using windows, then install the
 [virtualenvwrapper-win](https://pypi.python.org/pypi/virtualenvwrapper-win)
 package:
 
@@ -50,8 +50,8 @@ you can activate a virtual environment as follows:
 
 Your prompt with change and the current virtual environment will be
 displayed, i.e. rango. Now within this environment you will be able to
-install all the packages you like, without interferring with your
-standard or other environments. Try `pip list` to see you dont have
+install all the packages you like, without interfering with your
+standard or other environments. Try `pip list` to see you don't have
 `Django` or `Pillow` installed in your virtual environment. You can now
 install them with `pip` so that they exist in your virtual environment.
 

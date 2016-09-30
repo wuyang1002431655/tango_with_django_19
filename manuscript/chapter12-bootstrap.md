@@ -438,7 +438,7 @@ To use the toolkit within our templates, we need to first load the toolkit `{% l
 	{% endblock %}
 
 This solution is much cleaner, and automated. However, it does not
-render as nicely as the first solution. So it needs some tweaking to customise it as required, but we will let you figure it out :-).
+render as nicely as the first solution. It therefore needs some tweaking to customise it as required, but we'll let you figure out what needs to be done.
 
 
 ###Next Steps

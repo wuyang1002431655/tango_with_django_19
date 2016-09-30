@@ -94,7 +94,7 @@ following steps:
 
 - Remove the generic *Search* link from the menu bar, i.e. we are decommissioning the global search functionality.
 - Take the search form and results template markup from `search.html` and place it into `category.html`.
-- Update the search form so that that action refers back to the category page, i.e.:
+- Update the search form so that action refers back to the category page, i.e.:
 
 	{lang="python",linenos=off}
 		<form class="form-inline" id="user_form" 
@@ -124,7 +124,7 @@ Another useful feature to let users inspect and edit their own profile. Undertak
 - Map the URL `/rango/profile/` to your new `profile()` view.
 - In the base template add a link called *Profile* into the menu bar, preferably with other user-related links. This should only be available to users who are logged in (i.e. `{% if user.is_authenticated %}`).
 
-To let users browse through user profiles, you can also create a users page, that lists all the users. If you click on a user page, then you can see their profile. However, you must make sure that that a user can only edit their own page!
+To let users browse through user profiles, you can also create a users page, that lists all the users. If you click on a user page, then you can see their profile. However, you must make sure that a user can only edit their own page!
 
 T> ### Referencing Uploaded Content in Templates
 T>

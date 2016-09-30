@@ -14,7 +14,7 @@ there are numerous reasons why you should include tests:
 
 -   Test will save you time: a change in a complex system can cause
     failures in unpredictable places.
--   Tests dont just identify problems, they prevent them: tests show
+-   Tests don't just identify problems, they prevent them: tests show
     where the code is not meeting expectations.
 -   Test make your code more attractive: "Code without tests is broken
     by design", Jacob Kaplan-Moss, One of Django's original developers.
@@ -58,7 +58,7 @@ do this by issuing the following command:
 	OK
 	Destroying test database for alias 'default'...
 
-This will run through the tests associated with the rango application.
+This will run through the tests associated with the Rango app.
 At the moment, nothing much happens. That is because you may have
 noticed the file `rango/tests.py` only contains an import statement.
 Every time you create an application, Django automatically creates such a
@@ -91,7 +91,7 @@ the following code into `rango/tests.py`:
 	        self.assertEqual((cat.views >= 0), True)
 
 The first thing you should notice, if you have not written tests before,
-is that we have to inherit from TestCase. The naming over the method in
+is that we have to inherit from `TestCase`. The naming over the method in
 the class also follows a convention, all tests start with `test_` and
 they also contain some type of assertion, which is the test. Here we are
 checking if the values are equal, with the `assertEqual` method, but other
@@ -101,7 +101,7 @@ commands (i.e. `assertItemsEqual`, `assertListEqual`, `assertDictEqual`,
 etc). Django's testing machinery is derived from Python's but also
 provides a number of other asserts and specific test cases.
 
-Now lets run the test:
+Now let's run the test:
 
 {lang="text",linenos=off}
 	$ python manage.py test rango
@@ -239,7 +239,7 @@ have `coverage` installed, run the following command:
 	$ coverage run --source='.' manage.py test rango
 
 This will run through all the tests and collect the coverage data for
-the rango application. To see the coverage report you need to then type:
+the Rango application. To see the coverage report you need to then type:
 
 {lang="text",linenos=off}
 	$ coverage report

@@ -1,5 +1,5 @@
 #AJAX in Django with JQuery {#chapter-ajax}
-
+JavaScript
 AJAX essentially is a combination of technologies that are integrated
 together to reduce the number of page loads. Instead of reloading the
 full page, only part of the page or the data in the page is reloaded. If
@@ -38,9 +38,9 @@ you can also just directly refer to it:
 	</script>
 
 If you are using Bootstrap, then scroll to the bottom of the template code, and you will the JQuery library being imported at the end.
-You can then add a link to `rango-ajax.js` after the Jquery library import.
+You can then add a link to `rango-ajax.js` after the JQuery library import.
 
-Now that we have setup JQuery and have a place to put our client side AJAX code, we can now pimp the rango application.
+Now that we have setup JQuery and have a place to put our client side AJAX code, we can now pimp the Rango application.
 
 ##Add a "Like Button"
 
@@ -49,7 +49,7 @@ It would be nice to let user, who are registered, denote that they
 users "like" categories, but we will not be keeping track of what
 categories they have "liked". So a registered user, could click the like button multiple times, if they refresh the page.
 If we wanted to keep track of their likes, we would have to add in an additional model, and other supporting infrastructure,
-but we'll leave that as an exercise for you :-).
+but we'll leave that as an exercise for you to complete.
 
 
 ### Workflow
@@ -63,7 +63,7 @@ To let users "like" certain categories undertake the following workflow:
 	- This sets up the template to capture likes and to display likes for the category.
 	- Note, since the `category()` view passes a reference to the category object, we can use that to access the number of likes, with `{{ category.likes }}` in the template
 - Create a view called, `like_category` which will examine the request and pick out the `category_id` and then increment the number of likes for that category.
-	- Don't forgot to add in the url mapping; i.e map the `like_category` view to `rango/like_category/`. The GET request will then be `rango/like_category/?category_id=XXX`
+	- Don't forgot to add in the url mapping; i.e. map the `like_category` view to `rango/like_category/`. The GET request will then be `rango/like_category/?category_id=XXX`
 	- Instead of returning a HTML page have this view will return the new total number of likes for that category.
 - Now in `rango-ajax.js` add the JQuery code to perform the AJAX GET request.
 	- If the request is successful, then update the `#like_count` element, and hide the like button.
@@ -141,7 +141,7 @@ an AJAX GET request. Add in the following code:
 	    });
 	});
 
-This piece of JQuery/Javascript will add an event handler to the element
+This piece of JQuery/JavaScript will add an event handler to the element
 with id `#likes`, i.e. the button. When clicked, it will extract the
 category id from the button element, and then make an AJAX GET request
 which will make a call to `/rango/like/` encoding the
@@ -181,7 +181,7 @@ To do this you will need to do the following.
 	- To let the client ask for this data, you will need to create a URL mapping; lets call it *suggest*
 
 With the URL mapping, view, and template in place, you will
-need to update the `base.html` template to provide a category search box, and then add in some Javascript/JQuery code to link up everything so that when the user types the suggested categories are displayed.
+need to update the `base.html` template to provide a category search box, and then add in some JavaScript/JQuery code to link up everything so that when the user types the suggested categories are displayed.
 
 In the `base.html` template modify the sidebar block so that a div with an id="cats" encapsulates the categories being presented. The JQuery/AJAX will update this element. Before this `<div>` add an input box for a user to enter the letters of a category, i.e.:
 
@@ -200,7 +200,7 @@ With these elements added into the templates, you can add in some JQuery to upda
 
 X> ###Exercise
 X>
-X> Update the population script by adding in the following categories: Pascal, Perl, Php, Prolog, PostScript, Programming, 
+X> Update the population script by adding in the following categories: `Pascal`, `Perl`, `PHP`, `Prolog`, `PostScript` and `Programming`. 
 
 
 
