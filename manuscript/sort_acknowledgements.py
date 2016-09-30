@@ -1,4 +1,5 @@
 # Use this script to order people by their first name.
+# Watch for UNICODE
 
 f = open('chapter-acks.md', 'r')
 in_acks_list = False
@@ -22,7 +23,7 @@ for line in f:
             name = line[1:line.index(']')]
         elif line.startswith('**['):
             name = line[3:line.index(']')]
-            line = line[2:]
+            line = line[3:]
         elif line.startswith('**'):
             name = line[2:]
             line = line[2:]
