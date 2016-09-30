@@ -19,12 +19,12 @@ chapter16-rango-hints.md
 chapter17-jquery.md
 chapter18-ajax.md
 
-{backmatter}
-
 chapter-testing.md
 chapter-deployment.md
 chapter-summary.md
 chapter-acks.md
+
+{backmatter}
 
 chapter-system-setup.md
 chapter-unix.md
