@@ -45,7 +45,7 @@ Remember that the `index()` function is responsible for the main page view.  Mod
 	    return render(request, 'rango/index.html', context_dict)
 
 Here, the expression `Category.objects.order_by('-likes')[:5]`  queries the `Category` model to retrieve the top five categories. You can see that it uses
-the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list (`[:5]`) and thus return a sublist of `Category` objects.
+the `order_by()` method to sort by the number of `likes` in descending order. The `-` in `-likes` denotes that we would like them in descending order (if we removed the `-` then the results would be returned in ascending order). Since a list of `Category` objects will be returned, we used Python's list operators to take the first five objects from the list (`[:5]`) to return a subset of `Category` objects.
 
 With the query complete, we passed a reference to the list (stored as variable `category_list`) to the dictionary, `context_dict`. This dictionary is then passed as part of the context for the template engine in the `render()` call.
 
