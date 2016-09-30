@@ -4,7 +4,7 @@ This book was written to help teach web application development to computing sci
 
 We would also like to thank all the people who have helped to improve this resource by sending us comments, suggestions, git issues and pull requests. If you've sent in changes over the years, please do remind us if you are not on the list! 
 
-%% Keep the BEGIN and END for the sorting script to work!
+%% Keep the BEGIN and END for the sorting script to know where the list starts and ends.
 %% BEGIN ACKNOWLEDGEMENTS LIST
 
 Adam Kikowski,
@@ -15,10 +15,10 @@ Ally Weir,
 [Brian](https://github.com/flycal6),
 [Burak K.](https://github.com/McMutton),
 Burak Karaboga,
-[Can Ibanoglu](https://github.com/canibanoglu),
-[Charlotte](https://github.com/Charlotteis),
+Can Ibanoglu @canlbanoglu,
+[Charlotte ](https://github.com/Charlotteis),
 [Claus Conrad](https://github.com/cconrad),
-[Codenius](https://twitter.com/Codenius),
+Codenius @Codenius,
 [cspollar](https://github.com/cspollar),
 Dan C,
 David Manlove,
@@ -28,13 +28,13 @@ Duncan Drizy,
 [Giles T.](https://github.com/gpjt),
 [Grigoriy M](https://github.com/GriMel),
 James Yeo,
-[Jan Felix Trettow](‏https://twitter.com/JanFelixTrettow),
+Jan Felix Trettow ‏@JanFelixTrettow,
 [Jonathan Sundqvist](https://github.com/jonathan-s),
 Karen Little,
 [Kartik Singhal](https://github.com/k4rtik),
 [koviusesGitHub](https://github.com/koviusesGitHub),
 [Krace Kumar](https://github.com/kracekumar),
-[Manoel Maria ‏@xmadruga157](https://twitter.com/xmadruga157),
+Manoel Maria ‏@xmadruga157,
 [Martin de G.](https://github.com/martindegroot),
 [Matevz P.](https://github.com/matonsjojc),
 [mHulb](https://github.com/mHulb),
@@ -52,17 +52,17 @@ Oleg Belausov,
 [Pierre-Yves Mathieu](https://github.com/pywebdesign),
 [Praestgias](https://github.com/praestigias),
 [Ramdog](https://github.com/ramdog),
-[Rezha Julio](https://github.com/kimiamania),
+Rezha Julio ‏@kimiamania,
 [rnevius](https://github.com/rnevius),
-Sadegh Kh,
+Sadegh Kh ‏@IR_Melbourne,
 [Saex](https://github.com/SaeX),
-Saurabh Tandon,
-Svante Kvarnström,
+Saurabh Tandon ‏@saurabhtand,
+Svante Kvarnström @sjktje,
 Tanmay Kansara,
-Thomas Murphy,
-[Thomas Whyyou](https://twitter.com/thomaswhyyou),
-William Vincent, and
-[Zhou](https://github.com/AugustLONG).
+Thomas Murphy ‏@TMurphyMusic,
+Thomas Whyyou @thomaswhyyou,
+William Vincent,
+[Zhou](https://github.com/AugustLONG),
 
 
 %% END ACKNOWLEDGEMENTS LIST
