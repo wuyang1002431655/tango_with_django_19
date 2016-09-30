@@ -4,66 +4,68 @@ This book was written to help teach web application development to computing sci
 
 We would also like to thank all the people who have helped to improve this resource by sending us comments, suggestions, git issues and pull requests. If you've sent in changes over the years, please do remind us if you are not on the list! 
 
+%% Keep the BEGIN and END for the sorting script to work!
+%% BEGIN ACKNOWLEDGEMENTS LIST
 
-[Mickey P.](https://github.com/mickeypash)
-[pdehaye](https://github.com/pdehaye)
-[Martin de G.](https://github.com/martindegroot)
-[Matevz P.](https://github.com/matonsjojc)
-[pawonfire](https://github.com/pawonfire)
-[Giles T.](https://github.com/gpjt)
-[Grigoriy M](https://github.com/GriMel)
-[Brian](https://github.com/flycal6)
-[Zhou](https://github.com/AugustLONG)
-[Charlotte ](https://github.com/Charlotteis)
-[cspollar](https://github.com/cspollar)
-[mHulb](https://github.com/mHulb)
-Duncan Drizy
-[Burak K.](https://github.com/McMutton)
-[koviusesGitHub](https://github.com/koviusesGitHub)
-Nitin Tulswani
-Mike Gleen
-Manoel Maria ‏@xmadruga157 
-Codenius @Codenius 
-Ally Weir 
-Can Ibanoglu @canlbanoglu
-Sadegh Kh ‏@IR_Melbourne
-Jan Felix Trettow ‏@JanFelixTrettow
-Rezha Julio ‏@kimiamania
-Thomas Murphy ‏@TMurphyMusic
-Saurabh Tandon ‏@saurabhtand
-[Pierre-Yves Mathieu](https://github.com/pywebdesign)
-[Dhiraj Thakur](https://github.com/dhirajt)
-Svante Kvarnström @sjktje
-[Ramdog](https://github.com/ramdog)
-[Krace Kumar](https://github.com/kracekumar)
-James Yeo
-[Michael Ho Chum](https://github.com/michaelchum)
-[Jonathan Sundqvist](https://github.com/jonathan-s)
-[nolan-m](https://github.com/nolan-m)
-[Kartik Singhal](https://github.com/k4rtik)
-William Vincent
-Mike Gleen
-Oleg Belausov
-Adam Kikowski
-Thomas Whyyou @thomaswhyyou
-Dan C
-[Saex](https://github.com/SaeX)
-[Breakerfall](https://github.com/breakerfall)
-[Michael Herman](https://github.com/mjhea0)
-[Praestgias](https://github.com/praestigias)
-[Claus Conrad](https://github.com/cconrad)
-[nCrazed](https://github.com/nCrazed)
-[rnevius](https://github.com/rnevius)
-Karen Little
-Tanmay Kansara
-Burak Karaboga
-[Peter Mash](https://github.com/PeterMash)
-David Manlove
-[Adam Mertz](https://github.com/Amertz08)
-[Devin Fitzsimons](https://github.com/aisflat439)
-[bernieyangmh](https://github.com/bernieyangmh)
+**Adam Kikowski,**
+[Adam Mertz](https://github.com/Amertz08),
+**Ally Weir,**
+[bernieyangmh](https://github.com/bernieyangmh),
+**[Breakerfall](https://github.com/breakerfall),**
+[Brian](https://github.com/flycal6),
+**[Burak K.](https://github.com/McMutton),**
+Burak Karaboga,
+**[Can Ibanoglu](https://github.com/canibanoglu),**
+[Charlotte](https://github.com/Charlotteis),
+**[Claus Conrad](https://github.com/cconrad),**
+[Codenius](https://twitter.com/Codenius),
+**[cspollar](https://github.com/cspollar),**
+Dan C,
+**David Manlove,**
+[Devin Fitzsimons](https://github.com/aisflat439),
+**[Dhiraj Thakur](https://github.com/dhirajt),**
+Duncan Drizy,
+**[Giles T.](https://github.com/gpjt),**
+[Grigoriy M](https://github.com/GriMel),
+**James Yeo,**
+[Jan Felix Trettow](‏https://twitter.com/JanFelixTrettow),
+**[Jonathan Sundqvist](https://github.com/jonathan-s),**
+Karen Little,
+**[Kartik Singhal](https://github.com/k4rtik),**
+[koviusesGitHub](https://github.com/koviusesGitHub),
+**[Krace Kumar](https://github.com/kracekumar),**
+[Manoel Maria ‏@xmadruga157](https://twitter.com/xmadruga157),
+**[Martin de G.](https://github.com/martindegroot),**
+[Matevz P.](https://github.com/matonsjojc),
+**[mHulb](https://github.com/mHulb),**
+[Michael Herman](https://github.com/mjhea0),
+**[Michael Ho Chum](https://github.com/michaelchum),**
+[Mickey P.](https://github.com/mickeypash),
+**Mike Gleen,**
+[nCrazed](https://github.com/nCrazed),
+**Nitin Tulswani,**
+[nolan-m](https://github.com/nolan-m),
+**Oleg Belausov,**
+[pawonfire](https://github.com/pawonfire),
+**[pdehaye](https://github.com/pdehaye),**
+[Peter Mash](https://github.com/PeterMash),
+**[Pierre-Yves Mathieu](https://github.com/pywebdesign),**
+[Praestgias](https://github.com/praestigias),
+**[Ramdog](https://github.com/ramdog),**
+[Rezha Julio](https://github.com/kimiamania),
+**[rnevius](https://github.com/rnevius),**
+Sadegh Kh,
+**[Saex](https://github.com/SaeX),**
+Saurabh Tandon,
+**Svante Kvarnström,**
+Tanmay Kansara,
+**Thomas Murphy,**
+[Thomas Whyyou](https://twitter.com/thomaswhyyou),
+**William Vincent,** and
+[Zhou](https://github.com/AugustLONG).
 
 
+%% END ACKNOWLEDGEMENTS LIST
 
 Thank you all very much!
 
