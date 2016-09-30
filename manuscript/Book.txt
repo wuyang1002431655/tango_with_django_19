@@ -22,7 +22,6 @@ chapter18-ajax.md
 chapter-testing.md
 chapter-deployment.md
 chapter-summary.md
-chapter-acks.md
 
 {backmatter}
 

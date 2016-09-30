@@ -1,7 +1,7 @@
 # Use this script to order people by their first name.
 # Watch for UNICODE
 
-f = open('chapter-acks.md', 'r')
+f = open('chapter-summary.md', 'r')
 in_acks_list = False
 
 people = []
