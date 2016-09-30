@@ -18,13 +18,22 @@ for line in f:
         break
     
     if in_acks_list and line != "":
-        if line.startswith('[') or line.startswith('**['):
+        if line.startswith('['):
             name = line[1:line.index(']')]
+        elif line.startswith('**['):
+            name = line[3:line.index(']')]
+            line = line[2:]
+        elif line.startswith('**'):
+            name = line[2:]
+            line = line[2:]
         else:
             name = line
         
         if name[-1] == ',':
             name = name[:-1]
+        
+        if line[-2:len(line)] == '**':
+            line = line[0:len(line)-2]
         
         name = name.lower()
         people.append((name, line))
@@ -38,7 +47,7 @@ count = 0
 
 for person in sorted_people:
     if count % 2 == 0:
-        print '{person}'.format(person=person[1])
+        print '**{person}**'.format(person=person[1])
     else:
         print person[1]
     
