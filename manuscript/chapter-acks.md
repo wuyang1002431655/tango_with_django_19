@@ -61,8 +61,8 @@ Svante Kvarnström,
 Tanmay Kansara,
 Thomas Murphy,
 [Thomas Whyyou](https://twitter.com/thomaswhyyou),
-William Vincent,
-[Zhou](https://github.com/AugustLONG),
+William Vincent, and
+[Zhou](https://github.com/AugustLONG).
 
 
 %% END ACKNOWLEDGEMENTS LIST
