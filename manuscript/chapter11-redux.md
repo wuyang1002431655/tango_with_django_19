@@ -1,12 +1,9 @@
 #User Authentication with `Django-Registration-Redux` {#chapter-redux}
 
-In a previous chapter, we added in login and registration functionality by manually coding up the urls, views and templates. However, such functionality is common to many web application so developers have crated numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
+In a previous chapter, we added in login and registration functionality by manually coding up the URLs, views and templates. However, such functionality is common to many web application so developers have crated numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
 provide these facilities. 
 
-This will mean we will need re-factor our
-code to remove the login and registration functionality we previously created, and then setup and configure our project to include the `django-registration-redux` application.
-This chapter also will provide  you with some experience of using external
-applications and show you how easily they can be plugged into your Django project.
+This will mean we will need re-factor our code to remove the login and registration functionality we previously created, and then setup and configure our project to include the `django-registration-redux` application. This chapter also will provide  you with some experience of using external applications and show you how easily they can be plugged into your Django project.
 
 ##Setting up Django Registration Redux
 
