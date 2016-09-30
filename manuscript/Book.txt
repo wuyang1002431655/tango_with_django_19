@@ -25,6 +25,7 @@ chapter-summary.md
 
 {backmatter}
 
+appendix-intro.md
 chapter-system-setup.md
 chapter-unix.md
 chapter-git.md
