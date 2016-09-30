@@ -38,8 +38,8 @@ Storing passwords as plaintext within a database is something which should absol
 
 {lang="python",linenos=off}
 	PASSWORD_HASHERS = (
-		'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+	    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+	    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	)
 
 Django considers the order of hashers specified as important, and will pick and use the first password hasher in `PASSWORD_HASHERS` (e.g. `settings.PASSWORD_HASHERS[0]`). If other password hashers are specified in the tuple, Django will also use these if the first hasher doesn't work.
@@ -48,10 +48,10 @@ If you want to use a more secure hasher, you can install [Bcrypt](https://pypi.p
 
 {lang="python",linenos=off}
 	PASSWORD_HASHERS = [
-		'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-		'django.contrib.auth.hashers.BCryptPasswordHasher',
-		'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-		'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+	    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+	    'django.contrib.auth.hashers.BCryptPasswordHasher',
+	    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+	    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 	]
 
 As previously mentioned, Django by default uses the PBKDF2 algorithm to hash passwords. If you do not specify a `PASSWORD_HASHERS` tuple, Django therefore defaults to the `PBKDF2PasswordHasher` password hasher. You can read more about password hashing in the [official Django documentation on how Django stores passwords](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#how-django-stores-passwords).

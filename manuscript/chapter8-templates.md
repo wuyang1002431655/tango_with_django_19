@@ -183,26 +183,26 @@ The `extends` command takes one parameter - the template which is to be extended
 	{% load staticfiles %}
 	
 	{% block title_block %}
-		{{ category.name }}
+	    {{ category.name }}
 	{% endblock %}
 	
 	{% block body_block %}
-		{% if category %}
-			<h1>{{ category.name }}</h1>
-			
-			{% if pages %}
-				<ul>
-				{% for page in pages %}
-					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
-				{% endfor %}
-				</ul>
-			{% else %}
-				<strong>No pages currently in category.</strong>
-			{% endif %}
-			<a href="{% url 'add_page' category.slug %}">Add a Page</a>
-		{% else %}
-			The specified category does not exist!
-		{% endif %}
+	    {% if category %}
+	        <h1>{{ category.name }}</h1>
+	        
+	        {% if pages %}
+	            <ul>
+	            {% for page in pages %}
+	                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+	            {% endfor %}
+	            </ul>
+	        {% else %}
+	            <strong>No pages currently in category.</strong>
+	        {% endif %}
+	        <a href="{% url 'add_page' category.slug %}">Add a Page</a>
+	    {% else %}
+	        The specified category does not exist!
+	    {% endif %}
 	{% endblock %}
 
 W> ### Loading `staticfiles`

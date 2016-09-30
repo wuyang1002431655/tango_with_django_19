@@ -34,7 +34,7 @@ JavaScript file (`jquery.js`) here along with an file called
 
 {lang="javascript",linenos=off}
 	$(document).ready(function() {
-		// JQuery code to be added in here.
+	    // JQuery code to be added in here.
 	});
 
 

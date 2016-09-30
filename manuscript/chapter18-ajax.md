@@ -34,7 +34,7 @@ you can also just directly refer to it:
 
 {lang="html",linenos=off}
 	<script 
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
+	    src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
 	</script>
 
 If you are using Bootstrap, then scroll to the bottom of the template code, and you will the JQuery library being imported at the end.
@@ -264,7 +264,7 @@ In the base template in the sidebar div add in the following HTML code:
 	    </li>
 	    </form>
 	</ul>
-    <hr>
+	<hr>
 	<div id="cats">
 	</div>
 
@@ -277,9 +277,9 @@ which will send the suggestion request.
 Next remove the following lines from the template:
 
 {lang="html",linenos=off}
-    {% block sidebar_block %}
+	{% block sidebar_block %}
 	    {% get_category_list category %}
-    {% endblock %}
+	{% endblock %}
 
 
 

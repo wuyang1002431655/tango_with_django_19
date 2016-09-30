@@ -21,15 +21,15 @@ this application. Open up the `settings.py` file, and update the
 
 {lang="python",linenos=off}
 	INSTALLED_APPS = [
-		'django.contrib.admin',
-		'django.contrib.auth',
-		'django.contrib.contenttypes',
-		'django.contrib.sessions',
-		'django.contrib.messages',
-		'django.contrib.staticfiles',
-		'rango',
-		'registration'  # add in the registration package
-		]
+	    'django.contrib.admin',
+	    'django.contrib.auth',
+	    'django.contrib.contenttypes',
+	    'django.contrib.sessions',
+	    'django.contrib.messages',
+	    'django.contrib.staticfiles',
+	    'rango',
+	    'registration'  # add in the registration package
+	    ]
 	
 
 While you are in the `settings.py` file you can also add:
@@ -111,17 +111,17 @@ following code:
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
 	{% block body_block %}
-		<h1>Login</h1>
-		<form method="post" action=".">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" value="Log in" />
-			<input type="hidden" name="next" value="{{ next }}" />
-		</form>
-		<p>
-			Not  a member? 
-			<a href="{% url 'registration_register' %}">Register</a>
-		</p>
+	    <h1>Login</h1>
+	    <form method="post" action=".">
+	        {% csrf_token %}
+	        {{ form.as_p }}
+	        <input type="submit" value="Log in" />
+	        <input type="hidden" name="next" value="{{ next }}" />
+	    </form>
+	    <p>
+	        Not  a member? 
+	        <a href="{% url 'registration_register' %}">Register</a>
+	    </p>
 	{% endblock %}
 
 Notice that whenever a URL is referenced, the `url` template tag is used
@@ -137,12 +137,12 @@ with the following code:
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
 	{% block body_block %}
-		<h1>Register Here</h1>
-		<form method="post" action=".">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" value="Submit" />
-		</form>
+	    <h1>Register Here</h1>
+	    <form method="post" action=".">
+	        {% csrf_token %}
+	        {{ form.as_p }}
+	        <input type="submit" value="Submit" />
+	    </form>
 	{% endblock %}
 
 
@@ -154,8 +154,8 @@ In `templates/registration` create the file,
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
 	{% block body_block %}
-		<h1>Registration Complete</h1>
-		<p>You are now registered</p>
+	    <h1>Registration Complete</h1>
+	    <p>You are now registered</p>
 	{% endblock %}
 
 
@@ -167,8 +167,8 @@ following code:
 {lang="html",linenos=off}
 	{% extends "rango/base.html" %}
 	{% block body_block %}
-		<h1>Logged Out</h1>
-		<p>You are now logged out.</p>
+	    <h1>Logged Out</h1>
+	    <p>You are now logged out.</p>
 	{% endblock %}
 		
 

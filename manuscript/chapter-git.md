@@ -190,11 +190,11 @@ I> If you have [set up your `.gitignore` file correctly](#section-git-setup-twea
     Your branch is up-to-date with 'origin/master'.
     Changes to be committed:
       (use "git reset HEAD <file>..." to unstage)
-    	modified:   chapter-unix.md
+        modified:   chapter-unix.md
     Changes not staged for commit:
       (use "git add <file>..." to update what will be committed)
       (use "git checkout -- <file>..." to discard changes in working directory)
-    	modified:   chapter-git.md
+        modified:   chapter-git.md
 
 From this example above, we can see that the file `chapter-unix.md` has been added to the latest commit, and will therefore be updated in the next `git push`. The file `chapter-git.md` has been updated, but `git add` hasn't been run on the file, so the changes won't be applied to the repository.
 

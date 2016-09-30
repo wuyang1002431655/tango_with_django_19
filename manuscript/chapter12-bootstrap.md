@@ -45,86 +45,86 @@ Before we can use the template we need to modify the HTML so that we can use it 
 	{% load rango_template_tags %}
 	<html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, 
-				initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<link rel="icon" href="{% static 'images/favicon.ico' %}">
-		<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
-		<!-- Bootstrap core CSS -->
-		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" 
-			rel="stylesheet">
-		<!-- Custom styles for this template -->
-		<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" 
-			rel="stylesheet">
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, 
+	                                   initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+	    <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+	    <!-- Bootstrap core CSS -->
+	    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" 
+	        rel="stylesheet">
+	    <!-- Custom styles for this template -->
+	    <link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" 
+	          rel="stylesheet">
 	</head>
 	<body>
 	<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-		<button type="button" class="navbar-toggler hidden-sm-up"
-			data-toggle="collapse" data-target="#navbar" 
-			aria-expanded="false" aria-controls="navbar">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="#">Rango</a>
-		<div id="navbar">
-			<nav class="nav navbar-nav pull-xs-left">
-			<a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
-			<a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
-			<a class="nav-item nav-link" href="{% url 'search' %}">Search</a>
-			{% if user.is_authenticated %}
-			<a class="nav-item nav-link" 
-				href="{% url 'add_category' %}">
-					Add a New Category</a>
-			<a class="nav-item nav-link" 
-				href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
-			{% else %}
-			<a class="nav-item nav-link" 
-				href="{% url 'registration_register' %}">Register Here</a>
-			<a class="nav-item nav-link" 
-				href="{% url 'auth_login' %}">Login</a>
-			{% endif %}
-			</nav>
-		</div>
+	    <button type="button" class="navbar-toggler hidden-sm-up"
+	            data-toggle="collapse" data-target="#navbar" 
+	            aria-expanded="false" aria-controls="navbar">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	    </button>
+	    <a class="navbar-brand" href="#">Rango</a>
+	    <div id="navbar">
+	        <nav class="nav navbar-nav pull-xs-left">
+	        <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
+	        <a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
+	        <a class="nav-item nav-link" href="{% url 'search' %}">Search</a>
+	        {% if user.is_authenticated %}
+	        <a class="nav-item nav-link" 
+	           href="{% url 'add_category' %}">
+	            Add a New Category</a>
+	        <a class="nav-item nav-link" 
+	           href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
+	        {% else %}
+	        <a class="nav-item nav-link" 
+	           href="{% url 'registration_register' %}">Register Here</a>
+	        <a class="nav-item nav-link" 
+	           href="{% url 'auth_login' %}">Login</a>
+	        {% endif %}
+	        </nav>
+	    </div>
 	</nav>
 	<div class="container-fluid">
-		<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
-			{% block sidebar_block %}
-				{% get_category_list category %}
-			{% endblock %}
-		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			{% block body_block %}{% endblock %}
-		</div>
-		</div>
+	    <div class="row">
+	    <div class="col-sm-3 col-md-2 sidebar">
+	        {% block sidebar_block %}
+	            {% get_category_list category %}
+	        {% endblock %}
+	    </div>
+	    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	        {% block body_block %}{% endblock %}
+	    </div>
+	    </div>
 	</div>
 	<!-- Bootstrap core JavaScript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script 
-		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
-		</script>
-		<script>
-		window.jQuery || 
-		document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-		</script>
-		<script 
-		src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
-		</script>
-		<!-- Just to make our placeholder images work.
-			 Don't actually copy the next line! -->
-		<script 
-			src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
-		</script>
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script 
-		src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
-		</script>
+	    ================================================== -->
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script 
+	      src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+	    </script>
+	    <script>
+	    window.jQuery || 
+	    document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+	    </script>
+	    <script 
+	      src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+	    </script>
+	    <!-- Just to make our placeholder images work.
+	         Don't actually copy the next line! -->
+	    <script 
+	      src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
+	    </script>
+	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	    <script 
+	      src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+	    </script>
 	</body>
 	</html>
 	
@@ -199,17 +199,17 @@ For the index page it would be nice to show the top categories and top pages in 
 
 {lang="html",linenos=off}
 	<div class="row marketing">
-		<div class="col-lg-6">
-			<h4>Subheading</h4>
-			<p>Donec id elit non mi porta gravida at eget metus. 
-				Maecenas faucibus mollis interdum.</p>
-			<h4>Subheading</h4>
-		</div>
-		<div class="col-lg-6">
-			<h4>Subheading</h4>
-			<p>Donec id elit non mi porta gravida at eget metus. 
-				Maecenas faucibus mollis interdum.</p>
-		</div>
+	    <div class="col-lg-6">
+	        <h4>Subheading</h4>
+	        <p>Donec id elit non mi porta gravida at eget metus. 
+	            Maecenas faucibus mollis interdum.</p>
+	        <h4>Subheading</h4>
+	    </div>
+	    <div class="col-lg-6">
+	        <h4>Subheading</h4>
+	        <p>Donec id elit non mi porta gravida at eget metus. 
+	            Maecenas faucibus mollis interdum.</p>
+	    </div>
 	</div>
 
 Inside the `<div class="row marketing">`, we can see that it contains two `<div>`'s with classes `col-lg-6`. Bootstrap is based on a [grid layout](http://v4-alpha.getbootstrap.com/layout/grid/), where each container is conceptually broken up into 12 units. The `col-lg-6` class denotes a column that is of size 6, i.e. half the size of its container, `<div class="row marketing">`.
@@ -221,47 +221,47 @@ Given this example, we can create columns in `index.html`  by updating the templ
 	{% extends 'rango/base.html' %}
 	{% load staticfiles %}
 	{% block title_block %}
-		Index
+	    Index
 	{% endblock %}
 	{% block body_block %}
 	<div class="jumbotron">
-		<h1 class="display-3">Rango says...</h1>
-		{% if user.is_authenticated %}		
-			<h1>hey there {{ user.username }}!</h1>
-		{% else %}
-			<h1>hey there partner! </h1>
-		{% endif %}
+	    <h1 class="display-3">Rango says...</h1>
+	    {% if user.is_authenticated %}		
+	        <h1>hey there {{ user.username }}!</h1>
+	    {% else %}
+	        <h1>hey there partner! </h1>
+	    {% endif %}
 	</div>
 	<div class="row marketing">
-		<div class="col-lg-6">
-		<h4>Most Liked Categories</h4>
-		<p>
-		{% if categories %}
-		<ul>
-			{% for category in categories %}
-			<li><a href="{% url 'show_category' category.slug %}">
-				{{ category.name }}</a></li>
-			{% endfor %}
-		</ul>
-		{% else %}
-			<strong>There are no categories present.</strong>
-		{% endif %}
-		</p>
-		</div>
-		<div class="col-lg-6">
-			<h4>Most Viewed Pages</h4>
-			<p>
-			{% if pages %}
-			<ul>
-				{% for page in pages %}
-				<li><a href="{{ page.url }}">{{ page.title }}</a></li>
-				{% endfor %}
-				</ul>
-			{% else %}
-				<strong>There are no categories present.</strong>
-			 {% endif %}
-			</p>
-		</div>
+	    <div class="col-lg-6">
+	    <h4>Most Liked Categories</h4>
+	    <p>
+	    {% if categories %}
+	    <ul>
+	        {% for category in categories %}
+	        <li><a href="{% url 'show_category' category.slug %}">
+	            {{ category.name }}</a></li>
+	        {% endfor %}
+	    </ul>
+	    {% else %}
+	        <strong>There are no categories present.</strong>
+	    {% endif %}
+	    </p>
+	    </div>
+	    <div class="col-lg-6">
+	        <h4>Most Viewed Pages</h4>
+	        <p>
+	        {% if pages %}
+	        <ul>
+	            {% for page in pages %}
+	            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+	            {% endfor %}
+	            </ul>
+	        {% else %}
+	            <strong>There are no categories present.</strong>
+	         {% endif %}
+	        </p>
+	    </div>
 	</div>	
 	<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> 	
 	{% endblock %}
@@ -287,21 +287,21 @@ template as follows:
 {lang="html",linenos=off}
 	{% block body_block %}
 	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css"
-		rel="stylesheet">
+	    rel="stylesheet">
 	<div class="jumbotron">
-		<h1 class="display-3">Login</h1>
+	    <h1 class="display-3">Login</h1>
 	</div>
 	<form class="form-signin" role="form" method="post" action=".">
-		{% csrf_token %}
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<label for="inputUsername" class="sr-only">Username</label>
-		<input type="text" name="username" id="id_username" class="form-control" 
-			placeholder="Username" required autofocus>
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" name="password" id="id_password" class="form-control"
-			placeholder="Password" required>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" 
-			value="Submit" />Sign in</button>
+	    {% csrf_token %}
+	    <h2 class="form-signin-heading">Please sign in</h2>
+	    <label for="inputUsername" class="sr-only">Username</label>
+	    <input type="text" name="username" id="id_username" class="form-control" 
+	           placeholder="Username" required autofocus>
+	    <label for="inputPassword" class="sr-only">Password</label>
+	    <input type="password" name="password" id="id_password" class="form-control"
+	           placeholder="Password" required>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit" 
+	            value="Submit" />Sign in</button>
 	</form>
 	{% endblock %}
 
@@ -327,33 +327,34 @@ templates. For the `add_page.html` template, we can set it up as
 follows.
 
 {lang="html",linenos=off}
-		{% extends "rango/base.html" %}
+	{% extends "rango/base.html" %}
 	{% block title %}Add Page{% endblock %}
 	
 	{% block body_block %}
-		{% if category %}
-			<form role="form" id="page_form" method="post" 
-				action="/rango/category/{{category.slug}}/add_page/">
-			<h2 class="form-signin-heading"> Add a Page to 
-				<a href="/rango/category/{{category.slug}}/"> 
-					{{ category.name }}</a></h2>
-			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
-			{% for field in form.visible_fields %}
-				{{ field.errors }}
-				{{ field.help_text }}<br/>
-				{{ field }}<br/>
-			{% endfor %}
-			<br/>
-			<button class="btn btn-primary"
-				type="submit" name="submit">
-					Add Page</button>
-			</form>
-		{%  else %}
-			<p>This is category does not exist.</p>
-		{%  endif %}
+	    {% if category %}
+	        <form role="form" id="page_form" method="post" 
+	              action="/rango/category/{{category.slug}}/add_page/">
+	        <h2 class="form-signin-heading"> Add a Page to 
+	            <a href="/rango/category/{{category.slug}}/"> 
+	                {{ category.name }}</a></h2>
+	        {% csrf_token %}
+	        {% for hidden in form.hidden_fields %}
+	            {{ hidden }}
+	        {% endfor %}
+	        {% for field in form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text }}<br/>
+	            {{ field }}<br/>
+	        {% endfor %}
+	        <br/>
+	        <button class="btn btn-primary"
+	                type="submit" name="submit">
+	            Add Page
+	        </button>
+	        </form>
+	    {%  else %}
+	        <p>This is category does not exist.</p>
+	    {%  endif %}
 	{% endblock %}
 
 X> ###Exercise 

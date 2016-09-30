@@ -169,7 +169,7 @@ The good people at PythonAnywhere have set up a sample WSGI file for us with sev
 	# ADD YOUR PROJECT TO THE PYTHONPATH FOR THE PYTHON INSTANCE
 	path = '/home/<username>/<path-to>/tango_with_django_project/'
 	if path not in sys.path:
-		sys.path.append(path)
+	    sys.path.append(path)
 	
 	# IMPORTANTLY GO TO THE PROJECT DIR
 	os.chdir(path)
