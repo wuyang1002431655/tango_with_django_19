@@ -18,7 +18,7 @@ for line in f:
         break
     
     if in_acks_list and line != "":
-        if line.startswith('['):
+        if line.startswith('[') or line.startswith('**['):
             name = line[1:line.index(']')]
         else:
             name = line
@@ -38,7 +38,7 @@ count = 0
 
 for person in sorted_people:
     if count % 2 == 0:
-        print '**{person}**'.format(person=person[1])
+        print '{person}'.format(person=person[1])
     else:
         print person[1]
     
