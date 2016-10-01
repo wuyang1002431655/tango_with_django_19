@@ -1,16 +1,17 @@
 #User Authentication with `Django-Registration-Redux` {#chapter-redux}
 
-In a previous chapter, we added in login and registration functionality by manually coding up the URLs, views and templates. However, such functionality is common to many web application so developers have crated numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
+In a previous chapter, we added in login and registration functionality by manually coding up the URLs, views and templates. However, such functionality is common to many web application so developers have created numerous add-on applications that can be included in your Django project to reduce the amount of code required to provide login, registration, one-step and two-step authentication, password change, password recovery, etc. In this chapter, we are going to use the package `django-registration-redux` to
 provide these facilities. 
 
-This will mean we will need re-factor our code to remove the login and registration functionality we previously created, and then setup and configure our project to include the `django-registration-redux` application. This chapter also will provide  you with some experience of using external applications and show you how easily they can be plugged into your Django project.
+This will mean we will need to re-factor our code to remove the login and registration functionality we previously created, and then setup and configure our project to include the `django-registration-redux` application. This chapter also will provide  you with some experience of using external applications and show you how easily they can be plugged into your Django project.
 
 ##Setting up Django Registration Redux
 
-To start we need to first install `django-registration-redux` into your environment using `pip`.
+To start we need to first install `django-registration-redux` version 1.4 into your environment using `pip`.
 
 {lang="text",linenos=off}
-	pip install django-registration-redux
+	pip install -U django-registration-redux==1.4
+
 
 Now that it is installed, we need to tell Django that we will be using
 this application. Open up the `settings.py` file, and update the
@@ -29,7 +30,7 @@ this application. Open up the `settings.py` file, and update the
 	    ]
 	
 
-While you are in the `settings.py` file you can also add:
+While you are in the `settings.py` file you can also add the following variables which are part of the registrations package's configuration (these settings should be pretty self explanatory):
 
 {lang="python",linenos=off}
 	# If True, users can register
@@ -44,7 +45,7 @@ While you are in the `settings.py` file you can also add:
 	# and are trying to access pages requiring authentication 
 	LOGIN_URL = '/accounts/login/' 
 
-These settings should be pretty self explanatory. Now, in
+Now, in
 `tango_with_django_project/urls.py` you can update the `urlpatterns` so
 it includes a reference to the registration package:
 
@@ -86,7 +87,7 @@ functions for activating the account in a two stage process:
     >     subject line of the activation email)
 
 Now the catch. While Django Registration Redux provides all this
-functionality, it does not provide the templates. So we need to create
+functionality, it does not provide the templates because these tend to be application specific. So we need to create
 the templates associated with each view.
 
 ##Setting up the Templates
@@ -192,7 +193,7 @@ rango. If we exclude it, then they will be directed to the log out page
 (but that would not be very nice).
 
 Next de-commission the `register`, `login`, `logout` functionality from
-the `rango` application, i.e. remove the urls, views, and templates (or
+the `rango` application, i.e. remove the URLs, views, and templates (or
 comment them out).
 
 ### Modifying the Registration Flow {#section-redux-templates-flow}

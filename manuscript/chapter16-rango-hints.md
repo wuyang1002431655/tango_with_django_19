@@ -225,7 +225,7 @@ The basic flow for a registering user here would be:
 - filling out the new `UserProfileForm` form; and
 - completing the registration.
 
-This therefore assumes that a user will be registered with Rango *before* the profile form is saved.
+This assumes that a user will be registered with Rango *before* the profile form is saved.
 
 ### Creating a Profile Registration Template
 First, let's create a template that'll provide the necessary markup for displaying an additional registration form. In this solution, we're going to keep the Django `registration-redux` form separate from our Profile Registration form - just to delineate between the two. If you can think of a neat way to mix both forms together, why not try it?
@@ -328,7 +328,7 @@ Now that our template, `ModelForm` and corresponding view have all been implemen
 This maps our new `register_profile()` view to the URL `/rango/register_profile/`. Remember, the `/rango/` part of the URL comes from your project's `urls.py` module - the remainder of the URL is then handled by the Rango app's `urls.py` module.
 
 ### Modifying the Registration Flow
-Now that everything is (almost) working, we need to tweak the process that users undertake when registering. Back in the [Django `registration-redux` chapter](#section-redux-templates-flow), we created a new class-based view called `MyRegistrationView` that changes the URL that users are redirected to upon a successful registration. This needs to be changes from redirecting a user to the Rango homepage (with URL name `index`) to our new user profile registration URL. From the previous section, we gave this the name `register_profile`. This therefore means simply changing the `MyRegistrationView` class to look like the following example.
+Now that everything is (almost) working, we need to tweak the process that users undertake when registering. Back in the [Django `registration-redux` chapter](#section-redux-templates-flow), we created a new class-based view called `MyRegistrationView` that changes the URL that users are redirected to upon a successful registration. This needs to be changes from redirecting a user to the Rango homepage (with URL name `index`) to our new user profile registration URL. From the previous section, we gave this the name `register_profile`. This means changing the `MyRegistrationView` class to look like the following example.
 
 {lang="python",linenos=off}
 	class MyRegistrationView(RegistrationView):
@@ -336,6 +336,18 @@ Now that everything is (almost) working, we need to tweak the process that users
 	        return url('register_profile')
 
 Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how.
+
+
+T> ### Class-Based Views
+T>
+T> In this subsection, we mentioned something called **Class-Based Views**. Class based views are a different, and more elegant, but more sophisticated mechanism, for handling requests. Rather than taking a functional approach as we have done in this tutorial, that is, in our `views.py` we have written functions to handle each request, the class based approach mean inheriting and implementing a series methods to handle the requests. For example, rather than checking if a request was a `get` or a `post`, in the class based approach, you would need to implement a `get()` and `post()` method within the class. When your project and handlers become more complicated, using the Class based approach is more preferable. See the [Django Documentation for more information about Class Based Views](https://docs.djangoproject.com/en/1.9/topics/class-based-views/).
+
+
+X> ### Additional Exercise / Challenge
+X>
+X> - Go through the Django Documentation and study how to create Class-Based Views.
+X> - Update the Rango application to use Class-Based Views.
+X> - Tweet how awesome you are and let us know @tangowithdjango.
 
 ## Viewing your Profile  {#section-hints-profileview}
 With the creation of a `UserProfile` object now complete, let's implement the functionality to allow a user to view his or her profile and edit it. The process is again pretty similar to what we've done before. We'll need to consider the following aspects:
@@ -426,7 +438,7 @@ We then need to map our new `profile()` view to a URL. As usual, this involves t
 
 Note the inclusion of a `username` variable which is matched to anything after `/profile/` - meaning that the URL `/rango/profile/maxwelld90` would yield a `username` of `maxwelld90`, which is in turn passed to the `profile()` view as parameter `username`. This is how we are able to determine what user the current user has selected to view.
 
-### Tweaking `base.html`
+### Tweaking the Base Template
 Everything should now be working as expected - but it'd be nice to add a link in Rango's `base.html` template to link the currently logged in user to their profile, providing them with the ability to view or edit it. In Rango's `base.html` template, find the code that lists a series of links in the navigation bar of the page when the *user is logged in*. Add the following hyperlink to this collection.
 
 {lang="html",linenos=off}
@@ -437,10 +449,8 @@ Note that you may want to add additional information to this link, such as addin
 ## Listing all Users
 Our final challenge is to create another page that allows one to view a list of all users on the Rango app. This one is relatively straightforward - we need to implement another template, view and URL mapping - but the view in this instance is very simplistic. We'll be creating a list of users registered to Rango - and providing a hyperlink to view their profile using the code we implemented in the previous section.
 
-### Creating the `list_profiles.html` Template
-With the exercise not providing names to files and views, we can call the template what we want. Let's call it `list_profiles.html` - so go ahead and create that file in Rango's `templates` directory.
-
-Within the file, add the following HTML markup and Django template code.
+### Creating a Template for User Profiles
+In Rango's templates directory, create a template called `list_profiles.html`, within the file, add the following HTML markup and Django template code.
 
 {lang="html",linenos=off}
 	{% extends 'rango/base_bootstrap.html' %}
@@ -453,19 +463,17 @@ Within the file, add the following HTML markup and Django template code.
 	<h1>User Profiles</h1>
 	
 	<div class="panel">
-	    {% if user_list %}
+	    {% if userprofile_list %}
 	    <div class="panel-heading">
 	        <!-- Display search results in an ordered list -->
 	        <div class="panel-body">
 	            <div class="list-group">
-	                {% for listuser in user_list %}
+	                {% for listuser in userprofile_list %}
 	                <div class="list-group-item">
 	                    <h4 class="list-group-item-heading">
-	                        <a href="{% url 'profile' listuser.username %}">
-	                            {{ listuser.username }}</a>
+	                        <a href="{% url 'profile' listuser.user.username %}">
+	                            {{ listuser.user.username }}</a>
 	                    </h4>
-	                    <p class="list-group-item-text">
-	                        E-mail:{{ listuser.email }}</p>
 	                </div>
 	                {% endfor %}
 	            </div>
@@ -477,10 +485,7 @@ Within the file, add the following HTML markup and Django template code.
 	</div>
 	{% endblock %}
 
-Relatively straightforward - we create a series of `<div>` tags using various Bootstrap classes to style the list. For each user, we display their username and e-mail address, providing a hyperlink for their username which takes the user to the profile of the selected user.
-
-X> ### Styling the List - Can You do Better?
-X> We've included some Bootstrap styles here to make the list look a little nicer. Why not try and experiment and add your own CSS customisations to make the list of users look even more attractive? You can refer to the [CSS Crash Course chapter](#chapter-css) if you need any help.
+This template is relatively straightforward - we created a series of `<div>` tags using various Bootstrap classes to style the list. For each user, we display their username and provide a link to their profile page. Notice since we pass through a list of `UserProfile` objects, to access the username of the user, we need to go view the `user` property of the `UserProfile` object to get `username`.
 
 ### Creating the View
 With our template created, we can now create the corresponding view that selects all users from the `UserProfile` model. We also make the assumption that the current user must be logged in to view the other users of Rango. The following view `list_profiles()` can be added to Rango's `views.py` module to provide this functionality.
@@ -488,14 +493,11 @@ With our template created, we can now create the corresponding view that selects
 {lang="python",linenos=off}
 	@login_required
 	def list_profiles(request):
-	    user_list = User.objects.all()
 	    userprofile_list = UserProfile.objects.all()
 	    
 	    return render(request, 'rango/list_profiles.html',
-	        {'user_list' : user_list, 'userprofile_list' : userprofile_list})
+	        {'userprofile_list' : userprofile_list})
 
-I> ### Why both `User` and `UserProfile`?
-I> Remember, we need to provide both `User` and `UserProfile` objects to the template's context, as information pertaining to a given user is available over both models.
 
 ### Mapping the View and Adding a Link
 Our final step is to map a URL to the new `list_profiles()` view. Add the following to the `urlpatterns` list in Rango's `urls.py` module to do this.
@@ -508,4 +510,14 @@ We could also add a new hyperlink to Rango's `base.html` template, allowing user
 {lang="html",linenos=off}
 	<a href="{% url 'list_profiles' %}">List Profiles</a>
 
-With this link added, you should now have completed all the exercises! Congratulations!
+With this link added you should be able to now view the list of user profiles, and view specific profiles.
+
+X> ### Profile Page Exercise
+X>
+X> - Update the profile list to include a thumbnail of the user's profile picture.
+X> - If a user does not have a profile picture, then insert a substitute picture by using the [service provide by LoremPixel](ttp://lorempixel.com/) that lets you automatically generate images.
+X>
+X> Hint: you can add in [`<img width="64" height="64" src="http://lorempixel.com/64/64/people/"/>`](http://lorempixel.com/64/64/people/) to get a picture of `people` from LoremPixel that is 64x64 in size. Note that it might take a few seconds for the picture to download.
+
+
+

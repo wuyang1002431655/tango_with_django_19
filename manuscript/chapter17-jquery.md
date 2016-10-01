@@ -43,17 +43,15 @@ This piece of JQuery, first selects the document object (with
 ready i.e. the complete page is loaded, then the anonymous function
 denoted by `function(){ }` will be executed. It is pretty typical, if
 not standard, to wait until the document has been finished loading
-before running the JQuery functions. Otherwise, the code my try to run,
-but the HTML elements may not have been downloaded. See the [JQuery Documentation on Ready](http://api.jquery.com/ready/) for more details.
+before running the JQuery functions. Otherwise, the code will begin executing before all the HTML elements have been downloaded. See the [JQuery Documentation on Ready](http://api.jquery.com/ready/) for more details.
 
-I> ### Stylistic Note
+I> ### Select and Act Pattern
 I>
 I> JQuery requires you to think in a more `functional` programming style, as opposed to the typical 
 I> JavaScript style which is often written in a more `procedural` programming style. For all the 
-I> JQuery commands they follow a similar pattern: Select and Act. Select an element, and then act on 
-I> the element. So it is good to keep this in mind. There are different selection operators, and 
-I> various actions that can then be performed/applied. In the next, subsections we will take a few 
-I> JQuery functions that you can use to manipulate the HTML elements.
+I> JQuery commands they follow a similar pattern: **Select and Act**. Select an element, and then perform some action on/with 
+I> the element. So it is good to keep this in mind. In the next subsections, we will go through a few examples.
+
 
 
 ###Example Popup Box on Click

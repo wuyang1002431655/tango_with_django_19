@@ -3,26 +3,24 @@
 So far we have been adding in different pieces of functionality to
 Rango. We've been building up the application in this manner to get you
 familiar with the Django Framework, and to learn about how to construct
-the various parts of a website that you are likely to make in your own
-projects. Rango however at the present moment is not very cohesive. In
-this chapter, we challenge you to improve the application and its user
-experience by bringing together functionality that we've already
-implemented alongside some awesome new additions.
+the various parts of an application. However, at the moment, Rango is not very cohesive or interactive.
+In this chapter, we challenge you to improve the application and its user
+experience by bringing together some of the functionality that we have already implemented along with some other features.
 
-To make Rango more coherent and integrated it would be nice to add the
+To make Rango more coherent, integrated and interactive, it would be nice to add the
 following functionality.
 
 - Track the clickthroughs of Categories and Pages, i.e.:
-	- count the number of times a category is viewed;
-	- count the number of times a page is viewed via Rango; and
+	- count the number of times a category is viewed
+	- count the number of times a page is viewed via Rango, and
 	- collect likes for categories (see [Django and Ajax Chapter]({#chapter-ajax})).
 - Integrate the browsing and searching within categories, i.e.:
-	- instead of having a disconnected search page, let users search for pages on each specific category page
-	- let users filter the set of categories shown in the side bar (see [Django and Ajax Chapter]({#chapter-ajax})); and only updates the results (see [Django and Ajax Chapter]({#chapter-ajax}))
+	- instead of having a disconnected search page, let users search for pages on each specific category page, and
+	- let users filter the set of categories shown in the side bar (see [Django and Ajax Chapter]({#chapter-ajax})).
 - Provide services for Registered Users, i.e.:
 	- Assuming you have switched the `django-registration-redux`, we need to setup the registration form to collect the additional information (i.e. website, profile picture)
-	- let users view their profile;
-	- let users edit their profile; and
+	- let users view their profile
+	- let users edit their profile, and
 	- let users see the list of users and their profiles.
 
 I> ###Note
@@ -55,7 +53,7 @@ will need to perform the following steps.
 	- If no parameters are in the HTTP `GET` request for `page_id`, or the parameters do not return a `Page` object,  redirect the user to Rango's homepage. Use the `reverse` method from `django.core.urlresolvers` to get the URL string and then redirect. If you are using Django 1.10, then you can import the `reverse` method from `django.shortcuts`.
 	- See [Django Shortcut Functions](https://docs.djangoproject.com/en/1.9/topics/http/shortcuts/) for more on `redirect` and `reverse`.
 - Update the `category.html` so that it uses `/rango/goto/?page_id=XXX`.
-	- Remember to use  the `url` *templatetag* instead of using the direct URL i.e. 
+	- Remember to use  the `url` template tag instead of using the direct URL i.e. 
 	
 	{lang="python",linenos=off}
 		<a href="{% url 'goto' %}?page_id={{page.id}}"\>
@@ -96,17 +94,18 @@ following steps:
 - Take the search form and results template markup from `search.html` and place it into `category.html`.
 - Update the search form so that action refers back to the category page, i.e.:
 
-	{lang="python",linenos=off}
-		<form class="form-inline" id="user_form" 
-		    method="post" action="{% url 'show_category'  category.slug %}">
+
+{lang="html",linenos=off}
+	<form class="form-inline" id="user_form" 
+	    method="post" action="{% url 'show_category'  category.slug %}">
 
 - Update the category view to handle a HTTP `POST` request. The view must then include any search results in the context dictionary for the template to render.
 - Also, lets make it so that only authenticated users can search. So to restrict access within the `category.html` template use:
 
-	{lang="python",linenos=off}
-		{% if user.authenticated %} 
-		    <!-- Insert search code here -->
-		{% endif %}
+{lang="python",linenos=off}
+	{% if user.authenticated %} 
+	    <!-- Insert search code here -->
+	{% endif %}
 
 ##Create and View Profiles
 If you have swapped over to the `django-registration-redux` package, then you'll have to collect the `UserProfile` data. To do this, instead of re-directing the user to the Rango index page, you will need redirect them to a new form, to collect the user's profile picture and URL details. To add the UserProfile registration functionality, you need to:
@@ -128,6 +127,6 @@ To let users browse through user profiles, you can also create a users page, tha
 
 T> ### Referencing Uploaded Content in Templates
 T>
-T> If you have successfully completed all of the [Templates and Media chapter](#section-templates-upload), your Django setup should be ready to deal with the uploading and serving of user media files. You should be able to reference the `MEDIA_URL` URL (defined in `settings.py`) in your templates through use of the `{{ MEDIA_URL }}` tag, provided by the [media template context processor](https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media).
+T> If you have successfully completed all of the [Templates and Media chapter](#section-templates-upload), your Django setup should be ready to deal with the uploading and serving of user media files. You should be able to reference the `MEDIA_URL` URL (defined in `settings.py`) in your templates through use of the `{{ MEDIA_URL }}` tag, provided by the [media template context processor](https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media), e.g. `<img src="{{ MEDIA_URL}}cat.jpg">`.
 
 In the next chapter, we provide a series of hints and tips to help you complete the aforementioned features.

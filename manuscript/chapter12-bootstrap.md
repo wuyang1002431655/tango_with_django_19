@@ -109,17 +109,8 @@ Before we can use the template we need to modify the HTML so that we can use it 
 	    <script 
 	      src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
 	    </script>
-	    <script>
-	    window.jQuery || 
-	    document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-	    </script>
 	    <script 
 	      src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
-	    </script>
-	    <!-- Just to make our placeholder images work.
-	         Don't actually copy the next line! -->
-	    <script 
-	      src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js">
 	    </script>
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	    <script 
@@ -148,7 +139,7 @@ I> reference the static files stored locally.
 
 	
 ##Quick Style Change
-To give Rango a much needed facelift, we can replace the content of the existing `base.html` with the HTML template code in `base_bootstrap.html`. You might want to first comment out the existing code in `base.html` and then cut-and-paste in the `base_bootstrap.html` code.
+To give Rango a much needed facelift, we can replace the content of the existing `base.html` with the HTML template code in `base_bootstrap.html`. You might want to first comment out the existing code in `base.html` and then copy in the `base_bootstrap.html` code.
 
 Now reload your application. Pretty nice, hey!
 
@@ -272,7 +263,7 @@ presented is pretty horrible.
 Let's use the [list group styles provided by
 Bootstrap](http://v4-alpha.getbootstrap.com/components/list-group/) to improve how they look. We can do this quite easily by changing the
 `<ul>` elements to `<ul class="list-group">` and the `<li>` elements to
-`<li class="list-group-item">`.
+`<li class="list-group-item">`. Reload the page, any better?
 
 ![A screenshot of the Index page with a Jumbotron and Columns.](images/ch12-styled-index.png)
 
@@ -309,14 +300,14 @@ template as follows:
 Besides adding in a link to the bootstrap `signin.css`, and a series of
 changes to the classes associated with elements, we have removed the
 code that automatically generates the login form, i.e. `form.as_p`.
-Instead, we took the elements, and importantly the id of the elements
+Instead, we took the elements, and importantly the `id` of the elements
 generated and associated them with the elements in this bootstrapped
-form.
+form. To find out what these `id`s were, we ran Rango, navigated to the page, and then inspected the source to see what HTML was produced by the `form.as_p` template tag. 
 
 In the button, we have set the class to `btn` and `btn-primary`. If you
 check out the [Bootstrap section on
 buttons](http://v4-alpha.getbootstrap.com/components/buttons/) you can see there are
-lots of different colours that can be assigned to buttons.
+lots of different colours, sizes and styles that can be assigned to buttons.
 
 ![A screenshot of the login page with customised Bootstrap Styling.](images/ch12-styled-login.png)
 
@@ -409,20 +400,24 @@ For the `registration_form.html`, we can update the form as follows:
 Again we have manually transformed the form created by the
 `{{ form.as_p }}` template tag, and added the various bootstrap classes.
 
-I> ###Bootstrap, HTML and Django Kludge
-I>
-I> This is not the best solution - we have kind of kludged it together. 
-I> It would be much nicer and cleaner if we could instruct Django when building the HTML for the form to insert the appropriate classes.
+W> ###Bootstrap, HTML and Django Kludge
+W>
+W> This is not the best solution - we have kind of kludged it together. 
+W> It would be much nicer and cleaner if we could instruct Django when building the HTML for the form to insert the appropriate classes.
 
 ##Using `Django-Bootstrap-Toolkit`
 An alternative solution would be to use something like the `django-bootstrap-toolkit` see
-<https://github.com/dyve/django-bootstrap-toolkit>. To install the `django-bootstrap-toolkit` run, `pip install django-bootstrap-toolkit`. Add, `bootstrap_toolkit` to the `INSTALLED_APPS` tuple in `settings.py`. 
+<https://github.com/dyve/django-bootstrap-toolkit>. To install the `django-bootstrap-toolkit` run:
 
-To use the toolkit within our templates, we need to first load the toolkit `{% load bootstrap_toolkit %}` and then call the function that updates the generated HTML, i.e. 
-`{{ form|as_bootstrap }}`. Applying this solution to the `category.html` template, we arrive at the following.
+{lang="text",linenos=off}
+	pip install django-bootstrap-toolkit
+	
+Add, `bootstrap_toolkit` to the `INSTALLED_APPS` tuple in `settings.py`. 
+
+To use the toolkit within our templates, we need to first load the toolkit using the `load` template tag, `{% load bootstrap_toolkit %}`, and then call the function that updates the generated HTML, i.e.  `{{ form|as_bootstrap }}`. Updating the `category.html` template, we arrive at the following.
 
 {lang="html",linenos=off}
-		{% extends "rango/base.html" %}
+	{% extends "rango/base.html" %}
 	
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
@@ -443,9 +438,14 @@ render as nicely as the first solution. It therefore needs some tweaking to cust
 
 
 ###Next Steps
-In this chapter we have described how to quickly style your Django application using the Bootstrap toolkit. Bootstrap is highly extensible and it is relatively easy to change themes - check out the [StartBootstrap Website](http://startbootstrap.com/) for a whole series of free themes. Alternatively, you might want to use a different CSS toolkit like [Zurb](http://zurb.com). Now that you have an idea of how to hack these templates and integrate them into your Django applications to make them look slick and modern.
+In this chapter we have described how to quickly style your Django application using the Bootstrap toolkit. Bootstrap is highly extensible and it is relatively easy to change themes - check out the [StartBootstrap Website](http://startbootstrap.com/) for a whole series of free themes. Alternatively, you might want to use a different CSS toolkit like: [Zurb](http://zurb.com), [Titon](http://titon.io/en/toolkit), [Pure](http://purecss.io), [GroundWorkd](https://groundworkcss.github.io/groundwork/) or [BaseCSS](http://www.basscss.com). Now that you have an idea of how to hack the templates and set them up to use a responsive CSS toolkit, we can now go back and focus on finishing off the extra functionality that will really pull the application together.
 
-Now that Rango is starting to look better we can go back and add in the
-extra functionality that will really pull the application together.
 
 ![A screenshot of the Registration page with customised Bootstrap Styling.](images/ch12-styled-register.png)
+
+
+
+X> ### Another Style Exercise
+X>
+X> While this tutorial uses Bootstrap, an additional, and optional exercise, would be to style Rango using one of the other responsive CSS toolkits. 
+X> If you do create your own style, let us know and we can link to it to show others how you have pimped Rango!

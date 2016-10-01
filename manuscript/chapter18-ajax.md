@@ -200,7 +200,8 @@ With these elements added into the templates, you can add in some JQuery to upda
 
 X> ###Exercise
 X>
-X> Update the population script by adding in the following categories: `Pascal`, `Perl`, `PHP`, `Prolog`, `PostScript` and `Programming`. 
+X> - Update the population script by adding in the following categories: `Pascal`, `Perl`, `PHP`, `Prolog`, `PostScript` and `Programming`. 
+X> These additional categories will make the demo of the inline category suggestion functionality more impressive :-).
 
 
 

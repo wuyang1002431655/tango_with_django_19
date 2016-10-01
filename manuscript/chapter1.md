@@ -168,6 +168,7 @@ We will also have a model for the `User` so that they can register and login. We
 ##Summary
 These high level design and specifications will serve as a useful reference point when building our Web application. While we will be focusing on using specific technologies, these steps are common to most database driven websites. It's a good idea to become familiar with reading and producing such specifications and designs so that you can communicate your designs and ideas with others. Here we will be focusing on using Django and the related technologies to implement this specification.
 
+
 T> ### Cut and Paste Coding
 T>
 T> As you progress through the tutorial, you'll most likely be tempted to cut and paste the code from the book to your code editor.
