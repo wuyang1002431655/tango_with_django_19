@@ -5,7 +5,7 @@ JQuery rocks! JQuery is a library written in JavaScript that lets you access the
 - explain how to interpret JQuery code; and
 - and provide a number of small examples.
 
-## Including JQuery in Your Django Project/Application
+## Including JQuery in Your Django Project/App
 In your *base* template include a reference to:
 
 {lang="html",linenos=off}

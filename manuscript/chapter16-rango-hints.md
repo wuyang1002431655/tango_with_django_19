@@ -405,6 +405,9 @@ Everything should now be working as expected - but it'd be nice to add a link in
 
 Note that you may want to add additional information to this link, such as adding a `class` attribute to the `<a>` tag to style it correctly. The link called the URL matched to name `profile` (see above), specifying the currently logged in username as the subsequent portion of the URL.
 
+{id="fig-exercises-profile"}
+![Rango's complete user profile page.](images/exercises-profile.png)
+
 ## Listing all Users
 Our final challenge is to create another page that allows one to view a list of all users on the Rango app. This one is relatively straightforward - we need to implement another template, view and URL mapping - but the view in this instance is very simplistic. We'll be creating a list of users registered to Rango - and providing a hyperlink to view their profile using the code we implemented in the previous section.
 

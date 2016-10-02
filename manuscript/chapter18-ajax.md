@@ -28,7 +28,7 @@ You can then add a link to `rango-ajax.js` after the JQuery library import.
 
 Now that we have setup JQuery and have a place to put our client side AJAX code, we can now modify the Rango app.
 
-## Add a "Like Button"
+## Add a Like Button
 It would be nice to let users, who are registered, denote that they *"like"* a particular category. In the following workflow, we will let users "like" categories, but we will not be keeping track of what categories they have "liked". A registered user could click the like button multiple times if they refresh the page. If we wanted to keep track of their likes, we would have to add in an additional model, and other supporting infrastructure, but we'll leave that as an exercise for you to complete.
 
 ### Workflow
@@ -142,7 +142,7 @@ X> ###Exercise
 X> - Update the population script by adding in the following categories: `Pascal`, `Perl`, `PHP`, `Prolog`, `PostScript` and `Programming`. 
 X> These additional categories will make the demo of the inline category suggestion functionality more impressive.
 
-### Parameterise the Get Category List Function
+### Parameterising `get_category_list()`
 In this helper function, we use a filter to find all the categories that start with the string supplied. The filter we use will be `istartwith`, this will make sure that it doesn't matter whether we use uppercase or lowercase letters. If it on the other hand was important to take into account whether letters was uppercase or not you would use `startswith` instead.
 
 {lang="python",linenos=off}
@@ -290,3 +290,6 @@ The HTML template markup for the new template `page_list.html`:
 	{% endif %}
 
 Finally, don't forget to add in the URL mapping:  `url(r'^add/$', views.auto_add_page, name='auto_add_page'),`.
+
+{id="fig-exercises-suggestion"}
+![Complete inline category suggestions. Notice how the suggestions populate and change as the user types each individual character.](images/exercises-suggestion.png)
