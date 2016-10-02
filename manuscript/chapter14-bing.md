@@ -45,7 +45,7 @@ This page allows you to try out the Bing Search API by filling out the boxes to 
 Assuming this all works take a copy of your API key. We will need this when we make requests as part of the authentication process. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be shown.   We'll be using it later, so take a note of it - and keep it safe!  The Bing API Service Explorer keeps a tab of how many queries you have left of your monthly quota. So if someone obtains your key, they'll be able to use your quota.  
 
 ## Adding Search Functionality
-Below we have provided the code which we can use to issue queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code. You'll also need to take a copy of your Bing Search API key - we'll show you what to do with that shortly.
+Below we have provided the code that we can use to issue queries to the Bing search service. Create a file called `rango/bing_search.py` and import the following code. You'll also need to take a copy of your Bing Search API key - we'll show you what to do with that shortly.
 
 I> ### Python 2 and 3 `import` Differences
 I> 
@@ -68,7 +68,7 @@ I> Make sure you use the correct one.
 	    Remember: put bing.key in your .gitignore file to avoid committing it!
 	    """
 	    # See Python Anti-Patterns - it's an awesome resource!
-	    # Here we using "with" when opening documents.
+	    # Here we are using "with" when opening documents.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    bing_api_key = None
 	    
@@ -159,7 +159,7 @@ I> Make sure you use the correct one.
 		
 		
 		
-###Python 3 version
+### Python 3 Version
 
 {lang="python",linenos=on}
 	import json
@@ -174,7 +174,7 @@ I> Make sure you use the correct one.
 	    Remember: put bing.key in your .gitignore file to avoid committing it!
 	    """
 	    # See Python Anti-Patterns - it's an awesome resource!
-	    # Here we using "with" when opening documents.
+	    # Here we are using "with" when opening documents.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    bing_api_key = None
 	    
@@ -264,7 +264,7 @@ I> Make sure you use the correct one.
 	    return results
 
 
-In the module(s) above, we have implemented two functions: one to retrieve your Bing API key from a local file, and another to issue a  query to the Bing search engine. Below, we discuss how both of the functions work.
+In the module(s) above, we have implemented two functions: one to retrieve your Bing API key from a local file, and another to issue a query to the Bing search engine. Below, we discuss how both of the functions work.
 
 ### `read_bing_key()` - Reading the Bing Key {#section-bing-adding-key}
 The `read_bing_key()` function reads in your key from a file called `bing.key`, located in your Django project's root directory (i.e. `<workspace>/tango_with_django/`). We have created this function because if you are putting your code into a public repository on GitHub for example, you should take some precautions to avoid sharing your API Key publicly. 
@@ -272,7 +272,6 @@ The `read_bing_key()` function reads in your key from a file called `bing.key`, 
 From the Azure website, take a copy of your *Account key* and save it into `<workspace>/tango_with_django/bing.key`. The key should be the only contents of the file - nothing else should exist within it. This file should be kept from being committed to your GitHub repository. To make sure that you do not accidentally commit it, update your repository's `.gitignore` file to exclude any files with a `.key` extension, by adding the line `*.key`. This way, your key file will only be stored locally and you will not end up with someone using your query quota.
 	
 T> ### Keys and Rings
-T>
 T> Keep them secret, keep them safe!
 
 
@@ -293,19 +292,16 @@ Notice that results are passed from Bing's servers as JSON. This is because we e
 Also, note that if an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the `print` statement within the `except` block.
 
 I> ###Bing it on!
-I>
 I> There are many different parameters that the Bing Search API can handle which we don't cover here. 
-I> If you want to know more about the API  check out the [Bing Search API Migration Guide and FAQ](http://datamarket.azure.com/dataset/bing/search).
+I> If you want to know more about the API check out the [Bing Search API Migration Guide and FAQ](http://datamarket.azure.com/dataset/bing/search).
 
 X> ### Exercises
-X> 
 X> Extend your `bing_search.py` module so that it can be run independently, i.e. running `python bing_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
 X> 
 X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
 
 T> ### Hint
-T>
 T> Add the following code, so that when you run `python bing_search.py` it calls the `main()` function:
 T> 	
 T> {lang="python",linenos=off}
@@ -320,7 +316,7 @@ T> When you run the module explicitly via `python bing_search.py`, the `bing_sea
 ## Putting Search into Rango
 Now that we have successfully implemented the search functionality module, we need to integrate it into our Rango app. There are two main steps that we need to complete for this to work.
 
--  We must first create a `search.html` template which extends from our `base.html` template. The `search.html` template will include a HTML `<form>` to capture the user's query as well as template code to present any results.
+-  We must first create a `search.html` template that extends from our `base.html` template. The `search.html` template will include a HTML `<form>` to capture the user's query as well as template code to present any results.
 - We then create a view to handle the rendering of the `search.html` template for us, as well as calling the `run_query()` function we defined above.
 
 ### Adding a Search Template
@@ -366,7 +362,6 @@ Let's first create a template called, `rango/search.html`. Add the following HTM
 	</div>	
 	{% endblock %}
 
-
 The template code above performs two key tasks.
 
 - In all scenarios, the template presents a search box and a search buttons within a HTML `<form>` for users to enter and submit their search queries.
@@ -374,11 +369,10 @@ The template code above performs two key tasks.
 	
 To style the HTML, we have made use of Bootstrap [panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
 
-
 In the view code, in the next subsection, we will only pass through the results to the template, when the user issues a query. Initially, there will be not results to show.
 
 ### Adding the View
-With our search template added, we can then add the view which prompts the rendering of our template. Add the following `search()` view to Rango's `views.py` module.
+With our search template added, we can then add the view that prompts the rendering of our template. Add the following `search()` view to Rango's `views.py` module.
 
 {lang="python",linenos=off}	
 	def search(request):
@@ -405,19 +399,10 @@ You'll also need to ensure you do the following, too.
 
 Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango app (as shown in the figure below).
 
-{id="fig-bing-python-search"}
-![Searching for "Python for Noobs".
-](images/ch14-bing-python-search.png)
-
+{id="fig-bing-python-search"} ![Searching for "Python for Noobs".](images/ch14-bing-python-search.png)
 
 X> ### Additional Exercise
-X>
 X> You may notice that when you issue a query, the query disappears when the results are shown. This is not very user friendly.
 X> Update the view and template so that user's query is displayed within the search box.
 X>
-X> Hint: Within the view, you will need to put the `query` into the context dictionary, and within the template, you will need to show the query text in the search box.
-
-
-<!--
--->
-
+X> Within the view, you will need to put the `query` into the context dictionary. Within the template, you will need to show the query text in the search box.

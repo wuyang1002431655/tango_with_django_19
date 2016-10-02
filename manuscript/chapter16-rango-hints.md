@@ -1,23 +1,16 @@
-#Making Rango Tango! Hints {#chapter-hints}
-
+# Making Rango Tango! Hints {#chapter-hints}
 Hopefully, you will have been able to complete the exercises given the workflows we provided. If not, or if you need a little help, have a look at the potential solutions we have provided below, and use them within your version of Rango.
 
 I> ### Got a better solution?
-I>
 I> The solutions provided in this chapter are only one way to solve each problem.
 I> They are based on what we have learnt so far. However, if you implement them differently, 
 I> feel free to share your solutions with us - and tweet links to @tangowithdjango for others to see.
 
 ## Track Page Clickthroughs
-
 Currently, Rango provides a direct link to external pages. This is not very good if you want to track the number of times each page is clicked and viewed. To count the number of times a page is viewed via Rango, you'll need to perform the following steps.
 
 ### Creating a URL Tracking View
-
-Create a new view called `track_url()` in `/rango/views.py` which takes
-a parameterised HTTP `GET` request (i.e. `rango/goto/?page_id=1`) and
-updates the number of views for the page. The view should then redirect
-to the actual URL.
+Create a new view called `track_url()` in `/rango/views.py` which takes a parameterised HTTP `GET` request (i.e. `rango/goto/?page_id=1`) and updates the number of views for the page. The view should then redirect to the actual URL.
 
 {lang="python",linenos=off}
 	from django.shortcuts import redirect
@@ -40,15 +33,12 @@ to the actual URL.
 	    return redirect(url)
 
 
-Be sure that you import the `redirect()` function to `views.py` if it
-isn't included already!
+Be sure that you import the `redirect()` function to `views.py` if it isn't included already!
 
 {lang="python",linenos=off}
 	from django.shortcuts import redirect
 
-
 ### Mapping URL
-
 In `/rango/urls.py` add the following code to the `urlpatterns` tuple.
 
 {lang="python",linenos=off}
@@ -56,10 +46,7 @@ In `/rango/urls.py` add the following code to the `urlpatterns` tuple.
 
 
 ### Updating the Category Template
-
-Update the `category.html` template so that it uses
-`rango/goto/?page_id=XXX` instead of providing the direct URL for users
-to click.
+Update the `category.html` template so that it uses `rango/goto/?page_id=XXX` instead of providing the direct URL for users to click.
 
 {lang="python",linenos=off}
 	{% for page in pages %}
@@ -76,44 +63,23 @@ to click.
 Here you can see that in the template we have added some control statements to display `view`, `views` or nothing depending on the value of `page.views`.
 
 ### Updating Category View
-
-Since we are tracking the number of clickthroughs you can now update
-the `category()` view so that you order the pages by the number of
-views, i.e.:
+Since we are tracking the number of clickthroughs you can now update the `category()` view so that you order the pages by the number of views:
 
 {lang="python",linenos=off}
 	pages = Page.objects.filter(category=category).order_by('-views')
 
-Now, confirm it all works, by clicking on links, and then going back to
-the category page. Don't forget to refresh or click to another category
-to see the updated page.
+Now, confirm it all works, by clicking on links, and then going back to the category page. Don't forget to refresh or click to another category to see the updated page.
 
 ## Searching Within a Category Page
+Rango aims to provide users with a helpful directory of page links. At the moment, the search functionality is essentially independent of the categories. It would be nicer however to have search integrated into category browsing. Let's assume that a user will first browse their category of interest first. If they can't find the page that they want, they can then search for it. If they find a page that is suitable, then they can add it to the category that they are in. Let's tackle the first part of this description here.
 
-Rango aims to provide users with a helpful directory of page links. At
-the moment, the search functionality is essentially independent of the
-categories. It would be nicer however to have search integrated into
-category browsing. Let's assume that a user will first browse their
-category of interest first. If they can't find the page that they want,
-they can then search for it. If they find a page that is suitable, then
-they can add it to the category that they are in. Let's tackle the first
-part of this description here.
-
-We first need to remove the global search functionality and only let
-users search within a category. This will mean that we essentially
-decommission the current search page and search view. After this, we'll
-need to perform the following.
+We first need to remove the global search functionality and only let users search within a category. This will mean that we essentially decommission the current search page and search view. After this, we'll need to perform the following.
 
 ### Decommissioning Generic Search
-
-Remove the generic *Search* link from the menu bar by editing the
-`base.html` template. You can also remove or comment out the URL mapping
-in `rango/urls.py`.
+Remove the generic *Search* link from the menu bar by editing the `base.html` template. You can also remove or comment out the URL mapping in `rango/urls.py`.
 
 ### Creating a Search Form Template
-
-After the categories add in a new `div` at the bottom of the template in `category.html`, and add in the search form.
-This is very similar to the template code in the `search.html`, but we have updated the action to point to the `show_category` page. We also pass through a variable called `query`, so that the user can see what query has been issued.
+After the categories add in a new `div` at the bottom of the template in `category.html`, and add in the search form. This is very similar to the template code in the `search.html`, but we have updated the action to point to the `show_category` page. We also pass through a variable called `query`, so that the user can see what query has been issued.
 
 {lang="html",linenos=off}
 	<form class="form-inline" id="user_form"
@@ -151,13 +117,11 @@ After the search form, we need to provide a space where the results are rendered
 Remember to wrap the search form and search results with `{% if user.authenticated %}` and `{% endif %}`, so that only authenticated users can search. You don't want random users to be wasting your Bing Search budget!
 
 ### Updating the Category View
-Update the category view to handle a HTTP `POST` request (i.e. when the
-user submits a search) and inject the results list into the context. The
-following code demonstrates this new functionality.
+Update the category view to handle a HTTP `POST` request (i.e. when the user submits a search) and inject the results list into the context. The following code demonstrates this new functionality.
 
 {lang="python",linenos=off}
 	def show_category(request, category_name_slug):
-	    # Create a context dictionary which we can pass
+	    # Create a context dictionary that we can pass
 	    # to the template rendering engine.
 	    context_dict = {}
 	    
@@ -203,15 +167,12 @@ following code demonstrates this new functionality.
 	    # Go render the response and return it to the client.
 	    return render(request, 'rango/category.html', context_dict)
 
-Notice that in the `context_dict` that we pass through, now includes
-the `result_list` and `query`, and if there is no query, we provide a
-default query, i.e. the category name. The query box then displays this
-value.
+Notice that the `context_dict` now includes the `result_list` and `query`. If there is no query, we provide a default query, i.e. the category name. The query box then displays this value.
 
 ## Creating a `UserProfile` Instance {#section-hints-profiles}
 This section provides a solution for creating Rango `UserProfile` accounts. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
 
-- Create a `profile_registration.html` which will display the `UserProfileForm`.
+- Create a `profile_registration.html` that will display the `UserProfileForm`.
 - Create a `UserProfileForm` `ModelForm` class to handle the new form.
 - Create a `register_profile()` view to capture the profile details.
 - Map the view to a URL, i.e. `rango/register_profile/`.
@@ -311,7 +272,6 @@ With a valid `UserProfileForm`, we can then create a new instance of the `UserPr
 If the request sent was a HTTP `GET`, the user simply wants to request a blank form to fill out - so we respond by `render`ing the `profile_registration.html` template created above with a blank instance of the `UserProfileForm`, passed to the rendering context dictionary as `form` - thus satisfying the requirement we created in our template. This solution should therefore handle all required scenarios for creating, parsing and saving data from a `UserProfileForm` form.
 
 E> ### Can't find `login_required`?
-E>
 E> Remember, once a newly registered user hits this view, they will have had a new account created for them - so we can safely assume that he or she is now logged into Rango. This is why we are using the `@login_required` decorator at the top of our view to prevent individuals from accessing the view when they are unauthorised to do so.
 E> 
 E> If you are receiving an error stating that the `login_required()` function (used as a decorator to our new view) cannot be located, ensure that you have the following `import` statement at the top of your `view.py` module.
@@ -320,7 +280,7 @@ E> {lang="python",linenos=off}
 E> 	from django.contrib.auth.decorators import login_required
 
 ### Mapping the View to a URL
-Now that our template, `ModelForm` and corresponding view have all been implemented, a seasoned Djangoer should now be thinking: *map it!* We need to map our new view to a URL, so that users can access the newly created content. This can be easily achieved by opening up Rango's `urls.py` module, and adding the following line to the `urlpatterns` list.
+Now that our template `ModelForm` and corresponding view have all been implemented, a seasoned Djangoer should now be thinking: *map it!* We need to map our new view to a URL, so that users can access the newly created content. Opening up Rango’s `urls.py` module and adding the following line to the `urlpatterns` list will achieve this.
 
 {lang="python",linenos=off}
 	url(r'^register_profile/$', views.register_profile, name='register_profile'),
@@ -337,14 +297,10 @@ Now that everything is (almost) working, we need to tweak the process that users
 
 Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how.
 
-
 T> ### Class-Based Views
-T>
-T> In this subsection, we mentioned something called **Class-Based Views**. Class based views are a different, and more elegant, but more sophisticated mechanism, for handling requests. Rather than taking a functional approach as we have done in this tutorial, that is, in our `views.py` we have written functions to handle each request, the class based approach mean inheriting and implementing a series methods to handle the requests. For example, rather than checking if a request was a `get` or a `post`, in the class based approach, you would need to implement a `get()` and `post()` method within the class. When your project and handlers become more complicated, using the Class based approach is more preferable. See the [Django Documentation for more information about Class Based Views](https://docs.djangoproject.com/en/1.9/topics/class-based-views/).
+T> In this subsection, we mentioned something called **class-based views**. Class based views are a different, and more elegant, but more sophisticated mechanism, for handling requests. Rather than taking a functional approach as we have done in this tutorial, that is, in our `views.py` we have written functions to handle each request, the class based approach mean inheriting and implementing a series methods to handle the requests. For example, rather than checking if a request was a `get` or a `post`, in the class based approach, you would need to implement a `get()` and `post()` method within the class. When your project and handlers become more complicated, using the Class based approach is more preferable. See the [Django Documentation for more information about Class Based Views](https://docs.djangoproject.com/en/1.9/topics/class-based-views/).
 
-
-X> ### Additional Exercise / Challenge
-X>
+X> ### Additional Exercise
 X> - Go through the Django Documentation and study how to create Class-Based Views.
 X> - Update the Rango application to use Class-Based Views.
 X> - Tweet how awesome you are and let us know @tangowithdjango.
