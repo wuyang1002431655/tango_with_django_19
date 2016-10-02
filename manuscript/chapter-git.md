@@ -115,6 +115,8 @@ I> Examples include temporary files, databases (that can easily be recreated) an
 I>
 I> When you create a new repository on GitHub, the service can offer to create a `.gitignore` file based upon the languages you will use in your project, which can save you some time setting everything up.
 
+{pagebreak}
+
 ## Basic Commands and Workflow {#section-git-workflow}
 With your repository cloned and ready to go on your local computer, you're ready to get to grips with the Git workflow. This section shows you the basic Git workflow - and the associated Git commands you can issue.
 
