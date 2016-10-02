@@ -80,7 +80,6 @@ I> Make sure you use the correct one.
 	        
 	    return bing_api_key
 	    
-	
 	def run_query(search_terms):
 	    """
 	    Given a string containing search terms (query),
@@ -157,7 +156,7 @@ I> Make sure you use the correct one.
 	    # Return the list of results to the calling function.
 	    return results
 		
-		
+{pagebreak}
 		
 ### Python 3 Version
 
@@ -186,7 +185,6 @@ I> Make sure you use the correct one.
 	        
 	    return bing_api_key
 	    
-	
 	def run_query(search_terms):
 	    """
 	    Given a string containing search terms (query),
@@ -272,6 +270,7 @@ The `read_bing_key()` function reads in your key from a file called `bing.key`, 
 From the Azure website, take a copy of your *Account key* and save it into `<workspace>/tango_with_django/bing.key`. The key should be the only contents of the file - nothing else should exist within it. This file should be kept from being committed to your GitHub repository. To make sure that you do not accidentally commit it, update your repository's `.gitignore` file to exclude any files with a `.key` extension, by adding the line `*.key`. This way, your key file will only be stored locally and you will not end up with someone using your query quota.
 	
 T> ### Keys and Rings
+T>
 T> Keep them secret, keep them safe!
 
 
@@ -399,9 +398,11 @@ You'll also need to ensure you do the following, too.
 
 Once you have put in the URL mapping and added a link to the search page, you should now be able issue queries to the Bing Search API and have the results shown within the Rango app (as shown in the figure below).
 
-{id="fig-bing-python-search"} ![Searching for "Python for Noobs".](images/ch14-bing-python-search.png)
+{id="fig-bing-python-search"}
+![Searching for "Python for Noobs".](images/ch14-bing-python-search.png)
 
 X> ### Additional Exercise
+X>
 X> You may notice that when you issue a query, the query disappears when the results are shown. This is not very user friendly.
 X> Update the view and template so that user's query is displayed within the search box.
 X>
