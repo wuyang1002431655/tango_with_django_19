@@ -1,13 +1,11 @@
 # A Crash Course in UNIX-based Commands {#chapter-unix}
-
 Depending on your computing background, you may or may not have encountered a UNIX based system, or a derivative of. This small crash course focuses on getting you up to speed with the *terminal*, an application in which you issue commands for the computer to execute. This differs from a point-and-click *Graphical User Interface (GUI)*, the kind of interface that has made computing so much more accessible. A terminal based interface may be more complex to use, but the benefits of using such an interface include getting things done quicker, and more accurately, too.
 
 I> ### Not for Windows!
-I> Note that we're focusing on the Bash shell, a shell for UNIX-based operating systems and their derivatives, including OS X and Linux distributions. If you're a Windows user, you can use the [Windows Command Prompt](http://www.ai.uga.edu/mc/winforunix.html) or [Windows PowerShell](https://msdn.microsoft.com/en-us/powershell/mt173057.aspx). Users of Windows 10 will [also be able to issue Bash commands directly to the Command Prompt](http://www.pcworld.com/article/3050473/windows/heres-how-windows-10s-ubuntu-based-bash-shell-will-actually-work.html). You could also experiment by [installing Cygwin](https://www.cygwin.com/) to bring Bash commands to Windows.
+I> Note that we're focusing on the Bash shell, a shell for UNIX-based operating systems and their derivatives, including OS X and Linux distributions. If you're a Windows user, you can use the [Windows Command Prompt](http://www.ai.uga.edu/mc/winforunix.html) or [Windows PowerShell](https://msdn.microsoft.com/en-us/powershell/mt173057.aspx). Users of Windows 10 with the [2016 Anniversary Update](https://blogs.windows.com/windowsexperience/2016/08/02/how-to-get-the-windows-10-anniversary-update/) will [also be able to issue Bash commands directly to the Command Prompt](http://www.pcworld.com/article/3050473/windows/heres-how-windows-10s-ubuntu-based-bash-shell-will-actually-work.html). You could also experiment by [installing Cygwin](https://www.cygwin.com/) to bring Bash commands to Windows.
 
 ## Using the Terminal
-
-UNIX based operating systems and derivatives - such as OS X and Linux distributions - all use a similar looking terminal application, typically using the [Bash shell](https://en.wikipedia.org/wiki/Bash_(Unix_shell)). All possess a core set of commands which allow you to navigate through your computer's filesystem and launch programs - all without the need for any graphical interface.
+UNIX based operating systems and derivatives - such as OS X and Linux distributions - all use a similar looking terminal application, typically using the [Bash shell](https://en.wikipedia.org/wiki/Bash_(Unix_shell)). All possess a core set of commands that allow you to navigate through your computer's filesystem and launch programs - all without the need for any graphical interface.
 
 Upon launching a new terminal instance, you'll be typically presented with something resembling the following.
 
@@ -21,7 +19,7 @@ What you see is the *prompt*, and indicates when the system is waiting to execut
 * the privilege of your user account (the dollar sign, or `$`).
 
 D> ### What is a Directory?
-D> Above, we refer to your present working directory. But what exactly is a *directory*? If you have used a Windows computer up until now, you'll probably know a directory as a *folder*. The concept of a folder is analogous to a directory - it is a cataloguing structure which can contain references to other files and directories.
+D> In the text above, we refer to your present working directory. But what exactly is a *directory*? If you have used a Windows computer up until now, you'll probably know a directory as a *folder*. The concept of a folder is analogous to a directory - it is a cataloguing structure that contains references to other files and directories.
 
 The dollar sign (`$`) typically indicates that the user is a standard user account. Conversely, a hash symbol (`#`) may be used to signify the user logged in has [root privileges](http://en.wikipedia.org/wiki/Superuser). Whatever symbol is present is used to signify that the computer is awaiting your input.
 
@@ -61,7 +59,7 @@ Now, let's create a directory within the home directory called `code`. To do thi
     sibu:~ david$ mkdir code
     sibu:~ david$
 
-There's no confirmation that the command succeeded. We can check that the `code` directory was created by changing the present working directory with the `cd` command.
+There's no confirmation that the command succeeded. We can change the present working directory with the `cd` command to change to `code`. If this succeeds, we will know the directory has been successfully created.
 
 {lang="text",linenos=off}
     sibu:~ david$ cd code
@@ -84,7 +82,7 @@ This shows us that there's something present our home directory called `code`, a
     sibu:~ david$ ls -l
     drwxr-xr-x  2 david  grad  68  2 Apr 11:07 code
 
-This provides us with additional information, such as the modification date (`2 Apr 11:07`), who the file belongs to (user `david` of group `grad`), the size of the entry (`68` bytes), and the file permissions (`drwxr-xr-x`). While we don't go into file permissions here, the key thing to note is the `d` at the start of the string which denotes the entry is a directory. If we then add some files to our home directory and reissue the `ls -l` command, we then can observe differences in the way files are displayed as opposed to directories.
+This provides us with additional information, such as the modification date (`2 Apr 11:07`), whom the file belongs to (user `david` of group `grad`), the size of the entry (`68` bytes), and the file permissions (`drwxr-xr-x`). While we don't go into file permissions here, the key thing to note is the `d` at the start of the string that denotes the entry is a directory. If we then add some files to our home directory and reissue the `ls -l` command, we then can observe differences in the way files are displayed as opposed to directories.
 
 {lang="text",linenos=off}
     sibu:~ david$ ls -l
@@ -119,12 +117,11 @@ Creating files is also easy to do, straight from the terminal. The `touch` comma
 Note the filesize of `new.txt` - it is zero bytes, indicating an empty file. We can start editing the file using one of the many available text editors that are available for use directly from a terminal, such as [`nano`](http://www.nano-editor.org/) or [`vi`](http://en.wikipedia.org/wiki/Vi). While we don't cover how to use these editors here, you can [have a look online for a simple how-to tutorial](http://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/). We suggest starting with `nano` - while there are not as many features available compared to other editors, using `nano` is much simpler.
 
 ## Core Commands {#section-unix-commands}
-
 In the short tutorial above, you've covered a few of the core commands such as `pwd`, `ls` and `cd`. There are however a few more standard UNIX commands that you should familiarise yourself with before you start working for real. These are listed below for your reference, with most of them focusing upon file management. The list comes with an explanation of each, and an example of how to use them.
 
 * `pwd`: As explained previously, this command displays your *present working directory* to the terminal. The full path of where you are presently is displayed.
 * `ls`: Displays a list of files in the current working directory to the terminal. 
-* `cd`: In conjunction with a path, allows you to change your present working directory. For example, the command `cd /users/grad/david/` changes the current working directory to `/users/grad/david/`. You can also move up a directory level without having to provide the [absolute path](http://www.uvsc.edu/disted/decourses/dgm/2120/IN/steinja/lessons/06/06_04.html) by using two dots, e.g. `cd ..`.
+* `cd`: In conjunction with a path, `cd` allows you to change your present working directory. For example, the command `cd /users/grad/david/` changes the current working directory to `/users/grad/david/`. You can also move up a directory level without having to provide the [absolute path](http://www.uvsc.edu/disted/decourses/dgm/2120/IN/steinja/lessons/06/06_04.html) by using two dots, e.g. `cd ..`.
 * `cp`: Copies files and/or directories. You must provide the *source* and the *target*. For example, to make a copy of the file `input.py` in the same directory, you could issue the command `cp input.py input_backup.py`.
 * `mv`: Moves files/directories. Like `cp`, you must provide the *source* and *target*. This command is also used to rename files. For example, to rename `numbers.txt` to `letters.txt`, issue the command `mv numbers.txt letters.txt`. To move a file to a different directory, you would supply either an absolute or relative path as part of the target - like `mv numbers.txt /home/david/numbers.txt`.
 * `mkdir`: Creates a directory in your current working directory. You need to supply a name for the new directory after the `mkdir` command. For example, if your current working directory was `/home/david/` and you ran `mkdir music`, you would then have a directory `/home/david/music/`. You will need to then `cd` into the newly created directory to access it.
