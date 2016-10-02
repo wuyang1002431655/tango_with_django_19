@@ -11,7 +11,7 @@ I> The term *cookie* wasn't actually derived from the food that you eat, but fro
 I> 
 I> You can find out more about [cookies and their history on Wikipedia](http://en.wikipedia.org/wiki/HTTP_cookie#History). Of course, with such a great idea came a software patent - and you can read [US patent 5774670](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO1&Sect2=HITOFF&d=PALL&p=1&u=%2Fnetahtml%2FPTO%2Fsrchnum.htm&r=1&f=G&l=50&s1=5774670.PN.&OS=PN/5774670&RS=PN/5774670) that was submitted by Montulli himself.
 
-The passing of information in the form of cookies can open up potential security holes in your Web application's design. This is why developers of Web applications need to be extremely careful when using cookies. When using cookies, a designer must always ask himself or herself: *does the information you want to store as a cookie **really** need to be sent and stored on a client's machine?* In many cases, there are more secure solutions to the problem. Passing a user's credit card number on an e-commerce site as a cookie for example would be highly insecure. What if the user's computer is compromised? The cookie could be taken by a malicious program. From there, hackers would have his or her credit card number - all because your Web application's design is fundamentally flawed. This chapter examines the fundamental basics of client-side cookies - and server-side session storage for Web applications.
+The passing of information in the form of cookies can open up potential security holes in your Web application's design. This is why developers of Web applications need to be extremely careful when using cookies. When using cookies, a designer must always ask himself or herself: *does the information you want to store as a cookie **really** need to be sent and stored on a client's machine?* In many cases, there are more secure solutions to the problem. Passing a user's credit card number on an e-commerce site as a cookie for example would be highly insecure. What if the user's computer is compromised? A malicious program could take the cookie. From there, hackers would have his or her credit card number - all because your Web application's design is fundamentally flawed. This chapter examines the fundamental basics of client-side cookies - and server-side session storage for Web applications.
 
 {id="fig-ch10-bbcnews"}
 ![A screenshot of the BBC News website (hosted in the United Kingdom) with the cookie warning message presented at the top of the page.](images/ch10-bbcnews.png)
@@ -28,7 +28,7 @@ Without a persistent connection between the client and server, the software on b
 
 The most commonly used way of holding state is through the use of a *session ID* stored as a cookie on a client's computer. A session ID can be considered as a token (a sequence of characters, or a *string*) to identify a unique session within a particular Web application. Instead of storing all kinds of information as cookies on the client (such as usernames, names, or passwords), only the session ID is stored, which can then be mapped to a data structure on the Web server. Within that data structure, you can store all of the information you require. This approach is a **much more secure** way to store information about users. This way, the information cannot be compromised by a insecure client or a connection which is being snooped.
 
-If your browser supports cookies, pretty much all websites create a new session for you when you visit. You can see this for yourself now - check out Figure fig-session-id. In Google Chrome's developer tools, you can view cookies which are sent by the Web server you've accessed. In Figure fig-session-id, you can observe the selected cookie `sessionid`. The cookie contains a series of letters and numbers which Django uses to uniquely identify your session. From there, all your session details can be accessed - but only on the server side.
+If your browser supports cookies, pretty much all websites create a new session for you when you visit. You can see this for yourself now - check out Figure fig-session-id. In Google Chrome's developer tools, you can view cookies that are sent by the Web server you've accessed. In Figure fig-session-id, you can observe the selected cookie `sessionid`. The cookie contains a series of letters and numbers that Django uses to uniquely identify your session. From there, all your session details can be accessed - but only on the server side.
 
 {id="fig-ch10-sessionid"}
 ![A screenshot of Google Chrome with the Developer Tools opened - check out the cookie `sessionid`.](images/ch10-sessionid.png)
@@ -41,7 +41,7 @@ I> An alternative way of persisting state information *without cookies* is to en
 ## Setting up Sessions in Django
 Although this should already be setup and working correctly, it's nevertheless good practice to learn which Django modules provide which functionality. In the case of sessions, Django provides [middleware](https://docs.djangoproject.com/en/1.9/topics/http/middleware/) that implements session functionality.
 
-To check that everything is in order, open your Django project's `settings.py` file. Within the file, locate the `MIDDLEWARE_CLASSES` list. You should find within this list a module represented by the string `django.contrib.sessions.middleware.SessionMiddleware`. If you can't see it, add it to the list now. It is the `SessionMiddleware` middleware which enables the creation of unique `sessionid` cookies.
+To check that everything is in order, open your Django project's `settings.py` file. Within the file, locate the `MIDDLEWARE_CLASSES` list. You should find within this list a module represented by the string `django.contrib.sessions.middleware.SessionMiddleware`. If you can't see it, add it to the list now. It is the `SessionMiddleware` middleware that enables the creation of unique `sessionid` cookies.
 
 The `SessionMiddleware` is designed to work flexibly with different ways to store session information. There are many approaches that can be taken - you could store everything in a file, in a database, or even in a in-memory cache. The most straightforward approach is to use the `django.contrib.sessions` application to store session information in a Django model/database (specifically, the model `django.contrib.sessions.models.Session`). To use this approach, you'll also need to make sure that `django.contrib.sessions` is in the `INSTALLED_APPS` tuple of your Django project's `settings.py` file. Remember, if you add the application now, you'll need to update your database with the usual migration commands.
 
@@ -49,7 +49,7 @@ T> ### Caching Sessions
 T> If you want faster performance, you may want to consider a cached approach for storing session information. You can check out the [official Django documentation for advice on cached sessions](https://docs.djangoproject.com/en/1.9/topics/http/sessions/#using-cached-sessions).
 
 ## A Cookie Tasting Session
-While all modern Web browsers support cookies, certain cookies may get blocked depending on your browsers security level. Check that you've enabled support for cookies before continuing.
+While all modern Web browsers support cookies, certain cookies may get blocked depending on your browser's security level. Check that you've enabled support for cookies before continuing.
 
 ### Testing Cookie Functionality
 To test out cookies, you can make use of some convenience methods provided by Django's `request` object. The three of particular interest to us are `set_test_cookie()`, `test_cookie_worked()` and `delete_test_cookie()`. In one view, you will need to set the test cookie. In another, you'll need to test that the cookie exists. Two different views are required for testing cookies because you need to wait to see if the client has accepted the cookie from the server.
@@ -176,7 +176,7 @@ Now if you visit the Rango homepage, and inspect the developer tools provided by
 
 
 ## Session Data
-The previous example shows how we can store and manipulate client side cookies - or the data stored on the client. However, a more secure way to save session information is to store any such data on the server side. We can then use the session ID cookie which is stored on the client side (but is effectively anonymous) as the key to access the data.
+The previous example shows how we can store and manipulate client side cookies - or the data stored on the client. However, a more secure way to save session information is to store any such data on the server side. We can then use the session ID cookie that is stored on the client side (but is effectively anonymous) as the key to access the data.
 
 To use session based cookies you need to perform the following steps.
 
@@ -219,7 +219,7 @@ Since all the cookies are stored server side, we won't be changing the response 
 	    # Update/set the visits cookie
 	    request.session['visits'] = visits
 
-Now that we have updated the handler function, we can now update the `index()` view. First change `visitor_cookie_handler(request, response)` to `visitor_cookie_handler(request)`. Then add in a the following line to pass the number of visits to the context dictionary.
+Now that we have updated the handler function, we can now update the `index()` view. First change `visitor_cookie_handler(request, response)` to `visitor_cookie_handler(request)`. Then add in the following line to pass the number of visits to the context dictionary.
 
 {lang="python",linenos=off}
 	context_dict['visits'] = request.session['visits']
@@ -263,15 +263,15 @@ Check out the available settings you can use on the [official Django documentati
 Sessions accumulate easily, and the data store that contains session information does too. If you are using the database backend for Django sessions, you will have to periodically clear the database that stores the cookies. This can be done using `$ python manage.py clearsessions`. The [official Django documentation](https://docs.djangoproject.com/en/1.9/topics/http/sessions/#clearing-the-session-store) suggests running this daily as a [Cron job](https://en.wikipedia.org/wiki/Cron). If you don't, you could find your app's performance begin to degrade when it begins to experience more and more users.
 
 ## Basic Considerations and Workflow
-When using cookies within your Django application, there's a few things you should consider.
+When using cookies within your Django application, there are a few things you should consider.
 
--   First, consider what type of cookies your Web application requires. Does the information you wish to store need to persist over a series of user browser sessions, or can it be safely disregarded upon the end of one session?
--   Think carefully about the information you wish to store using cookies. Remember, storing information in cookies by their definition means that the information will be stored on client's computers, too. This is a potentially huge security risk: you simply don't know how compromised a user's computer will be. Consider server-side alternatives if potentially sensitive information is involved.
--   As a follow-up to the previous bullet point, remember that users may set their browser's security settings to a high level which could potentially block your cookies. As your cookies could be blocked, your site may function incorrectly. You *must* cater for this scenario - *you have no control over the client browser's setup*.
+- First, consider what type of cookies your Web application requires. Does the information you wish to store need to persist over a series of user browser sessions, or can it be safely disregarded upon the end of one session?
+- Think carefully about the information you wish to store using cookies. Remember, storing information in cookies by their definition means that the information will be stored on client's computers, too. This is a potentially huge security risk: you simply don't know how compromised a user's computer will be. Consider server-side alternatives if potentially sensitive information is involved.
+- As a follow-up to the previous bullet point, remember that users may set their browser's security settings to a high level that could potentially block your cookies. As your cookies could be blocked, your site may function incorrectly. You *must* cater for this scenario - *you have no control over the client browser's setup*.
 
 If client-side cookies are the right approach for you, then work through the following steps.
 
-1. You must first perform a check to see if the cookie you want exists. This can be done by checking the `request` parameter. The `request.COOKIES.has_key('<cookie_name>')` function returns a boolean value indicating whether a cookie `<cookie_name>` exists on the client's computer or not.
+1. You must first perform a check to see if the cookie you want exists. Checking the `request` parameter parameter will allow you to do this. The `request.COOKIES.has_key('<cookie_name>')` function returns a boolean value indicating whether a cookie `<cookie_name>` exists on the client's computer or not.
 2. If the cookie exists, you can then retrieve its value - again via the `request` parameter - with `request.COOKIES[]`. The `COOKIES` attribute is exposed as a dictionary, so pass the name of the cookie you wish to retrieve as a string between the square brackets. Remember, cookies are all returned as strings, regardless of what they contain. You must therefore be prepared to cast to the correct type (with `int()` or `float()`, for example).
 3. If the cookie doesn't exist, or you wish to update the cookie, pass the value you wish to save to the response you generate. `response.set_cookie('<cookie_name>', value)` is the function you call, where two parameters are supplied: the name of the cookie, and the `value` you wish to set it to.
 
