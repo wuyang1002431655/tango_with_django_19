@@ -36,6 +36,10 @@ for line in f:
         if line[-2:len(line)] == '**':
             line = line[0:len(line)-2]
         
+        if ']' in line:
+            if not line.startswith('['):
+                line = '[{0}'.format(line)
+        
         name = name.lower()
         people.append((name, line))
 

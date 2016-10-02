@@ -35,40 +35,41 @@ Duncan Drizy,
 [Grigoriy M](https://github.com/GriMel),
 **James Yeo,**
 [Jan Felix Trettow](https://tiwtter.com/JanFelixTrettow),
-**[Jonathan Sundqvist](https://github.com/jonathan-s),**
-Karen Little,
-**[Kartik Singhal](https://github.com/k4rtik),**
-[koviusesGitHub](https://github.com/koviusesGitHub),
-**[Krace Kumar](https://github.com/kracekumar),**
-[Manoel Maria](https://twitter.com/xmadruga157),
-**[Martin de G.](https://github.com/martindegroot),**
-[Matevz P.](https://github.com/matonsjojc),
-**[mHulb](https://github.com/mHulb),**
-[Michael Herman](https://github.com/mjhea0),
-**[Michael Ho Chum](https://github.com/michaelchum),**
-[Mickey P.](https://github.com/mickeypash),
-**Mike Gleen,**
-[nCrazed](https://github.com/nCrazed),
-**Nitin Tulswani,**
-[nolan-m](https://github.com/nolan-m),
-**Oleg Belausov,**
-[pawonfire](https://github.com/pawonfire),
-**[pdehaye](https://github.com/pdehaye),**
-[Peter Mash](https://github.com/PeterMash),
-**[Pierre-Yves Mathieu](https://github.com/pywebdesign),**
-[Praestgias](https://github.com/praestigias),
-**[Ramdog](https://github.com/ramdog),**
-[Rezha Julio](https://github.com/kimiamania),
-**[rnevius](https://github.com/rnevius),**
-Sadegh Kh,
-**[Saex](https://github.com/SaeX),**
-[Saurabh Tandon](https://twitter.com/saurabhtand),
-**Svante Kvarnstrom,**
-Tanmay Kansara,
-**Thomas Murphy,**
-[Thomas Whyyou](https://twitter.com/thomaswhyyou),
-**William Vincent,** and
-[Zhou](https://github.com/AugustLONG).
+**Joe Maskell,**
+[Jonathan Sundqvist](https://github.com/jonathan-s),
+**Karen Little,**
+[Kartik Singhal](https://github.com/k4rtik),
+**[koviusesGitHub](https://github.com/koviusesGitHub),**
+[Krace Kumar](https://github.com/kracekumar),
+**[Manoel Maria](https://twitter.com/xmadruga157),**
+[Martin de G.](https://github.com/martindegroot),
+**[Matevz P.](https://github.com/matonsjojc),**
+[mHulb](https://github.com/mHulb),
+**[Michael Herman](https://github.com/mjhea0),**
+[Michael Ho Chum](https://github.com/michaelchum),
+**[Mickey P.](https://github.com/mickeypash),**
+Mike Gleen,
+**[nCrazed](https://github.com/nCrazed),**
+Nitin Tulswani,
+**[nolan-m](https://github.com/nolan-m),**
+Oleg Belausov,
+**[pawonfire](https://github.com/pawonfire),**
+[pdehaye](https://github.com/pdehaye),
+**[Peter Mash](https://github.com/PeterMash),**
+[Pierre-Yves Mathieu](https://github.com/pywebdesign),
+**[Praestgias](https://github.com/praestigias),**
+[Ramdog](https://github.com/ramdog),
+**[Rezha Julio](https://github.com/kimiamania),**
+[rnevius](https://github.com/rnevius),
+**Sadegh Kh,**
+[Saex](https://github.com/SaeX),
+**[Saurabh Tandon](https://twitter.com/saurabhtand),**
+Svante Kvarnstrom,
+**Tanmay Kansara,**
+Thomas Murphy,
+**[Thomas Whyyou](https://twitter.com/thomaswhyyou),**
+William Vincent,** and
+**[Zhou](https://github.com/AugustLONG).**
 
 
 %% END ACKNOWLEDGEMENTS LIST
