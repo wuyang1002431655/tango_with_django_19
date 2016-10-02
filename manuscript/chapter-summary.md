@@ -65,6 +65,7 @@ Oleg Belausov,
 [Saex](https://github.com/SaeX),
 **[Saurabh Tandon](https://twitter.com/saurabhtand),**
 Svante Kvarnstrom,
+Serede Sixty Six,
 **Tanmay Kansara,**
 Thomas Murphy,
 **[Thomas Whyyou](https://twitter.com/thomaswhyyou),**
