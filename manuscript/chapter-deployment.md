@@ -1,9 +1,8 @@
 # Deploying Your Project {#chapter-deploy}
-This chapter provides a step-by-step guide on how to deploy your Django applications. We'll be looking at deploying applications on [PythonAnywhere](https://www.pythonanywhere.com/?affiliate_id=000116e3), an online IDE and web hosting service. The service provides in-browser access to the server-based Python and Bash command line interfaces, meaning you can interact with PythonAnywhere's servers just like you would with a regular terminal instance on your own computer. Currently, PythonAnywhere are offering a free account which sets you up with an adequate amount of storage space and CPU time to get a Django application up and running.
+This chapter provides a step-by-step guide on how to deploy your Django applications. We'll be looking at deploying applications on [PythonAnywhere](https://www.pythonanywhere.com/?affiliate_id=000116e3), an online IDE and web hosting service. The service provides in-browser access to the server-based Python and Bash command line interfaces, meaning you can interact with PythonAnywhere's servers just like you would with a regular terminal instance on your own computer. Currently, PythonAnywhere are offering a free account that sets you up with an adequate amount of storage space and CPU time to get a Django application up and running.
 
 I> ### Go Git It!
-I>
-I> You can do this chapter independently as we have already implemented Rango and it is available from GitHub. If you haven't used Git/GitHub before you can check out our [chapter on using Git](#chapter-git)).
+I> You can do this chapter independently as we have already implemented Rango and it is available from GitHub. If you haven't used Git/GitHub before, you can check out our [chapter on using Git](#chapter-git)).
 
 ## Creating a PythonAnywhere Account
 First, [sign up for a Beginner PythonAnywhere account](https://www.pythonanywhere.com/?affiliate_id=000116e3). If your application takes off and becomes popular, you can always upgrade your account at a later stage to gain more storage space and CPU time along with a number of other benefits - such as hosting specific domains and SSH abilities, for example.
@@ -25,7 +24,7 @@ Of the five tabs provided, we'll be working primarily with the *consoles* and *w
 ![The PythonAnywhere dashboard, showing the *Consoles* tab.](images/ch-deploy-pa-interface.png)
 
 ## Creating a Virtual Environment
-As part of a its standard default Bash environment, PythonAnywhere comes with Python 2.7.6 and a number of pre-installed Python Packages (including *Django 1.3.7* and *Django-Registration 0.8*). Since we are using a different setup, we need to select a particular Python version and setup a virtual environment for our application.
+As part of its standard default Bash environment, PythonAnywhere comes with Python 2.7.6 and a number of pre-installed Python Packages (including *Django 1.3.7* and *Django-Registration 0.8*). Since we are using a different setup, we need to select a particular Python version and setup a virtual environment for our application.
 
 First, open a Bash console from the PythonAnywhere *Consoles* tab by clicking the *Bash* link. When the terminal is ready for you to use, enter the following commands.
 
@@ -66,8 +65,7 @@ To see what packages are already installed, enter `pip list`. Now we can customi
 
 Alternatively, you could use `pip freeze > requirements.txt` to save your current development environment, and then on PythonAnywhere, run `pip install -r requirements.txt` to install all the packages in one go.
 
-I> ### Waiting for the Bits to Download
-I>
+I> ### Waiting to Download...
 I> Installing all theses packages may take some time, so you can relax, call a friend, or tweet about our tutorial `@tangowithdjango`!
 
 Once installed, check if Django has been installed with the command `which django-admin.py`. You should receive output similar to the following example.
@@ -75,8 +73,7 @@ Once installed, check if Django has been installed with the command `which djang
 {lang="text",linenos=off}    
 	/home/<username>/.virtualenvs/rango/bin/django-admin.py
 
-I> ###Virtual Environments on PythonAnywhere
-I>
+I> ### Virtual Environments on PythonAnywhere
 I> PythonAnywhere also provides instructions on how to setup virtual environments. [Check out their Wiki documentation for more information](https://help.pythonanywhere.com/pages/VirtualEnvForNewerDjango).
 
 ### Virtual Environment Switching
@@ -114,7 +111,7 @@ If you haven't put your code in a Git repository, you can clone the version we h
 	16:54 ~ $ git clone https://github.com/leifos/tango_with_django_19.git
 
 ### Setting Up the Database
-With your files cloned, you must then prepare your database. We'll be using the `populate_rango.py` module that we created earlier in the book. As we'll be running the module, you must ensure that you are using the `rango` virtual environment (i.e. you see `(rango)` as part of your prompt - if not, invoke `workon rango`). From your home directory, move into the `tango_with_django_19` directory, then to the `code` directory. Finally, `cd` into the `tango_with_django_project` directory - the directory with `manage.py` in it. Now issue the following commands.
+With your files cloned, you must then prepare your database. We'll be using the `populate_rango.py` module that we created earlier in the book. As we'll be running the module, you must ensure that you are using the `rango` virtual environment (i.e. you see `(rango)` as part of your prompt - if not, invoke `workon rango`). From your home directory, move into the `tango_with_django_19` directory, then to the `code` directory. Finally, `cd` into the directory with `manage.py` in it - `tango_with_django_project`. Now issue the following commands.
 
 {lang="text",linenos=off}    
 	(rango) 16:55 ~/tango_with_django $ python manage.py makemigrations rango
@@ -154,7 +151,6 @@ If you have checked out code from our GitHub account, then the path will be some
 {lang="text",linenos=off} 
 	/home/<username>/tango_with_django_19/code/tango_with_django_project/
 
-
 ### Configuring the WSGI Script
 The [Web Server Gateway Interface](http://en.wikipedia.org/wiki/Web_Server_Gateway_Interface), a.k.a. *WSGI* provides a simple and universal interface between Web servers and Web applications. PythonAnywhere uses WSGI to bridge the server-application link and map incoming requests to your subdomain to your web application.
 
@@ -186,19 +182,17 @@ The good people at PythonAnywhere have set up a sample WSGI file for us with sev
 	import django.core.handlers.wsgi
 	application = django.core.handlers.wsgi.WSGIHandler()
 
-
 Ensure that you replace `<username>` with your PythonAnywhere username, and update any other path settings to suit your application. You should also remove all other code from the WSGI configuration script to ensure no conflicts take place.
 
 The script adds your project's directory to the `PYTHONPATH` for the Python instance that runs your web application. This allows Python to access your project's modules. If you have additional paths to add, you can easily insert them here. You can then specify the location of your project's `settings.py` module. The final step is to include the Django WSGI handler and invoke it for your application.
 
 When you have completed the WSGI configuration, click the *Save* button at the top-right of the webpage. Navigate back to the *Web* tab within the PythonAnywhere dashboard, and click the *Reload* button at the top of the page. When the application is reloaded, you can then revisit your PythonAnywhere subdomain at `http://<username>.pythonanywhere.com`. Hopefully, if all went well, you should see your application up and running. If not, check through your scripts and paths carefully. Double check your paths by actually visiting the directories, and use `pwd` to confirm the path. 
 	
-I> ### Bad Gateway Errors??
-I>
+I> ### Bad Gateway Errors
 I> During testing, we noted that you can sometimes receive `HTTP 502 - Bad Gateway` errors instead of your application. Try reloading your application again, and then waiting a longer. If the problem persists, try reloading again. If the problem still persists, [check out your log files](#section-deploy-logfiles) to see if any accesses/errors are occurring, before contacting the PythonAnywhere support.
 
 ### Assigning Static Paths
-We're almost there. One issue which we still have to address is to sort out paths for our application. Doing so will allow PythonAnywhere's servers to serve your static content, for example From the PythonAnywhere dashboard, click the *Web* tab and choose the subdomain hosting your application from the list on the left.
+We're almost there. One issue that we still have to address is to sort out paths for our application. Doing so will allow PythonAnywhere's servers to serve your static content, for example From the PythonAnywhere dashboard, click the *Web* tab and choose the subdomain hosting your application from the list on the left.
 
 Underneath the *Static files* header, perform the following. 
 
@@ -212,8 +206,7 @@ where `<username>` should be replaced with your PythonAnywhere username. `<pytho
 
 Repeat the two steps above for the URL `/static/` and path `/home/<username>/<path-to>/tango_with_django_project/static`, with the path setting pointing to the `static` directory of your Web application.
 
-With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget about potential
-`HTTP 502 - Bad Gateway` errors, as discussed previously. Setting the static folders means that when you visit the `admin` interface, it has the predefined Django style sheets, and that you can access images and scripts. Reload your Web application, and you should now notice that your images are present.
+With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget the about potential for `HTTP 502 - Bad Gateway` errors. Setting the static folders means that when you visit the `admin` interface, it has the predefined Django style sheets, and that you can access images and scripts. Reload your Web application, and you should now notice that your images are present.
 
 ### Bing API Key
 [Add your Bing API key]({#section-bing-adding-key}) to `bing.key` to enable the search functionality in Rango.
@@ -242,7 +235,6 @@ Note that the names for each log file are prepended with your subdomain. For exa
 When debugging, you may find it useful to delete or move the log files so that you don't have to scroll through a huge list of previous attempts. If the files are moved or deleted, they will be recreated automatically when a new request or error arises.
 
 X> ###Exercises
-X>
 X> Congratulations, you've successfully deployed Rango!
 X> 
 X> -  Tweet a link of your application to [@tangowithdjango](https://twitter.com/tangowithdjango).
