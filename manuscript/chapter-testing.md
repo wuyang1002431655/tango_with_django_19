@@ -5,7 +5,7 @@ According to the [Django Tutorial](https://docs.djangoproject.com/en/1.9/intro/t
 
 - Test will save you time: a change in a complex system can cause failures in unpredictable places.
 - Tests don't just identify problems, they prevent them: tests show where the code is not meeting expectations.
-- Test make your code more attractive: "Code without tests is broken by design", Jacob Kaplan-Moss, One of Django's original developers.
+- Test make your code more attractive: *"Code without tests is broken by design"* - Jacob Kaplan-Moss, one of Django's original developers.
 - Tests help teams work together: they make sure your team doesn't inadvertently break your code.
 
 According to the [Python Guide](http://docs.python-guide.org/en/latest/writing/tests/), there are a number of general rules you should try to follow when writing tests. Below are some main rules.

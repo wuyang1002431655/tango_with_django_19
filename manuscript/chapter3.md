@@ -27,7 +27,7 @@ At the prompt, enter the following commands:
 {lang="text",linenos=off}
 	>>> import django
 	>>> django.get_version()
-	'1.9.5'
+	'1.9.10'
 	>>> exit()
 
 
@@ -102,8 +102,8 @@ Executing this command will launch Python, and instruct Django to initiate its l
 
 	Run 'python manage.py migrate' to apply them.
 
-	April 10, 2016 - 11:07:24
-	Django version 1.9.5, using settings 'tango_with_django_project.settings'
+	October 2, 2016 - 21:45:32
+	Django version 1.9.10, using settings 'tango_with_django_project.settings'
 	Starting development server at http://127.0.0.1:8000/
 	Quit the server with CONTROL-C.
 

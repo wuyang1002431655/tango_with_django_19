@@ -37,7 +37,7 @@ A package manager, whether for Python, your [operating system](https://en.wikipe
 Try and run pip with the command `$ pip`. If the command is not found, you'll need to install pip itself - check out the [system setup chapter](#chapter-system-setup) for more information. You should also ensure that the following packages are installed on your system. Run the following commands to install Django and [pillow](https://python-pillow.org/) (an image manipulation library for Python).
 
 {lang="bash",linenos=off}
-	$ pip install -U django==1.9.5
+	$ pip install -U django==1.9.10
 	$ pip install pillow
 
 I> ### Problems Installing `pillow`?

@@ -58,7 +58,7 @@ Note the inclusion of `(rango)` compared to the previous command prompt. This si
 To see what packages are already installed, enter `pip list`. Now we can customise the virtual environment by installing the required packages for our Rango application. Install all the required packages, by issuing the following commands.
 
 {lang="text",linenos=off}    
-	$ pip install -U django==1.9.5
+	$ pip install -U django==1.9.10
 	$ pip install pillow
 	$ pip install django-registration-redux
 	$ pip install django-bootstrap-toolkit
