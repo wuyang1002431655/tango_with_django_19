@@ -1,11 +1,9 @@
 #A Git Crash Course {#chapter-git}
-
 We strongly recommend that you spend some time familiarising yourself with a [version control](https://en.wikipedia.org/wiki/Version_control) system for your application's codebase. This chapter provides you with a crash course in how to use [Git](http://en.wikipedia.org/wiki/Git_(software)), one of the many version control systems available. Originally developed by [Linus Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds), Git is today [one of the most popular version control systems in use](https://en.wikipedia.org/wiki/Comparison_of_source_code_hosting_facilities#Popularity), and is used by open-source and closed-source projects alike.
 
 This tutorial demonstrates at a high level how Git works, explains the basic commands that you can use, and provides an explanation of Git's workflow. By the end of this chapter, you'll be able to make contributions to a Git repository, enabling you to work solo, or in a team.
 
 ## Why Use Version Control?
-
 As your software engineering skills develop, you will find that you are able to plan and implement solutions to ever more complex problems. As a rule of thumb, the larger the problem specification, the more code you have to write. The more code you write, the greater the emphasis you should put on software engineering practices. Such practices include the use of design patterns and the *DRY (Don't Repeat Yourself)* principle.
 
 Think about your experiences with programming thus far. Have you ever found yourself in any of these scenarios?
@@ -23,7 +21,6 @@ Using a version control system makes your life easier in *all* of the above case
 We missed one final (and important) argument for using version control. With ever more complex problems to solve, your software projects will undoubtedly contain a large number of files containing source code. It'll also be likely that you *aren't working alone on the project; your project will probably have more than one contributor.* In this scenario, it can become difficult to avoid conflicts when working on files. 
 
 ## How Git Works
-
 Essentially, Git comprises of four separate storage locations: your **workspace**, the **local index**, the **local repository** and the **remote repository**. As the name may suggest, the remote repository is stored on some remote server, and is the only location stored on a computer other than your own. This means that there are two copies of the repository - your local copy, and the remote copy. Having two copies is one of the main selling points of Git over other version control systems. You can make changes to your local repository when you may not have Internet access, and then apply any changes to the remote repository at a later stage. Only once changes are made to the remote repository can other contributors see your changes.
 
 D> ### What is a Repository?
@@ -41,7 +38,6 @@ For now though, let's provide an overview of each of the different aspects of th
 Next, we'll be looking at how to [get your Git workspace set up and ready to go](#section-git-setup). We'll also [discuss the basic workflow](#section-git-workflow) you should use when using Git.
 
 ## Setting up Git {#section-git-setup}
-
 We assume that you've got Git installed with the software to go. One easy way to test the software out is to simply issue `git` to your terminal or Command Prompt. If you don't see a `command not found` error, you're good to go. Otherwise, have a look at how to install Git to your system.
 
 I> ### Using Git on Windows
@@ -56,7 +52,6 @@ Setting up your Git workspace is a straightforward process. Once everything is s
 3.  Navigate into the newly created directory. That's your workspace in which you can add files to be version controlled!
 
 ### How to Clone a Remote Repository {#section-git-setup-clone}
-
 Cloning your repository is a straightforward process with the `git clone` command. Supplement this command with the URL of your remote repository - and if required, authentication details, too. The URL of your repository varies depending on the provider you use. If you are unsure of the URL to enter, it may be worth querying it with your search engine or asking someone in the know.
 
 For GitHub, try the following command, replacing the parts below as appropriate:
@@ -89,13 +84,11 @@ T> ### Not using GitHub?
 T> There are many websites that provide Git repositories - some free, some paid. While this chapter uses GitHub, you are free to use whatever service you wish. Other providers include [Atlassian Bitbucket](https://bitbucket.org/) and [Unfuddle](https://unfuddle.com/). You will of course have to change the URL from which you clone your repository if you use a service other than GitHub.
 
 ### The Directory Structure
-
 Once you have cloned your remote repository onto your local computer, navigate into the directory with your terminal, Command Prompt or GUI file browser. If you have cloned an empty repository the workspace directory should appear empty. This directory is therefore your blank workspace with which you can begin to add your project's files.
 
 However, the directory isn't blank at all! On closer inspection, you will notice a hidden directory called `.git`. Stored within this directory are both the local repository and local index. **Do not alter the contents of the `.git` directory.** Doing so could damage your Git setup and break version control functionality. *Your newly created workspace therefore actually contains within it the local repository and index.*
 
 ### Final Tweaks {#section-git-setup-tweaks}
-
 With your workspace setup, now would be a good time to make some final tweaks. Here, we discuss two cool features you can try which could make your life (and your team members') a little bit easier.
 
 When using your Git repository as part of a team, any changes you make will be associated with the username you use to access your remote Git repository. However, you can also specify your full name and e-mail address to be included with changes that are made by you on the remote repository. Simply open a Command Prompt or terminal and navigate to your workspace. From there, issue two commands: one to tell Git your full name, and the other to tell Git your e-mail address.
@@ -123,7 +116,6 @@ I>
 I> When you create a new repository on GitHub, the service can offer to create a `.gitignore` file based upon the languages you will use in your project, which can save you some time setting everything up.
 
 ## Basic Commands and Workflow {#section-git-workflow}
-
 With your repository cloned and ready to go on your local computer, you're ready to get to grips with the Git workflow. This section shows you the basic Git workflow - and the associated Git commands you can issue.
 
 {id="fig-git-sequence"}
@@ -132,7 +124,6 @@ With your repository cloned and ready to go on your local computer, you're ready
 We have provided a pictorial representation of the basic Git workflow as shown above. Match each of the numbers in the black circles to the numbered descriptions below to read more about each stage. **Refer to this diagram whenever you're unsure about the next step you should take - it's very useful!**
 
 ### 1. Starting Off
-
 Before you can start work on your project, you must prepare Git. If you haven't yet sorted out your project's Git workspace, you'll need to [`clone` your repository to set it up](#section-git-setup-clone).
 
 If you've already cloned your repository, it's good practice to get into the habit of updating your local copy by using the `git pull` command. This *pulls* the latest changes from the remote repository onto your computer. By doing this, you'll be working from the same page as your team members. This will reduce the possibility of conflicting versions of files, which really does make your life a bit of a nightmare.
@@ -169,7 +160,6 @@ T>
 T> Remember to talk to your team to coordinate your activity so you are not working on the same files, or using branching.
 
 ### 2. Doing Some Work!
-
 Once your workspace has been cloned or updated with the latest changes, it's time for you to get some work done! Within your workspace directory, you can take existing files and modify them. You can delete them too, or add new files to be version controlled.
 
 When you modify your repository in any way, you need to keep Git up-to-date of any changes. Doing so allows Git to update your local index. The list of files stored within the local index are then used to perform your next *commit*, which we'll be discussing in the next step. To keep Git informed, there are several Git commands that let you update the local index. Three of the commands are near identical to those that were discussed in the [Unix Crash Course](#section-unix-commands) (e.g. `cp`, `mv`), with the addition of a `git` prefix.
@@ -202,7 +192,6 @@ I> ### Checking Status
 I> For further information on the `git status` command, check out the [official Git documentation](http://git-scm.com/docs/git-status).
 
 ### 3. Committing your Changes
-
 We've mentioned *committing* several times in the previous step - but what does it mean? Committing is when you save changes - which are listed in the local index - that you have made within your workspace. The more often you commit, the greater the number of opportunities you'll have to revert back to an older version of your code if things go wrong. Make sure you commit often, but don't commit an incomplete or broken version of a particular module or function. There's a lot of discussion as to when the ideal time to commit is. [Have a look at this Stack Overflow page](http://stackoverflow.com/questions/1480723/dvcs-how-often-and-when-to-commit-changes) for the opinions of several developers. It does however make sense to commit only when everything is working. If you find you need to roll back to a previous commit only to find nothing works, you won't be too happy.
 
 To commit, you issue the `git commit` command. Any changes to existing files that you have indexed will be saved to version control at this point. Additionally, any files that you've requested to be copied, removed, moved or added to version control via the local index will be undertaken at this point. When you commit, you are updating the [*HEAD* of your local repository](http://stackoverflow.com/questions/2304087/what-is-git-head-exactly).
@@ -221,7 +210,6 @@ T> ### Sensible Commits
 T> Although frequent commits may be a good thing, you will want to ensure that what you have written actually *works* before you commit. This may sound silly, but it's an incredibly easy thing to not think about. To reiterate, committing code which doesn't actually work can be infuriating to your team members if they then rollback to a version of your project's codebase which is broken!
 
 ### 4. Synchronising your Repository
-
 T> ### Important when Collaborating
 T> Synchronising your local repository before making changes is crucial to ensure you minimise the chance for conflicts occurring. Make sure you get into the habit of doing a `pull` before you `push`.
 
@@ -235,7 +223,6 @@ T> ### Editing Merge Logs
 T> If you do see a text editor on your Mac or Linux installation, it's probably the [`vi`](http://en.wikipedia.org/wiki/Vi) text editor. If you've never used vi before, check out [this helpful page containing a list of basic commands](http://www.cs.colostate.edu/helpdocs/vi.html) on the Colorado State University Computer Science Department website. If you don't like vi, [you can change the default text editor](http://git-scm.com/book/en/Customizing-Git-Git-Configuration#Basic-Client-Configuration) that Git calls upon. Windows installations most likely will bring up Notepad.
 
 ### 5. Pushing your Commit(s)
-
 *Pushing* is the phrase used by Git to describe the sending of any changes in your local repository to the remote repository. This is the way in which your changes become available to your other team members, who can then retrieve them by running the `git pull` command in their respective local workspaces. The `git push` command isn't invoked as often as committing - *you require one or more commits to perform a push.* You could aim for one push per day, when a particular feature is completed, or at the request of a team member who is after your updated code.
 
 To push your changes, the simplest command to run is:
@@ -249,7 +236,6 @@ T> ### Important Push?
 T> If your `git push` is particularly important, you can also alert other team members to the fact they should really update their local repositories by pulling your changes. You can do this through a *pull request.* Issue one after pushing your latest changes by invoking the command `git request-pull master`, where master is your branch name (this is the default value). If you are using a service such as GitHub, the web interface allows you to generate requests without the need to enter the command. Check out [the official GitHub website's tutorial](https://help.github.com/articles/using-pull-requests) for more information.
 
 ## Recovering from Mistakes
-
 This section presents a solution to a coder's worst nightmare: what if you find that your code no longer works? Perhaps a refactoring went terribly wrong, or another team member without discussion changed something. Whatever the reason, using a form of version control always gives you a last resort: rolling back to a previous commit. This section details how to do just that. We follow the information given from [this Stack Overflow](http://stackoverflow.com/questions/2007662/rollback-to-an-old-commit-using-git) question and answer page.
 
 W> ### Changes may be Lost!
