@@ -1,16 +1,11 @@
 #JQuery and Django
+JQuery rocks! JQuery is a library written in JavaScript that lets you access the power of JavaScript without the pain. This is because a few lines of JQuery often encapsulates hundreds of lines of JavaScript. Also, JQuery provides a suite of functionality that is mainly focused on manipulating HTML elements. In this chapter, we will describe:
 
-JQuery rocks! JQuery is a library written in JavaScript that lets you access the power of JavaScript without the pain. This is because a few lines of JQuery often encapsulates
-hundreds of lines of JavaScript. Also, JQuery provides a suite of
-functionality that is mainly focused on manipulating HTML elements. In
-this chapter, we will describe:
+- how to incorporate JQuery within your Django app;
+- explain how to interpret JQuery code; and
+- and provide a number of small examples.
 
-- how to incorporate JQuery within your Django Application
-- explain how to interpret JQuery code
-- and provide a number of small examples 
-
-##Including JQuery in Your Django Project/Application
-
+## Including JQuery in Your Django Project/Application
 In your *base* template include a reference to:
 
 {lang="html",linenos=off}
@@ -18,7 +13,7 @@ In your *base* template include a reference to:
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
 	<script src="{% static "js/rango-jquery.js" %}"></script>
 	
-or if you have downloaded and saved a copy to your static folder, then you can reference it as follows:
+or if you have downloaded and saved a copy to your static directory, then you can reference it as follows:
 
 {lang="html",linenos=off}
 	{% load staticfiles %}
@@ -27,39 +22,20 @@ or if you have downloaded and saved a copy to your static folder, then you can r
 	
 Make sure you have your static files set up (see [Chapter Templates and Static Media](#chapter-templates-static))
 
-In the static folder create a *js* folder and place the JQuery
-JavaScript file (`jquery.js`) here along with an file called
-`rango-jquery.js`, which will house our JavaScript code. In
-`rango-jquery.js`, add the following JavaScript:
+In the `static` directory, create a *js* directory and place the JQuery JavaScript file (`jquery.js`) here along with an file called `rango-jquery.js`. This script will house our JavaScript code. In `rango-jquery.js`, add the following JavaScript:
 
 {lang="javascript",linenos=off}
 	$(document).ready(function() {
 	    // JQuery code to be added in here.
 	});
 
-
-This piece of JQuery, first selects the document object (with
-`$(document)`), and then makes a call to `ready()`. Once the document is
-ready i.e. the complete page is loaded, then the anonymous function
-denoted by `function(){ }` will be executed. It is pretty typical, if
-not standard, to wait until the document has been finished loading
-before running the JQuery functions. Otherwise, the code will begin executing before all the HTML elements have been downloaded. See the [JQuery Documentation on Ready](http://api.jquery.com/ready/) for more details.
+This piece of JavaScript utilises JQuery. It first selects the document object (with `$(document)`), and then makes a call to `ready()`. Once the document is ready (i.e. the complete page is loaded), the anonymous function denoted by `function() { }` will be executed. It is pretty typical, if not standard, to wait until the document has been finished loading before running the JQuery functions. Otherwise, the code may begin executing before all the HTML elements have been downloaded. See the [JQuery Documentation on Ready](http://api.jquery.com/ready/) for more details.
 
 I> ### Select and Act Pattern
-I>
-I> JQuery requires you to think in a more `functional` programming style, as opposed to the typical 
-I> JavaScript style which is often written in a more `procedural` programming style. For all the 
-I> JQuery commands they follow a similar pattern: **Select and Act**. Select an element, and then perform some action on/with 
-I> the element. So it is good to keep this in mind. In the next subsections, we will go through a few examples.
+I> JQuery requires you to think in a more *functional* programming style, as opposed to the typical JavaScript style which is often written in a more *procedural* programming style. For all the JQuery commands, they follow a similar pattern: **Select and Act**. Select an element, and then perform some action on/with the element.
 
-
-
-###Example Popup Box on Click
-
-In this example, we want to show you the difference between doing the
-same functionality in standard JavaScript versus JQuery.
-
-In your `about.html` template, add the following piece of code:
+### Example Popup Box on Click
+In this example, we want to show you the difference between doing the same functionality in standard JavaScript versus JQuery. In your `about.html` template, add the following piece of code:
 
 {lang="html",linenos=off}
 	<button  class="btn btn-primary" 
@@ -67,10 +43,7 @@ In your `about.html` template, add the following piece of code:
 	    Click Me - I run JavaScript 
 	</button>
 
-As you can see, we are assigning the function `alert()` to the `onClick`
-handler of the button. Load up the `about` page, and try it out.
-
-Now lets do it using JQuery, by first adding another button:
+As you can see, we are assigning the function `alert()` to the `onClick` handler of the button. Load up the `about` page, and try it out. Now lets do it using JQuery, by first adding another button:
 
 {lang="html",linenos=off}
 	<button  class="btn btn-primary" id="about-btn"> 
@@ -78,10 +51,7 @@ Now lets do it using JQuery, by first adding another button:
 	<p>This is a example</p>
 	<p>This is another example</p>
 
-
-Notice that there is not JavaScript code associated with the button
-currently. We will be doing that with the following code added to
-`rango-jquery.js`:
+Notice that there is no JavaScript code associated with the button currently. We will be doing that with the following code added to `rango-jquery.js`:
 
 {lang="javascript",linenos=off}
 	$(document).ready( function() {
@@ -90,51 +60,30 @@ currently. We will be doing that with the following code added to
 	    });
 	});
 
-Reload the page, and try it out. Hopefully, you will see that both
-buttons pop up an alert.
+Reload the page, and try it out. Hopefully, you will see that both buttons pop up an alert.
 
-The JQuery/JavaScript code here, first selects the document object, and
-when it is ready, it executes the functions within its body, i.e.
-`$("#about-btn").click()`, which selects the element in the page with id
-equal to `about-btn`, and then it programatically assigns to the on
-click event, the `alert()` function.
+The JQuery/JavaScript code here first selects the document object, and when it is ready, it executes the functions within its body, i.e. `$("#about-btn").click()`. This code selects the element in the page with an `id` equal to `about-btn`, and then programatically assigns to the `click` event the `alert()` function.
 
-At first you might think that JQuery is rather cumbersome, as it
-requires us to include a lot more code to do the same thing. This may be
-true for a simple function like `alert()` but for more complex functions
-it is much cleaner, as the JQuery/JavaScript code is maintained in a
-separate file (completely!!). This is because we assign the event
-handler at run-time rather than statically within the code. We achieve
-separation of concerns between the JQuery/JavaScript code and the html
-code.
+At first, you might think that JQuery is rather cumbersome, as it requires us to include a lot more code to do the same thing. This may be true for a simple function like `alert()`. For more complex functions, it is much cleaner as the JQuery/JavaScript code is maintained in a separate file. This is because we assign the event handler at runtime rather than statically within the code. We achieve separation of concerns between the JQuery/JavaScript code and the HTML markup.
 
 T> ###Keep Them Separated
-T>
-T> [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) is a design principle which is good to keep in mind. In terms of web apps, the HTML is responsible for the page content, CSS is used to style the presentation of the content, while JavaScript is responsible for how the user can interact with the content, and manipulating the content and style.
+T> [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) is a design principle that is good to keep in mind. In terms of web apps, the HTML is responsible for the page content; CSS is used to style the presentation of the content, while JavaScript is responsible for how the user can interact with the content, and manipulating the content and style.
 T>
 T> By keeping them separated, you will have cleaner code and you will reduce maintenance woes in the future.
 T>
 T> Put another way, *never mix, never worry!*
 
-###Selectors
-
-There are different ways to select elements in JQuery. From the above
-example, shows how the `#` can be used to find `id` elements in your
-html document. To find classes, you can use `.`, so, for example, if we
-added the following code:
+### Selectors
+There are different ways to select elements in JQuery. The above example shows how the `#` selector can be used to find elements with a particular `id` in your HTML document. To find classes, you can use the `.` selector, as shown in the example below.
 
 {lang="javascript",linenos=off}
 	$(".ouch").click( function(event) {
 	    alert("You clicked me! ouch!");
 	});
 
+Then all elements in the document that have the `class="ouch"` would be selected, and assigned to its on click handler, the `alert()` function. Note that all the elements would be assigned the same function.
 
-Then all elements, that had a `class="ouch"` would be selected, and
-assigned to its on click handler, the `alert()` function. Note that all
-the elements would be assigned the same function.
-
-Also, HTML tags can also be selected by referring to the tag in the
-selector:
+HTML tags can also be selected by referring to the tag in the selector:
 
 {lang="javascript",linenos=off}
 	$("p").hover( function() {
@@ -144,48 +93,26 @@ selector:
 	    $(this).css('color', 'blue');
 	});
 
-
 Add this JavaScript to your `rango-jquery.js`, and then in the `about.html` template, add a paragraph, `<p>This text is for a JQuery Example</p>`. Try it out, go to the about page and hover over the text.
 
-Here, we are selecting all the `p` HTML elements, and on hover we are
-associated two functions, one for on hover, and the other for hover off.
-You can see that we are using another selector called, `this`, which
-selects the element in question, and then sets it color to red or blue,
-respectively. Note, the JQuery `hover()` function takes two functions
-(see <http://api.jquery.com/hover/>), the JQuery `click()` requires the
-event to passed through (see <http://api.jquery.com/click/>).
+Here, we are selecting all the `p` HTML elements, and on hover we are associated two functions, one for on hover, and the other for hover off. You can see that we are using another selector called, `this`, which selects the element in question, and then sets its colour to red or blue respectively. Note that the JQuery `hover()` function takes [two functions](http://api.jquery.com/hover/), and the JQuery [`click()`](http://api.jquery.com/click/) function requires the event to be passed through.
 
-Try adding the above code your `rango-jquery.js` file, make sure it is
-within the `$(document).ready()` function. What happens if you change
-the `$(this)` to `$(p)`?
+Try adding the above code your `rango-jquery.js` file, making sure it is within the `$(document).ready()` function. What happens if you change the `$(this)` to `$(p)`?
 
-Hover, is an example of a mouse move event, for descriptions on other
-such events, see: <http://api.jquery.com/category/events/mouse-events/>
+Hovering is an example of a mouse move event. For descriptions on other such events, see the [JQuery API documentation](http://api.jquery.com/category/events/mouse-events/).
 
-##DOM Manipulation Example
-
-In the above example, we used the `hover` function to assign an event
-handler to the on hover event, and then used the `css` function to
-change the color of the element. The `css` is one example of DOM
-manipulation, however, the stand JQuery library provides many other ways
-to manipulate the DOM. For example, we can add classes to elements, with
-the `addClass` function:
+## DOM Manipulation Example
+In the above example, we used the `hover` function to assign an event handler to the on hover event, and then used the `css` function to change the colour of the element. The `css` function is one example of DOM manipulation, however, the standard JQuery library provides many other ways in which to manipulate the DOM. For example, we can add classes to elements, with the `addClass` function:
 
 {lang="javascript",linenos=off}
 	$("#about-btn").addClass('btn btn-primary')
 
+This will select the element with `id` `#about-btn`, and assign the classes `btn` and `btn-primary` to it. By adding these Bootstrap classes, the button will now appear in the Bootstrap style (assuming you are using the Bootstrap toolkit).
 
-This will select the element with id `#about-btn`, and assign the
-classes `btn` and `btn-primary` to it. By adding these Bootstrap classes
-will mean the button will now appear in the bootstrap style (assuming
-you are using the Bootstrap toolkit).
-
-It is also possible to access the html of a particular element. For
-example, lets put a `div` in the `about.html`:
+It is also possible to access the inner HTML of a particular element. For example, lets put a `div` in the `about.html` template:
 
 {lang="html",linenos=off}
 	<div id="msg">Hello  - I'm here for a JQuery Example too</div>
-
 
 Then add the following JQuery to `rango-jquery.js`:
 
@@ -196,17 +123,6 @@ Then add the following JQuery to `rango-jquery.js`:
 	    $("#msg").html(msgstr)
 	});
 
+When the element with `id` `#about-btn` is clicked, we first get the HTML inside the element with `id` `msg` and append `"o"` to it. We then change the HTML inside the element by calling the `html()` function again, but this time passing through string `msgstr` to replace the HTML inside that element.
 
-On click of the element with id `#about-btn`, we first get the html
-inside the element with id `msg` and append "o" to it. Then we change
-the HTML inside the element by calling the `html` function again, but
-this time passing through string `msgstr` to replace the html inside
-that element.
-
-In this chapter we have provided a very rudimentary guide to using JQuery
-and incorporating it within your Django Application. From here you
-should be able to understand how JQuery operates and experiment with the
-different functions and libraries provided by JQuery and JQuery
-developers (see <http://jquery.com>). In the next chapter we will be
-using the JQuery to help provide AJAX functionality within Rango.
-
+In this chapter, we have provided a very rudimentary guide to using JQuery and how you can incorporate it within your Django app. From here, you should be able to understand how JQuery operates and experiment with the different functions and libraries provided by JQuery and JQuery developers. In the next chapter, we will be using JQuery to help provide AJAX functionality within Rango.
