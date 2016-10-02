@@ -19,7 +19,9 @@ Before we can use the template, we need to modify the HTML so that we can use it
 - Stripped out all the non-essential content from the HTML and replaced it with:
 	- `{% block body_block %}{% endblock %}`
 - Set the title element to be:
-	- `<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>`
+	- `<title>
+           Rango - {% block title %}How to Tango with Django!{% endblock %}
+       </title>`
 - Changed `project name` to be `Rango`.
 - Added the links to the index page, login, register, etc to the top nav bar.
 - Added in a side block, i.e., `{% block side_block %}{% endblock %}`
