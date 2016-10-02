@@ -3,7 +3,7 @@ So far, we've created several HTML templates for different pages within our Rang
 
 In this chapter, we will use *template inheritance* to overcome the first problem, and the *URL template tag* to solve the second problem. We will start with addressing the latter problem first.
 
-##Using Relative URLs in Templates
+## Using Relative URLs in Templates
 So far, we have been directly coding the URL of the page or view we want to
 show within the template, i.e. `<a href="/rango/about/">About</a>`. This kind of hard coding of URLs means that if we change our URL mappings in `urls.py`, then we will have to also change all of these URL references. The preferred way is to use the template tag `url` to look up the URL in the `urls.py` files and dynamically insert the URL path. 
 
@@ -70,7 +70,7 @@ The basic approach to using inheritance in templates is as follows.
 3.  Create specific templates for your app's pages - all of which inherit from the base template - and specify the contents of each block.
 
 
-###Reoccurring HTML and The Base Template
+### Reoccurring HTML and The Base Template
 Given the templates that we have created so far, it should be pretty obvious that we have been repeating a fair bit of HTML code. Below, we have abstracted away any page specific details to show the skeleton structure that we have been repeating within each template.
 
 {lang="html",linenos=on}
@@ -275,7 +275,7 @@ It would be nice to show the different categories that users can browse through 
 
 However, this is a pretty nasty solution because we will need to be repeatedly including the same code in all views. A [DRYer](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
-###Using Template Tags
+### Using Template Tags
 Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called, `rango_template_tags.py`, in which you can add the following code.
 
 {lang="python",linenos=on}
@@ -315,7 +315,7 @@ Try it out. Now all pages that inherit from `base.html` will also include the li
 T> ### Restart the Server!
 T> You'll need to restart the Django development server (or ensure it restarted itself) every time you modify template tags. If the server doesn't restart, Django won't register the tags.
 
-###Parameterised Template Tags 
+### Parameterised Template Tags 
 We can also *parameterise* the template tags we create, allowing for greater flexibility. As an example, we'll use parameterisation to highlight which category we are looking at when visiting its page. Adding in a parameter is easy - we can update the `get_category_list()` method as follows.
 
 {lang="python",linenos=off}
