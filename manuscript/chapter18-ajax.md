@@ -227,10 +227,7 @@ X> - Create a view `auto_add_page` that accepts a parameterised `GET` request ``
 X> - Map an URL to the view `url(r'^add/$', views.auto_add_page, name='auto_add_page'),`
 X> - Add an event handler to the add buttons using JQuery - when added hide the button. The response could also update the pages listed on the category page, too.
 
-T> ### Hints
-T> Below we have included code fragments to help you complete these exercises.
-
-The HTML template code for `category.html` that inserts a button, and crucially keeps a record of the category that the button is associated with.
+We have included the following code fragments to help you complete the exercises above. The HTML template code for `category.html` that inserts a button, and crucially keeps a record of the category that the button is associated with.
 
 {lang="html",linenos=off}
 	{% if user.is_authenticated %}

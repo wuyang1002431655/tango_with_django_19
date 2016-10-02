@@ -69,7 +69,7 @@ Serede Sixty Six,
 **Tanmay Kansara,**
 Thomas Murphy,
 **[Thomas Whyyou](https://twitter.com/thomaswhyyou),**
-William Vincent,** and
+William Vincent, and
 **[Zhou](https://github.com/AugustLONG).**
 
 
