@@ -3,13 +3,10 @@ Let's get started with Django! In this chapter, we'll be giving you an overview 
 
 ##Testing Your Setup
 
-Let's start by checking that your Python and Django installations are
-correct for this tutorial. To do this, open a new terminal window and issue the following
-command, which tells you what Python version you have:
+Let's start by checking that your Python and Django installations are correct for this tutorial. To do this, open a new terminal window and issue the following command, which tells you what Python version you have.
 
 {lang="text",linenos=off}
 	$ python --version
-
 
 The response should be something like `2.7.11` or `3.5.1`, but any 2.7.5+ or 3.4+ versions of Python should work fine. If you need to upgrade or install Python go to the chapter on [setting up your system](#chapter-system-setup). 
 
@@ -83,7 +80,6 @@ For the purposes of this tutorial, we call this nested directory called `tango_w
 In the project directory, you will see there is a file called `manage.py`. We will be calling this script time and time again as we develop our project. It provides you with a series of commands you can run to maintain your Django project. For example, `manage.py` allows you to run the built-in Django development server, test your application and run various database commands. We will be using the script for virtually every Django command we want to run.
 
 I> ### The Django Admin and Manage Scripts
-I>
 I> For Further Information on Django admin script, see the Django documentation for more details about the  [Admin and Manage scripts](https://docs.djangoproject.com/en/1.9/ref/django-admin/#django-admin-py-and-manage-py).
 I>
 I> Note that if you run `python manage.py help` you can see the list of commands available.
@@ -128,14 +124,13 @@ You can stop the development server at anytime by pushing `CTRL + C` in your ter
 Executing this command will force the development server to respond to incoming requests on TCP port `5555`. You will need to replace `<your_machines_ip_address>` with your computer's IP address or `127.0.0.1`. 
 
 I> ### Don't know your IP Address?
-I> 
 I> If you use `0.0.0.0`, Django figures out what your IP address is. Go ahead and try:
 I>
 I> `python manage.py runserver 0.0.0.0:5555`
 
 When setting ports, it is unlikely that you will be able to use TCP port 80 or 8080 as these are traditionally reserved for HTTP traffic. Also, any port below 1024 is considered to be [privileged](http://www.w3.org/Daemon/User/Installation/PrivilegedPorts.html) by your operating system. 
 
-While you won't be using the lightweight development server to deploy your application, it's nice to be able to demo your application on another machine in your network. Running the server with your machine's IP address will enable others to enter in `http://<your_machines_ip_address>:<port>/` and view your Web application. Of course, this will depend on how your network is configured. There may be proxy servers or firewalls in the way which would need to be configured before this would work. Check with the administrator of the network you are using if you can't view the development server remotely.
+While you won't be using the lightweight development server to deploy your application, it's nice to be able to demo your application on another machine in your network. Running the server with your machine's IP address will enable others to enter in `http://<your_machines_ip_address>:<port>/` and view your Web application. Of course, this will depend on how your network is configured. There may be proxy servers or firewalls in the way that would need to be configured before this would work. Check with the administrator of the network you are using if you can't view the development server remotely.
 
 ##Creating a Django Application
 A Django project is a collection of *configurations* and *applications* that together make up a given Web application or website. One of the intended outcomes of using this approach is to promote good software engineering practices. By developing a series of small applications, the idea is that you can theoretically drop an existing application into a different Django project and have it working with minimal effort. 
@@ -270,7 +265,6 @@ Within each application, you will create a number of URL mappings. The initial m
 It's also important to have a good understanding of how URLs are handled in Django. It may seem a bit confusing right now, but as we progress through the book, we will be creating more and more URL mappings, so you'll soon be a pro. To find out more about them, check out the [official Django documentation on URLs](https://docs.djangoproject.com/en/1.9/topics/http/urls/) for further details and further examples.
 
 I> ###Note on Regular Expressions
-I>
 I> Django URL patterns use [regular expressions](http://en.wikipedia.org/wiki/Regular_expression) to perform the matching. It is worthwhile familiarising yourself on how to use regular expressions in Python. The official Python documentation contains a [useful guide on regular expressions](http://docs.python.org/2/howto/regex.html), while `regexcheatsheet.com` provides a [neat summary of regular expressions](http://regexcheatsheet.com/).
 
 If you are using version control, now is a good time to commit the changes you have made to your workspace. Refer to the [chapter providing a crash course on Git](#chapter-git) if you can't remember the commands and steps involved in doing this.
@@ -304,7 +298,6 @@ X> - Now that you have started the book, follow us on Twitter [@tangowithdjango]
 
 
 I> ### Hints
-I> 
 I> If you're struggling to get the exercises done, the following hints will
 I> hopefully provide you with some inspiration on how to progress.
 I> 

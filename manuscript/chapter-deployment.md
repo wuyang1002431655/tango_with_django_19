@@ -166,23 +166,23 @@ The good people at PythonAnywhere have set up a sample WSGI file for us with sev
 	import os
 	import sys
 	
-	# ADD YOUR PROJECT TO THE PYTHONPATH FOR THE PYTHON INSTANCE
+	# Add your project's directory the PYTHONPATH
 	path = '/home/<username>/<path-to>/tango_with_django_project/'
 	if path not in sys.path:
 	    sys.path.append(path)
 	
-	# IMPORTANTLY GO TO THE PROJECT DIR
+	# Move to the project directory
 	os.chdir(path)
 	
-	# TELL DJANGO WHERE YOUR SETTINGS MODULE IS LOCATED
+	# Tell Django where the settings.py module is located
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 	                      'tango_with_django_project.settings')
 	
-	# IMPORT THE DJANGO SETUP
+	# Import your Django project's configuration
 	import django
 	django.setup()
 	
-	# IMPORT THE DJANGO WSGI HANDLER TO TAKE CARE OF REQUESTS
+	# Import the Django WSGI to handle any requests
 	import django.core.handlers.wsgi
 	application = django.core.handlers.wsgi.WSGIHandler()
 

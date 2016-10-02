@@ -1,4 +1,4 @@
-#Getting Ready to Tango
+# Getting Ready to Tango
 Before we get down to coding, it's really important that we get our development environment setup so that you can *Tango with Django!* You'll need to ensure that you have all the necessary components installed on your computer. This chapter outlines the five key components that you need to be aware of, setup and use. These are listed below.
 
 * Working with the [terminal](https://en.wikipedia.org/wiki/Terminal_emulator) or [Command Prompt](https://en.wikipedia.org/wiki/Cmd.exe).
@@ -73,23 +73,22 @@ Research which one is right for you, and be aware that some may require you to p
 
 We use PyCharm as it supports virtual environments and Django integration - though you will have to configure the IDE accordingly. We don't cover that here - although JetBrains do provide a [guide on setting PyCharm up](https://www.jetbrains.com/help/pycharm/2016.1/creating-and-running-your-first-django-project.html).
 
-##Code Repository
-We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on GIT](#chapter-git) for your reference which you can refer to later on. **We highly recommend that you set up a Git repository for your own projects.**
+## Code Repository
+We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on GIT](#chapter-git) for your reference that you can refer to later on. **We highly recommend that you set up a Git repository for your own projects.**
 
 X> ###Exercises
 X> 
 X> To get comfortable with your environment, try out the following exercises.
 X> 
-X>  -   Install Python 2.7.5+/3.4+ and Pip.
-X>  -   Play around with your *command line interface (CLI)* and create a directory called `code`,  which we use to create our projects in.
-X>  -   Setup your Virtual Environment (optional)
-X>  -   Install the Django and Pillow packages
-X>  -   Setup an account on a Git Repository site like: GitHub, BitBucket, etc if you haven't already done so.
-X>  -   Download and setup an Integrated Development Environment like [PyCharm](https://www.jetbrains.com/pycharm/)
+X>  - Install Python 2.7.5+/3.4+ and Pip.
+X>  - Play around with your *command line interface (CLI)* and create a directory called `code`,  which we use to create our projects in.
+X>  - Setup your Virtual Environment (optional)
+X>  - Install the Django and Pillow packages
+X>  - Setup an account on a Git Repository site like: GitHub, BitBucket, etc if you haven't already done so.
+X>  - Download and setup an Integrated Development Environment like [PyCharm](https://www.jetbrains.com/pycharm/)
 X> 
 X>  As previously stated, we've made the code for the book and application available on our [GitHub repository](https://github.com/leifos/tango_with_django_19/).
 X> 
-X>  -   If you spot any errors or problem, please let us know by making a change request on GitHub.
-X>  -   If you have any problems with the exercises, you can check out the repository to see how we completed them.
-
+X>  - If you spot any errors or problem, please let us know by making a change request on GitHub.
+X>  - If you have any problems with the exercises, you can check out the repository to see how we completed them.
 
