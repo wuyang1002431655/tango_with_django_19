@@ -304,7 +304,7 @@ T> - In the `add_page.html` template you can access the slug with ``{{ category.
 T> - Ensure that the link only appears when *the requested category exists* - with or without pages. i.e. in the template check with `{% if cat %} .... {% else %} A category by this name does not exist {% endif %}`.
 T> - Update Rango's `category.html` template with a new hyperlink with a line break immediately following it: `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
 T> - Make sure that in your `add_page.html` template that the form posts to `/rango/category/{{ category.slug }}/add_page/`.
-T> - Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
+T> - Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`) to handle the above link.
 T> - You can avoid the repetition of `max_length` parameters through the use of an additional attribute in your `Category` class. This attribute could be used to store the value for `max_length`, and then be referenced where required.
 T>
 T> If you get *really* stuck, you can always check out [our code on GitHub](https://github.com/leifos/tango_with_django_19/tree/master/code).
