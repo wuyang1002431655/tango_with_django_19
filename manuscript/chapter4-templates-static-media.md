@@ -303,7 +303,7 @@ The two variables tell Django where to look in your filesystem for media files (
 
 When we come to working with templates [later on in this book](#chapter-mtv), it'll be handy for us to obtain a reference to the `MEDIA_URL` path when we need to reference uploaded content. Django provides a [*template context processor*](https://docs.djangoproject.com/en/1.9/ref/templates/api/#django-template-context-processors-media) that'll make it easy for us to do. While we don't strictly need this set up now, it's a good time to add it in.
 
-To do this, find the `TEMPLATES` list in `settings.py`. Within that list, look for the nested `context_processors` list, and within that list, add a new processor, `django.core.context_processors.media`. Your `context_processors` list should then look similar to the example below.
+To do this, find the `TEMPLATES` list in `settings.py`. Within that list, look for the nested `context_processors` list, and within that list, add a new processor, `django.template.context_processors.media`. Your `context_processors` list should then look similar to the example below.
 
 {lang="python",linenos=off}
 	'context_processors': [
@@ -311,7 +311,7 @@ To do this, find the `TEMPLATES` list in `settings.py`. Within that list, look f
 	    'django.template.context_processors.request',
 	    'django.contrib.auth.context_processors.auth',
 	    'django.contrib.messages.context_processors.messages',
-	    'django.core.context_processors.media'
+	    'django.template.context_processors.media'
 	],
 
 ### Tweaking your URLs
