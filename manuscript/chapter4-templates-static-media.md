@@ -188,8 +188,7 @@ W> When setting `STATIC_URL`, check that you end the URL you specify with a forw
 I> ### Serving Static Content
 I> While using the Django development server to serve your static media files is fine for a development environment, it's highly unsuitable for a production environment. The [official Django documentation on deployment](https://docs.djangoproject.com/en/1.9/howto/static-files/deployment/) provides further information about deploying static files in a production environment. We'll look at this issue in more detail however when we [deploy Rango](#chapter-deploy).
 
-
-If you haven't figure it out, the image should be accessible if you visit: `http://127.0.0.1:8000/static/images/rango.jpg`.
+If you haven't managed to figure out where the image should be accessible from, point your web browser to `http://127.0.0.1:8000/static/images/rango.jpg`.
 
 ### Static Media Files and Templates
 Now that you have your Django project set up to handle static files, you can now make use of these files within your templates to improve their appearance and add additional functionality.

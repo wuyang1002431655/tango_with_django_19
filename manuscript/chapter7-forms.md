@@ -206,7 +206,7 @@ As a final step let's put a link on the index page so that we can easily add cat
 	<a href="/rango/add_category/">Add a New Category</a><br />
 
 ### Demo
-Now let's try it out! Run your Django development server, and then visit `http://127.0.0.1:8000/rango/`. Use your new link to jump to the Add Category page, and try adding a category. The [figure below](#fig-ch7-add-cat) shows screenshots of the Add Category and Index Pages.
+Now let's try it out! Start or restart your Django development server, and then point your web browser to Rango at `http://127.0.0.1:8000/rango/`. Use your new link to jump to the Add Category page, and try adding a category. The [figure below](#fig-ch7-add-cat) shows screenshots of the Add Category and Index Pages.
 
 {id="fig-ch7-add-cat"}
 >![Adding a new category to Rango with our new form.](images/ch7-add-cat.png)
@@ -302,9 +302,9 @@ T> To help you with the exercises above, the following hints may be of some use 
 T>
 T> - In the `add_page.html` template you can access the slug with ``{{ category.slug }}`` because the view passes the `category` object through to the template via the context dictionary.
 T> - Ensure that the link only appears when *the requested category exists* - with or without pages. i.e. in the template check with `{% if cat %} .... {% else %} A category by this name does not exist {% endif %}`.
-T> - Update the `category.html` with a link to `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
+T> - Update Rango's `category.html` template with a new hyperlink with a line break immediately following it: `<a href="/rango/category/{{category.slug}}/add_page/">Add Page</a> <br/>`
 T> - Make sure that in your `add_page.html` template that the form posts to `/rango/category/{{ category.slug }}/add_page/`.
 T> - Update `rango/urls.py` with a URL mapping (`/rango/category/<category_name_slug>/add_page/`)to handle the above link.
 T> - You can avoid the repetition of `max_length` parameters through the use of an additional attribute in your `Category` class. This attribute could be used to store the value for `max_length`, and then be referenced where required.
 T>
-T> If you get *really* stuck you can check out [our code on GitHub](https://github.com/leifos/tango_with_django_19/tree/master/code).
+T> If you get *really* stuck, you can always check out [our code on GitHub](https://github.com/leifos/tango_with_django_19/tree/master/code).

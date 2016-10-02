@@ -1,7 +1,7 @@
-#Django Basics {#chapter-django-basics}
+# Django Basics {#chapter-django-basics}
 Let's get started with Django! In this chapter, we'll be giving you an overview of the creation process. You'll be setting up a new project and a new Web application. By the end of this chapter, you will have a simple Django powered website up and running!
 
-##Testing Your Setup
+## Testing Your Setup
 
 Let's start by checking that your Python and Django installations are correct for this tutorial. To do this, open a new terminal window and issue the following command, which tells you what Python version you have.
 
@@ -44,7 +44,7 @@ I> Snippets beginning with a dollar sign (`$`) indicates that the remainder of t
 I>
 I> Whenever you see `>>>`, the following is a command that should be entered into the interactive Python interpreter. This is launched by issuing `$ python`. See what we did there? You can also exit the Python interpreter by entering `quit()`.
 
-##Creating Your Django Project
+## Creating Your Django Project
 To create a new Django Project, go to your `workspace` directory, and issue the following command:
 
 {lang="text",linenos=off}
@@ -132,7 +132,7 @@ When setting ports, it is unlikely that you will be able to use TCP port 80 or 8
 
 While you won't be using the lightweight development server to deploy your application, it's nice to be able to demo your application on another machine in your network. Running the server with your machine's IP address will enable others to enter in `http://<your_machines_ip_address>:<port>/` and view your Web application. Of course, this will depend on how your network is configured. There may be proxy servers or firewalls in the way that would need to be configured before this would work. Check with the administrator of the network you are using if you can't view the development server remotely.
 
-##Creating a Django Application
+## Creating a Django Application
 A Django project is a collection of *configurations* and *applications* that together make up a given Web application or website. One of the intended outcomes of using this approach is to promote good software engineering practices. By developing a series of small applications, the idea is that you can theoretically drop an existing application into a different Django project and have it working with minimal effort. 
 
 A Django application exists to perform a particular task. You need to create specific applications that are responsible for providing your site with particular kinds of functionality. For example, we could imagine that a project might consist of several applications including a polling app, a registration app, and a specific content related app. In another project, we may wish to re-use the polling and registration apps, and so can include them in other projects. We will talk about this later. For now we are going to create the application for the *Rango* app.
@@ -174,7 +174,7 @@ I> ### `startapp` Magic
 I>
 I> When creating a new app with the `python manage.py startapp` command, Django may add the new app's name to your `settings.py` `INSTALLED_APPS` list automatically for you. It's nevertheless good practice to check everything is setup correctly before you proceed.
 
-##Creating a View
+## Creating a View
 With our Rango application created, let's now create a simple view. For our first view, let's just send some text back to the client - we won't concern ourselves about using models or templates just yet.
 
 In your favourite IDE, open the file `views.py`, located within your newly created `rango` application directory. Remove the comment `# Create your views here.` so that you now have a blank file.
@@ -208,7 +208,7 @@ To create an initial mapping, open `urls.py` located in your project directory a
 
 This maps the basic URL to the `index` view in the `rango` application. Run the development server (e.g. `python manage.py runserver`) and visit `http://127.0.0.1:8000` or whatever address your development server is running on. You'll then see the rendered output of the `index` view.
 
-##Mapping URLs
+## Mapping URLs
 Rather than directly mapping URLs from the project to the application, we can make our application more modular (and thus re-usable) by changing how we route the incoming URL to a view. To do this, we first need to modify the project's `urls.py` and have it point to the application to handle any specific Rango application requests. We then need to specify how Rango deals with such requests.
 
 First, open the project's `urls.py` file which is located inside your project configuration directory. As a relative path from your workspace directory, this would be the file `<workspace>/tango_with_django_project/tango_with_django_project/urls.py`. Update the `urlpatterns` list as shown in the example below.
@@ -245,7 +245,7 @@ Consequently, we need to create a new file called `urls.py` in the `rango` appli
 
 This code imports the relevant Django machinery for URL mappings and the `views` module from `rango`. This allows us to call the function `url` and point to the `index` view for the mapping in `urlpatterns`. 
 
-When we talk about URL strings, we assume that the host portion of a given URL (e.g. `http://127.0.0.1:8000`, `http://www.tangowithdjango.com`, or whatever) has *already been stripped away*. This means that the Django machinery need only handle the remainder of the URL string. For example, given the URL `http://127.0.0.1:8000/rango/about/`, Django would have a URL string of `/rango/about/`.
+When we talk about URL strings, we assume that the host portion of a given URL has *already been stripped away*. The host portion of a URL denotes the host address or domain name that maps to the webserver, such as `http://127.0.0.1:8000` or `http://www.tangowithdjango.com` for example. Stripping the host portion away means that the Django machinery needs to only handle the remainder of the URL string. For example, given the URL `http://127.0.0.1:8000/rango/about/`, Django would have a URL string of `/rango/about/`.
 
 The URL mapping we have created above calls Django's `url()` function, where the first parameter is the regular expression `^$`, which matches to an empty string because `^` denotes starts with, while `$` denotes ends with. As there is nothing in between these characters then it only matches an empty string.  Any URL string supplied by the user that matches this pattern means that the view `views.index()` would be invoked by Django. You might be thinking that matching a blank URL is pretty pointless - what use would it serve? Remember that when the URL pattern matching takes place, only a portion of the original URL string is considered. This is because our the project will first process the original URL string (i.e. `rango/`) and strip away the `rango/` part, passing on an empty string to the Rango application to handle.
 
@@ -269,7 +269,7 @@ I> Django URL patterns use [regular expressions](http://en.wikipedia.org/wiki/Re
 
 If you are using version control, now is a good time to commit the changes you have made to your workspace. Refer to the [chapter providing a crash course on Git](#chapter-git) if you can't remember the commands and steps involved in doing this.
 
-##Basic Workflows
+## Basic Workflows
 
 What you've just learnt in this chapter can be succinctly summarised into a list of actions. Here, we provide these lists for the two distinct tasks you have performed. You can use this section for a quick reference if you need to remind yourself about particular actions later on.
 
@@ -296,14 +296,12 @@ X> - Revise the `HttpResponse` in the `index` view to include a link to the abou
 X> - In the `HttpResponse` in the `about` view include a link back to the main page.
 X> - Now that you have started the book, follow us on Twitter [@tangowithdjango](https://twitter.com/tangowithdjango), and let us know how you are getting on!
 
-
 I> ### Hints
 I> If you're struggling to get the exercises done, the following hints will
 I> hopefully provide you with some inspiration on how to progress.
 I> 
 I> - In your `views.py`, create a function called: `def about(request):`, and have the function return a HttpResponse(), insert your HTML inside this response.
 I> - The regular expression to match `about/` is `r'^about/'` - so in `rango/urls.py` add in a new mapping to the `about()` view.
-
 I> - Update your `index()` view to include a link to the `about` view. Keep it simple for now - something like `Rango says hey there partner! <br/> <a href='/rango/about/'>About</a>`. 
 I> - Also add the HTML to link back to the index page is into your response from the `about()` view `<a href="/rango/">Index</a>`.
 I>
