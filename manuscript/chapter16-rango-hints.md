@@ -472,10 +472,12 @@ X> ### Profile Page Exercise
 X>
 X> - Update the profile list to include a thumbnail of the user's profile picture.
 X> - If a user does not have a profile picture, then insert a substitute picture by using the [service provide by LoremPixel](ttp://lorempixel.com/) that lets you automatically generate images.
-X>
-X> Hint: you can use
-X> [`<img width="64" height="64" src="http://lorempixel.com/64/64/people/"/>`](http://lorempixel.com/64/64/people/) 
-X>  from LoremPixel to get a picture of `people` that is 64x64 in size. Note that it might take a few seconds for the picture to download.
+
+T> ### Image Placeholders
+T>
+T> You can use
+T> [`<img width="64" height="64" src="http://lorempixel.com/64/64/people/"/>`](http://lorempixel.com/64/64/people/) 
+T>  from LoremPixel to get a picture of `people` that is 64x64 in size. Note that it might take a few seconds for the picture to download.
 
 
 
