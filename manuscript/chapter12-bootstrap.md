@@ -42,12 +42,15 @@ Before we can use the template, we need to modify the HTML so that we can use it
 	    <meta name="description" content="">
 	    <meta name="author" content="">
 	    <link rel="icon" href="{% static 'images/favicon.ico' %}">
-	    <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+	    <title>
+	      Rango - {% block title %}How to Tango with Django!{% endblock %}
+	    </title>
 	    <!-- Bootstrap core CSS -->
 	    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" 
 	        rel="stylesheet">
 	    <!-- Custom styles for this template -->
-	    <link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" 
+	    <link href=
+	           "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" 
 	          rel="stylesheet">
 	</head>
 	<body>
@@ -104,7 +107,8 @@ Before we can use the template, we need to modify the HTML so that we can use it
 	    </script>
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	    <script 
-	      src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+	      src=
+	      "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
 	    </script>
 	</body>
 	</html>

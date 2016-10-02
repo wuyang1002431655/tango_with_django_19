@@ -232,7 +232,7 @@ T> Below we have included code fragments to help you complete these exercises.
 
 The HTML template code for `category.html` that inserts a button, and crucially keeps a record of the category that the button is associated with.
 
-lang="html",linenos=off}
+{lang="html",linenos=off}
 	{% if user.is_authenticated %}
 	    <button data-catid="{{category.id}}" data-title="{{ result.title }}"
 	        data-url="{{ result.link }}" 
