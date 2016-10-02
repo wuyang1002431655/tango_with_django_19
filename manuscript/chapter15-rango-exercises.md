@@ -16,7 +16,7 @@ To make Rango more coherent, integrated and interactive, it would be nice to add
 	- let users edit their profile, and
 	- let users see the list of users and their profiles.
 
-I> ###Note
+I> ### Note
 I> We won't be working through all of these tasks right now. Some will be taken care of in the [Django and Ajax Chapter]({#chapter-ajax}), while others will be left to you to complete as additional exercises.
 
 Before we start to add this additional functionality we will make a todo list to plan our workflow for each task. Breaking tasks down into sub-tasks will greatly simplify the implementation so that we are attacking each one with a clear plan. In this chapter, we will provide you with the workflow for a number of the above tasks. From what you have learnt so far, you should be able to fill in the gaps and implement most of it on your own (except those requiring AJAX). In the following chapter, we have included hints, tips and code snippets elaborating on how to implement these features. Of course, if you get really stuck, you can always check out our implementation on GitHub.

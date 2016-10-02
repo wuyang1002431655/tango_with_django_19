@@ -169,6 +169,9 @@ Update the category view to handle a HTTP `POST` request (i.e. when the user sub
 
 Notice that the `context_dict` now includes the `result_list` and `query`. If there is no query, we provide a default query, i.e. the category name. The query box then displays this value.
 
+{id="fig-exercises-categories"}
+![Rango's updated category view, complete with Bing search functionality.](images/ch4-first-template.png)
+
 ## Creating a `UserProfile` Instance {#section-hints-profiles}
 This section provides a solution for creating Rango `UserProfile` accounts. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.
 
@@ -472,12 +475,10 @@ X> ### Profile Page Exercise
 X>
 X> - Update the profile list to include a thumbnail of the user's profile picture.
 X> - If a user does not have a profile picture, then insert a substitute picture by using the [service provide by LoremPixel](ttp://lorempixel.com/) that lets you automatically generate images.
-
-T> ### Image Placeholders
-T>
-T> You can use
-T> [`<img width="64" height="64" src="http://lorempixel.com/64/64/people/"/>`](http://lorempixel.com/64/64/people/) 
-T>  from LoremPixel to get a picture of `people` that is 64x64 in size. Note that it might take a few seconds for the picture to download.
+X>
+X> Hint: you can use
+X> [`<img width="64" height="64" src="http://lorempixel.com/64/64/people/"/>`](http://lorempixel.com/64/64/people/) 
+X>  from LoremPixel to get a picture of `people` that is 64x64 in size. Note that it might take a few seconds for the picture to download.
 
 
 
