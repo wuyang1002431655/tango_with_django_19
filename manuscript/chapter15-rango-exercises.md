@@ -6,10 +6,10 @@ To make Rango more coherent, integrated and interactive, it would be nice to add
 - Track the clickthroughs of Categories and Pages, i.e.:
 	- count the number of times a category is viewed
 	- count the number of times a page is viewed via Rango, and
-	- collect likes for categories (see [Django and Ajax Chapter]({#chapter-ajax})).
+	- collect likes for categories (see [Django and Ajax Chapter](#chapter-ajax)).
 - Integrate the browsing and searching within categories, i.e.:
 	- instead of having a disconnected search page, let users search for pages on each specific category page, and
-	- let users filter the set of categories shown in the side bar (see [Django and Ajax Chapter]({#chapter-ajax})).
+	- let users filter the set of categories shown in the side bar (see [Django and Ajax Chapter](#chapter-ajax)).
 - Provide services for Registered Users, i.e.:
 	- Assuming you have switched the `django-registration-redux`, we need to setup the registration form to collect the additional information (i.e. website, profile picture)
 	- let users view their profile
