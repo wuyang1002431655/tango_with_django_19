@@ -86,7 +86,7 @@ Colours are important in defining the look and feel of your website. You can cha
 
 W> ### Pick Colours Sensibly
 W>
-W> Take great care when picking colours to use on your webpages. If you select colours that don’t contrast well, people simply won’t be to read your text! There are many websites available that can help you pick out a good colour scheme - try [colorcombos.com](http://www.colorcombos.com/) for starters.
+W> Take great care when picking colours to use on your webpages. If you select colours that don't contrast well, people simply won't be to read your text! There are many websites available that can help you pick out a good colour scheme - try [colorcombos.com](http://www.colorcombos.com/) for starters.
 
 Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
