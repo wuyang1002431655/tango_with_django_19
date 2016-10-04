@@ -208,29 +208,8 @@ Let's work through an example. Consider the following HTML markup and CSS code.
 
 This produces the output shown below.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-float-ex1-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	    }
-	    
-	    .css-float-ex1-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	    
-	    .css-float-ex1-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	    }
-	</style>
-	
-{lang="html",linenos=off}
-	<div class="css-float-ex1-container">
-	    <span class="css-float-ex1-yellow">Span 1</span>
-	    <span class="css-float-ex1-blue">Span 2</span>
-	</div>
+{id="fig-css-ex1"}
+![](images/css-ex1.png)
 
 We can see that each element follows its natural flow: the container element with class `container` spans the entire width of its parent container, while each of the `<span>` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text `Span 2` to the right of its container. We can achieve this by modifying our CSS `.blue` class to look like the following example.
 
