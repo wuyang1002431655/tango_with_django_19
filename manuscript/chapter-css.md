@@ -188,7 +188,7 @@ Let's work through an example. Consider the following HTML markup and CSS code.
 {lang="html",linenos=off}
 	<div class="container">
 	    <span class="yellow">Span 1</span>
-	    <span class="blue">Span 2</span>
+	    <span class="red">Span 2</span>
 	</div>
 
 {lang="css",linenos=off}
@@ -201,8 +201,8 @@ Let's work through an example. Consider the following HTML markup and CSS code.
 	    border: 1px solid black;
 	}
 	
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	}
 
@@ -211,70 +211,24 @@ This produces the output shown below.
 {id="fig-css-ex1"}
 ![](images/css-ex1.png)
 
-We can see that each element follows its natural flow: the container element with class `container` spans the entire width of its parent container, while each of the `<span>` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text `Span 2` to the right of its container. We can achieve this by modifying our CSS `.blue` class to look like the following example.
+We can see that each element follows its natural flow: the container element with class `container` spans the entire width of its parent container, while each of the `<span>` elements are enclosed inline within the parent. Now suppose that we wish to then move the red element with text `Span 2` to the right of its container. We can achieve this by modifying our CSS `.red` class to look like the following example.
 
 {lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    float: right;
 	}
 
 By applying the `float: right;` property and value pairing, we should then see something similar to the example shown below.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-float-ex2-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	    }
-	
-	    .css-float-ex2-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-float-ex2-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        float: right;
-	    }
-	</style>
-	
-{lang="html",linenos=off}
-	<div class="css-float-ex2-container">
-	    <span class="css-float-ex2-yellow">Span 1</span>
-	    <span class="css-float-ex2-blue">Span 2</span>
-	</div>
+{id="fig-css-ex2"}
+![](images/css-ex2.png)
 
-Note how the `.blue` element now appears at the right of its parent container, `.container`. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied `float: left` to the `.yellow` `<span>`?
+Note how the `.red` element now appears at the right of its parent container, `.container`. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied `float: left;` to the `.yellow` `<span>`?
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-float-ex3-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        margin-bottom: 20px;
-	    }
-	
-	    .css-float-ex3-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        float: left;
-	    }
-	
-	    .css-float-ex3-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        float: right;
-	    }
-	</style>
-	
-{lang="html",linenos=off}
-	<div class="css-float-ex3-container">
-	    <span class="css-float-ex3-yellow">Span 1</span>
-	    <span class="css-float-ex3-blue">Span 2</span>
-	</div>
+{id="fig-css-ex3"}
+![](images/css-ex3.png)
 
 This would float the `.yellow` element, removing it from the natural flow of the webpage. In effect, it is not sitting on top of the `.container` container. This explains why the parent container does not now fill down with the `<span>` elements like you would expect. You can apply the `overflow: hidden;` property to the parent container as shown below to fix this problem. For more information on how this trick works, have a look at [this QuirksMode.org online article](http://www.quirksmode.org/css/clearing.html).
 
@@ -283,32 +237,9 @@ This would float the `.yellow` element, removing it from the natural flow of the
 	    border: 1px solid black;
 	    overflow: hidden;
 	}
-	
-	<style type="text/css">
-	    .css-float-ex4-container {
-	        border: 1px solid black;
-	        overflow: hidden;
-	        padding: 10px;
-	    }
-	
-	    .css-float-ex4-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        float: left;
-	    }
-	
-	    .css-float-ex4-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        float: right;
-	    }
-	</style>
-	
-{lang="html",linenos=off}
-	<div class="css-float-ex4-container">
-	    <span class="css-float-ex4-yellow">Span 1</span>
-	    <span class="css-float-ex4-blue">Span 2</span>
-	</div>
+
+{id="fig-css-ex4"}
+![](images/css-ex4.png)
 
 Applying `overflow: hidden` ensures that our `.container` pushes down to the appropriate height.
 
@@ -320,7 +251,7 @@ Let's explain how this works. Consider our previous example where two `<span>` e
 {lang="html",linenos=off}
 	<div class="container">
 	    <span class="yellow">Span 1</span>
-	    <span class="blue">Span 2</span>
+	    <span class="red">Span 2</span>
 	</div>
 
 {lang="css",linenos=off}
@@ -334,93 +265,46 @@ Let's explain how this works. Consider our previous example where two `<span>` e
 	    border: 1px solid black;
 	}
 	
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	}
 
 This produces the following result - just as we would expect. Note that we have artificially increased the `height` of our `container` element to 150 pixels. This will allow us more room with which to play with.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-rel-ex1-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 150px;
-	    }
-	
-	    .css-rel-ex1-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-rel-ex1-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	    }
-	</style>
+{id="fig-css-ex5"}
+![](images/css-ex5.png)
 
-{lang="html",linenos=off}
-	<div class="css-rel-ex1-container">
-	    <span class="css-rel-ex1-yellow">Span 1</span>
-	    <span class="css-rel-ex1-blue">Span 2</span>
-	</div>
-
-Now let's attempt to position our `.blue` `<span>` element relatively. First, we apply the `position: relative;` property and value pairing to our `.blue` class, like so.
+Now let's attempt to position our `.red` `<span>` element relatively. First, we apply the `position: relative` property and value pairing to our `.red` class, like so.
 
 {lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    position: relative;
 	}
 
-This has no effect on the positioning of our `.blue` element. What it does do however is change the positioning of `.blue` from `static` to `relative`. This paves the way for us to specify where - from the original position of our element - we now wish the element to be located.
+This has no effect on the positioning of our `.red` element. What it does do however is change the positioning of `.red` from `static` to `relative`. This paves the way for us to specify where - from the original position of our element - we now wish the element to be located.
 
 {lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    position: relative;
 	    left: 150px;
 	    top: 80px;
 	}
 
-By applying the `left` and `top` properties as shown in the example above, we are wanting the `.blue` element to be *pushed* 150 pixels *from the left*. In other words, we move the element 150 pixels to the right. Think about that carefully! The `top` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result our experimentation can be seen below.
+By applying the `left` and `top` properties as shown in the example above, we are wanting the `.red` element to be *pushed* 150 pixels *from the left*. In other words, we move the element 150 pixels to the right. Think about that carefully! The `top` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result of our experimentation can be seen below.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-rel-ex2-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 150px;
-	    }
-	
-	    .css-rel-ex2-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-rel-ex2-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: relative;
-	        left: 150px;
-	        top: 80px;
-	    }
-	</style>
+{id="fig-css-ex6"}
+![](images/css-ex6.png)
 
-{lang="html",linenos=off}
-	<div class="css-rel-ex2-container">
-	    <span class="css-rel-ex2-yellow">Span 1</span>
-	    <span class="css-rel-ex2-blue">Span 2</span>
-	</div>
-
-From this behaviour, we can deduce that the properties `right` and `bottom` *push* elements from the right and bottom respectively. We can test this out by applying the properties to our `.yellow` class as shown below.
+From this behaviour, we can see that the properties `right` and `bottom` *push* elements from the right and bottom respectively. We can test this out by applying the properties to our `.yellow` class as shown below.
 
 {lang="css",linenos=off}
 	.yellow {
-	    background-color: blue;
+	    background-color: yellow;
 	    border: 1px solid black;
 	    float: right;
 	    position: relative;
@@ -430,110 +314,35 @@ From this behaviour, we can deduce that the properties `right` and `bottom` *pus
 
 This produces the following output. The `.yellow` container is pushed into the top left-hand corner of our container by pushing up and to the right.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-rel-ex3-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 150px;
-	    }
-	
-	    .css-rel-ex3-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        position: relative;
-	        right: 10px;
-	        bottom: 10px;
-	    }
-	
-	    .css-rel-ex3-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: relative;
-	        left: 150px;
-	        top: 80px;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-rel-ex3-container">
-	    <span class="css-rel-ex3-yellow">Span 1</span>
-	    <span class="css-rel-ex3-blue">Span 2</span>
-	</div>
+{id="fig-css-ex7"}
+![](images/css-ex7.png)
 
 T> ### Order Matters
 T>
 T> What happens if you apply both a `top` and `bottom` property, or a `left` and `right` property? Interestingly, the *first* property for the relevant axis is applied. For example, if `bottom` is specified before `top`, the `bottom` property is used.
 
-We can even apply relative positioning to elements that are floated. Consider our earlier example where the two `<span>` elements were positioned on either side of the container by floating `.blue` to the right.
+We can even apply relative positioning to elements that are floated. Consider our earlier example where the two `<span>` elements were positioned on either side of the container by floating `.red` to the right.
+
+{id="fig-css-ex8"}
+![](images/css-ex8.png)
+
+We can then alter the `.red` class to the following.
 
 {lang="css",linenos=off}
-	<style type="text/css">
-	    .css-rel-ex4-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	    }
-	
-	    .css-rel-ex4-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-rel-ex4-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        float: right;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-rel-ex4-container">
-	    <span class="css-rel-ex4-yellow">Span 1</span>
-	    <span class="css-rel-ex4-blue">Span 2</span>
-	</div>
-
-We can then alter the `.blue` class to the following.
-
-{lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    float: right;
 	    position: relative;
 	    right: 100px;
 	}
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-rel-ex5-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	    }
-	
-	    .css-rel-ex5-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-rel-ex5-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        float: right;
-	        position: relative;
-	        right: 150px;
-	    }
-	</style>
+{id="fig-css-ex9"}
+![](images/css-ex9.png)
 
-{lang="html",linenos=off}
-	<div class="css-rel-ex5-container">
-	    <span class="css-rel-ex5-yellow">Span 1</span>
-	    <span class="css-rel-ex5-blue">Span 2</span>
-	</div>
-
-This therefore means that relative positioning works from the position at which the element would have otherwise been at - regardless of any other position changing properties being applied.
+This means that relative positioning works from the position at which the element would have otherwise been at - regardless of any other position changing properties being applied.
 
 ### Absolute Positioning
-
 Our final positioning technique is *absolute positioning.* While we still modify the `position` parameter of a style, we use `absolute` as the value instead of `relative`. In contrast to relative positioning, absolute positioning places an element *relative to its first parent element that has a position value other than static.* This may sound a little bit confusing, but let's go through it step by step to figure out what exactly happens.
 
 First, we can again take our earlier example of the two coloured `<span>` elements within a `<div>` container. The two `<span>` elements are placed side-by-side as they would naturally.
@@ -541,7 +350,7 @@ First, we can again take our earlier example of the two coloured `<span>` elemen
 {lang="html",linenos=off}
 	<div class="container">
 	    <span class="yellow">Span 1</span>
-	    <span class="blue">Span 2</span>
+	    <span class="red">Span 2</span>
 	</div>
 
 {lang="css",linenos=off}
@@ -555,101 +364,42 @@ First, we can again take our earlier example of the two coloured `<span>` elemen
 	    border: 1px solid black;
 	}
 	
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	}
 
 This produces the output shown below. Note that we again set our `.container` height to an artificial value of 70 pixels to give us more room.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-abs-ex1-hidden-container {
-	        position: relative;
-	    }
-	
-	    .css-abs-ex1-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 70px;
-	    }
-	
-	    .css-abs-ex1-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-abs-ex1-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	    }
-	</style>
+{id="fig-css-ex10"}
+![](images/css-ex10.png)
 
-{lang="html",linenos=off}
-	<div class="css-abs-ex1-hidden-container">
-	    <div class="css-abs-ex1-container">
-	        <span class="css-abs-ex1-yellow">Span 1</span>
-	        <span class="css-abs-ex1-blue">Span 2</span>
-	    </div>
-	</div>
-
-We now apply absolute positioning to our `.blue` element.
+We now apply absolute positioning to our `.red` element.
 
 {lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    position: absolute;
 	}
 
-Like with relative positioning, this has no overall effect on the positioning of our blue element in the webpage. We must apply one or more of `top`, `bottom`, `left` or `right` in order for a new position to take effect. As a demonstration, we can apply `top` and `left` properties to our blue element like in the example below.
+Like with relative positioning, this has no overall effect on the positioning of our red element in the webpage. We must apply one or more of `top`, `bottom`, `left` or `right` in order for a new position to take effect. As a demonstration, we can apply `top` and `left` properties to our red element like in the example below.
 
 {lang="css",linenos=off}
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    position: absolute;
 	    top: 0;
 	    left: 0;
 	}
-	
-	<style type="text/css">
-	    .css-abs-ex2-hidden-container {
-	        position: relative;
-	        padding-top: 30px;
-	    }
-	
-	    .css-abs-ex2-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 70px;
-	    }
-	
-	    .css-abs-ex2-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	    }
-	
-	    .css-abs-ex2-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: absolute;
-	        top: 0;
-	        left: 0;
-	    }
-	</style>
 
-{lang="html",linenos=off}
-	<div class="css-abs-ex2-hidden-container">
-	    <div class="css-abs-ex2-container">
-	        <span class="css-abs-ex2-yellow">Span 1</span>
-	        <span class="css-abs-ex2-blue">Span 2</span>
-	    </div>
-	</div>
+{id="fig-css-ex11"}
+![](images/css-ex11.png)
 
-Wow, what happened here? Our blue element is now positioned outside of our container! You'll note that if you run this code within your own web browser window, the blue element appears in the top left-hand corner of the viewport. This therefore means that our `top`, `bottom`, `left` and `right` properties take on a slightly different meaning when absolute positioning is concerned.
+Wow, what happened here? Our red element is now positioned outside of our container! You'll note that if you run this code within your own web browser window, the red element appears in the top left-hand corner of the viewport. This therefore means that our `top`, `bottom`, `left` and `right` properties take on a slightly different meaning when absolute positioning is concerned.
 
-As our container element's position is by default set to `position: static`, the blue and yellow elements are moving to the top left and bottom right of our screen respectively. Let's now modify our `.yellow` class to move the yellow `<span>` to 5 pixels from the bottom right-hand corner of our page. The `.yellow` class now looks like the example below.
+As our container element's position is by default set to `position: static`, the red and yellow elements are moving to the top left and bottom right of our screen respectively. Let's now modify our `.yellow` class to move the yellow `<span>` to 5 pixels from the bottom right-hand corner of our page. The `.yellow` class now looks like the example below.
 
 {lang="css",linenos=off}
 	.yellow {
@@ -662,43 +412,8 @@ As our container element's position is by default set to `position: static`, the
 
 This produces the following result.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-abs-ex3-hidden-container {
-	        position: relative;
-	        padding: 30px 0 35px;
-	    }
-	
-	    .css-abs-ex3-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 70px;
-	    }
-	
-	    .css-abs-ex3-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        position: absolute;
-	        bottom: 5px;
-	        right: 5px;
-	    }
-	
-	    .css-abs-ex3-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: absolute;
-	        top: 0;
-	        left: 0;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-abs-ex3-hidden-container">
-	    <div class="css-abs-ex3-container">
-	        <span class="css-abs-ex3-yellow">Span 1</span>
-	        <span class="css-abs-ex3-blue">Span 2</span>
-	    </div>
-	</div>
+{id="fig-css-ex12"}
+![](images/css-ex12.png)
 
 But what if we don't want our elements to be positioned absolutely in relation to the entire page? More often than not, we'll be looking to adjusting the positioning of our elements in relation to a container. If we recall our definition for absolute positioning, we will note that absolute positions are calculated *relative to the first parent element that has a position value other than static.* As our container is the only parent for our two `<span>` elements, the container to which the absolutely positioned elements is therefore the `<body>` of our HTML page. We can fix this by adding `position: relative;` to our `.container` class, just like in the example below.
 
@@ -711,43 +426,8 @@ But what if we don't want our elements to be positioned absolutely in relation t
 
 This produces the following result. `.container` becomes the first parent element with a position value of anything other than `relative`, meaning our `<span>` elements latch on!
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-abs-ex4-hidden-container {
-	        position: relative;
-	    }
-	
-	    .css-abs-ex4-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 70px;
-	        position: relative;
-	    }
-	
-	    .css-abs-ex4-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        position: absolute;
-	        bottom: 5px;
-	        right: 5px;
-	    }
-	
-	    .css-abs-ex4-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: absolute;
-	        top: 0;
-	        left: 0;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-abs-ex4-hidden-container">
-	    <div class="css-abs-ex4-container">
-	        <span class="css-abs-ex4-yellow">Span 1</span>
-	        <span class="css-abs-ex4-blue">Span 2</span>
-	    </div>
-	</div>
+{id="fig-css-ex13"}
+![](images/css-ex13.png)
 
 Our elements are now absolutely positioned in relation to `.container`. Great! Now, let's adjust the positioning values of our two `<span>` elements to move them around.
 
@@ -760,54 +440,19 @@ Our elements are now absolutely positioned in relation to `.container`. Great! N
 	    right: 100px;
 	}
 	
-	.blue {
-	    background-color: blue;
+	.red {
+	    background-color: red;
 	    border: 1px solid black;
 	    position: absolute;
 	    float: right;
 	    bottom: 50px;
 	    left: 40px;
 	}
-	
-	<style type="text/css">
-	    .css-abs-ex5-hidden-container {
-	        position: relative;
-	    }
-	
-	    .css-abs-ex5-container {
-	        border: 1px solid black;
-	        padding: 10px;
-	        height: 70px;
-	        position: relative;
-	    }
-	
-	    .css-abs-ex5-yellow {
-	        background-color: yellow;
-	        border: 1px solid black;
-	        position: absolute;
-	        top: 20px;
-	        right: 100px;
-	    }
-	
-	    .css-abs-ex5-blue {
-	        background-color: blue;
-	        border: 1px solid black;
-	        position: absolute;
-	        float: right;
-	        bottom: 50px;
-	        left: 40px;
-	    }
-	</style>
 
-{lang="html",linenos=off}
-	<div class="css-abs-ex5-hidden-container">
-	    <div class="css-abs-ex5-container">
-	        <span class="css-abs-ex5-yellow">Span 1</span>
-	        <span class="css-abs-ex5-blue">Span 2</span>
-	    </div>
-	</div>
+{id="fig-css-ex14"}
+![](images/css-ex14.png)
 
-Note that we also apply `float: right;` to our `.blue` element. This is to demonstrate that unlike relative positioning, absolute positioning *ignores any other positioning properties applied to an element*. `top: 10px` for example will always ensure that an element appears 10 pixels down from its parent (set with `position: relative;`), regardless of whether the element has been floated or not.
+Note that we also apply `float: right;` to our `.red` element. This is to demonstrate that unlike relative positioning, absolute positioning *ignores any other positioning properties applied to an element*. `top: 10px` for example will always ensure that an element appears 10 pixels down from its parent (set with `position: relative;`), regardless of whether the element has been floated or not.
 
 ## The Box Model {#section-css-box}
 When using CSS, you're never too far away from using *padding*, *borders* and *margins*. These properties are some of the most fundamental styling techniques which you can apply to the elements within your webpages. They are incredibly important and are all related to what we call the *CSS box model.*
@@ -843,24 +488,8 @@ Lists however don't look particularly appealing to end-users. Take the following
 
 Rendered without styling, the list looks pretty boring.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-lists-border {
-	        overflow: hidden;
-	        border: 1px solid black;
-	        padding: 10px 0 10px;
-	        margin: 10px 0 10px;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-lists-border">
-	    <ul>
-	        <li>Django</li>
-	        <li>How to Tango with Django</li>
-	        <li>Two Scoops of Django</li>
-	    </ul>
-	</div>
+{id="fig-css-ex15"}
+![](images/css-ex15.png)
 
 Let's make some modifications. First, let's get rid of the ugly bullet points. With our `<ul>` element already (and conveniently) set with class `sample-list`, we can create the following style.
 
@@ -869,23 +498,10 @@ Let's make some modifications. First, let's get rid of the ugly bullet points. W
 	    list-style-type: none;
 	}
 
-This produces the following result. Note the now lacking bullet points!
+This produces the following result. Note the lack of bullet points!
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-lists-ex2 {
-	        list-style-type: none;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-lists-border">
-	    <ul class="css-lists-ex2">
-	        <li>Django</li>
-	        <li>How to Tango with Django</li>
-	        <li>Two Scoops of Django</li>
-	    </ul>
-	</div>
+{id="fig-css-ex16"}
+![](images/css-ex16.png)
 
 Let's now change the orientation of our list. We can do this by altering the `display` property of each of our list's elements (`<li>`). The following style maps to this for us.
 
@@ -896,27 +512,8 @@ Let's now change the orientation of our list. We can do this by altering the `di
 
 When applied, our list elements now appear on a single line, just like in the example below.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-lists-ex3 {
-	        list-style-type: none;
-	    }
-	
-	    .css-lists-ex3 li {
-	        display: inline;
-	    }
-	</style>
-
-{lang="css",linenos=off}
-	<div style="text-align: center;">
-	    <div class="css-lists-border">
-	        <ul class="css-lists-ex3">
-	            <li>Django</li>
-	            <li>How to Tango with Django</li>
-	            <li>Two Scoops of Django</li>
-	        </ul>
-	    </div>
-	</div>
+{id="fig-css-ex17"}
+![](images/css-ex17.png)
 
 While we may have the correct orientation, our list now looks awful. Where does one element start and the other end? It's a complete mess! Let's adjust our list element style and add some contrast and padding to make things look nicer.
 
@@ -930,30 +527,8 @@ While we may have the correct orientation, our list now looks awful. Where does 
 
 When applied, our list looks so much better - and quite professional, too!
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-lists-ex4 {
-	        list-style-type: none;
-	    }
-	
-	    .css-lists-ex4 li {
-	        display: inline;
-	        background-color: #333333;
-	        color: #FFFFFF;
-	        padding: 10px;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div style="text-align: center;">
-	    <div class="css-lists-border">
-	        <ul class="css-lists-ex4">
-	            <li>Django</li>
-	            <li>How to Tango with Django</li>
-	            <li>Two Scoops of Django</li>
-	         </ul>
-	    </div>
-	</div>
+{id="fig-css-ex18"}
+![](images/css-ex18.png)
 
 From the example, it is hopefully clear that lists can be easily customised to suit the requirements of your webpages. For more information and inspiration on how to style lists, you can check out some of the selected links below.
 
@@ -988,31 +563,10 @@ Every hyperlink's text colour is changed to red, with the default underline of t
 	    text-decoration: underline;
 	}
 
-This produces links as shown below. Hover over them to see them change!
+This produces links as shown below. Notice the change in colour of the second link - it is being hovered over.
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    .css-links-example {
-	        padding: 10px 0 10px;
-	        text-align: center;
-	    }
-	    .css-links-example a {
-	        color: red;
-	        text-decoration: none;
-	    }
-	
-	    .css-links-example a:hover {
-	        color: blue;
-	        text-decoration: underline;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div class="css-links-example">
-	    <a href="http://www.django.com/">Django</a>&nbsp;
-	    <a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;
-	    <a href="http://2scoops.org/">Two Scoops of Django</a>
-	</div>
+{id="fig-css-ex19"}
+![](images/css-ex19.png)
 
 You may not however wish for the same link styles across the entire webpage. For example, your navigation bar may have a dark background while the rest of your page has a light background. This would necessitate having different link stylings for the two areas of your webpage. The example below demonstrates how you can apply different link styles by using a slightly more complex CSS style selector.
 
@@ -1055,61 +609,10 @@ We can then construct some simple markup to demonstrate these classes.
 	    <a href="http://www.bing.co.uk/">Bing Search</a>
 	</div>
 
-The resultant output looks similar to the example shown below. Again, hover over the links to see them change!
+The resultant output looks similar to the example shown below. Code up the example above, and hover over the links in your browser to see the text colours change!
 
-{lang="css",linenos=off}
-	<style type="text/css">
-	    #css-links-multiple-dark {
-	        background-color: black;
-	        margin-bottom: 10px;
-	        padding: 5px;
-	        margin-top: 10px;
-	        width: 90%;
-	        margin-left: auto;
-	        margin-right: auto;
-	        border: 1px solid #000000;
-	    }
-	
-	    #css-links-multiple-dark a {
-	        color: white;
-	        text-decoration: underline;
-	    }
-	
-	    #css-links-multiple-dark a:hover {
-	        color: aqua;
-	    }
-	
-	    .css-links-multiple-light {
-	        background-color: white;
-	        padding: 5px;
-	        margin-bottom: 10px;
-	        width: 90%;
-	        margin-left: auto;
-	        margin-right: auto;
-	        border: 1px solid #000000;
-	    }
-	
-	    .css-links-multiple-light a {
-	        color: black;
-	        text-decoration: none;
-	    }
-	
-	    .css-links-multiple-light a:hover {
-	        color: olive;
-	        text-decoration: underline;
-	    }
-	</style>
-
-{lang="html",linenos=off}
-	<div style="text-align: center;">
-	    <div id="css-links-multiple-dark">
-	        <a href="http://www.google.co.uk/">Google Search</a>
-	    </div>
-	
-	    <div class="css-links-multiple-light">
-	        <a href="http://www.bing.co.uk/">Bing Search</a>
-	    </div>
-	</div>
+{id="fig-css-ex20"}
+![](images/css-ex20.png)
 
 With a small amount of CSS, you can make some big changes in the way your webpages appear to users.
 
