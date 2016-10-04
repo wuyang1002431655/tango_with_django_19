@@ -86,7 +86,7 @@ Django provides a [comprehensive series of built-in field types](https://docs.dj
 I> ### Other Field Types
 I> Check out the [Django documentation on model fields](https://docs.djangoproject.com/es/1.9/ref/models/fields/#model-field-types) for a full listing of the Django field types you can use, along with details on the required and optional parameters that each has.
 
-For each field, you can specify the `unique` attribute. If set to `True`, the given field’s value must be unique throughout the underlying database table that is mapped to the associated model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique, meaning that every category name must be unique. This means that you can use the field like a primary key.
+For each field, you can specify the `unique` attribute. If set to `True`, the given field's value must be unique throughout the underlying database table that is mapped to the associated model. For example, take a look at our `Category` model defined above. The field `name` has been set to unique, meaning that every category name must be unique. This means that you can use the field like a primary key.
 
 You can also specify additional attributes for each field, such as stating a default value with the syntax `default='value'`, and whether the value for a field can be blank (or [`NULL`](https://en.wikipedia.org/wiki/Nullable_type)) (`null=True`) or not (`null=False`).
 
@@ -364,7 +364,7 @@ T> Code within a conditional `if __name__ == '__main__'` statement will therefor
 E> ### Importing Models
 E> When importing Django models, make sure you have imported your project's settings by importing `django` and setting the environment variable `DJANGO_SETTINGS_MODULE` to be your project's setting file, as demonstrated in lines 1 to 6 above. You then call ``django.setup()`` to import your Django project's settings.
 E>
-E> If you don’t perform this crucial step, you’ll **get an exception when attempting to import your models. This is because the necessary Django infrastructure has not yet bee initialised.** This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
+E> If you don't perform this crucial step, you’ll **get an exception when attempting to import your models. This is because the necessary Django infrastructure has not yet been initialised.** This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
 
 The `for` loop occupying lines 51-54 is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to a new category is stored in local variable `c` - check line 52 above. This is stored because a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
 
