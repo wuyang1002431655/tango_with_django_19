@@ -252,7 +252,7 @@ I> ### Clean Overrides
 I> Overriding methods implemented as part of the Django framework can provide you with an elegant way to add that extra bit of functionality for your application. There are many methods which you can safely override for your benefit, just like the `clean()` method in `ModelForm` as shown above. Check out [the Official Django Documentation on Models](https://docs.djangoproject.com/en/1.9/topics/db/models/#overriding-predefined-model-methods) for more examples on how you can override default functionality to slot your own in.
 
 X> ###Exercises
-X> Now that you've worked through the chapter, consider the following questions, and how you could potentially solve them.
+X> Now that you've worked through the chapter, consider the following questions, and how you could solve them.
 X> 
 X> - What would happen if you don't enter in a category name on the add category form?
 X> - What happens when you try to add a category that already exists?

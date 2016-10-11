@@ -100,6 +100,7 @@ Let's first make a function to handle the cookies given the request and response
 	        #update the last visit cookie now that we have updated the count
 	        response.set_cookie('last_visit', str(datetime.now()))
 	    else:
+	        visits = 1
 	        # set the last visit cookie 
 	        response.set_cookie('last_visit', last_visit_cookie)
 	    
@@ -213,6 +214,7 @@ Since all the cookies are stored server side, we won't be changing the response 
 	        #update the last visit cookie now that we have updated the count
 	        request.session['last_visit'] = str(datetime.now())
 	    else:
+	        visits = 1
 	        # set the last visit cookie 
 	        request.session['last_visit'] = last_visit_cookie
 	
@@ -287,6 +289,6 @@ X>
 X> Now you've read through this chapter and tried out the code, give these exercises a go.
 X> 
 X> - Check that your cookies are server side. Clear the browser's cache and cookies, then check to make sure you can't see the `last_visit` and `visits` variables in the browser. Note you will still see the `sessionid` cookie. Django uses this cookie to look up the session in the database where it stores all the server side cookies about that session.
-X> - Update the *About* page view and template telling the visitors how many times they have visited the site.
+X> - Update the *About* page view and template telling the visitors how many times they have visited the site. Remember to call the `visitor_cookie_handler()` before you attempt to get the `visits` cookie from the `request.session` dictionary, otherwise if the cookie is not set it will raise an error. 
 
 [^1]: The latest version of the HTTP standard HTTP 1.1 actually supports the ability for multiple requests to be sent in one TCP network connection. This provides huge improvements in performance, especially over high-latency network connections (such as via a traditional dial-up modem and satellite). This is referred to as *HTTP pipelining*, and you can read more about this technique on [Wikipedia](http://en.wikipedia.org/wiki/HTTP_pipelining).

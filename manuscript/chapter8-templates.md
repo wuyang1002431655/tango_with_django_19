@@ -21,7 +21,7 @@ One can also reference a URL pattern without a specified name, by referencing th
 
 In this example, we must ensure that the app `rango` has the view `about`, contained within its `views.py` module.
 
-In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this you can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
+In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this, you can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
 
 {lang="html",linenos=off}
 	{% for category in categories %}
@@ -225,7 +225,7 @@ X> Now that you've worked through this chapter, there are a number of exercises 
 X>
 X> - Update all other previously defined templates in the Rango app to extend from the new `base.html` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from `base.html`. 
 X> - While you're at it, make sure you remove the links from our `index.html` template. We don't need them anymore! You can also remove the link to Rango's homepage within the `about.html` template.
-X> - Update all references to Rango URLs with the `url` template tag. You can also do this in your `views.py` module too - check out the [`reverse()` helper function](https://docs.djangoproject.com/en/1.9/ref/urlresolvers/#reverse).
+X> - Update all references to Rango URLs by using the `url` template tag. You can also do this in your `views.py` module too - check out the [`reverse()` helper function](https://docs.djangoproject.com/en/1.9/ref/urlresolvers/#reverse).
 
 
 T> ### Hints

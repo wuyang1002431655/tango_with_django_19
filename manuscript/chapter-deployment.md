@@ -31,7 +31,7 @@ First, open a Bash console from the PythonAnywhere *Consoles* tab by clicking th
 {lang="bash",linenos=off}    
 	$ mkvirtualenv --python=<python-version> rango
 
-If you've coded up the tutorial using Python 3.x, then change `<python-version>` to either `python3.4` or `python3.5`. If your are using Python 2.7.x, then change `<python-version>` to `python2.7`. The command you enter creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
+If you've coded up the tutorial using Python 3.x, then change `<python-version>` to either `python3.4` or `python3.5`. If you are using Python 2.7.x, then change `<python-version>` to `python2.7`. The command you enter creates a new virtual environment called `rango` using the version of Python that you specified. For example, below is the output for when we created a Python 2.7 virtual environment.
 
 {lang="bash",linenos=off}
 	13:38 ~ $ mkvirtualenv --python=python2.7 rango
@@ -156,7 +156,7 @@ The [Web Server Gateway Interface](http://en.wikipedia.org/wiki/Web_Server_Gatew
 
 To configure the WSGI script, navigate to the *Web* tab in PythonAnywhere's dashboard. From there, click the Web tab. Under the Code heading you can see a link to the WSGI configuration file in the Code section: e.g. `/var/www/<username>_pythonanywhere_com_wsgi.py`
 
-The good people at PythonAnywhere have set up a sample WSGI file for us with several possible configurations. For your Web application, you'll need to configure the Django section of the file. The example below demonstrates a possible configuration for you application.
+The good people at PythonAnywhere have set up a sample WSGI file for us with several possible configurations. For your Web application, you'll need to configure the Django section of the file. The example below demonstrates a possible configuration for your application.
 
 {lang="python",linenos=off}    
 	import os
@@ -202,7 +202,7 @@ Click the `Enter path` text. Set this to (all on one line):
 	/home/<username>/.virtualenvs/rango/lib/<python-version>/site-packages/django/
 	  contrib/admin/static/admin
 	
-where `<username>` should be replaced with your PythonAnywhere username. `<python-version>` should also be replaced with `2.7`, `3.4`, etc., depending on which Python version you selected. You may also need to change `rango` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path. Then click `Enter URL` and enter `/static/admin`, followed by hitting return.
+where `<username>` should be replaced with your PythonAnywhere username. `<python-version>` should also be replaced with `python2.7`, `python3.4`, etc., depending on which Python version you selected. You may also need to change `rango` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path. Then click `Enter URL` and enter `/static/admin`, followed by hitting return.
 
 Repeat the two steps above for the URL `/static/` and path `/home/<username>/<path-to>/tango_with_django_project/static`, with the path setting pointing to the `static` directory of your Web application.
 
