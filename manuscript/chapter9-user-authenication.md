@@ -490,7 +490,7 @@ This line can then be replaced with the following code.
 	    hey there partner!
 	{% endif %}
 
-As you can see, we have used Django's template language to check if the user is authenticated with `{% if user.is_authenticated %}`. If a user is logged in, then Django's machinery gives us access to the `user` object. We can tell from this object if the user is logged in (authenticated). If he or she is logged in, we can also obtain details about him or her. In the example about, the user's username will be presented to them if logged in - otherwise the generic `hey there partner!` message will be shown.
+As you can see, we have used Django's template language to check if the user is authenticated with `{% if user.is_authenticated %}`. If a user is logged in, then Django gives us access to the `user` object. We can tell from this object if the user is logged in (authenticated). If he or she is logged in, we can also obtain details about him or her. In the example about, the user's username will be presented to them if logged in - otherwise the generic `hey there partner!` message will be shown.
 
 ### Demo
 Start the Django development server and attempt to login to the application. The [figure below](#fig-ch9-user-login) shows the screenshots of the login and index page.
@@ -599,6 +599,6 @@ Many Web applications however take the concepts of user authentication further. 
 X> ### Exercises
 X> For now, work on the following two exercises to reinforce what you've learnt in this chapter.
 X>
-X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have ensure links to add or edit pages appear only if the user browsing the website is logged in.
+X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have to ensure that the links to *add* or *edit* pages appear only if the user browsing the website is logged in.
 X> - Provide informative error messages when users incorrectly enter their username or password.
 X> - Keep your templating know-how up to date by converting the restricted page view to use a template. Call the template `restricted.html`, and ensure that it too extends from Rango's `base.html` template.

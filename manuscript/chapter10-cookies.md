@@ -28,12 +28,12 @@ Without a persistent connection between the client and server, the software on b
 
 The most commonly used way of holding state is through the use of a *session ID* stored as a cookie on a client's computer. A session ID can be considered as a token (a sequence of characters, or a *string*) to identify a unique session within a particular Web application. Instead of storing all kinds of information as cookies on the client (such as usernames, names, or passwords), only the session ID is stored, which can then be mapped to a data structure on the Web server. Within that data structure, you can store all of the information you require. This approach is a **much more secure** way to store information about users. This way, the information cannot be compromised by a insecure client or a connection which is being snooped.
 
-If your browser supports cookies, pretty much all websites create a new session for you when you visit. You can see this for yourself now - check out Figure fig-session-id. In Google Chrome's developer tools, you can view cookies that are sent by the Web server you've accessed. In Figure fig-session-id, you can observe the selected cookie `sessionid`. The cookie contains a series of letters and numbers that Django uses to uniquely identify your session. From there, all your session details can be accessed - but only on the server side.
+If your browser supports cookies, pretty much all websites create a new session for you when you visit. You can see this for yourself now - check out Figure fig-session-id. In Google Chrome's developer tools, you can view cookies that are sent by the Web server you've accessed. In the figure below, you can observe the selected cookie `sessionid`. The cookie contains a series of letters and numbers that Django uses to uniquely identify your session. From there, all your session details can be accessed - but only on the server side.
 
 {id="fig-ch10-sessionid"}
 ![A screenshot of Google Chrome with the Developer Tools opened - check out the cookie `sessionid`.](images/ch10-sessionid.png)
 
-Have a closer look at the [figure above](#fig-ch10-sessionid). Do you notice the token `csrftoken`? This cookie is added by Django to reduce the risk of cross-site forgery occurring when the user submits forms, and you've been using it before in this very tutorial.
+Have a closer look at the [figure above](#fig-ch10-sessionid). Do you notice the token `csrftoken`? This cookie is added by Django to reduce the risk of cross-site forgery occurring when the user submits forms.
 
 I> ### Without Cookies
 I> An alternative way of persisting state information *without cookies* is to encode the Session ID within the URL. For example, you may have seen PHP pages with URLs like this one: `http://www.site.com/index.php?sessid=omgPhPwtfIsThisIdDoingHere332i942394`. This means you don't need to store cookies on the client machine, but the URLs become pretty ugly. These URLs go against the principles of Django - clean, human-friendly URLs.
@@ -68,7 +68,7 @@ In the `about()` view, add the following three lines to the top of the function.
 	    print("TEST COOKIE WORKED!")
 	    request.session.delete_test_cookie()
 
-With these small changes saved, run the Django development server and navigate to Rango's homepage, `http://127.0.0.1:8000/rango/`. Once the page is loaded, navigate to the registration page. When the registration page is loaded, you should see `TEST COOKIE WORKED!` appear in your Django development server's console, like in the [figure below](#fig-ch10-test-cookie).
+With these small changes saved, run the Django development server and navigate to Rango's homepage, `http://127.0.0.1:8000/rango/`. Now navigate to the registration page, you should see `TEST COOKIE WORKED!` appear in your Django development server's console, like in the [figure below](#fig-ch10-test-cookie).
 
 {id="fig-ch10-test-cookie"}
 ![A screenshot of the Django development server's console output with the `TEST COOKIE WORKED!` message.](images/ch10-test-cookie.png)
@@ -183,7 +183,7 @@ To use session based cookies you need to perform the following steps.
 
 1.  Make sure that the `MIDDLEWARE_CLASSES` list found in the `settings.py` module contains `django.contrib.sessions.middleware.SessionMiddleware`.
 2.  Configure your session backend. Make sure that `django.contrib.sessions` is in your `INSTALLED_APPS` in `settings.py`. If not, add it, and run the database migration command, `python manage.py migrate`.
-3.  By default a database backend is assumed, but you might want to another setup (i.e. a cache). See the [official Django Documentation on Sessions for other backend configurations](https://docs.djangoproject.com/en/1.9/topics/http/sessions/).
+3.  By default a database backend is assumed, but you might want to a different setup (i.e. a cache). See the [official Django Documentation on Sessions for other backend configurations](https://docs.djangoproject.com/en/1.9/topics/http/sessions/).
 
 Instead of storing the cookies directly in the request (and thus on the client's machine), you can access server-side data via the method `request.session.get()` and store them with `request.session[]`. Note that a session ID cookie is still used to remember the client's machine (so technically a browser side cookie exists). However, all the user/session data is stored server side. Django's session middleware handles the client side cookie and the storing of the user/session data. 
 

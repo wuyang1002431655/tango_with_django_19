@@ -71,7 +71,7 @@ In `rango/forms.py` add the following code.
 	        # or specify the fields to include (i.e. not include the category field)
 	        #fields = ('title', 'url', 'views')
 
-We need to specify which fields that are included on the form, via `fields`, or specify the fields that are to be excluded, via `exclude`.
+We need to specify which fields are included on the form, via `fields`, or specify which fields are to be excluded, via `exclude`.
 
 Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our `PageForm` class, we've defined `forms.CharField` for the `title` field, and `forms.URLField` for `url` field. Both fields provide text entry for users. Note the `max_length` parameters we supply to our fields - the lengths that we specify are identical to the maximum length of each field we specified in the underlying data models. Go back to the [chapter on models](#chapter-models-databases) to check for yourself, or have a look at Rango's `models.py` file.
 

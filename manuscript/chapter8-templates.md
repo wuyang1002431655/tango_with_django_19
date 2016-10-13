@@ -21,12 +21,12 @@ One can also reference a URL pattern without a specified name, by referencing th
 
 In this example, we must ensure that the app `rango` has the view `about`, contained within its `views.py` module.
 
-In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `category` URL/view takes the `category.slug` as a parameter). To handle this, you can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
+In your app's `index.html` template, you will notice that you have a parameterised URL pattern (the `show_category` URL/view takes the `category.slug` as a parameter). To handle this, you can pass the `url` template tag the name of the URL/view and the slug within the template, as follows:
 
 {lang="html",linenos=off}
 	{% for category in categories %}
 	    <li>
-	        <a href="{% url 'category' category.slug %}">
+	        <a href="{% url 'show_category' category.slug %}">
 	            {{ category.name }}
 	        </a>
 	    </li>
