@@ -32,6 +32,7 @@ Dan C,
 **[Dhiraj Thakur](https://github.com/dhirajt),**
 Duncan Drizy,
 **[Giles T.](https://github.com/gpjt),**
+[Gerardo A-C](https://github.com/gerac83),
 [Grigoriy M](https://github.com/GriMel),
 **James Yeo,**
 [Jan Felix Trettow](https://tiwtter.com/JanFelixTrettow),
