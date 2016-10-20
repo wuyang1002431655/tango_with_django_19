@@ -257,8 +257,8 @@ T>
 T> 	    class Meta:
 T> 	        verbose_name_plural = 'Categories'
 T> 	        
-T> 	        def __str__(self):
-T> 	            return self.name
+T> 	    def __str__(self):
+T> 	        return self.name
 
 I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.

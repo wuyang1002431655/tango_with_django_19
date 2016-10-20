@@ -27,6 +27,7 @@ Burak Karaboga,
 [Codenius](https://twitter.com/Codenius),
 **[cspollar](https://github.com/cspollar),**
 Dan C,
+**[Darius](https://github.com/dariushazimi),**
 **David Manlove,**
 [Devin Fitzsimons](https://github.com/aisflat439),
 **[Dhiraj Thakur](https://github.com/dhirajt),**
