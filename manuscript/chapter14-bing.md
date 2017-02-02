@@ -6,11 +6,9 @@ The Bing Search API provides you with the ability to embed search results from t
 
 Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, you will need to sign up for an *API key*. The key currently provides subscribers with access to 5000 queries per month, which should be more than enough for our purposes.
 
-I> Application Programming Interface (API)
+I> ### Application Programming Interface (API)
 I>
-I> An (Application Programming Interface)[ http://en.wikipedia.org/wiki/Application_programming_interface>] specifies how software components should interact with one another.
-I> In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. 
-I> Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, (Luis Rei provides an excellent tutorial on APIs)[ http://blog.luisrei.com/articles/rest.html].
+I> An [Application Programming Interface](http://en.wikipedia.org/wiki/Application_programming_interface) specifies how software components should interact with one another. In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, [Luis Rei provides an excellent tutorial on APIs](http://blog.luisrei.com/articles/rest.html).
 
 
 ### Registering for a Bing API Key
