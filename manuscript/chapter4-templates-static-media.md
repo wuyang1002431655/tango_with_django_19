@@ -271,8 +271,7 @@ T>
 T> For further information about including static media you can read through the official [Django documentation on working with static files in templates](https://docs.djangoproject.com/en/1.9/howto/static-files/#staticfiles-in-templates).
 
 ## Serving Media {#section-templates-upload}
-Static media files can be considered files that don't change and are essential to your application. However, often you will have to store *media files* which are dynamic in nature, and are loaded into your database, by your users or administrators, and so they may change.
-For example when a user uploads their profile picture, or if you have table of products where each product contains an image of the item.
+Static media files can be considered files that don't change and are essential to your application. However, often you will have to store *media files* which are dynamic in nature. These files can be uploaded by your users or administrators, and so they may change. As an example, a media file would be a user's profile picture. If you run an e-commerce website, a series of media files would be used as images for the different products that your online shop has.
 
 In order to serve media files successfully, we need to update Django project's settings. This section details what you need to add - [but we won't be fully testing it out until later](#chapter-ex) where we implement the functionality for users to upload profile pictures.
 
@@ -362,9 +361,12 @@ X> * Convert the about page to use a template as well, using a template called `
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
 X> * In your Django project directory, create a new directory called `media`, download a picture of a cat and save it the media directory in a file called `cat.jpg`. 
-X> * In your about page, add in the `<img>` tag to display the picture of the cat, to ensure that your media is being served correctly.
+X> * In your **about page**, add in the `<img>` tag to display the picture of the cat, to ensure that your media is being served correctly. Keep the static image of Rango in your index page!
 
-
+T> ### Static and Media Files
+T> Remember: static files, as the name implies, do not change. These files form the core components of your website. Media files are user defined; and as such, they may change often!
+T>
+T> An example of a static file could be a stylesheet file, which determines the appearance of your app's webpages. An example of a media file could be a user profile image, which is uploaded by the user when they create an account on your app.
 
 
 <!---
