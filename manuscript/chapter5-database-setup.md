@@ -438,14 +438,14 @@ X> * Customise the admin interface. Change it in such a way so that when you vie
 T> ### Exercise Hints
 T> If you require some help or inspiration to complete these exercises done, here are some hints.
 T> 
-T> * Modify the `Category` model by adding in the fields `views` and `likes` as `IntegerField`s.
-T> * In your population script, you can then modify the `add_cat()` function. Add two parameters called `views` and `likes`. These parameters will then allow you to set the `views` and `likes` fields in the `Category` object that is created within the `add_cat()` function, which is called `c`.
+T> * Modify the `Category` model by adding two `IntegerField`s: `views` and `likes`.
+T> * In your population script, you can then modify the `add_cat()` function to manipulate the value of the new `views` and `likes` fields in the `Category` model.
 T>
-T>      * Indented?
+T>      * You'll need to add two parameters to the definition of `add_cat()` so that `views` and `likes` values can be passed to the function, as well as a `name` for the category.
+T>      * You can then use these parameters to set the `views` and `likes` fields within the new `Category` model instance you create within the `add_cat()` function, which is assigned to variable `c` in the population script defined earlier in this chapter. As an example, you can access the `likes` field using the notation `c.likes`. Don't forget to `save()` the instance!
+T>      * You then need to update the `cats` dictionary in the `populate()` function of your population script. Look at the dictionary. Each [key/value pairing](https://www.tutorialspoint.com/python/python_dictionary.htm) represents the *name* of the category as the key, and an additional dictionary containing additional information relating to the category as the *value*. You'll want to tweak this dictionary to include `views` and `likes` for each category.
+T>      * The final step involves you modifying how you call the `add_cat()` function. You now have three parameters to pass (`name`, `views` and `likes`); your code (on line 52) provides only the `name`. You need to add the additional two fields to the function call. If you aren't sure how the `for` loop works over dictionaries, check out this online Python tutorial. From here, you can figure out how to access the `views` and `likes` values from your dictionary.
 
-
-T> * Modify the `Category` model by adding in the fields, `view` and `likes` as `IntegerFields`.
-T> * Modify the `add_cat` function in the `populate.py` script. Add two parameters to the function called `views` and `likes`. Once you get the `Category` `c`, then you can update the number of views with `c.views`, and similarly with `likes`. Don't forget to `save()` the instance!
 T> * To customise the admin interface, you will need to edit `rango/admin.py` and create a `PageAdmin` class that inherits from `admin.ModelAdmin`. 
 T> * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
 T> * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
