@@ -445,8 +445,8 @@ T>      * You can then use these parameters to set the `views` and `likes` field
 T>      * You then need to update the `cats` dictionary in the `populate()` function of your population script. Look at the dictionary. Each [key/value pairing](https://www.tutorialspoint.com/python/python_dictionary.htm) represents the *name* of the category as the key, and an additional dictionary containing additional information relating to the category as the *value*. You'll want to modify this dictionary to include `views` and `likes` for each category.
 T>      * The final step involves you modifying how you call the `add_cat()` function. You now have three parameters to pass (`name`, `views` and `likes`); your code currently provides only the `name`. You need to add the additional two fields to the function call. If you aren't sure how the `for` loop works over dictionaries, check out [this online Python tutorial](https://www.tutorialspoint.com/python/python_dictionary.htm). From here, you can figure out how to access the `views` and `likes` values from your dictionary.
 T> * After your population script has been updated, you can move on to customising the admin interface. You will need to edit `rango/admin.py` and create a `PageAdmin` class that inherits from `admin.ModelAdmin`. 
-T> * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
-T> * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
+T>      * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
+T>      * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
 
 I> ### Tests
 I>

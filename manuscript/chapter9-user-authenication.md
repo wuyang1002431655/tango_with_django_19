@@ -279,7 +279,7 @@ Now we need to make the template that will be used by the new `register()` view.
 	{% endblock %}
 	
 	{% block body_block %}
-	    <h1>About Page</h1>
+	    <h1>Register for Rango</h1>
 	    {% if registered %}
 	        Rango says: <strong>thank you for registering!</strong>
 	        <a href="{% url 'index' %}">Return to the homepage.</a><br />
