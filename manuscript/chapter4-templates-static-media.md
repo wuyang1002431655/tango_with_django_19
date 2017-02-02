@@ -49,7 +49,7 @@ Note that you are *required to use absolute paths* to locate the `templates` dir
 	          '/Users/clueless_noob/templates', ]
 
 	
-However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the black slashes have to be constructed differently.
+However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the backslashes have to be constructed differently.
 
 W> ### Don't hard code Paths!
 W> The road to hell is paved with hard coded paths. [Hard-coding paths](http://en.wikipedia.org/wiki/Hard_coding) is a [software engineering anti-pattern](http://sourcemaking.com/antipatterns), and will make your project [less portable](http://en.wikipedia.org/wiki/Software_portability) - meaning that when you run it on another computer, it probably won't work!
@@ -361,7 +361,7 @@ X>
 X> * Convert the about page to use a template as well, using a template called `about.html`.
 X> * Within the new `about.html` template, add a picture stored within your project's static files.
 X> * On the about page, include a line that says, `This tutorial has been put together by <your-name>`.
-X> * In your Django project directory, create a new directory called `media`, download a picture of a cat and save it the media directory in a file called, `cat.jpg`. 
+X> * In your Django project directory, create a new directory called `media`, download a picture of a cat and save it the media directory in a file called `cat.jpg`. 
 X> * In your about page, add in the `<img>` tag to display the picture of the cat, to ensure that your media is being served correctly.
 
 
