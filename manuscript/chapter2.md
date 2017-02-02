@@ -74,7 +74,7 @@ Research which one is right for you, and be aware that some may require you to p
 We use PyCharm as it supports virtual environments and Django integration - though you will have to configure the IDE accordingly. We don't cover that here - although JetBrains do provide a [guide on setting PyCharm up](https://www.jetbrains.com/help/pycharm/2016.1/creating-and-running-your-first-django-project.html).
 
 ## Code Repository
-We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [GIT](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on GIT](#chapter-git) for your reference that you can refer to later on. **We highly recommend that you set up a Git repository for your own projects.**
+We should also point out that when you develop code, you should always house your code within a version-controlled repository such as [SVN](http://subversion.tigris.org/) or [Git](http://git-scm.com/). We won't be explaining this right now, so that we can get stuck into developing an application in Django. We have however written a [chapter providing a crash course on Git](#chapter-git) for your reference that you can refer to later on. **We highly recommend that you set up a Git repository for your own projects.**
 
 X> ###Exercises
 X> 

@@ -283,7 +283,7 @@ E> {lang="python",linenos=off}
 E> 	from django.contrib.auth.decorators import login_required
 
 ### Mapping the View to a URL
-Now that our template `ModelForm` and corresponding view have all been implemented, a seasoned Djangoer should now be thinking: *map it!* We need to map our new view to a URL, so that users can access the newly created content. Opening up Rango’s `urls.py` module and adding the following line to the `urlpatterns` list will achieve this.
+Now that our template `ModelForm` and corresponding view have all been implemented, a seasoned Djangoer should now be thinking: *map it!* We need to map our new view to a URL, so that users can access the newly created content. Opening up Rango's `urls.py` module and adding the following line to the `urlpatterns` list will achieve this.
 
 {lang="python",linenos=off}
 	url(r'^register_profile/$', views.register_profile, name='register_profile'),

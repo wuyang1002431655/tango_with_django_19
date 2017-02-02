@@ -347,7 +347,7 @@ To create a population script for Rango, start by creating a new Python module w
 	    populate()
 
 T> ### Understand this Code!
-T> To reiterate, don't simply copy, paste and leave. Add the code to your new module, and then step through line by line to work out what is going on. It'll help with your understanding.
+T> **To reiterate, don't simply copy, paste and leave.** Add the code to your new module, and then step through line by line to work out what is going on. It'll help with your understanding.
 T> 
 T> We've explanations below - hopefully you'll learn something new!
 T>
@@ -364,7 +364,7 @@ T> Code within a conditional `if __name__ == '__main__'` statement will therefor
 E> ### Importing Models
 E> When importing Django models, make sure you have imported your project's settings by importing `django` and setting the environment variable `DJANGO_SETTINGS_MODULE` to be your project's setting file, as demonstrated in lines 1 to 6 above. You then call ``django.setup()`` to import your Django project's settings.
 E>
-E> If you don't perform this crucial step, you’ll **get an exception when attempting to import your models. This is because the necessary Django infrastructure has not yet been initialised.** This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
+E> If you don't perform this crucial step, you'll **get an exception when attempting to import your models. This is because the necessary Django infrastructure has not yet been initialised.** This is why we import `Category` and `Page` *after* the settings have been loaded on line 8.
 
 The `for` loop occupying lines 51-54 is responsible for the calling the `add_cat()` and `add_page()` functions repeatedly. These functions are in turn responsible for the creation of new categories and pages. `populate()` keeps tabs on categories that are created. As an example, a reference to a new category is stored in local variable `c` - check line 52 above. This is stored because a `Page` requires a `Category` reference. After `add_cat()` and `add_page()` are called in `populate()`, the function concludes by looping through all new `Category` and associated `Page` objects, displaying their names on the terminal.
 
@@ -427,6 +427,7 @@ X>
 X> * Update the `Category` model to include the additional attributes `views` and `likes` where the `default` values for each are both zero (`0`).
 X> * Make the migrations for your app and then migrate your database to commit the changes.
 X> * Update your population script so that the `Python` category has `128` views and `64` likes, the `Django` category has `64` views and `32` likes, and the `Other Frameworks` category has `32` views and `16` likes.
+    X> Indented point.
 X> * Delete and recreate your database, populating it with your updated population script.
 X> * Complete parts [two](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) and [seven](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) of the official Django tutorial. These sections will reinforce what you've learnt on handling databases in Django, and show you additional techniques to customising the Django admin interface.
 X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed). You will need to complete the previous exercises or at least go through the official Django Tutorial to complete this exercise.
