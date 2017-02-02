@@ -422,12 +422,11 @@ Invariably, there will be times when you will have to delete your database. When
 2. Create a new administrative account with the `createsuperuser` command.
 
 X> ### Exercises
-X> Now that you've completed this chapter, try out these exercises to reinforce and practice what you have learnt. **Once again, note that the following chapters will have expected you to have completed these exercises!**
+X> Now that you've completed this chapter, try out these exercises to reinforce and practice what you have learnt. **Once again, note that the following chapters will have expected you to have completed these exercises! If you're stuck, there are some hints to help you complete the exercises below.**
 X>
 X> * Update the `Category` model to include the additional attributes `views` and `likes` where the `default` values for each are both zero (`0`).
 X> * Make the migrations for your app and then migrate your database to commit the changes.
 X> * Update your population script so that the `Python` category has `128` views and `64` likes, the `Django` category has `64` views and `32` likes, and the `Other Frameworks` category has `32` views and `16` likes.
-    X> Indented point.
 X> * Delete and recreate your database, populating it with your updated population script.
 X> * Complete parts [two](https://docs.djangoproject.com/en/1.9/intro/tutorial02/) and [seven](https://docs.djangoproject.com/en/1.9/intro/tutorial07/) of the official Django tutorial. These sections will reinforce what you've learnt on handling databases in Django, and show you additional techniques to customising the Django admin interface.
 X> * Customise the admin interface. Change it in such a way so that when you view the `Page` model, the table displays the `category`, the `name` of the page and the `url` - just [like in the screenshot shown below](#fig-admin-completed). You will need to complete the previous exercises or at least go through the official Django Tutorial to complete this exercise.
@@ -439,8 +438,14 @@ X> * Customise the admin interface. Change it in such a way so that when you vie
 T> ### Exercise Hints
 T> If you require some help or inspiration to complete these exercises done, here are some hints.
 T> 
+T> * Modify the `Category` model by adding in the fields `views` and `likes` as `IntegerField`s.
+T> * In your population script, you can then modify the `add_cat()` function. Add two parameters called `views` and `likes`. These parameters will then allow you to set the `views` and `likes` fields in the `Category` object that is created within the `add_cat()` function, which is called `c`.
+T>
+T>      * Indented?
+
+
 T> * Modify the `Category` model by adding in the fields, `view` and `likes` as `IntegerFields`.
-T> * Modify the `add_cat` function in the `populate.py` script, to take the `views` and `likes`. Once you get the `Category` `c`, then you can update the number of views with `c.views`, and similarly with `likes`. Don't forget to `save()` the instance!
+T> * Modify the `add_cat` function in the `populate.py` script. Add two parameters to the function called `views` and `likes`. Once you get the `Category` `c`, then you can update the number of views with `c.views`, and similarly with `likes`. Don't forget to `save()` the instance!
 T> * To customise the admin interface, you will need to edit `rango/admin.py` and create a `PageAdmin` class that inherits from `admin.ModelAdmin`. 
 T> * Within your new `PageAdmin` class, add `list_display = ('title', 'category', 'url')`.
 T> * Finally, register the `PageAdmin` class with Django's admin interface. You should modify the line `admin.site.register(Page)`. Change it to `admin.site.register(Page, PageAdmin)` in Rango's `admin.py` file.
