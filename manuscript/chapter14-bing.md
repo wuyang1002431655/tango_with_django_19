@@ -20,7 +20,7 @@ When your account has been created, go to the [Windows Azure Marketplace Bing Se
 On the right hand side of the page you should see a list of transactions per month. At the bottom of the list is *5,000 Transactions/month*. Click the sign up button to the right - subscribe for the free service.
 
 {id="fig-bing-search"}
-![The Bing Search API services - sign up for the 5000 transactions/month for free.
+![The Bing Search API services - sign up for the 5,000 transactions/month for free.
 ](images/ch14-bing-search-api.png)
 
 <!--> Once you've read the *Publisher Offer Terms*, agreed and click *Sign Up* to continue. You will  then be presented with a page confirming that you have successfully signed up.-->

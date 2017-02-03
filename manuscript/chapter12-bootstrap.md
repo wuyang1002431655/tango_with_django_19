@@ -8,7 +8,7 @@ Now take a look at the [Bootstrap 4.0 website](http://v4-alpha.getbootstrap.com/
 
 To style Rango we have identified that the [dashboard style](http://v4-alpha.getbootstrap.com/examples/dashboard/) more or less meets our needs in terms of the layout of Rango, i.e. it has a menu bar at the top, a side bar (which we will use to show categories) and a main content pane. 
 
-Download and save the HTML source for the Dashboard layout to a file called, `base_bootstrap.html` and save it to your `templates/rango` folder.
+Download and save the HTML source for the Dashboard layout to a file called, `base_bootstrap.html` and save it to your `templates/rango` directory.
 
 Before we can use the template, we need to modify the HTML so that we can use it in our application. The changes that we performed are listed below along with the updated HTML (so that you don't have to go to the trouble).
 
@@ -123,7 +123,7 @@ In this new template, we have assumed that you have completed the chapters on Us
 Also of note is that the HTML template makes references to external websites to request the required `css` and `js` files. So you will need to be connected to the internet for the style to be loaded when you run the application.
 
 I> ###Working Offline?
-I> Rather than including external references to the `css` and `js` files, you could download all the associated files and store them in your static folder. If you do this, simply update the base template to reference the static files stored locally. 
+I> Rather than including external references to the `css` and `js` files, you could download all the associated files and store them in your static directory. If you do this, simply update the base template to reference the static files stored locally. 
 
 	
 ## Quick Style Change

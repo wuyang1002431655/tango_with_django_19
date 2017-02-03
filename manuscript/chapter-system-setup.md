@@ -53,7 +53,7 @@ By default, Microsoft Windows comes with no installations of Python. This means 
 2.  Follow the on-screen prompts to install Python.
 3.  Close the installer once completed, and delete the downloaded file.
 
-Once the installer is complete, you should have a working version of Python ready to go. By default, Python 2.7.5 is installed to the folder `C:\Python27`. We recommend that you leave the path as it is.
+Once the installer is complete, you should have a working version of Python ready to go. By default, Python 2.7.5 is installed to the directory `C:\Python27`. We recommend that you leave the path as it is.
 
 Upon the completion of the installation, open a Command Prompt and enter the command `python`. If you see the Python prompt, installation was successful. However, in certain circumstances, the installer may not set your Windows installation's `PATH` environment variable correctly. This will result in the `python` command not being found. Under Windows 7, you can rectify this by performing the following:
 
@@ -88,7 +88,7 @@ If all works, you should then see output that looks something similar to the exa
 	/opt/local/Library/Frameworks/Python.framework/
 	    Versions/2.7/lib/python2.7/site-packages:
 
-This is the path to your Python installation's `site-packages` directory, where additional Python packages and modules are stored. If you see a path, you can continue to the next part of this tutorial. If you however do not see anything, you'll need to do a little bit of detective work to find out the path. On a Windows installation, this should be a trivial exercise: `site-packages` is located within the `lib` folder of your Python installation directory. For example, if you installed Python to `C:\Python27`, `site-packages` will be at `C:\Python27\Lib\site-packages\`.
+This is the path to your Python installation's `site-packages` directory, where additional Python packages and modules are stored. If you see a path, you can continue to the next part of this tutorial. If you however do not see anything, you'll need to do a little bit of detective work to find out the path. On a Windows installation, this should be a trivial exercise: `site-packages` is located within the `lib` directory of your Python installation directory. For example, if you installed Python to `C:\Python27`, `site-packages` will be at `C:\Python27\Lib\site-packages\`.
 
 UNIX-based operating systems however require a little bit of detective work to discover the path of your `site-packages` installation. To do this, launch the Python interpreter. The following terminal session demonstrates the commands you should issue.
 
@@ -115,7 +115,7 @@ The string which is shown as a result of executing `print site.getsitepackages()
 
 Replace `<PATH_TO_SITE-PACKAGES>` with the path to your `site-packages` directory. Save the file, and quit and reopen any instances of your terminal.
 
-On a Windows-based computer, you must follow the [instructions shown above](#section-system-setup-python-windows) to bring up the environment variables settings dialog. Add a `PYTHONPATH` variable with the value being set to your `site-packages` folder, which is typically `C:\Python27\Lib\site-packages\`.
+On a Windows-based computer, you must follow the [instructions shown above](#section-system-setup-python-windows) to bring up the environment variables settings dialog. Add a `PYTHONPATH` variable with the value being set to your `site-packages` directory, which is typically `C:\Python27\Lib\site-packages\`.
 
 ## Using `setuptools` and `pip`
 Installing and setting up your development environment is a really important part of any project. While it is possible to install Python Packages such as Django separately, this can lead to numerous problems and hassles later on. For example, how would you share your setup with another developer? How would you set up the same environment on your new machine? How would you upgrade to the latest version of the package? Using a package manager removes much of the hassle involved in setting up and configuring your environment. It will also ensure that the package you install is the correct for the version of Python you are using, along with installing any other packages that are dependent upon the one you want to install.

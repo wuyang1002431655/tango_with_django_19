@@ -206,7 +206,7 @@ where `<username>` should be replaced with your PythonAnywhere username. `<pytho
 
 Repeat the two steps above for the URL `/static/` and path `/home/<username>/<path-to>/tango_with_django_project/static`, with the path setting pointing to the `static` directory of your Web application.
 
-With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget the about potential for `HTTP 502 - Bad Gateway` errors. Setting the static folders means that when you visit the `admin` interface, it has the predefined Django style sheets, and that you can access images and scripts. Reload your Web application, and you should now notice that your images are present.
+With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget the about potential for `HTTP 502 - Bad Gateway` errors. Setting the static directories means that when you visit the `admin` interface, it has the predefined Django style sheets, and that you can access images and scripts. Reload your Web application, and you should now notice that your images are present.
 
 ### Bing API Key
 [Add your Bing API key]({#section-bing-adding-key}) to `bing.key` to enable the search functionality in Rango.

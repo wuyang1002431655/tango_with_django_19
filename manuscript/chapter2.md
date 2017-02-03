@@ -92,3 +92,5 @@ X>
 X>  - If you spot any errors or problem, please let us know by making a change request on GitHub.
 X>  - If you have any problems with the exercises, you can check out the repository to see how we completed them.
 
+D> ### What is a Directory?
+D> In the text above, we refer to creating a *directory*. But what exactly is a *directory*? If you have used a Windows computer up until now, you'll know a directory as a *folder*. The concept of a folder is analogous to a directory - it is a cataloguing structure that contains references to other files and directories.
