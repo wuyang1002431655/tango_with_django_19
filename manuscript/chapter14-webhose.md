@@ -280,7 +280,7 @@ Let's first start at the beginning, and create a new template called `search.htm
 The template code above performs two key tasks.
 
 * The template presents a search box and *Search* button within a HTML `<form>` for users to enter and submit their queries.
-* Id a `results_list` object is passed to the template's context when rendering, the template then iterates through the `results_list` object, rendering the results contained within. The template expects that each result consists of a `title`, `link` and `summary` -- consistent with what is returned from the `run_query()` function defined earlier in this chapter.
+* If a `results_list` object is passed to the template's context when rendering, the template then iterates through the `results_list` object, rendering the results contained within. The template expects that each result consists of a `title`, `link` and `summary` -- consistent with what is returned from the `run_query()` function defined earlier in this chapter.
 
 To style the page that is rendered, we have made use of Bootstrap [panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
 
