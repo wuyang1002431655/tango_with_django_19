@@ -82,7 +82,9 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	    query_string = urllib.quote(search_terms)
 	
 	    # Use string formatting to construct the complete API URL.
-	    search_url = '{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}'.format(
+	    # search_url is a string split over multiple lines.
+	    search_url = ('{root_url}?token={key}&format=json&q={query}'
+	                  '&sort=relevancy&size={size}').format(
 	                    root_url=root_url,
 	                    key=webhose_api_key,
 	                    query=query_string,
@@ -151,7 +153,9 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	    query_string = urllib.parse.quote(search_terms)  # Py3
 	
 	    # Use string formatting to construct the complete API URL.
-	    search_url = '{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}'.format(
+	    # search_url is a string split over multiple lines.
+	    search_url = ('{root_url}?token={key}&format=json&q={query}'
+	                  '&sort=relevancy&size={size}').format(
 	                    root_url=root_url,
 	                    key=webhose_api_key,
 	                    query=query_string,
@@ -162,7 +166,7 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	    try:
 	        # Connect to the Webhose API, and convert the response to a
 	        # Python dictionary.
-	        response = urllib.request.urlopen(search_url).read().decode('utf-8')  # Py3
+	        response = urllib.request.urlopen(search_url).read().decode('utf-8')
 	        json_response = json.loads(response)
 	    
 	        # Loop through the posts, appendng each to the results list as
