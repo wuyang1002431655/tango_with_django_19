@@ -184,8 +184,43 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 In the code samples above, we have implemented two functions: one to retrieve your Webhose API key from a local file (through function `read_webhose_key()`), and another to issue a query to the Webhose API and return results (`run_query()`). Below, we discuss how both of the functions work.
 
 ### `read_webhose_key()` -- Reading the Webhose API Key
+The `read_webhose_key()` function reads in your Webhose API key from a file called `webhose.key`. This file should be located in your Django project's root directory, **not Rango's directory** (i.e. `<workspace>/tango_with_django_project/`). We have created this function as it allows you to separate your private API key from the code that utilises it. This is advantageous in scenarios where code is shared publicly (i.e. on GitHub) -- you don't want people using your API key!
+
+You should create the `webhose.key` file now. Take the Webhose API key you copied earlier, and save it into the file `<workspace/tango_with_django_project/webhose.key>`. The key should be the only contents of the file -- nothing else should exist within it. Avoid committing the file to your GitHub repository by updating your repository's `.gitignore` file to exclude any files with a `.key` extension by adding the line `*.key`. This way, your key is only stored locally, and cannot be committed to your remote Git repository by accident.
+
+T> ### Keys
+T> Keep them secret, keep them safe!
 
 ### `run_query()` -- Executing the Query
+The `run_query()` function takes two parameters: `search_terms`, a string representing a user's query; and `size`, an [optional parameter](http://www.diveintopython.net/power_of_introspection/optional_arguments.html), set to a default of `10`. This second parameter allows us to control the number of results to return from the Webhose API. Given these parameters, the function then communicates with the Webhose API, and returns a series of Python dictionaries within a list, with each dictionary representing an individual result -- consisting of a result `title`, `link` and `summary`. The inline commentary in the function definitions above (for both Python 2.7.x and Python 3) explain what's happening at each stage -- check out the commentary further to increase your understanding of what is going on.
+
+To summarise, the logic of `run_query()` can be broadly split into seven main tasks, which are explained below.
+
+* First, the function obtains the Webhose API key by calling the `read_webhose_key()` function.
+* The function then correctly formats the query string to be sent to the API. This is done by [*URL endcoding*](https://en.wikipedia.org/wiki/Percent-encoding) the string, converting special characters such as spaces to a format that can be understood by Web servers and browsers. As an example, the space character `' '` is converted to `%20`.
+* The complete URL for the Webhose API call is then constructed by concatenating the URL encoded `search_terms` string and `size` parameters -- as well as your Webhose API key -- together into a series of [querystring](https://en.wikipedia.org/wiki/Query_string) arguments as dictated by the [Webhose API documentation](https://webhose.io/documentation).
+* We then connect to the Webhose API using the Python `urllib2` (for Python 2.7.x) or `urllib` modules. The string response from the server is then saved in the variable `response`.
+* This response is then converted to a Python dictionary object using the Python `json` library.
+* The dictionary is then iterated over, with each result returned from the Webhose API saved to the `results` list as a dictionary, consisting of `title`, `link` and `summary` key/value pairings.
+* The `results` list is then returned by the function.
+
+I> ### Exploring API Options
+I> When starting off with a new API, it's always a good idea to explore the provided documentation to see what options you can play with. We recommend exploring the [Webhose API documentation](https://webhose.io/documentation) and play around with some of the options that you can vary.
+
+X> ### Exercises
+X> Extend your `bing_search.py` module so that it can be run independently, i.e. running `python bing_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
+X> 
+X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
+X> - issues the query via `run_query()`, and prints the results.
+
+T> ### Hint
+T> You've already done this in your population script for Rango! Try following the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html#Main) to make everything look the part by adding a `main()` function, and calling whatever you need to from there. You should also make use of the following line -- if you aren't sure what this line means, [have a look online for an answer](http://stackoverflow.com/questions/419163/what-does-if-name-main-do).
+T> 	
+T> {lang="python",linenos=off}
+T>		if __name__ == '__main__':
+T>		    main()
+T>
+T> Using this line will ensure that you can run your module independently of anything else -- yet still include the module within another Python program (i.e. your Django project) and not have code automatically executed when you `import`.
 
 ## Putting Search into Rango
 
