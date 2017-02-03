@@ -68,7 +68,7 @@ In the `about()` view, add the following three lines to the top of the function.
 	    print("TEST COOKIE WORKED!")
 	    request.session.delete_test_cookie()
 
-With these small changes saved, run the Django development server and navigate to Rango's homepage, `http://127.0.0.1:8000/rango/`. Now navigate to the registration page, you should see `TEST COOKIE WORKED!` appear in your Django development server's console, like in the [figure below](#fig-ch10-test-cookie).
+With these small changes saved, run the Django development server and navigate to Rango's homepage, `http://127.0.0.1:8000/rango/`. Now navigate to the about page, you should see `TEST COOKIE WORKED!` appear in your Django development server's console, like in the [figure below](#fig-ch10-test-cookie).
 
 {id="fig-ch10-test-cookie"}
 ![A screenshot of the Django development server's console output with the `TEST COOKIE WORKED!` message.](images/ch10-test-cookie.png)

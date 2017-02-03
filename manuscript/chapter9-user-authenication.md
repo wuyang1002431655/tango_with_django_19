@@ -573,7 +573,7 @@ With the view created, map the URL `/rango/logout/` to the `user_logout()` view 
 
 Now that all the machinery for logging a user out has been completed, we can add some finishing touches. It'd be handy to provide a link from the homepage to allow users to simply click a link to logout. However, let's be smart about this: is there any point providing the logout link to a user who isn't logged in? Perhaps not - it may be more beneficial for a user who isn't logged in to be given the chance to register, for example.
 
-Like in the previous section, we'll be modifying Rango's `index.html` template and making use of the `user` object in the template's context to determine what links we want to show. Find your growing list of links at the bottom of the page, and replace it with the following code. Note we also add a link to our restricted page at `/rango/restricted/`.
+Like in the previous section, we'll be modifying Rango's `base.html` template and making use of the `user` object in the template's context to determine what links we want to show. Find your growing list of links at the bottom of the page, and replace it with the following code. Note we also add a link to our restricted page at `/rango/restricted/`.
 
 {lang="html",linenos=off}
 	<ul>
