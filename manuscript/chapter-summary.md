@@ -28,21 +28,23 @@ Burak Karaboga,
 **[cspollar](https://github.com/cspollar),**
 Dan C,
 **[Darius](https://github.com/dariushazimi),**
-**David Manlove,**
+David Manlove,
+**[David Skillman](https://github.com/reggaedit),**
 [Devin Fitzsimons](https://github.com/aisflat439),
 **[Dhiraj Thakur](https://github.com/dhirajt),**
 Duncan Drizy,
-**[Giles T.](https://github.com/gpjt),**
-[Gerardo A-C](https://github.com/gerac83),
-[Grigoriy M](https://github.com/GriMel),
-**James Yeo,**
-[Jan Felix Trettow](https://tiwtter.com/JanFelixTrettow),
-**Joe Maskell,**
-[Jonathan Sundqvist](https://github.com/jonathan-s),
-**Karen Little,**
-[Kartik Singhal](https://github.com/k4rtik),
-**[koviusesGitHub](https://github.com/koviusesGitHub),**
-[Krace Kumar](https://github.com/kracekumar),
+**[Gerardo A-C](https://github.com/gerac83),**
+[Giles T.](https://github.com/gpjt),
+**[Grigoriy M](https://github.com/GriMel),**
+James Yeo,
+**[Jan Felix Trettow](https://tiwtter.com/JanFelixTrettow),**
+Joe Maskell,
+**[Jonathan Sundqvist](https://github.com/jonathan-s),**
+Karen Little,
+**[Kartik Singhal](https://github.com/k4rtik),**
+[koviusesGitHub](https://github.com/koviusesGitHub),
+**[Krace Kumar](https://github.com/kracekumar),**
+[ma-152478](https://github.com/ma-152478),
 **[Manoel Maria](https://twitter.com/xmadruga157),**
 [Martin de G.](https://github.com/martindegroot),
 **[Matevz P.](https://github.com/matonsjojc),**

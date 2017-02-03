@@ -203,7 +203,7 @@ The `run_query()` function takes two parameters: `search_terms`, a string repres
 To summarise, the logic of `run_query()` can be broadly split into seven main tasks, which are explained below.
 
 * First, the function obtains the Webhose API key by calling the `read_webhose_key()` function.
-* The function then correctly formats the query string to be sent to the API. This is done by [*URL endcoding*](https://en.wikipedia.org/wiki/Percent-encoding) the string, converting special characters such as spaces to a format that can be understood by Web servers and browsers. As an example, the space character `' '` is converted to `%20`.
+* The function then correctly formats the query string to be sent to the API. This is done by [*URL encoding*](https://en.wikipedia.org/wiki/Percent-encoding) the string, converting special characters such as spaces to a format that can be understood by Web servers and browsers. As an example, the space character `' '` is converted to `%20`.
 * The complete URL for the Webhose API call is then constructed by concatenating the URL encoded `search_terms` string and `size` parameters -- as well as your Webhose API key -- together into a series of [querystring](https://en.wikipedia.org/wiki/Query_string) arguments as dictated by the [Webhose API documentation](https://webhose.io/documentation).
 * We then connect to the Webhose API using the Python `urllib2` (for Python 2.7.x) or `urllib` modules. The string response from the server is then saved in the variable `response`.
 * This response is then converted to a Python dictionary object using the Python `json` library.
@@ -216,7 +216,7 @@ I> When starting off with a new API, it's always a good idea to explore the prov
 X> ### Exercises
 X> Extend your `webhose_search.py` module so that it can be run independently, i.e. running `python webhose_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
 X> 
-X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
+X> - prompts the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
 
 T> ### Hint
@@ -309,12 +309,13 @@ By now, the code above should be pretty self explanatory to you. The only major 
 We then need to create the URL mapping between a URL and the `search()` view, as well as make it possible for users to navigate to the search page through Rango's navigation bars.
 
 * Add the URL mapping between the `search()` view and the URL `/rango/search/`, with `name='search'`. This can be done by adding the line `url(r'search/$', views.search, name='search')` to Rango's `urls.py` module.
-* Update the `base.html` navigation bar to include a link to the search page. Remember to use the `url` template tag to reference the link, rather than hardcoding it into the template.
+* Update the `base.html` navigation bar to include a link to the search page. Remember to use the `url` template tag to reference the link, rather than hard coding it into the template.
 * Finally, ensure that the `webhose.key` file is created -- with your Webhose API key contained within it -- and it is located in your Django project's root directory (i.e. `<workspace>/tango_with_django_project/`, alongside `manage.py`).
 
-Once you have put the URL mapping together and added a link to the search page, you should now be able to issue queries to the Webhose API, with results now showing in the Rango app -- as shown in the figure below.
+Once you have put the URL mapping together and added a link to the search page, you should now be able to issue queries to the Webhose API, with results now showing in the Rango app -- as shown [in the figure below](#fig-bing-python-search).
 
-???
+{id="fig-bing-python-search"}
+![Searching for "Python for Noobs".](images/ch14-bing-python-search.png)
 
 X> ### Additional Exercise
 X>
