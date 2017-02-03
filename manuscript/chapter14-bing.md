@@ -400,7 +400,6 @@ Once you have put in the URL mapping and added a link to the search page, you sh
 
 X> ### Additional Exercise
 X>
-X> You may notice that when you issue a query, the query disappears when the results are shown. This is not very user friendly.
-X> Update the view and template so that user's query is displayed within the search box.
+X> You may notice that when you issue a query, the query disappears when the results are shown. This is not very user friendly. Update the view and template so that the user's query is displayed within the search box.
 X>
 X> Within the view, you will need to put the `query` into the context dictionary. Within the template, you will need to show the query text in the search box.

@@ -97,9 +97,10 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	        # Python dictionary.
 	        response = urllib2.urlopen(search_url).read()
 	        json_response = json.loads(response)
-    
-	        # Loop through the posts, appendng each to the results list
-	        # as a dictionary.
+	
+	        # Loop through the posts, appending each to the results list as
+	        # a dictionary. We restrict the summary to the first 200
+	        # characters, as summary responses from Webhose can be long!
 	        for post in json_response['posts']:
 	            results.append({'title': post['title'],
 	                            'link': post['url'],
@@ -169,8 +170,9 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	        response = urllib.request.urlopen(search_url).read().decode('utf-8')
 	        json_response = json.loads(response)
 	    
-	        # Loop through the posts, appendng each to the results list as
-	        # a dictionary.
+	        # Loop through the posts, appending each to the results list as
+	        # a dictionary. We restrict the summary to the first 200
+	        # characters, as summary responses from Webhose can be long!
 	        for post in json_response['posts']:
 	            results.append({'title': post['title'],
 	                            'link': post['url'],
@@ -208,7 +210,7 @@ I> ### Exploring API Options
 I> When starting off with a new API, it's always a good idea to explore the provided documentation to see what options you can play with. We recommend exploring the [Webhose API documentation](https://webhose.io/documentation) and play around with some of the options that you can vary.
 
 X> ### Exercises
-X> Extend your `bing_search.py` module so that it can be run independently, i.e. running `python bing_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
+X> Extend your `webhose_search.py` module so that it can be run independently, i.e. running `python webhose_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
 X> 
 X> - prompts the the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
@@ -222,9 +224,96 @@ T>		    main()
 T>
 T> Using this line will ensure that you can run your module independently of anything else -- yet still include the module within another Python program (i.e. your Django project) and not have code automatically executed when you `import`.
 
-## Putting Search into Rango
+## Putting Webhose Search into Rango
+Now that we have successfully implemented the search functionality module `webhose_search.py`, we need to integrate it into our Rango app. There are three main steps that we need to complete for this to work.
+
+1. We must first create a `search.html` template that extends from Rango's `base.html` template. The `search.html` template will include a HTML `<form>` to capture the user's query, as well as template code to present any results.
+2. We then create a Django view to handle the rendering of the `search.html` template for us, as well as calling the `run_query()` function we defined earlier in this chapter. W then allow users to access the new view by mapping it to a new URL within Rango's `urls.py` module.
 
 ### Adding a Search Template
+Let's first start at the beginning, and create a new template called `search.html`. Place it within the `rango` directory of your project's `templates` directory. Add the following HTML markup and Django template code.
+
+{lang="html",linenos=on}
+	{% extends 'rango/base.html' %}
+	{% load staticfiles %}
+	
+	{% block title %} Search {% endblock %}
+	
+	{% block body_block %}
+	<div>
+	    <h1>Search with Rango</h1>
+	    <br/>
+	    <form class="form-inline" id="user_form" 
+	          method="post" action="{% url 'search' %}">
+	        {% csrf_token %}
+	        <div class="form-group">
+	            <input class="form-control" type="text" size="50" 
+	                   name="query" value="" id="query" />
+	        </div>
+	        <button class="btn btn-primary" type="submit" name="submit"
+	                value="Search">Search</button>
+	    </form>
+	    
+	    <div>
+	        {% if result_list %}
+	        <h3>Results</h3>
+	        <!-- Display search results in an ordered list -->
+	        <div class="list-group">
+	        {% for result in result_list %}
+	            <div class="list-group-item">
+	                <h4 class="list-group-item-heading">
+	                    <a href="{{ result.link }}">{{ result.title }}</a>
+	                    </h4>
+	                    <p class="list-group-item-text">{{ result.summary }}</p>
+	            </div>
+	        {% endfor %}
+	        </div>
+	        {% endif %}
+	    </div>
+	</div>	
+	{% endblock %}
+
+The template code above performs two key tasks.
+
+* The template presents a search box and *Search* button within a HTML `<form>` for users to enter and submit their queries.
+* Id a `results_list` object is passed to the template's context when rendering, the template then iterates through the `results_list` object, rendering the results contained within. The template expects that each result consists of a `title`, `link` and `summary` -- consistent with what is returned from the `run_query()` function defined earlier in this chapter.
+
+To style the page that is rendered, we have made use of Bootstrap [panels](http://getbootstrap.com/components/#panels), [list groups](http://getbootstrap.com/components/#list-group), and [inline forms](http://getbootstrap.com/css/#forms-inline).
+
+The Django view in the following subsection will only pass through results to the template above in a context variable called `results_list` when the user issues a query. Initially, no results will be available to show -- so `results_list` will not be provided to the template, and thus, no results will be rendered.
 
 ### Adding the View
+With the new template added, we can then add the view that prompts the rendering of our template. Add the following `search()` view to Rango's `views.py` module.
 
+{lang="python",linenos=off}	
+	def search(request):
+	    result_list = []
+	    
+	    if request.method == 'POST':
+	        query = request.POST['query'].strip()
+	        if query:
+	            # Run our Webhose search function to get the results list!
+	            result_list = run_query(query)
+	    
+	    return render(request, 'rango/search.html', {'result_list': result_list})
+
+By now, the code above should be pretty self explanatory to you. The only major addition here that you wouldn't have done so far is the calling of the `run_query()` function we defined earlier in this chapter. To call it, we are also required to `import` the `webhose_search.py` module, too. Ensure that before you run the Django development server that you add the following `import` statement at the top of Rango's `views.py` module.
+
+{lang="python",linenos=off}
+	from rango.webhose_search import run_query
+
+We then need to create the URL mapping between a URL and the `search()` view, as well as make it possible for users to navigate to the search page through Rango's navigation bars.
+
+* Add the URL mapping between the `search()` view and the URL `/rango/search/`, with `name='search'`. This can be done by adding the line `url(r'search/$', views.search, name='search')` to Rango's `urls.py` module.
+* Update the `base.html` navigation bar to include a link to the search page. Remember to use the `url` template tag to reference the link, rather than hardcoding it into the template.
+* Finally, ensure that the `webhose.key` file is created -- with your Webhose API key contained within it -- and it is located in your Django project's root directory (i.e. `<workspace>/tango_with_django_project/`, alongside `manage.py`).
+
+Once you have put the URL mapping together and added a link to the search page, you should now be able to issue queries to the Webhose API, with results now showing in the Rango app -- as shown in the figure below.
+
+???
+
+X> ### Additional Exercise
+X>
+X> You may notice that when you issue a query, the query disappears when the results are shown. This is not very user friendly. Update the `search()` view and `search.html` template so that the user's query is displayed within the search box.
+X>
+X> Within the view, you will need to put the `query` into the context dictionary. Within the template, you will need to show the query text in the search box.
