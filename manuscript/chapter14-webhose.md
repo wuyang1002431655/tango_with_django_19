@@ -34,21 +34,17 @@ Have a look at what you get back, and also have a look at the raw JSON response 
 `http://webhose.io/search?token=<KEY>&format=json&q=<QUERY>&sort=relevancy`
 
 ## Adding Search Functionality
-Now you've got your Webhose API key, you're ready to implement functionality in Python that issues queries to the Webhose API. Create a module in the `rango` app directory called `webhose_search.py`, and add the following code. As mentioned earlier in the book, it's better you go through and type it out -- you'll be thinking about how it works as you type, rather than blindly copying and pasting.
+Now you've got your Webhose API key, you're ready to implement functionality in Python that issues queries to the Webhose API. Create a new module (file) in the `rango` app directory called `webhose_search.py`, and add the following code -- picking the correct one for your Python version. As mentioned earlier in the book, it's better you go through and type the code out -- you'll be thinking about how it works as you type (and understanding what's going on), rather than blindly copying and pasting.
 
-I> ### Python 2 and 3 `import` Differences
-I> 
-I> In [Python 3 they refactored the `urllib` package](http://stackoverflow.com/a/2792652), so the way that we connect and work with external web resources has changed from Python 2.7+. Below we have two versions of the code, one for Python 2.7+ and one for Python 3+. Make sure you use the correct one.
-
-
+I> ### Python 2 and 3 Differences
+I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a/2792652), so the way that we connect and work with external web resources has changed from Python 2.7+. Below we have two versions of the code, one for Python 2.7+ and one for Python 3+. Make sure you use the correct one for your environment.
 
 ### Python 2 Version
-
 {lang="python",linenos=on}
 	import json
 	import urllib
 	import urllib2
-
+	
 	def read_webhose_key():
 	    """
 	    Reads the Webhose API key from a file called 'webhose.key'.
@@ -59,64 +55,65 @@ I> In [Python 3 they refactored the `urllib` package](http://stackoverflow.com/a
 	    # Here we are using "with" when opening files.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    webhose_api_key = None
-
+	
 	    try:
 	        with open('webhose.key', 'r') as f:
 	            webhose_api_key = f.readline()
 	    except:
 	        raise IOError('webhose.key file not found')
-
+	
 	    return webhose_api_key
-
+	
 	def run_query(search_terms, size=10):
 	    """
-	    Given a string containing search terms (query), and a number of results to return (default of 10),
-	    returns a list of results from the Webhose API, with each result consisting of a title, link and summary.
+	    Given a string containing search terms (query), and a number of results to
+	    return (default of 10), returns a list of results from the Webhose API,
+	    with each result consisting of a title, link and summary.
 	    """
 	    webhose_api_key = read_webhose_key()
-
+	
 	    if not webhose_api_key:
 	        raise KeyError('Webhose key not found')
-
-
+	
 	    # What's the base URL for the Webhose API?
 	    root_url = 'http://webhose.io/search'
-
+	
 	    # Format the query string - escape special characters.
 	    query_string = urllib.quote(search_terms)
-
+	
 	    # Use string formatting to construct the complete API URL.
 	    search_url = '{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}'.format(
 	                    root_url=root_url,
 	                    key=webhose_api_key,
 	                    query=query_string,
 	                    size=size)
-
+	
 	    results = []
-
+	
 	    try:
-	        # Connect to the Webhose API, and convert the response to a Python dictionary.
+	        # Connect to the Webhose API, and convert the response to a
+	        # Python dictionary.
 	        response = urllib2.urlopen(search_url).read()
 	        json_response = json.loads(response)
     
-	        # Loop through the posts, appendng each to the results list as a dictionary.
+	        # Loop through the posts, appendng each to the results list
+	        # as a dictionary.
 	        for post in json_response['posts']:
 	            results.append({'title': post['title'],
 	                            'link': post['url'],
 	                            'summary': post['text'][:200]})
 	    except:
 	        print("Error when querying the Webhose API")
-
+	
 	    # Return the list of results to the calling function.
 	    return results
 
 ### Python 3 Version
-
 {lang="python",linenos=on}
 	import json
 	import urllib.parse  # Py3
 	import urllib.request  # Py3
-
+	
 	def read_webhose_key():
 	    """
 	    Reads the Webhose API key from a file called 'webhose.key'.
@@ -127,55 +124,60 @@ I> In [Python 3 they refactored the `urllib` package](http://stackoverflow.com/a
 	    # Here we are using "with" when opening files.
 	    # http://docs.quantifiedcode.com/python-anti-patterns/maintainability/
 	    webhose_api_key = None
-    
+	
 	    try:
 	        with open('webhose.key', 'r') as f:
 	            webhose_api_key = f.readline()
 	    except:
 	        raise IOError('webhose.key file not found')
-    
+	
 	    return webhose_api_key
-
+	
 	def run_query(search_terms, size=10):
 	    """
-	    Given a string containing search terms (query), and a number of results to return (default of 10),
-	    returns a list of results from the Webhose API, with each result consisting of a title, link and summary.
+	    Given a string containing search terms (query), and a number of results to
+	    return (default of 10), returns a list of results from the Webhose API,
+	    with each result consisting of a title, link and summary.
 	    """
 	    webhose_api_key = read_webhose_key()
-    
+	
 	    if not webhose_api_key:
 	        raise KeyError('Webhose key not found')
-    
+	
 	    # What's the base URL for the Webhose API?
 	    root_url = 'http://webhose.io/search'
-    
+	
 	    # Format the query string - escape special characters.
 	    query_string = urllib.parse.quote(search_terms)  # Py3
-    
+	
 	    # Use string formatting to construct the complete API URL.
 	    search_url = '{root_url}?token={key}&format=json&q={query}&sort=relevancy&size={size}'.format(
 	                    root_url=root_url,
 	                    key=webhose_api_key,
 	                    query=query_string,
 	                    size=size)
-    
+	
 	    results = []
-    
+	
 	    try:
-	        # Connect to the Webhose API, and convert the response to a Python dictionary.
-	        response = urllib.request.urlopen(search_url).read().decode('utf-8')  #Py3 (library, decode)
+	        # Connect to the Webhose API, and convert the response to a
+	        # Python dictionary.
+	        response = urllib.request.urlopen(search_url).read().decode('utf-8')  # Py3
 	        json_response = json.loads(response)
-        
-	        # Loop through the posts, appendng each to the results list as a dictionary.
+	    
+	        # Loop through the posts, appendng each to the results list as
+	        # a dictionary.
 	        for post in json_response['posts']:
 	            results.append({'title': post['title'],
 	                            'link': post['url'],
 	                            'summary': post['text'][:200]})
 	    except:
 	        print("Error when querying the Webhose API")
-    
+	
 	    # Return the list of results to the calling function.
 	    return results
+
+In the code samples above, we have implemented two functions: one to retrieve your Webhose API key from a local file (through function `read_webhose_key()`), and another to issue a query to the Webhose API and return results (`run_query()`). Below, we discuss how both of the functions work.
 
 ### `read_webhose_key()` -- Reading the Webhose API Key
 
