@@ -31,12 +31,14 @@ Once you have your API key, scroll back up to the top of the Webhose dashboard, 
 
 Have a look at what you get back, and also have a look at the raw JSON response that is returned by the Webhose API. You can do this by clicking on the *JSON* tab. You can try copying and pasting the JSON response in to an online [JSON pretty printer](http://jsonprettyprint.com/) to see how it's structured if you want. Close the response by clicking the *X* to the right of the *Output Stream* title, and you'll be returned the API page. You can now scroll down to find the *Integration Examples* section. Make sure the *Endpoint* tab is selected, and have a look at the URL that you are shown. This is the URL that your Rango app will be communicating with to obtain search results -- or, in other words, the *endpoint URL*. We'll be making use of it later. An example of the Webhose API endpoint URL -- for a given configuration, with the API key and query redacted -- is shown below.
 
-`http://webhose.io/search?token=<KEY>&format=json&q=<QUERY>&sort=relevancy`
+`http://webhose.io/search ? token=<KEY>&format=json&q=<QUERY>&sort=relevancy`
+
+The URL can essentially be split into two parts - the *base URL* on the left of the question mark, and the querystring to the right. Consider the base URL as the path to the API, and the querystring a series of key and value pairings (e.g. `format` for a key, `json` for a value) that tell the API exactly what you want to get from it. You'll see in the code sample shortly that we take the same process of splitting the URL into a base URL before combining the querystring together to get the complete request URL.
 
 ## Adding Search Functionality
 Now you've got your Webhose API key, you're ready to implement functionality in Python that issues queries to the Webhose API. Create a new module (file) in the `rango` app directory called `webhose_search.py`, and add the following code -- picking the correct one for your Python version. As mentioned earlier in the book, it's better you go through and type the code out -- you'll be thinking about how it works as you type (and understanding what's going on), rather than blindly copying and pasting.
 
-I> ### Python 2 and 3 Differences
+I> ### Differences between Python 2 and 3
 I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a/2792652), so the way that we connect and work with external web resources has changed from Python 2.7+. Below we have two versions of the code, one for Python 2.7+ and one for Python 3+. Make sure you use the correct one for your environment.
 
 ### Python 2 Version
@@ -192,6 +194,8 @@ You should create the `webhose.key` file now. Take the Webhose API key you copie
 
 T> ### Keys
 T> Keep them secret, keep them safe!
+T>
+T> Don't let anyone use your code. If they misuse it, you could be banned from the service it corresponds to.
 
 ### `run_query()` -- Executing the Query
 The `run_query()` function takes two parameters: `search_terms`, a string representing a user's query; and `size`, an [optional parameter](http://www.diveintopython.net/power_of_introspection/optional_arguments.html), set to a default of `10`. This second parameter allows us to control the number of results to return from the Webhose API. Given these parameters, the function then communicates with the Webhose API, and returns a series of Python dictionaries within a list, with each dictionary representing an individual result -- consisting of a result `title`, `link` and `summary`. The inline commentary in the function definitions above (for both Python 2.7.x and Python 3) explain what's happening at each stage -- check out the commentary further to increase your understanding of what is going on.
