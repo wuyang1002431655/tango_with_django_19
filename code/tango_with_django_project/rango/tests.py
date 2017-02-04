@@ -52,8 +52,8 @@ class AboutPageTests(TestCase):
         # Check if is there an image on the about page
         # Chapter 4
         response = self.client.get(reverse('about'))
-        self.assertIn(b'img src="/static/images/', response.content)
-        
+        self.assertIn(b'img src="/media/', response.content)
+
     def test_about_using_template(self):
         # Check the template used to render index page
         # Exercise from Chapter 4 
