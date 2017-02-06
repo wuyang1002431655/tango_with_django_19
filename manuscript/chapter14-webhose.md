@@ -1,4 +1,4 @@
-# Webhose Search {#chapter-webhose}
+# Webhose Search {#chapter-searchapi}
 Now that our Rango app is looking good and most of the core functionality has been implemented, we can move onto some of the more advanced functionality. In this chapter, we will connect Rango up to the *Webhose API* so that users can also search for pages, rather than simply browse categories. Before we do so, we need to set up an account with Webhose, and write a [wrapper](https://en.wikipedia.org/wiki/Adapter_pattern) to query and obtain results from their API.
 
 ## The Webhose API
