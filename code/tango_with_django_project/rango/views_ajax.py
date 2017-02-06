@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 from datetime import datetime
-from rango.bing_search import run_query
+from rango.webhose_search import run_query
 
 from django.contrib.auth.decorators import login_required
 

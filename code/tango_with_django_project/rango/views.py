@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from rango.models import Category, Page, UserProfile
 from rango.forms import CategoryForm, PageForm, UserProfileForm
 from datetime import datetime
-from rango.bing_search import run_query
+from rango.webhose_search import run_query
 from registration.backends.simple.views import RegistrationView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -114,7 +114,7 @@ def show_category(request, category_name_slug):
     if request.method == 'POST':
         query = request.POST['query'].strip()
         if query:
-            # Run our Bing function to get the results list!
+            # Run our Webhose function to get the results list!
             result_list = run_query(query)
             context_dict['query'] = query
     context_dict['result_list'] = result_list
@@ -179,7 +179,7 @@ def search(request):
     if request.method == 'POST':
         query = request.POST['query'].strip()
         if query:
-             # Run our Bing function to get the results list!
+             # Run our Webhose function to get the results list!
              result_list = run_query(query)
     return render(request, 'rango/search.html', {'result_list': result_list})
     
