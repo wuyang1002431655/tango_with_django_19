@@ -364,7 +364,7 @@ Let's try everything out now by visiting the Rango homepage. You should see up t
 What happens when you visit a category that does not exist? Try navigating a category which doesn't exist, like `/rango/category/computers/`. Do this by typing the address manually into your browser's address bar. You should see a message telling you that the specified category does not exist.
 
 {id="fig-ch6-rango-links"}
-![The links to Django pages.](images/ch6-rango-links.png)
+![The links to Django pages. Note the mouse is hovering over the first link -- you can see the corresponding URL for that link at the bottom left of the Google Chrome window.](images/ch6-rango-links.png)
 
 X> ## Exercises
 X> Reinforce what you've learnt in this chapter by trying out the following exercises.
