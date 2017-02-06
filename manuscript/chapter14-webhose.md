@@ -2,11 +2,11 @@
 Now that our Rango app is looking good and most of the core functionality has been implemented, we can move onto some of the more advanced functionality. In this chapter, we will connect Rango up to the *Webhose API* so that users can also search for pages, rather than simply browse categories. Before we do so, we need to set up an account with Webhose, and write a [wrapper](https://en.wikipedia.org/wiki/Adapter_pattern) to query and obtain results from their API.
 
 ## The Webhose API
-The Webhose API provides you with the ability to programmatically query *Webhose*, an online service that collates information from a variety of online sources in real-time. Through a straightforward interface, you can request results for a query in JSON. The returned data can then be interpreted by a JSON parser, with the results then rendered as part of a template within you app.
+The Webhose API provides you with the ability to programmatically query [*Webhose*](https://webhose.io/), an online service that collates information from a variety of online sources in real-time. Through a straightforward interface, you can request results for a query in JSON. The returned data can then be interpreted by a JSON parser, with the results then rendered as part of a template within you app.
 
 Although Webhose allows you to obtain results for information that has been recently [crawled](https://en.wikipedia.org/wiki/Web_crawler), we'll be focusing on returning content ranked by its *relevancy* to the query that a user of Rango provides. To use the Webhose API, you'll need an *API key*. The key provides you with 1,000 free queries per month -- more than enough for our purposes.
 
-I> ### What is an Application Programming Interface (API)?
+I> ### What is an *Application Programming Interface (API)*?
 I> An [Application Programming Interface](http://en.wikipedia.org/wiki/Application_programming_interface) specifies how software components should interact with one another. In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, [Luis Rei provides an excellent tutorial on APIs](http://blog.luisrei.com/articles/rest.html).
 
 ### Registering for a Webhose API Key

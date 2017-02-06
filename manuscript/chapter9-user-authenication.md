@@ -553,7 +553,8 @@ To enable users to log out gracefully, it would be nice to provide a logout opti
 To provide logout functionality in `rango/views.py`, add the view called `user_logout()` with the following code.
 
 {lang="python",linenos=off}
-	# Use the login_required() decorator to ensure only those logged in can access the view.
+	# Use the login_required() decorator to ensure only those logged in can
+	# access the view.
 	@login_required
 	def user_logout(request):
 	    # Since we know the user is logged in, we can now just log them out.
