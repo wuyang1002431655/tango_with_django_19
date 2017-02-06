@@ -119,7 +119,7 @@ To do this you will need to do the following.
 	- If the query string is not empty, ask the Category model to get the top 8 categories that start with the query string.
 	- The list of category objects will then be combined into a piece of HTML via template.
 	- Instead of creating a template called `suggestions.html` re-use the `cats.html` as it will be displaying data of the same type (i.e. categories).
-	- To let the client ask for this data, you will need to create a URL mapping; lets call it *suggest*
+	- To let the client ask for this data, you will need to create a URL mapping; let's call it *suggest*.
 
 With the URL mapping, view, and template in place, you will need to update the `base.html` template to provide a category search box, and then add in some JavaScript/JQuery code to link up everything so that when the user types the suggested categories are displayed.
 
@@ -172,20 +172,20 @@ Using the `get_category_list()` function, we can now create a view that returns 
 
 Note here we are reusing the `rango/cats.html` template.
 
-### Map View to URL
+### Mapping the View to URL
 Add the following code to `urlpatterns` in `rango/urls.py`:
 
 {lang="python",linenos=off}
 	url(r'^suggest/$', views.suggest_category, name='suggest_category'),
 
-### Update Base Template
+### Updating the Base Template
 In the base template, in the sidebar `<div>`, add in the following HTML markup:
 
 {lang="html",linenos=off}
-	<ul class="nav nav-list">
-	    <li class="nav-header">Type to find a category</li>
+	<ul class="nav nav-list flex-column">
+	    <li class="nav-item">Type to find a category</li>
 	    <form>
-	    <li><input class="search-query form-control" type="text"
+	    <li class="nav-item"><input class="search-query form-control" type="text"
 	        name="suggestion" value="" id="suggestion" />
 	    </li>
 	    </form>
