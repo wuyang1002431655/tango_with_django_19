@@ -114,7 +114,7 @@ After the search form, we need to provide a space where the results are rendered
 	</div>
 	
 
-Remember to wrap the search form and search results with `{% if user.authenticated %}` and `{% endif %}`, so that only authenticated users can search. You don't want random users to be wasting your Bing Search budget!
+Remember to wrap the search form and search results with `{% if user.authenticated %}` and `{% endif %}`, so that only authenticated users can search. You don't want random users to be wasting your monthly search API's budget!
 
 ### Updating the Category View
 Update the category view to handle a HTTP `POST` request (i.e. when the user submits a search) and inject the results list into the context. The following code demonstrates this new functionality.
@@ -158,7 +158,7 @@ Update the category view to handle a HTTP `POST` request (i.e. when the user sub
 	        query = request.POST['query'].strip()
 	        
 	        if query:
-	            # Run our Bing function to get the results list!
+	            # Run our search API function to get the results list!
 	            result_list = run_query(query)
 	            context_dict['query'] = query
 	            context_dict['result_list'] = result_list
@@ -170,7 +170,7 @@ Update the category view to handle a HTTP `POST` request (i.e. when the user sub
 Notice that the `context_dict` now includes the `result_list` and `query`. If there is no query, we provide a default query, i.e. the category name. The query box then displays this value.
 
 {id="fig-exercises-categories"}
-![Rango's updated category view, complete with Bing search functionality.](images/exercises-categories.png)
+![Rango's updated category view, complete with search API search functionality.](images/exercises-categories.png)
 
 ## Creating a `UserProfile` Instance {#section-hints-profiles}
 This section provides a solution for creating Rango `UserProfile` accounts. Recall that the standard Django `auth` `User` object contains a variety of standard information regarding an individual user, such as a username and password. We however chose to implement an additional `UserProfile` model to store additional information such as a user's Website and a profile picture. Here, we'll go through how you can implement this, using the following steps.

@@ -208,8 +208,8 @@ Repeat the two steps above for the URL `/static/` and path `/home/<username>/<pa
 
 With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget the about potential for `HTTP 502 - Bad Gateway` errors. Setting the static directories means that when you visit the `admin` interface, it has the predefined Django style sheets, and that you can access images and scripts. Reload your Web application, and you should now notice that your images are present.
 
-### Bing API Key
-[Add your Bing API key]({#section-bing-adding-key}) to `bing.key` to enable the search functionality in Rango.
+### Search API Key
+[Add your search API key]({#section-searchapi-adding-key}) to `search.key` to enable the search functionality in Rango.
 
 ### Turning off `DEBUG` Mode
 When you application is ready to go, it's a good idea to instruct Django that your application is now hosted on a production server. To do this, open your project's `settings.py` file and change `DEBUG = True` to `DEBUG = False`. This disables [Django's debug mode](https://docs.djangoproject.com/en/1.9/ref/settings/#debug), and removes explicit error messages.

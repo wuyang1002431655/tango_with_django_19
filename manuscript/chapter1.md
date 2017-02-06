@@ -44,21 +44,20 @@ X> Don't worry if you get stuck, though, as you can always check out our solutio
 ## Technologies and Services
 Through the course of this book, we will used various technologies and external services including:
 
-* [Python](http://www.python.org)
-* [Pip package manager](http://www.pip-installer.org)
-* [Django](https://www.djangoproject.com)
-* [Git](http://git-scm.com)
-* [GitHub](https://github.com)
-* [HTML](http://www.w3.org/html/)
-* [CSS](http://www.w3.org/Style/CSS/)
-* [JavaScript](https://www.javascript.com/)
-* [JQuery](http://jquery.com)
-* [Twitter Bootstrap](http://getbootstrap.com/)
-* [Bing Search API](http://datamarket.azure.com) via Azure Datamarket
-* [PythonAnywhere](https://www.pythonanywhere.com)
+* the [Python](http://www.python.org) programming language;
+* the [Pip package manager](http://www.pip-installer.org);
+* [Django](https://www.djangoproject.com);
+* the [Git](http://git-scm.com) version control system;
+* [GitHub](https://github.com);
+* [HTML](http://www.w3.org/html/);
+* [CSS](http://www.w3.org/Style/CSS/);
+* the [JavaScript](https://www.javascript.com/) programming language;
+* the [JQuery](http://jquery.com) library;
+* the [Twitter Bootstrap](http://getbootstrap.com/) framework;
+* the [Webhose API](https://webhose.io/) (referred to as the *search API*); and
+* the [PythonAnywhere](https://www.pythonanywhere.com) hosting service;
 
-We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits like *Twitter Bootstrap*, external services like those provided by *Microsoft Azure* and deploy your application quickly and easily with *PythonAnywhere*.
-
+We've selected these technologies and services as they are either fundamental to web development, and/or enable us to provide examples on how to integrate your web application with CSS toolkits like *Twitter Bootstrap*, external services like those provided by the *Webhose API* and deploy your application quickly and easily with *PythonAnywhere*.
 
 {pagebreak}
 
@@ -74,7 +73,7 @@ Your client would like you to create a website called *Rango* that lets users br
 	* *some way for visitors to browse or search* through categories.
 * When a user views a **category page**, your client would like Rango to display:
 	* the *category name, the number of visits, the number of likes*, along with the list of associated pages in that category (showing the page's title, and linking to its URL); and
-	* *some search functionality (via Bing's Search API)* to find other pages that can be linked to this category.
+	* *some search functionality (via the search API)* to find other pages that can be linked to this category.
 * For a particular category, the client would like: the *name of the category to be recorded*; the *number of times each category page has been visited*; and how many users have *clicked a "like" button* (i.e. the page gets rango'ed, and voted up the social hierarchy).
 * *Each category should be accessible via a readable URL* - for example, `/rango/books-about-django/`.
 * Only *registered users will be able to search and add pages to categories*. Visitors to the site should therefore be able to register for an account.
@@ -107,7 +106,7 @@ Since we are building a web application with Django, we will use the following t
 * The **client** will be a Web browser (such as *Chrome*, *Firefox*, and *Safari*) which will render HTML/CSS pages.
 * The **middleware** will be a *Django* application, and will be dispatched through Django's built-in development Web server while we develop.
 * The **database** will be the Python-based *SQLite3* Database engine.
-* The **search API** will be the *Bing Search API.*
+* The **search API** will be the search API.
 
 For the most part, this book will focus on developing the middleware. It should however be quite evident from the [system architecture diagram](#fig-ntier) that we will have to interface with all the other components.
 

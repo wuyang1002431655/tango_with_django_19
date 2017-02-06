@@ -49,9 +49,9 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	
 	def read_webhose_key():
 	    """
-	    Reads the Webhose API key from a file called 'webhose.key'.
+	    Reads the Webhose API key from a file called 'search.key'.
 	    Returns either None (no key found), or a string representing the key.
-	    Remember: put webhose.key in your .gitignore file to avoid committing it!
+	    Remember: put search.key in your .gitignore file to avoid committing it!
 	    """
 	    # See Python Anti-Patterns - it's an awesome resource!
 	    # Here we are using "with" when opening files.
@@ -59,10 +59,10 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	    webhose_api_key = None
 	
 	    try:
-	        with open('webhose.key', 'r') as f:
+	        with open('search.key', 'r') as f:
 	            webhose_api_key = f.readline()
 	    except:
-	        raise IOError('webhose.key file not found')
+	        raise IOError('search.key file not found')
 	
 	    return webhose_api_key
 	
@@ -121,9 +121,9 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	
 	def read_webhose_key():
 	    """
-	    Reads the Webhose API key from a file called 'webhose.key'.
+	    Reads the Webhose API key from a file called 'search.key'.
 	    Returns either None (no key found), or a string representing the key.
-	    Remember: put webhose.key in your .gitignore file to avoid committing it!
+	    Remember: put search.key in your .gitignore file to avoid committing it!
 	    """
 	    # See Python Anti-Patterns - it's an awesome resource!
 	    # Here we are using "with" when opening files.
@@ -131,10 +131,10 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	    webhose_api_key = None
 	
 	    try:
-	        with open('webhose.key', 'r') as f:
+	        with open('search.key', 'r') as f:
 	            webhose_api_key = f.readline()
 	    except:
-	        raise IOError('webhose.key file not found')
+	        raise IOError('search.key file not found')
 	
 	    return webhose_api_key
 	
@@ -187,10 +187,10 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 
 In the code samples above, we have implemented two functions: one to retrieve your Webhose API key from a local file (through function `read_webhose_key()`), and another to issue a query to the Webhose API and return results (`run_query()`). Below, we discuss how both of the functions work.
 
-### `read_webhose_key()` -- Reading the Webhose API Key
-The `read_webhose_key()` function reads in your Webhose API key from a file called `webhose.key`. This file should be located in your Django project's root directory, **not Rango's directory** (i.e. `<workspace>/tango_with_django_project/`). We have created this function as it allows you to separate your private API key from the code that utilises it. This is advantageous in scenarios where code is shared publicly (i.e. on GitHub) -- you don't want people using your API key!
+### `read_webhose_key()` -- Reading the Webhose API Key {#section-searchapi-adding-key}
+The `read_webhose_key()` function reads in your Webhose API key from a file called `search.key`. This file should be located in your Django project's root directory, **not Rango's directory** (i.e. `<workspace>/tango_with_django_project/`). We have created this function as it allows you to separate your private API key from the code that utilises it. This is advantageous in scenarios where code is shared publicly (i.e. on GitHub) -- you don't want people using your API key!
 
-You should create the `webhose.key` file now. Take the Webhose API key you copied earlier, and save it into the file `<workspace>/tango_with_django_project/webhose.key`. The key should be the only contents of the file -- nothing else should exist within it. Avoid committing the file to your GitHub repository by updating your repository's `.gitignore` file to exclude any files with a `.key` extension by adding the line `*.key`. This way, your key is only stored locally, and cannot be committed to your remote Git repository by accident.
+You should create the `search.key` file now. Take the Webhose API key you copied earlier, and save it into the file `<workspace>/tango_with_django_project/search.key`. The key should be the only contents of the file -- nothing else should exist within it. Avoid committing the file to your GitHub repository by updating your repository's `.gitignore` file to exclude any files with a `.key` extension by adding the line `*.key`. This way, your key is only stored locally, and cannot be committed to your remote Git repository by accident.
 
 T> ### Keys
 T> Keep them secret, keep them safe!
@@ -310,7 +310,7 @@ We then need to create the URL mapping between a URL and the `search()` view, as
 
 * Add the URL mapping between the `search()` view and the URL `/rango/search/`, with `name='search'`. This can be done by adding the line `url(r'search/$', views.search, name='search')` to Rango's `urls.py` module.
 * Update the `base.html` navigation bar to include a link to the search page. Remember to use the `url` template tag to reference the link, rather than hard coding it into the template.
-* Finally, ensure that the `webhose.key` file is created -- with your Webhose API key contained within it -- and it is located in your Django project's root directory (i.e. `<workspace>/tango_with_django_project/`, alongside `manage.py`).
+* Finally, ensure that the `search.key` file is created -- with your Webhose API key contained within it -- and it is located in your Django project's root directory (i.e. `<workspace>/tango_with_django_project/`, alongside `manage.py`).
 
 Once you have put the URL mapping together and added a link to the search page, you should now be able to issue queries to the Webhose API, with results now showing in the Rango app -- as shown [in the figure below](#fig-bing-python-search).
 

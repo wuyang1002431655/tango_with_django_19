@@ -4,9 +4,9 @@ import urllib2
 
 def read_webhose_key():
     """
-    Reads the Webhose API key from a file called 'webhose.key'.
+    Reads the Webhose API key from a file called 'search.key'.
     Returns either None (no key found), or a string representing the key.
-    Remember: put webhose.key in your .gitignore file to avoid committing it!
+    Remember: put search.key in your .gitignore file to avoid committing it!
     """
     # See Python Anti-Patterns - it's an awesome resource!
     # Here we are using "with" when opening files.
@@ -14,10 +14,10 @@ def read_webhose_key():
     webhose_api_key = None
     
     try:
-        with open('webhose.key', 'r') as f:
+        with open('search.key', 'r') as f:
             webhose_api_key = f.readline()
     except:
-        raise IOError('webhose.key file not found')
+        raise IOError('search.key file not found')
     
     return webhose_api_key
 
@@ -73,9 +73,9 @@ def run_query(search_terms, size=10):
 #
 # def read_webhose_key():
 #     """
-#     Reads the Webhose API key from a file called 'webhose.key'.
+#     Reads the Webhose API key from a file called 'search.key'.
 #     Returns either None (no key found), or a string representing the key.
-#     Remember: put webhose.key in your .gitignore file to avoid committing it!
+#     Remember: put search.key in your .gitignore file to avoid committing it!
 #     """
 #     # See Python Anti-Patterns - it's an awesome resource!
 #     # Here we are using "with" when opening files.
@@ -83,10 +83,10 @@ def run_query(search_terms, size=10):
 #     webhose_api_key = None
 #
 #     try:
-#         with open('webhose.key', 'r') as f:
+#         with open('search.key', 'r') as f:
 #             webhose_api_key = f.readline()
 #     except:
-#         raise IOError('webhose.key file not found')
+#         raise IOError('search.key file not found')
 #
 #     return webhose_api_key
 #
