@@ -27,7 +27,7 @@ Before we can use the template, we need to modify the HTML so that we can use it
 - Added in a side block, i.e., `{% block side_block %}{% endblock %}`
 - Added in `{% load staticfiles %}` after the `DOCTYPE` tag.
 
-## The New Base Template
+## Template
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
@@ -54,36 +54,36 @@ Before we can use the template, we need to modify the HTML so that we can use it
 	          rel="stylesheet">
 	</head>
 	<body>
-	<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-	    <button type="button" class="navbar-toggler hidden-sm-up"
-	            data-toggle="collapse" data-target="#navbar" 
-	            aria-expanded="false" aria-controls="navbar">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
+	
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+	    <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
+	            type="button"
+	            data-toggle="collapse"
+	            data-target="#navbar"
+	            aria-controls="navbar"
+	            aria-expanded="false"
+	            aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
 	    </button>
-	    <a class="navbar-brand" href="#">Rango</a>
-	    <div id="navbar">
-	        <nav class="nav navbar-nav pull-xs-left">
-	        <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
-	        <a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
-	        <a class="nav-item nav-link" href="{% url 'search' %}">Search</a>
-	        {% if user.is_authenticated %}
-	        <a class="nav-item nav-link" 
-	           href="{% url 'add_category' %}">
-	            Add a New Category</a>
-	        <a class="nav-item nav-link" 
-	           href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
-	        {% else %}
-	        <a class="nav-item nav-link" 
-	           href="{% url 'registration_register' %}">Register Here</a>
-	        <a class="nav-item nav-link" 
-	           href="{% url 'auth_login' %}">Login</a>
-	        {% endif %}
-	        </nav>
+	    <a class="navbar-brand" href="{% url 'index' %}">Rango</a>
+	
+	    <div class="collapse navbar-collapse" id="navbar">
+	        <ul class="navbar-nav mr-auto">
+	            <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+	            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+	            {% if user.is_authenticated %}
+	            <li class="nav-item"><a class="nav-link" href="{% url 'add_category' %}">Add a New Category</a></li>
+	            <li class="nav-item"><a class="nav-link" href="{% url 'profile' user.username %}">Profile</a></li>
+	            <li class="nav-item"><a class="nav-link" href="{% url 'list_profiles' %}">List Profiles</a></li>
+	            <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+	            {% else %}
+	            <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>
+	            <li class="nav-item"><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
+	            {% endif %}
+	        </ul>
 	    </div>
 	</nav>
+	
 	<div class="container-fluid">
 	    <div class="row">
 	    <div class="col-sm-3 col-md-2 sidebar">
@@ -114,7 +114,7 @@ Before we can use the template, we need to modify the HTML so that we can use it
 	</html>
 	
 
-Once you have the new template, downloaded the [Rango Favicon](https://github.com/leifos/tango_with_django_19/blob/master/code/tango_with_django_project/static/images/favicon.ico) and saved it to `static/images/`.
+Once you have the new template, downloaded the [Rango Favicon](https://raw.githubusercontent.com/leifos/tango_with_django_19/master/code/tango_with_django_project/static/images/favicon.ico) and saved it to `static/images/`.
 
 If you take a close look at the modified Dashboard HTML source, you'll notice it has a lot of structure in it created by a series of `<div>` tags. Essentially the page is broken into two parts - the top navigation bar which is contained by `<nav>` tags, and the main content pane denoted by the `<div class="container-fluid">` tag. Within the main content pane, there are two `<div>`s, one for the sidebar and the other for the main content, where we have placed the code for the `sidebar_block` and `body_block`, respectively.	
 	
@@ -376,15 +376,15 @@ To use the toolkit within our templates, we need to first load the toolkit using
 	
 	{% load bootstrap_toolkit %}
 	{% block title %}Add Category{% endblock %}
-	{% block body\_block %}
+	{% block body_block %}
 	    <form id="category_form" method="post" 
-	        action="{% url 'add_category' %}"\>
-	    <h2 class="form-signin-heading"\>Add a Category</a></h2>
+	        action="{% url 'add_category' %}">
+	    <h2 class="form-signin-heading">Add a Category</a></h2>
 	    {% csrf_token %}
 	    {{ form|as_bootstrap }}
 	    <br/>
 	    <button class="btn btn-primary" type="submit"
-	         name="submit"\>Create Category</button>
+	         name="submit">Create Category</button>
 	    </form>
 	{% endblock %}
 
