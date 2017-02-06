@@ -220,7 +220,7 @@ X> - prompts the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
 
 T> ### Hint
-T> You've already done this in your population script for Rango! Try following the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html#Main) to make everything look the part by adding a `main()` function, and calling whatever you need to from there. You should also make use of the following line -- if you aren't sure what this line means, [have a look online for an answer](http://stackoverflow.com/questions/419163/what-does-if-name-main-do).
+T> You've already done this in your [population script](#section-models-population) for Rango! Try following the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html#Main) to make everything look the part by adding a `main()` function, and calling whatever you need to from there. You should also make use of the following line -- if you aren't sure what this line means, [have a look online for an answer](http://stackoverflow.com/questions/419163/what-does-if-name-main-do), or refer [back to the section of the tutorial discussing the population script](#section-models-population).
 T> 	
 T> {lang="python",linenos=off}
 T>		if __name__ == '__main__':

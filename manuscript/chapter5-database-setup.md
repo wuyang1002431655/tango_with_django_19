@@ -104,7 +104,7 @@ Finally, it is good practice to implement the `__str__()` and/or `__unicode__()`
 With our models defined in `models.py`, we can now let Django work its magic and create the tables in the underlying database. Django provides what is called a [*migration tool*](https://en.wikipedia.org/wiki/Data_migration) to help us set up and update the database to reflect any changes to your models. For example, if you were to add a new field then you can use the migration tools to update the database.
 
 ### Setting up
-First of all, the database must be *initialised*. This means creating the database and all the associated tables so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command.
+First of all, the database must be *initialised*. This means creating the database and all the associated tables so that data can then be stored within it. To do this, you must open a terminal or command prompt, and navigate to your project's root directory - where `manage.py` is stored. Run the following command, *bearing in mind that the output may vary from what you see below.*
 
 {lang="text",linenos=off}
 	$ python manage.py migrate
@@ -178,7 +178,7 @@ To access the shell, we need to call ``manage.py`` from within your Django proje
 
 ``$ python manage.py shell``
 
-This will start an instance of the Python interpreter and load in your project's settings for you. You can then interact with the models, with the following terminal session demonstrating this functionality. Check out the inline commentary that we added to see what each command achieves.
+This will start an instance of the Python interpreter and load in your project's settings for you. You can then interact with the models, with the following terminal session demonstrating this functionality. Check out the inline commentary that we added to see what each command achieves. Note there are slight differences between what Django 1.9 and Django 1.10 return -- these are both demonstrated below, complete with commentary.
 
 {lang="python",linenos=off}
 	# Import the Category model from the Rango application
@@ -186,7 +186,10 @@ This will start an instance of the Python interpreter and load in your project's
 	
 	# Show all the current categories
 	>>> print(Category.objects.all())
-	[] # Returns an empty list (no categories have been defined!)
+	# The output examples below are for both Django 1.9 and Django 1.10.
+	# Both denote the same thing, that no categories have been defined.
+	[]  # Django 1.9 output -- an empty list.
+	<QuerySet []>  # Django 1.10 output -- an empty QuerySet object.
 	
 	# Create a new category object, and save it to the database.
 	>>> c = Category(name="Test")
@@ -194,7 +197,10 @@ This will start an instance of the Python interpreter and load in your project's
 	
 	# Now list all the category objects stored once more.
 	>>> print(Category.objects.all())
-	[<Category: test>] # We now have a category called 'Test' saved in the database!
+	# The output examples below are for both Django 1.9 and Django 1.10.
+	# You'll now see a 'test' category in both output examples.
+	[<Category: test>]  # Django 1.9
+	<QuerySet [<Category: test>]  # Django 1.10
 	
 	# Quit the Django shell.
 	>>> quit()
@@ -205,7 +211,7 @@ X> ### Complete the Official Tutorial
 X> The example above is only a very basic taster on database related activities you can perform in the Django shell. If you have not done so already, it's now a good time to complete [part two of the official Django Tutorial to learn more about interacting with models](https://docs.djangoproject.com/en/1.9/intro/tutorial02/). Also check out the [official Django documentation on the list of available commands](https://docs.djangoproject.com/en/1.9/ref/django-admin/#available-commands) for working with models.
 
 ## Configuring the Admin Interface
-One of the eye-catching features of Django is the built-in, Web-based administrative interface that allows you to browse and edit data represented as model instances (from the corresponding database tables).
+One of the standout features of Django is the built-in, Web-based administrative (or *admin*) interface that allows you to browse, edit and delete data represented as model instances (from the corresponding database tables). In this section, we'll be setting the admin interface up so you can see the two Rango models you have created so far.
 
 Setting everything up is relatively straightforward. In your project's `settings.py` module, you will notice that one of the preinstalled apps (within the `INSTALLED_APPS` list) is `django.contrib.admin`. Furthermore, there is a `urlpattern` that matches `admin/` within your project's `urls.py` module.
 
@@ -214,7 +220,7 @@ By default, things are pretty much ready to go. Start the Django development ser
 {lang="text",linenos=off}
 	$ python manage.py runserver
 
-Navigate your Web browser to `http://127.0.0.1:8000/admin/`. You are then presented with a login prompt. Login using the credentials you created previously with the `createsuperuser` command. You are then presented with an interface looking [similar to the one shown below](#fig-ch5-admin-first).
+Navigate your Web browser to `http://127.0.0.1:8000/admin/`. You are then presented with a login prompt. Login using the credentials you created previously with the `$ python manage.py createsuperuser` command. You are then presented with an interface looking [similar to the one shown below](#fig-ch5-admin-first).
 
 {id="fig-ch5-admin-first"}
 ![The Django admin interface, sans Rango models.](images/ch5-admin-first.png)
@@ -263,7 +269,7 @@ T> 	        return self.name
 I> ### Expanding `admin.py`
 I> It should be noted that the example ``admin.py`` module for your Rango app is the most simple, functional example available. However you can customise the Admin interface in a number of ways. Check out the [official Django documentation on the admin interface](https://docs.djangoproject.com/en/1.9/ref/contrib/admin/) for more information if you're interested.
 
-## Creating a Population Script
+## Creating a Population Script {#section-models-population}
 Entering test data into your database tends to be a hassle. Many developers will add in some bogus test data by randomly hitting keys, like `wTFzmN00bz7`. Rather than do this, it is better to write a script to automatically populate the database with realistic and credible data. This is because when you go to demo or test your app, you'll see some good examples in the database. Also, if you are deploying the app or sharing it with collaborators, then you/they won't have to go through the process of putting in sample data. It's therefore good practice to create what we call a *population script*. 
 
 To create a population script for Rango, start by creating a new Python module within your Django project's root directory (e.g. ``<workspace>/tango_with_django_project/``). Create the ``populate_rango.py`` file and add the following code.
@@ -351,7 +357,7 @@ T> **To reiterate, don't simply copy, paste and leave.** Add the code to your ne
 T> 
 T> We've explanations below - hopefully you'll learn something new!
 T>
-T> Further note that when you see line numbers along side the code, it indicates that we have listed the entire file, rather than code fragments.
+T> You should also note that when you see line numbers along side the code, it indicates that we have listed the entire file, rather than code fragments. It also makes things more difficult for you to copy and paste!
 
 While this looks like a lot of code, what is going on is essentially a series of function calls to two small functions, `add_page()` and `add_cat()` defined towards the end of the module. Reading through the code, we find that execution starts at the *bottom* of the module - look at lines 75 and 76. This is because above this point, we define functions; these are not executed unless we call them. When the interpreter hits [`if __name__ == '__main__'`](http://stackoverflow.com/a/419185), we call the `populate()` function.
 
@@ -379,7 +385,7 @@ I> This explanation therefore means that the `[0]` at the end of our call to the
 I> 
 I> You can check out the [official Django documentation](https://docs.djangoproject.com/en/1.9/ref/models/querysets/#get-or-create) for more information on the handy `get_or_create()` method.
 
-When saved, you can then run your new populations script by changing the present working directory in a terminal to the Django project's root. It's then a simple case of executing the command ``$ python populate_rango.py``. You should then see output similar to that shown below.
+When saved, you can then run your new populations script by changing the present working directory in a terminal to the Django project's root. It's then a simple case of executing the command ``$ python populate_rango.py``. You should then see output similar to that shown below -- the order in which categories are added may vary depending upon how your computer is set up.
 
 {lang="text",linenos=off}
 	$ python populate_rango.py
@@ -416,10 +422,14 @@ The workflow for adding models can be broken down into five steps.
 4. Apply the changes `$ python manage.py migrate`. This will create the necessary infrastructure within the database for your new model(s).
 5. Create/edit your population script for your new model(s).
 
-Invariably, there will be times when you will have to delete your database. When this happens, run the following commands from the `manage.py` module.
+There will be times when you will have to delete your database -- sometimes it's easier to just start afresh. When you want to do this, do the the following. Note that for this tutorial, you are using a SQLite database -- Django does support a [variety of other database engines](https://docs.djangoproject.com/en/1.9/ref/databases/).
 
-1. `migrate` your database - this will set everything up in the new database. Ensure that your app is listed in the migrations that are committed. If it is not, run the `makemigrations <app_name>` command, where `<app_name>` is the name of your app.
-2. Create a new administrative account with the `createsuperuser` command.
+1. If you're running it, stop your Django development server.
+2. For an SQLite database, delete the `db.sqlite3` file in your Django project's directory. It'll be in the same directory as the `manage.py` file.
+3. If you have changed your app's models, you'll want to run the `$ python manage.py makemigrations <app_name>` command, replacing `<app_name>` with the name of your Django app (i.e. `rango`). Skip this if your models have not changed.
+4. Run the `$ python manage.py migrate` to create a new database file (if you are running SQLite), and migrate database tables to the database.
+5. Create a new admin account with the `$ python manage.py createsuperuser` command.
+6. Finally, run your population script again to insert credible test data into your new database.
 
 X> ### Exercises
 X> Now that you've completed this chapter, try out these exercises to reinforce and practice what you have learnt. **Once again, note that the following chapters will have expected you to have completed these exercises! If you're stuck, there are some hints to help you complete the exercises below.**

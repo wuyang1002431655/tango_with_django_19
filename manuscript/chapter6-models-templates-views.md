@@ -92,7 +92,7 @@ As the example shows in Django's template language, all commands are enclosed wi
 If you now visit Rango's homepage at `<http://127.0.0.1:8000/rango/>`, you should see a list of categories underneath the page title just like in the [figure below](#figch6-rango-categories-index).
 
 {id="fig-ch6-rango-categories-index"}
-![The Rango homepage - now dynamically generated - shows a list of categories.](images/ch6-rango-categories-index.png)
+![The Rango homepage - now dynamically generated - showing a list of categories.](images/ch6-rango-categories-index.png)
 
 ##Creating a Details Page
 According to the [specifications for Rango](#overview-design-brief-label), we also need to show a list of pages that are associated with each category. We have a number of challenges here to overcome. A new view must be created, which should be parameterised. We also need to create URL patterns and URL strings that encode category names.
@@ -137,7 +137,7 @@ Next we need to override the `save()` method of the `Category` model, which we w
 	    def __str__(self):
 	        return self.name
 
-Now that the model has been updated, the changes must now be propagated to the database. However, since data already exists within the database, we need to consider the implications of the change. Essentially, for all the existing category names, we want to turn them into slugs (which is performed when the record is initially saved). When we update the models via the migration tool, it will add the `slug` field and provide the option of populating the field with a default value. Of course, we want a specific value for each entry - so we will first need to perform the migration, and then re-run the population script. This is because the population script will explicitly call the `save` method on each entry, triggering the 'save' as implemented above, and thus update the slug accordingly for each entry.
+Now that the model has been updated, the changes must now be propagated to the database. However, since data already exists within the database, we need to consider the implications of the change. Essentially, for all the existing category names, we want to turn them into slugs (which is performed when the record is initially saved). When we update the models via the migration tool, it will add the `slug` field and provide the option of populating the field with a default value. Of course, we want a specific value for each entry - so we will first need to perform the migration, and then re-run the population script. This is because the population script will explicitly call the `save()` method on each entry, triggering the 'save()' as implemented above, and thus update the slug accordingly for each entry.
 
 To perform the migration, issue the following commands (as detailed in the [Models and Databases Workflow](#section-models-databases-workflow)).
 
@@ -145,12 +145,12 @@ To perform the migration, issue the following commands (as detailed in the [Mode
 	$ python manage.py makemigrations rango
 	$ python manage.py migrate
 
-Since we did not provide a default value for the slug and we already have existing data in the model, the `migrate` command will give you two options. Select the option to provide a default, and enter `''`.  Then re-run the population script, which will update the slug fields.
+Since we did not provide a default value for the slug and we already have existing data in the model, the `migrate` command will give you two options. Select the option to provide a default, and enter an empty string -- denoted by two quote marks (i.e. `''`).  Run the population script again, which will then update the slug fields.
 
 {lang="text",linenos=off}
 	$ python populate_rango.py
 
-Now run the development server (`python manage.py runserver`), and inspect the data in the models via the admin interface (`http://127.0.0.1:8000/admin/`).
+Now run the development server with the command `$ python manage.py runserver`, and inspect the data in the models with the admin interface at `http://127.0.0.1:8000/admin/`.
 
 If you go to add in a new category via the admin interface you may encounter a problem, or two!
 
@@ -163,7 +163,7 @@ To solve the first problem, we can either update our model so that the slug fiel
 {lang="python",linenos=off}
 	slug = models.SlugField(blank=True) 
 
-or we can customise the admin interface so that it automatically prepopulates the slug field as you type in the category name. To do this update `rango/admin.py` with the following code:
+**or** we can customise the admin interface so that it automatically pre-populates the slug field as you type in the category name. To do this, update `rango/admin.py` with the following code.
 
 {lang="python",linenos=off}
 	from django.contrib import admin
@@ -280,7 +280,7 @@ If the `category` exists, then we check to see if there are any pages in the cat
 I> ### Note on Conditional Template Tags
 I> The Django template conditional tag - `{% if %}` - is a really neat way of determining the existence of an object within the template's context. Make sure you check the existence of an object to avoid errors.
 I>
-I> Placing conditional checks in your templates - like `{% if category %}` in the example above - also makes sense semantically. The outcome of the conditional check directly affects the way in which the rendered page is presented to the user - and presentational aspects of your Django applications should be encapsulated within templates.
+I> Placing conditional checks in your templates - like `{% if category %}` in the example above - also makes sense semantically. The outcome of the conditional check directly affects the way in which the rendered page is presented to the user. Remember, presentational aspects of your Django appls should be encapsulated within templates.
 
 ### Parameterised URL Mapping
 Now let's have a look at how we actually pass the value of the `category_name_url` parameter to the `show_category()` function. To do so, we need to modify Rango's `urls.py` file and update the `urlpatterns` tuple as follows.
@@ -298,7 +298,7 @@ We have added in a rather complex entry that will invoke `view.show_category()` 
 There are two things to note here. First we have added a parameter name with in the URL pattern, i.e. `<category_name_slug>`, which we will be able to access in our view later on. When you create a parameterised URL you need to ensure that the parameters that you include in the URL are declared in the corresponding view.
 The next thing to note is that the regular expression `[\w\-]+)` will look for any sequence of alphanumeric characters e.g. `a-z`, `A-Z`, or `0-9` denoted by `\w` and any hyphens (-) denoted by `\-`, and we can match as many of these as we like denoted by the `[ ]+` expression.
 
-The URL pattern will match a sequence of alphanumeric characters and hyphens which are between the `rango/category/` and the trailing `/`. This sequence will be stored in the parameter `category_name_slug` and passed to `views.show_category()`. For example, the URL `rango/category/python-books/` would result in the `category_name_slug` having the value, `python-books`. However, if the URL was `rango/category/python_books/` or `rango/category/££££-$$$$$/` then the sequence of characters between `rango/category/` and the trailing `/` would not match the regular expression, and a `404 not found` error would result because there would be no matching URL pattern.
+The URL pattern will match a sequence of alphanumeric characters and hyphens which are between the `rango/category/` and the trailing `/`. This sequence will be stored in the parameter `category_name_slug` and passed to `views.show_category()`. For example, the URL `rango/category/python-books/` would result in the `category_name_slug` having the value, `python-books`. However, if the URL was `rango/category/££££-$$$$$/` then the sequence of characters between `rango/category/` and the trailing `/` would not match the regular expression, and a `404 not found` error would result because there would be no matching URL pattern.
 
 All view functions defined as part of a Django applications *must* take at least one parameter. This is typically called `request` - and provides access to information related to the given HTTP request made by the user. When parameterising URLs, you supply additional named parameters to the signature for the given view.  That is why our `show_category()` view was defined as `def show_category(request, category_name_slug)`.
 
@@ -366,33 +366,31 @@ What happens when you visit a category that does not exist? Try navigating a cat
 {id="fig-ch6-rango-links"}
 ![The links to Django pages.](images/ch6-rango-links.png)
 
-X> ##Exercises
-X>
-X> 
+X> ## Exercises
 X> Reinforce what you've learnt in this chapter by trying out the following exercises.
 X> 
-X> - Update the population script to add some value to the `views` count for each page.
-X> - Modify the index page to also include the top 5 most viewed pages.
-X> - Include a heading for the "Most Liked Categories" and "Most Viewed Pages".
-X> - Include a link back to the index page from the category page.
-X> - Undertake [part three of official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/) if you have not done so already to reinforce what you've learnt here.
+X> * Update the population script to add some value to the `views` count for each page.
+X> * Modify the index page to also include the top 5 most viewed pages.
+X> * Include a heading for the "Most Liked Categories" and "Most Viewed Pages".
+X> * Include a link back to the index page from the category page.
+X> * Undertake [part three of official Django tutorial](https://docs.djangoproject.com/en/1.9/intro/tutorial03/) if you have not done so already to reinforce what you've learnt here.
 
 {id="fig-ch6-exercises"}
 ![The index page after you complete the exercises, showing the most liked categories and most viewed pages.](images/ch6-exercises.png)
 
 T> ### Hints
-T>
-T> - When updating the population script add in the values to the page dictionaries first then when iterating through the page dictionaries for each category pass the views data through i.e. `p["views"]`.
-T> - Remember to re-run the population script so that the views are updated.
-T>
-T> - You will need to edit both the `index` view and the `index.html` template to put the most viewed i.e. popular pages on the index page.
-T> - Instead of accessing the `Category` model, you will have to ask the `Page` model for the most viewed pages.
-T> - Remember to pass the list of pages through to the context.
-T> - If you are not sure about the HTML template code to use, you can draw inspiration from the `category.html` template code as the markup is essentially the same.
+T> * When updating the population script, you'll essentially follow the same process as you went through in the [previous chapter's](#chapter-models-databases) exercises. You will need to update the data structures for each page, and also update the code that makes use of them.
+T>      * Update the three data structures containing pages for each category -- `python_pages`, `django_pages` and `other_pages`. Each page has a `title` and `url` -- they all now need a count of how many `views` they see, too.
+T>      * Look at how the `add_page()` function is defined in your population script. Does it allow for you to pass in a `views` count? Do you need to change anything in this function?
+T>      * Finally, update the line where the `add_page()` function is *called*. If you called the views count in the data structures `views`, and the dictionary that represents a page is called `p` in the context of where `add_page()` is called, how can you pass the views count into the function?
+T> * Remember to re-run the population script so that the views are updated.
+T>      * You will need to edit both the `index` view and the `index.html` template to put the most viewed (i.e. popular pages) on the index page.
+T>      * Instead of accessing the `Category` model, you will have to ask the `Page` model for the most viewed pages.
+T>      * Remember to pass the list of pages through to the context.
+T>      * If you are not sure about the HTML template code to use, you can draw inspiration from the `category.html` template code as the markup is essentially the same.
 
 T> ### Model Tips
 T> For more tips on working with models you can take a look through the following blog posts:
 T> 
 T> 1. [Best Practices when working with models](http://steelkiwi.com/blog/best-practices-working-django-models-python/) by Kostantin Moiseenko. In this post you will find a series of tips and tricks when working with models.
-T>
 T> 2. [How to make your Django Models DRYer](https://medium.com/@raiderrobert/make-your-django-models-dryer-4b8d0f3453dd#.ozrdt3rsm) by Robert Roskam. In this post you can see how you can use the `property` method of a class to reduce the amount of code needed when accessing related models.
