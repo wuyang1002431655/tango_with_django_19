@@ -74,11 +74,9 @@ With these small changes saved, run the Django development server and navigate t
 If the message isn't displayed, you'll want to check your browser's security settings. The settings may be preventing the browser from accepting the cookie.
 
 ## Client Side Cookies: A Site Counter Example
-Now we know how cookies work, let's implement a very simple site visit counter. To achieve this, we're going to be creating two cookies: one to track the number of times the user has visited the Rango website, and the other to track the last time he or she accessed the site. Keeping track of the date and time of the last access will allow us to only increment the site counter once per day, for example, and thus avoid people spamming the site to increment the counter.
+Now we know how cookies work, let's implement a very simple site visit counter. To achieve this, we're going to be creating two cookies: one to track the number of times the user has visited the Rango app, and the other to track the last time he or she accessed the site. Keeping track of the date and time of the last access will allow us to only increment the site counter once per day (for example) and thus avoid people spamming the site to increment the counter.
 
-The sensible place to assume a user enters the Rango site is at the index page. Open `rango/views.py` and edit the `index()` view as follows:
-
-Let's first make a function to handle the cookies given the request and response (`visitor_cookie_handler()`), and then we can include this function in the `index()` view. In `views.py` add in the following function. Note that it is not technically a view, because it does not return a response - it is just a *helper function*.
+The sensible place to assume where a user enters the Rango site is at the index page. Open Rango's `view.py` file. Let's first make a function -- given a handle to both the `request` and `response` objects -- to handle cookies (`visitor_cookie_handler()`). We can then make use of this function in Rango's `index()` view. In `views.py`, add in the following function. Note that it is not technically a view, because it does not return a `response` object -- it is just a [*helper function*](https://web.cs.wpi.edu/~cs1101/a05/Docs/creating-helpers.html).
 
 {lang="python",linenos=off}
 	def visitor_cookie_handler(request, response):
@@ -95,39 +93,41 @@ Let's first make a function to handle the cookies given the request and response
 	    # If it's been more than a day since the last visit...
 	    if (datetime.now() - last_visit_time).days > 0:
 	        visits = visits + 1
-	        #update the last visit cookie now that we have updated the count
+	        # Update the last visit cookie now that we have updated the count
 	        response.set_cookie('last_visit', str(datetime.now()))
 	    else:
 	        visits = 1
-	        # set the last visit cookie 
+	        # Set the last visit cookie
 	        response.set_cookie('last_visit', last_visit_cookie)
 	    
 	    # Update/set the visits cookie
 	    response.set_cookie('visits', visits)
 
-This function takes the request object and the response object - because we want to be able to access the incoming cookies from the request, and add or update cookies in the response. In the function, you can see that we call the `request.COOKIES.get()` function, which is a helper function provided by Django. If the cookie exists, it returns the value. If it does not exist, we can provide a default value.  Once we have the values for each cookie, we can calculate if a day has elapses between the last visit or not.
+This helper function takes the `request` and `response` objects -- because we want to be able to access the incoming cookies from the `request`, and add or update cookies in the `response`. In the function, you can see that we call the `request.COOKIES.get()` function, which is a further helper function provided by Django. If the cookie exists, it returns the value. If it does not exist, we can provide a default value.  Once we have the values for each cookie, we can calculate whether a day (`.days`) has elapsed between the last visit.
 
-If you want to test this code out without having to wait a day, you can change `days` to `seconds`. That way the visit counter can be updated every second, as opposed to every day.
+If you want to test this code out without having to wait a day, change `days` to `seconds`. That way the visit counter can be updated every second, as opposed to every day.
 
-**Note that all cookie values are returned as strings**; *do not assume that a cookie storing whole numbers will return an integer.* You have to manually cast this to the correct type yourself. If a cookie does not exist, you can create a cookie with the `set_cookie()` method of the `response` object you create. The method takes in two values, the name of the cookie you wish to create (as a string), and the value of the cookie. In this case, it doesn't matter what type you pass as the value - it will be automatically cast to a string.
+**Note that all cookie values are returned as strings**; *do not assume that a cookie storing whole numbers will return an integer.* You have to manually cast this to the correct type yourself because there's no place in which to store additional information within a cookie telling us of the value's type.
 
-Since we are using the `datetime` we need to import this into `views.py`.
+If a cookie does not exist, you can create a cookie with the `set_cookie()` method of the `response` object you create. The method takes in two values, the name of the cookie you wish to create (as a string), and the value of the cookie. In this case, it doesn't matter what type you pass as the value - it will be automatically cast to a string.
+
+Since we are using the `datetime` we need to `import` this into `views.py` at the top of the file.
 
 {lang="python",linenos=off}
 	from datetime import datetime
 
-Next, update the `index()` view to call the `cookie_handler_function()`. To do this we need to extract the response first.
+Next, update the `index()` view to call the `cookie_handler_function()` helper function. To do this, we need to extract the `response` first.
 
 {lang="python",linenos=off}
 	def index(request):
 	    category_list = Category.objects.order_by('-likes')[:5]
 	    page_list = Page.objects.order_by('-views')[:5]
-	        context_dict = {'categories': category_list, 'pages': page_list}
+	    context_dict = {'categories': category_list, 'pages': page_list}
 	    
 	    # Obtain our Response object early so we can add cookie information.
 	    response = render(request, 'rango/index.html', context_dict)
 	
-	    # Call function to handle the cookies
+	    # Call the helper function to handle the cookies
 	    visitor_cookie_handler(request, response)
 	
 	    # Return response back to the user, updating any cookies that need changed.
@@ -136,7 +136,7 @@ Next, update the `index()` view to call the `cookie_handler_function()`. To do t
 {id="fig-ch10-cookie-visits"}
 ![A screenshot of Google Chrome with the Developer Tools open showing the cookies for Rango. Note the `visits` cookie - the user has visited a total of six times, with each visit at least one day apart.](images/ch10-cookie-visits.png)
 
-Now if you visit the Rango homepage, and inspect the developer tools provided by your browser, you should be able to see the cookies `visits` and `last_visit`. The [figure above](#fig-ch10-cookie-visits) demonstrates the cookies in action. Instead of using the developer tools, you could update the `index.html` and add `<p> visits: {{ visits }}</p>` to the template to show the number of visits.
+Now if you visit the Rango homepage and open the cookie inspector provided by your browser (e.g. [`chrome://cookies`](chrome://cookies) in Google Chrome), you should be able to see the cookies `visits` and `last_visit`. The [figure above](#fig-ch10-cookie-visits) demonstrates the cookies in action. Instead of using the developer tools, you could update the `index.html` and add `<p>visits: {{ visits }}</p>` to the template to show the number of visits.
 
 
 
@@ -177,7 +177,7 @@ Now if you visit the Rango homepage, and inspect the developer tools provided by
 ## Session Data
 The previous example shows how we can store and manipulate client side cookies - or the data stored on the client. However, a more secure way to save session information is to store any such data on the server side. We can then use the session ID cookie that is stored on the client side (but is effectively anonymous) as the key to access the data.
 
-To use session based cookies you need to perform the following steps.
+To use session-based cookies you need to perform the following steps.
 
 1.  Make sure that the `MIDDLEWARE_CLASSES` list found in the `settings.py` module contains `django.contrib.sessions.middleware.SessionMiddleware`.
 2.  Configure your session backend. Make sure that `django.contrib.sessions` is in your `INSTALLED_APPS` in `settings.py`. If not, add it, and run the database migration command, `python manage.py migrate`.
@@ -242,7 +242,7 @@ Make sure that these lines are executed before `render()` is called, or your cha
 Before you restart the Django development server, delete the existing client side cookies to start afresh. See the warning below for more information.
 
 W> ### Avoiding Cookie Confusion
-W> It's highly recommended that you delete any client-side cookies for Rango *before* you start using session-based data. You can do this in your browser's developer tools by deleting each cookie individually, or simply clear your browser's cache entirely - ensuring that cookies are deleted in the process.
+W> It's highly recommended that you delete any client-side cookies for Rango *before* you start using session-based data. You can do this in your browser's cookie inspector by deleting each cookie individually, or simply clear your browser's cache entirely -- ensuring that cookies are deleted in the process.
 
 I> ### Data Types and Cookies
 I> An added advantage of storing session data server-side is its ability to cast data from strings to the desired type. This only works however for [built-in types](http://docs.python.org/2/library/stdtypes.html), such as `int`, `float`, `long`, `complex` and `boolean`. If you wish to store a dictionary or other complex type, don't expect this to work. In this scenario, you might want to consider [pickling your objects](https://wiki.python.org/moin/UsingPickle).
