@@ -251,9 +251,8 @@ I> As a quick example of the checks you must carry out, have a look at the `abou
 I>
 I> {lang="python",linenos=off}
 I> 	def about(request):
-I> 	    return HttpResponse('
-I> 	        Rango says: Here is the about page.
-I> 	        <a href="/rango/">Index</a>')
+I> 	    return HttpResponse('Rango says: Here is the about page.
+I> 	                         <a href="/rango/">Index</a>')
 I>
 I> To employ the use of a template, we call the `render()` function and pass through the `request` object. This will allow the template engine to access information such as the request type (e.g. `GET`/`POST`), and information relating to the user's status (have a look at [Chapter 9](#chapter-user)).
 I>
