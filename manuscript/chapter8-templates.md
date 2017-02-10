@@ -276,7 +276,7 @@ It would be nice to show the different categories that users can browse through 
 However, this is a pretty nasty solution because we will need to be repeatedly including the same code in all views. A [DRYer](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
 ### Using Template Tags
-Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`, and this will be kept blank. The second module must be called `rango_template_tags.py`, in which you should add the following code.
+Create a directory `rango/templatetags`, and create two new modules within it. One must be called `__init__.py`, and this will be kept blank. The second module must be called `rango_template_tags.py`, in which you should add the following code.
 
 {lang="python",linenos=on}
 	from django import template
