@@ -32,7 +32,7 @@ In your app's `index.html` template, you will notice that you have a parameteris
 	    </li>
 	{% endfor %}
 
-Before you run off to update all the URLs in all your templates with relative URLs, we need to re-structure and refactor our templates by using inheritance to remove repetition.
+Before you run off to update all the URLs in all your templates with relative URLs, we need to restructure and refactor our templates by using inheritance to remove repetition.
 
 T> ### URLs and Multiple Django Apps
 T> This book focuses on the development on a single Django app, Rango. However, you may find yourself working on a Django project with multiple apps being used at once. This means that you could literally have hundreds of potential URLs with which you may need to reference. This scenario begs the question *how can we organise these URLs?* Two apps may have a view of the same name, meaning a potential conflict would exist. 
@@ -166,7 +166,7 @@ Now that you have an understanding of blocks within Django templates, let's take
 From the example above, we have introduced two new features into the base template.
 
 -   The first is a template block called `title_block`. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not override the block, then the `title_block` defaults to `How to Tango with Django!`, resulting in a complete title of `Rango - How to Tango with Django!`. Look at the contents of the `<title>` tag in the above template to see how this works.
--   We have also included the list of links from our current `index.html` template and placed them into a HTML `<div>` tag underneath our `body_block` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (`<hr />`) which provides a visual separation for the user between the `body_block` content and the links.
+-   We have also included the list of links from our current `index.html` template and placed them into a HTML `<div>` tag underneath our `body_block` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (`<hr />`) which provides a visual separation for the user between the content of the `body_block` block and the links.
 
 ## Template Inheritance {#section-templates-inheritance}
 Now that we've created a base template with blocks, we can now update all the templates we have created so that they inherit from the base template. Let's start by refactoring the template `rango/category.html`.
@@ -268,7 +268,7 @@ I> Remember, the last parameter of `render()` is the context dictionary with whi
 
 
 ## Custom Template Tags
-It would be nice to show the different categories that users can browse through in the sidebar on each page. Given what we have learnt so far we could do the following:
+It would be nice to show the different categories that users can browse through in the sidebar on each page. Given what we have learnt so far, we could do the following:
 
 - in the `base.html` template, we could add some code to display an item list of categories; and
 - within each view, we could access the `Category` object, get all the categories, and return that in the context dictionary.
@@ -276,7 +276,7 @@ It would be nice to show the different categories that users can browse through 
 However, this is a pretty nasty solution because we will need to be repeatedly including the same code in all views. A [DRYer](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) solution would be to create custom template tags that are included in the template, and which can request *their own* data.
 
 ### Using Template Tags
-Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`. This module will also be left blank. The second module must be called, `rango_template_tags.py`, in which you can add the following code.
+Create a directory `rango/templatetags`, and create two new modules. One must be called `__init__.py`, and this will be kept blank. The second module must be called `rango_template_tags.py`, in which you should add the following code.
 
 {lang="python",linenos=on}
 	from django import template
@@ -297,7 +297,7 @@ From this code snippet, you can see a new method called `get_category_list()`. T
 	        <li><a href="{% url 'show_category'  c.slug %}">{{ c.name }}</a></li>
 	    {% endfor %}
 	{% else %}
-	    <li> <strong>There are no categories present.</strong></li>
+	    <li><strong>There are no categories present.</strong></li>
 	{% endif %}
 	</ul>
 
@@ -321,7 +321,7 @@ We can also *parameterise* the template tags we create, allowing for greater fle
 {lang="python",linenos=off}
 	def get_category_list(cat=None):
 	    return {'cats': Category.objects.all(),
-	        'act_cat': cat}
+	            'act_cat': cat}
 
 Note the inclusion of the `cat` parameter to `get_category_list()`, which is optional - and if you don't pass in a category, `None` is used as the subsequent value.
 
@@ -346,7 +346,7 @@ We can also now update the `cats.html` template, too.
 	        </li>
 	    {% else  %}
 	        <li>
-	              <a href="{% url 'show_category' c.slug %}">{{ c.name }}</a>
+	            <a href="{% url 'show_category' c.slug %}">{{ c.name }}</a>
 	        </li>
 	    {% endif %}
 	{% endfor %}
