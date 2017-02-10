@@ -134,7 +134,7 @@ Next, update the `index()` view to call the `cookie_handler_function()` helper f
 	    return response
 
 {id="fig-ch10-cookie-visits"}
-![A screenshot of Google Chrome with the Developer Tools open showing the cookies for Rango. Note the `visits` cookie - the user has visited a total of six times, with each visit at least one day apart.](images/ch10-cookie-visits.png)
+![A screenshot of Google Chrome with the Developer Tools open showing the cookies for Rango, using the Django development server at `127.0.0.1`. Note the `visits` cookie - the user has visited a total of four times, with each visit at least one day apart.](images/ch10-cookie-visits.png)
 
 Now if you visit the Rango homepage and open the cookie inspector provided by your browser (e.g. [`chrome://cookies`](chrome://cookies) in Google Chrome), you should be able to see the cookies `visits` and `last_visit`. The [figure above](#fig-ch10-cookie-visits) demonstrates the cookies in action. Instead of using the developer tools, you could update the `index.html` and add `<p>visits: {{ visits }}</p>` to the template to show the number of visits.
 
