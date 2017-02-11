@@ -60,7 +60,7 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	
 	    try:
 	        with open('search.key', 'r') as f:
-	            webhose_api_key = f.readline()
+	            webhose_api_key = f.readline().strip()
 	    except:
 	        raise IOError('search.key file not found')
 	
@@ -195,7 +195,7 @@ You should create the `search.key` file now. Take the Webhose API key you copied
 T> ### Keys
 T> Keep them secret, keep them safe!
 T>
-T> Don't let anyone use your code. If they misuse it, you could be banned from the service it corresponds to.
+T> Don't let anyone use your code. If they misuse it, you could be banned from the service to which it corresponds. Or worse, end up having to pay for the services you did not use.
 
 ### `run_query()` -- Executing the Query
 The `run_query()` function takes two parameters: `search_terms`, a string representing a user's query; and `size`, an [optional parameter](http://www.diveintopython.net/power_of_introspection/optional_arguments.html), set to a default of `10`. This second parameter allows us to control the number of results to return from the Webhose API. Given these parameters, the function then communicates with the Webhose API, and returns a series of Python dictionaries within a list, with each dictionary representing an individual result -- consisting of a result `title`, `link` and `summary`. The inline commentary in the function definitions above (for both Python 2.7.x and Python 3) explain what's happening at each stage -- check out the commentary further to increase your understanding of what is going on.

@@ -15,7 +15,7 @@ def read_webhose_key():
     
     try:
         with open('search.key', 'r') as f:
-            webhose_api_key = f.readline()
+            webhose_api_key = f.readline().strip()
     except:
         raise IOError('search.key file not found')
     
@@ -49,15 +49,19 @@ def run_query(search_terms, size=10):
     
     try:
         # Connect to the Webhose API, and convert the response to a Python dictionary.
+        print(search_url)
         response = urllib2.urlopen(search_url).read()
+        print(response)
         json_response = json.loads(response)
         
         # Loop through the posts, appendng each to the results list as a dictionary.
         for post in json_response['posts']:
+            print(post['title'])
             results.append({'title': post['title'],
                             'link': post['url'],
                             'summary': post['text'][:200]})
-    except:
+    except Exception as e: 
+        print(e)
         print("Error when querying the Webhose API")
     
     # Return the list of results to the calling function.
