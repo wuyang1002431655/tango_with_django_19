@@ -600,6 +600,6 @@ Many Web applications however take the concepts of user authentication further. 
 X> ### Exercises
 X> For now, work on the following two exercises to reinforce what you've learnt in this chapter.
 X>
-X> - Customise the application so that only registered users can add or edit categories and pages, while non-registered can only view or use the categories and pages. You'll also have to ensure that the links to *add* or *edit* pages appear only if the user browsing the website is logged in.
+X> - Customise the application so that only registered users can add categories and pages, while unregistered can only view or use the categories and pages. You'll also have to ensure that the link to add pages appears only if the user browsing the website is logged in.
 X> - Provide informative error messages when users incorrectly enter their username or password.
 X> - Keep your templating know-how up to date by converting the restricted page view to use a template. Call the template `restricted.html`, and ensure that it too extends from Rango's `base.html` template.

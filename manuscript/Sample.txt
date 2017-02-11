@@ -5,8 +5,6 @@ chapter4-templates-static-media.md
 chapter5-database-setup.md
 chapter6-models-templates-views.md
 chapter7-forms.md
-chapter-testing.md
-chapter-deployment.md
 chapter-summary.md
 chapter-system-setup.md
 chapter-unix.md

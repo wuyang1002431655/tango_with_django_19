@@ -79,7 +79,7 @@ Now let's run the test:
 	
 	FAILED (failures=1)
 
-As we can see this test fails. This is because the model does not check whether the value is less than zero or not. Since we really want to ensure that the values are non-zero, we will need to update the model, to ensure that this requirement is fulfilled. Do this now by adding some code to the `Category` models, `save()` method, that checks the value of views, and updates it accordingly.
+As we can see this test fails. This is because the model does not check whether the value is less than zero or not. Since we really want to ensure that the values are non-zero, we will need to update the model to ensure that this requirement is fulfilled. Do this now by adding some code to the `save()` method of the `Category` model. The code should check the value of `views` attribute, and update it accordingly. A simple conditional check of `self.views` where it is less than zero should suffice here.
 
 Once you have updated your model, you can now re-run the test, and see if your code now passes it. If not, try again.
 
