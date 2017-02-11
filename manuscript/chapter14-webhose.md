@@ -132,7 +132,7 @@ I> In [Python 3, the `urllib` package was refactored](http://stackoverflow.com/a
 	
 	    try:
 	        with open('search.key', 'r') as f:
-	            webhose_api_key = f.readline()
+	            webhose_api_key = f.readline().strip()
 	    except:
 	        raise IOError('search.key file not found')
 	
