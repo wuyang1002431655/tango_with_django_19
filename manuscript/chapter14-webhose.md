@@ -214,10 +214,14 @@ I> ### Exploring API Options
 I> When starting off with a new API, it's always a good idea to explore the provided documentation to see what options you can play with. We recommend exploring the [Webhose API documentation](https://webhose.io/documentation) and play around with some of the options that you can vary.
 
 X> ### Exercises
-X> Extend your `webhose_search.py` module so that it can be run independently, i.e. running `python webhose_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
+X> Extend your `webhose_search.py` module so that it can be run independently. By this, we mean running `python webhose_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
 X> 
 X> - prompts the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
+X>
+X> For each result, you should display the corresponding `title` and `summary`, with a line break between each result.
+X>
+X> If you are developing Rango on a Windows computer with Python 2.7.x, you'll need to encode the output of each `print` statement using the `str` `encode()` function with `utf-8`. For example, to display the `title`, you would use `print(result['title']).encode('utf-8')`. This is due to the way that Python calls underlying Windows functions to output content. If you receive a `UnicodeEncodeError`, this may be your solution. Python 3 should be unaffected by this issue.
 
 T> ### Hint
 T> You've already done this in your [population script](#section-models-population) for Rango! Try following the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html#Main) to make everything look the part by adding a `main()` function, and calling whatever you need to from there. You should also make use of the following line -- if you aren't sure what this line means, [have a look online for an answer](http://stackoverflow.com/questions/419163/what-does-if-name-main-do), or refer [back to the section of the tutorial discussing the population script](#section-models-population).
