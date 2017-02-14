@@ -39,7 +39,7 @@ Duncan Drizy,
 [Giles T.](https://github.com/gpjt),
 **[Grigoriy M](https://github.com/GriMel),**
 James Yeo,
-**[Jan Felix Trettow](https://tiwtter.com/JanFelixTrettow),**
+**[Jan Felix Trettow](https://twitter.com/JanFelixTrettow),**
 Joe Maskell,
 **[Jonathan Sundqvist](https://github.com/jonathan-s),**
 Karen Little,
@@ -63,7 +63,7 @@ Oleg Belausov,
 [pdehaye](https://github.com/pdehaye),
 **[Peter Mash](https://github.com/PeterMash),**
 [Pierre-Yves Mathieu](https://github.com/pywebdesign),
-**[Praestgias](https://github.com/praestigias),**
+**Praestgias,**
 [pzkpfwVI](https://github.com/pzkpfwVI),
 **[Ramdog](https://github.com/ramdog),**
 [Rezha Julio](https://github.com/kimiamania),
