@@ -9,7 +9,7 @@ In this chapter, we will run through how to capture data through web forms. Djan
 
 One of the major advantages of using Django's forms functionality is that it can save you a lot of time and hassle creating the HTML forms. 
 
-##Basic Workflow
+## Basic Workflow
 The basic steps involved in creating a form and handling user input is as follows.
 
 1. If you haven't already got one, create a `forms.py` file within your Django application's directory to store form-related classes.
@@ -181,7 +181,7 @@ I> ### Hidden Fields
 I> The need for hidden as well as visible form fields is necessitated by the fact that HTTP is a stateless protocol. You can't persist state between different HTTP requests that can make certain parts of web applications difficult to implement. To overcome this limitation, hidden HTML form fields were created which allow web applications to pass important information to a client (which cannot be seen on the rendered page) in a HTML form, only to be sent back to the originating server when the user submits the form.
 
 I> ### Cross Site Request Forgery Tokens
-I> You should also take note of the code snippet `{% csrf_token %}`. This is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect and secure the HTTP `POST` action that is initiated on the subsequent submission of a form. *The Django framework requires the CSRF token to be present. If you forget to include a CSRF token in your forms, a user may encounter errors when he or she submits the form.* Check out the [official Django documentation on CSRF tokens](https://docs.djangoproject.com/en/1.9/ref/contrib/csrf/) for more information about this.
+I> You should also take note of the code snippet `{% csrf_token %}`. This is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect and secure the HTTP `POST` action that is initiated on the subsequent submission of a form. *The Django framework requires the CSRF token to be present. If you forget to include a CSRF token in your forms, a user may encounter errors when he or she submits the form.* Check out the [official Django documentation on CSRF tokens](https://docs.djangoproject.com/en/1.9/ref/csrf/) (and [this link for Django 1.10](https://docs.djangoproject.com/en/1.10/ref/csrf/)) for more information about this.
 
 ### Mapping the *Add Category* View
 Now we need to map the `add_category()` view to a URL. In the template we have used the URL `/rango/add_category/` in the form's action attribute. We now need to create a mapping from the URL to the View. In `rango/urls.py` modify the `urlpatterns` 
