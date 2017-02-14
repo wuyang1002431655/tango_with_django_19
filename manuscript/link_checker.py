@@ -13,6 +13,8 @@ def main(chapters_list_filename, hide_success=True):
 	chapters_f = open(chapters_list_filename, 'r')
 	pattern = re.compile(r'\[([^]]+)]\(\s*(http[s]?://[^)]+)\s*\)')  # http://stackoverflow.com/a/23395483
 	
+	print 'filename\tline_no\ttitle\turl\tstatus_code'
+	
 	for filename in chapters_f:
 		filename = filename.strip()
 		
