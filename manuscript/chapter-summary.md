@@ -15,7 +15,7 @@ We would also like to thank all the people who have helped to improve this resou
 
 **Adam Kikowski,**
 [Adam Mertz](https://github.com/Amertz08),
-**Alessio Oxilia**
+**Alessio Oxilia,**
 Ally Weir,
 **[bernieyangmh](https://github.com/bernieyangmh),**
 [Breakerfall](https://github.com/breakerfall),
@@ -31,7 +31,7 @@ Ally Weir,
 [Darius](https://github.com/dariushazimi),
 **David Manlove,**
 [David Skillman](https://github.com/reggaedit),
-**Deep Sukhwani (https://github.com/ProProgrammer)**
+**[Deep Sukhwani](https://github.com/ProProgrammer)**
 [Devin Fitzsimons](https://github.com/aisflat439),
 **[Dhiraj Thakur](https://github.com/dhirajt),**
 Duncan Drizy,
