@@ -214,12 +214,14 @@ I> ### Exploring API Options
 I> When starting off with a new API, it's always a good idea to explore the provided documentation to see what options you can play with. We recommend exploring the [Webhose API documentation](https://webhose.io/documentation) and play around with some of the options that you can vary.
 
 X> ### Exercises
-X> Extend your `webhose_search.py` module so that it can be run independently. By this, we mean running `python webhose_search.py` from your terminal or Command Prompt. Specifically, you should implement functionality that:
+X> Extend your `webhose_search.py` module so that it can be run independently. By this, we mean running `python webhose_search.py` from your terminal or Command Prompt, without running Django's development server. Specifically, you should implement functionality that:
 X> 
 X> - prompts the user to enter a query, i.e. use `raw_input()`; and
 X> - issues the query via `run_query()`, and prints the results.
 X>
 X> For each result, you should display the corresponding `title` and `summary`, with a line break between each result.
+X>
+X> You'll also need to modify the `read_webhose_key()` function so that the `search.key` file can be found from the `rango` directory in which `webhose_search.py` is launched. When running the Django development server, Python would expect to find `search.key` in the directory you launched `manage.py`. When you run `webhose_search.py` in the `rango` directory, you'll need to look one directory up. How could you modify the `read_webhose_key()` function to work both ways?
 X>
 X> If you are developing Rango on a Windows computer with Python 2.7.x, you'll need to encode the output of each `print` statement using the `str` `encode()` function with `utf-8`. For example, to display the `title` of a result, you would use `print(result['title']).encode('utf-8')`. This is due to the way that Python calls underlying Windows functions to output content. If you receive a `UnicodeEncodeError`, this may be your solution. Python 3 should be unaffected by this issue.
 
@@ -231,6 +233,8 @@ T>		if __name__ == '__main__':
 T>		    main()
 T>
 T> Using this line will ensure that you can run your module independently of anything else -- yet still include the module within another Python program (i.e. your Django project) and not have code automatically executed when you `import`.
+T>
+T> To modify your `read_webhose_key()` function, there's a few things you could try. The easiest approach would be to make use of the `os.path.isfile()` function to check if `search.key` is a file that exists in the current directory. If it doesn't exist, then you could assume that the key can be found in `../search.key` -- [one directory up (`..`)](http://teaching.idallen.com/cst8207/12f/notes/160_pathnames.html) from where your script is running. To access the `isfile()` function, you'll need to make sure the `os` module is imported at the top of `webhose_search.py`.
 
 ## Putting Webhose Search into Rango
 Now that we have successfully implemented the search functionality module `webhose_search.py`, we need to integrate it into our Rango app. There are three main steps that we need to complete for this to work.
