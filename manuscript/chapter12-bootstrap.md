@@ -70,30 +70,27 @@ Before we can use the template, we need to modify the HTML so that we can use it
 	    <div class="collapse navbar-collapse" id="navbar">
 	        <ul class="navbar-nav mr-auto">
 	            <li class="nav-item active">
-	                <a class="nav-link" href="{% url 'index' %}">Home</a>
+	            <a class="nav-link" href="{% url 'index' %}">Home</a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'about' %}">About</a>
+	            <a class="nav-link" href="{% url 'about' %}">About</a>
 	            </li>
 	            {% if user.is_authenticated %}
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'add_category' %}">Add a New Category</a>
+	            <a class="nav-link" href="{% url 'restricted' %}">Restricted Page</a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'profile' user.username %}">Profile</a>
+	            <a class="nav-link" href="{% url 'add_cateory' %}">Add a New Category</a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'list_profiles' %}">List Profiles</a>
-	            </li>
-	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
+	            <a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
 	            </li>
 	            {% else %}
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'registration_register' %}">Register Here</a>
+	            <a class="nav-link" href="{% url 'registration_register' %}">Register Here</a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
+	            <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
 	            </li>
 	            {% endif %}
 	        </ul>
