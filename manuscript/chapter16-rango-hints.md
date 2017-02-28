@@ -296,9 +296,9 @@ Now that everything is (almost) working, we need to tweak the process that users
 {lang="python",linenos=off}
 	class MyRegistrationView(RegistrationView):
 	    def get_success_url(self, user):
-	        return url('register_profile')
+	        return reverse('register_profile')
 
-Now when a user registers, they should be then redirected to the profile registration form - and upon successful completion of that - be redirected to the Rango homepage. It's easy when you know how.
+Now when a user registers, they should be then redirected to the profile registration form -- and upon successful completion of that -- be redirected to the Rango homepage. It's easy when you know how.
 
 T> ### Class-Based Views
 T> In this subsection, we mentioned something called **class-based views**. Class based views are a different, and more elegant, but more sophisticated mechanism, for handling requests. Rather than taking a functional approach as we have done in this tutorial, that is, in our `views.py` we have written functions to handle each request, the class based approach mean inheriting and implementing a series methods to handle the requests. For example, rather than checking if a request was a `get` or a `post`, in the class based approach, you would need to implement a `get()` and `post()` method within the class. When your project and handlers become more complicated, using the Class based approach is more preferable. See the [Django Documentation for more information about Class Based Views](https://docs.djangoproject.com/en/1.9/topics/class-based-views/).
