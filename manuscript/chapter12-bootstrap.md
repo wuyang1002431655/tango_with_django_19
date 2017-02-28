@@ -30,7 +30,9 @@ Before we can use the template, we need to modify the HTML so that we can use it
 ## Template
 
 W> ### Copying and Pasting
-W> As we said in the introductory chapter, *don't simply copy and paste the code you see here*. Type it in, think about what the HTML markup below is doing as you type. If you don't understand what a particular element does, search for it online. If you don't understand what a given Bootstrap CSS class achieves, check out the [documentation](http://getbootstrap.com/css/). 
+W> As we said in the introductory chapter, *don't simply copy and paste the code you see here*. Type it in, think about what the HTML markup below is doing as you type. If you don't understand what a particular element does, search for it online. If you don't understand what a given Bootstrap CSS class achieves, check out the [documentation](http://getbootstrap.com/css/).
+W>
+W> **If you copy and paste over a large portion of code like the template below, you risk including the book's headers and footers, too!**
 
 {lang="html",linenos=off}
 	<!DOCTYPE html>
