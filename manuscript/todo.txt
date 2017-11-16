@@ -3,3 +3,9 @@
 
 
 - From Mike Gleen::: Another note: Sometimes I get confused with the various directories. In the case of creating the "templates" directory, maybe it would help to say something like: Create it in the directory containing manage.py.
+
+November 2017
+~~~~~~~~~~~~~
+- Update the cookies chapter to reflect the changes in the Google Chrome cookies interface.
+- Check out the Webhose API
+- Check out the PythonAnywhere setup — David Manlove’s e-mail
