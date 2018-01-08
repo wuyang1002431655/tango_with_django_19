@@ -533,7 +533,6 @@ When applied, our list looks so much better - and quite professional, too!
 From the example, it is hopefully clear that lists can be easily customised to suit the requirements of your webpages. For more information and inspiration on how to style lists, you can check out some of the selected links below.
 
 -   Have a look at [this excellent tutorial on styling lists on A List Apart](http://alistapart.com/article/taminglists/).
--   Have a look at [this about.com article which demonstrates how to use your own bullets](http://webdesign.about.com/od/css/a/aa012907.htm)!
 -   Check out [this advanced tutorial from Web Designer Wall](http://webdesignerwall.com/tutorials/advanced-css-menu) that uses graphics to make awesome looking lists. In the tutorial, the author uses Photoshop - you could try using a simpler graphics package if you don't feel confident with Photoshop.
 -   [This site](http://learn.shayhowe.com/html-css/creating-lists/) provides some great inspiration and tips on how you can style lists.
 

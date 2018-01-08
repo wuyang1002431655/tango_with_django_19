@@ -23,7 +23,7 @@ Ally Weir,
 [Burak K.](https://github.com/McMutton),
 **Burak Karaboga,**
 [Can Ibanoglu](https://github.com/canibanoglu),
-**[Charlotte ](https://github.com/Charlotteis),**
+**Charlotte,**
 [Claus Conrad](https://github.com/cconrad),
 **[Codenius](https://twitter.com/Codenius),**
 [cspollar](https://github.com/cspollar),

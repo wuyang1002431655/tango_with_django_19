@@ -34,7 +34,7 @@ Pip is the python [package manager](https://en.wikipedia.org/wiki/Package_manage
 
 A package manager, whether for Python, your [operating system](https://en.wikipedia.org/wiki/Advanced_Packaging_Tool) or [some other environment](https://docs.npmjs.com/cli/install), is a software tool that automates the process of installing, upgrading, configuring and removing *packages* - that is, a package of software which you can use on your computer. This is opposed to downloading, installing and maintaining software manually. Maintaining Python packages is pretty painful. Most packages often have *dependencies* so these need to be installed too. Then these packages may conflict or require particular versions which need to be resolved. Also, the system path to these packages needs to be specified and maintained. Luckily *pip* handles all this for you - so you can sit back and relax.
 
-Try and run pip with the command `$ pip`. If the command is not found, you'll need to install pip itself - check out the [system setup chapter](#chapter-system-setup) for more information. You should also ensure that the following packages are installed on your system. Run the following commands to install Django and [pillow](https://python-pillow.org/) (an image manipulation library for Python).
+Try and run pip with the command `$ pip`. If the command is not found, you'll need to install pip itself - check out the [system setup chapter](#chapter-system-setup) for more information. You should also ensure that the following packages are installed on your system. Run the following commands to install Django and [pillow](https://pillow.readthedocs.io/en/5.0.0/) (an image manipulation library for Python).
 
 {lang="bash",linenos=off}
 	$ pip install -U django==1.9.10
