@@ -10,9 +10,9 @@ Q> ### Summary: What is a Template?
 Q> In the world of Django, think of a *template* as the scaffolding that is required to build a complete HTML webpage. A template contains the *static parts* of a webpage (that is, parts that never change), complete with special syntax (or *template tags*) which can be overridden and replaced with *dynamic content* that your Django app's views can replace to produce a final HTML response.
 
 ### Configuring the Templates Directory
-To get templates up and running with your Django app, you'll need to create a directory in which template files are stored.
+To get templates up and running with your Django app, you'll need to create two directories in which template files are stored.
 
-In your Django project's directory (e.g. `<workspace>/tango_with_django_project/`), create a new directory called `templates`. Within the new templates directory, create another directory called `rango`. This means that the path `<workspace>/tango_with_django_project/templates/rango/` will be the location in which we will store templates associated with our `rango` application.
+In your Django project's directory (e.g. `<workspace>/tango_with_django_project/`), create a new directory called `templates`. Remember, this is the directory that contains your project's `manage.py` script! Within the new templates directory, create another directory called `rango`. This means that the path `<workspace>/tango_with_django_project/templates/rango/` will be the location in which we will store templates associated with our `rango` application.
 
 T> ### Keep your Templates Organised
 T> It's good practice to separate out your templates into subdirectories for each app you have. This is why we've created a `rango` directory within our `templates` directory. If you package your app up to distribute to other developers, it'll be much easier to know which templates belong to which app!
@@ -46,7 +46,7 @@ Note that you are *required to use absolute paths* to locate the `templates` dir
 {lang="python",linenos=off}
 	'DIRS': [ '/Users/leifos/templates',
 	          '/Users/maxwelld90/templates',
-	          '/Users/clueless_noob/templates', ]
+	          '/Users/davidm/templates', ]
 
 	
 However, there are a number of problems with this. First you have to add in the path for each setting, each time. Second, if you are running the app on different operating systems the backslashes have to be constructed differently.

@@ -28,13 +28,13 @@ Without a persistent connection between the client and server, the software on b
 
 The most commonly used way of holding state is through the use of a *session ID* stored as a cookie on a client's computer. A session ID can be considered as a token (a sequence of characters, or a *string*) to identify a unique session within a particular Web application. Instead of storing all kinds of information as cookies on the client (such as usernames, names, or passwords), only the session ID is stored, which can then be mapped to a data structure on the Web server. Within that data structure, you can store all of the information you require. This approach is a **much more secure** way to store information about users. This way, the information cannot be compromised by a insecure client or a connection which is being snooped.
 
-If your browser supports cookies, pretty much all websites create a new session for you when you visit. You can see this for yourself now -- check out the [screenshot below](#fig-ch10-sessionid). For Google Chrome, you can view cookies that have been sent by any Web server that you've accessed by opening Chrome's settings page at [`chrome://settings/cookies`](chrome://settings/cookies). This page then lists all cookies currently on your computer, for all sites visited. Filter the cookies with the search box at the top right by entering `127.0.0.1`. You'll then hopefully see a cookie called `sessionid`. The cookie contains a series of letters and numbers that Django uses to uniquely identify your computer with a given session. With this session ID, all your session details can be accessed -- but they are only stored on the *server side*.
+If you're using a modern browser that's properly configured, it'll support cookies. Pretty much every website that you visit will create a new *session* for you when you visit. You can see this for yourself now -- check out the [screenshot below](#fig-ch10-sessionid). For Google Chrome, you can view cookies for the currently open website by accessing Chrome's Developer Tools, by accessing *Chrome Settings > More Tools > Developer Tools*. When the Developer Tools pane opens, click the *Application* tab, and look for *Cookies* down the left hand side, within the *Storage* menu. If you're running this with a Rango page open, you should then hopefully see a cookie called `sessionid`. The `sessionid` cookie contains a series of letters and numbers that Django uses to uniquely identify your computer with a given session. With this session ID, all your session details can be accessed -- but they are only stored on the *server side*.
 
 {id="fig-ch10-sessionid"}
-![A screenshot of Google Chrome showing the `sessionid` cookie.](images/ch10-sessionid.png)
+![A screenshot of Google Chrome's Developer Tools with the `sessionid` cookie highlighted.](images/ch10-sessionid.png)
 
 I> ### Without Cookies
-I> An alternative way of persisting state information *without cookies* is to encode the Session ID within the URL. For example, you may have seen PHP pages with URLs like this one: `http://www.site.com/index.php?sessid=omgPhPwtfIsThisIdDoingHere332i942394`. This means you don't need to store cookies on the client machine, but the URLs become pretty ugly. These URLs go against the principles of Django - clean, human-friendly URLs.
+I> An alternative way of persisting state information *without cookies* is to encode the Session ID within the URL. For example, you may have seen PHP pages with URLs like this one: `http://www.site.com/index.php?sessid=someseeminglyrandomandlongstring1234`. This means you don't need to store cookies on the client machine, but the URLs become pretty ugly. These URLs go against the principles of Django - clean, human-friendly URLs.
 
 ## Setting up Sessions in Django
 Although this should already be setup and working correctly, it's nevertheless good practice to learn which Django modules provide which functionality. In the case of sessions, Django provides [middleware](https://docs.djangoproject.com/en/1.9/topics/http/middleware/) that implements session functionality.
@@ -134,9 +134,9 @@ Next, update the `index()` view to call the `cookie_handler_function()` helper f
 	    return response
 
 {id="fig-ch10-cookie-visits"}
-![A screenshot of Google Chrome with the Developer Tools open showing the cookies for Rango, using the Django development server at `127.0.0.1`. Note the `visits` cookie - the user has visited a total of four times, with each visit at least one day apart.](images/ch10-cookie-visits.png)
+![A screenshot of Google Chrome with the Developer Tools open showing the cookies for Rango, using the Django development server at `127.0.0.1`. Note the `visits` cookie - the user has visited a total of three times, with each visit at least one day apart.](images/ch10-cookie-visits.png)
 
-Now if you visit the Rango homepage and open the cookie inspector provided by your browser (e.g. [`chrome://cookies`](chrome://cookies) in Google Chrome), you should be able to see the cookies `visits` and `last_visit`. The [figure above](#fig-ch10-cookie-visits) demonstrates the cookies in action. Instead of using the developer tools, you could update the `index.html` and add `<p>visits: {{ visits }}</p>` to the template to show the number of visits.
+Now if you visit the Rango homepage and open the cookie inspector provided by your browser (e.g. Google Chrome's Developer Tools), you should be able to see the cookies `visits` and `last_visit`. The [figure above](#fig-ch10-cookie-visits) demonstrates the cookies in action. Instead of using the developer tools, you could update the `index.html` and add `<p>visits: {{ visits }}</p>` to the template to show the number of visits.
 
 
 
