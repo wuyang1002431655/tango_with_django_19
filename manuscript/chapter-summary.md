@@ -47,7 +47,7 @@ Karen Little,
 [koviusesGitHub](https://github.com/koviusesGitHub),
 **[Krace Kumar](https://github.com/kracekumar),**
 [ma-152478](https://github.com/ma-152478),
-**[Manoel Maria](https://twitter.com/xmadruga157),**
+**Manoel Maria,**
 [Martin de G.](https://github.com/martindegroot),
 **[Matevz P.](https://github.com/matonsjojc),**
 [mHulb](https://github.com/mHulb),
