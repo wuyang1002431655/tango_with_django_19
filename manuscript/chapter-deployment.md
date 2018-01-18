@@ -219,11 +219,7 @@ With these changes saved, reload your web application by clicking the *Reload* b
 [Add your search API key]({#section-searchapi-adding-key}) to `search.key` to enable the search functionality in Rango.
 
 ### Turning off `DEBUG` Mode
-When you application is ready to go, it's a good idea to instruct Django that your application is now hosted on a production server. To do this, open your project's `settings.py` file and change `DEBUG = True` to `DEBUG = False`. This disables [Django's debug mode](https://docs.djangoproject.com/en/1.9/ref/settings/#debug), and removes explicit error messages.
-
-Why do this? Disabling explicit error messages stops people from viewing them. Individuals will find this to be unprofessional if they see detailed error logs being displayed on a production website. Furthermore, malicious individuals could use the information the error message displays to potentially exploit weaknesses in your app. It therefore makes sense to simple turn off this functionality.
-
-Error messages are however still logged. If something goes wrong, you can see the Python stack track to work out how to fix it. You can view your log files by opening the PythonAnywhere Web component, displaying the page for your app. Look for the *Log files* header -- and there, you'll see an *Error log* link. If you click this, you'll see your app's stack traces that are generated when an exception is raised and unhandled.
+When you application is ready to go, it's a good idea to instruct Django that your application is now hosted on a production server. To do this, open your project's `settings.py` file and change `DEBUG = True` to `DEBUG = False`. This disables [Django's debug mode](https://docs.djangoproject.com/en/1.9/ref/settings/#debug), and removes explicit error messages. You can still however view Python stack traces to debug any exceptions that are raised as people use your app -- see the section below.
 
 ## Log Files {#section-deploy-logfiles}
 Deploying your Web application to an online environment introduces another layer of complexity. It is likely that you will encounter new and bizarre errors due to unsuspecting problems. When facing such errors, vital clues may be found in one of the three log files that the Web server on PythonAnywhere creates.
