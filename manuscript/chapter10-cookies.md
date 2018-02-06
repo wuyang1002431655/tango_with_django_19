@@ -96,7 +96,6 @@ The sensible place to assume where a user enters the Rango site is at the index 
 	        # Update the last visit cookie now that we have updated the count
 	        response.set_cookie('last_visit', str(datetime.now()))
 	    else:
-	        visits = 1
 	        # Set the last visit cookie
 	        response.set_cookie('last_visit', last_visit_cookie)
 	    
@@ -212,7 +211,6 @@ Since all the cookies are stored server side, we won't be changing the response 
 	        #update the last visit cookie now that we have updated the count
 	        request.session['last_visit'] = str(datetime.now())
 	    else:
-	        visits = 1
 	        # set the last visit cookie 
 	        request.session['last_visit'] = last_visit_cookie
 	
