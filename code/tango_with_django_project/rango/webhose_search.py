@@ -1,6 +1,6 @@
 import json
 import urllib
-import urllib2
+import urllib.request 
 
 def read_webhose_key():
     """
